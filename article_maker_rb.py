@@ -1294,7 +1294,7 @@ if __name__ == '__main__':
     # 記事作成
     main(main_list, keyword_dec_list, 193, 209)
     # ファイル一括アップロード
-    # total_upload()
+    total_upload()
 
     # print(sentence_counter())
     # article_checker("/Users/nakataketetsuhiko/PycharmProjects/create_article/files_sf").show()
