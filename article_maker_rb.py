@@ -18,21 +18,18 @@ from word_list_rb_sf import conjunction_list
 from word_list_rb_sf import actress_list
 from word_list_rb_sf import sexy_actress_list
 from word_list_rb_sf import area_link_list
-from word_list_rb_sf import insert_para_list
 from word_list_rb_sf import keyword_dec_list
-from word_list_rb_sf import main_list
-from word_list_rb_sf import insert_first_list_a
-from word_list_rb_sf import second_keyword_para
 from word_list_rb_sf import site_list
-from word_list_rb_sf import ps_s_list
 from word_list_rb_sf import point_tag
 from word_list_rb_sf import wp_tag
 from word_list_rb_sf import wp_update_list
 from word_list_rb_sf import atom_rss
 from word_list_rb_sf import one_rss
 from word_list_rb_sf import two_rss
-from word_list_rb_sf import sentence_num_list
-from word_list_rb_sf import illegal_para
+from word_list_rb_sf import random_adj_list
+
+from template_rb_sex import rb_sex_template
+
 from dup_list import dup_list_full
 
 
@@ -77,7 +74,7 @@ def main(sentence_list_b, keyword_list, start, stop):
         if key['id'] in illegal_id:
             print('illegal')
             result_a = illegal_key_checker(result_a, key, dup_list_full)
-        result_a = first_insert(result_a, insert_first_list_a, '<!--insert-first-a-->')
+        result_a = first_insert(result_a, rb_sex_template['insert_f'], '<!--insert-first-a-->')
         result_a = paragraph_insert(result_a, key, dup_l)
         result_a = result_a.replace("nodata", "")
         result = tag_maker(result_a)
@@ -209,12 +206,12 @@ def first_insert(main_str, insert_list, insert_str):
 
 
 def paragraph_insert(main_str, key, dup_list):
-    # insert_list = [make_insert_para(second_keyword_para, dup_list)]
-    insert_list = [insert_para_maker(second_keyword_para, key, dup_list)]
+    # insert_list = [make_insert_para(rb_sex_template['second_key'], dup_list)]
+    insert_list = [insert_para_maker(rb_sex_template['second_key'], key, dup_list)]
     count_num = main_str.count("<!--insert-para-->")
-    insert_para_list_c = copy.deepcopy(insert_para_list)
+    insert_para_list_c = copy.deepcopy(rb_sex_template['insert_para'])
     if key['ps'] is "s":
-        insert_para_list_c.append(ps_s_list)
+        insert_para_list_c.append(rb_sex_template['ps_s'])
     while len(insert_list) < count_num:
         # print(insert_para_list_c)
         insert_object = random.choice(insert_para_list_c)
@@ -491,7 +488,13 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
         long_str = long_str.replace(search_str, replace_str)
     long_str = long_str.replace('<!--il-insert-->', '')
     long_str = long_str.replace('<!--il-insert-e-->', '')
-    # todo: ランダム形容詞の挿入
+    # ランダム形容詞の挿入
+    if '<!--random-adj-->' in long_str:
+        rdm_adj_list = copy.deepcopy(random_adj_list)
+        if keyword_dec['rdm_adj']:
+            for x in keyword_dec['rdm_adj']:
+                del rdm_adj_list[x]
+        long_str = long_str.replace('<!--random-adj-->', random.choice(rdm_adj_list))
     # キーワード2の挿入
     keyword_sec = random.choice(kw_list)
     kw_list.remove(keyword_sec)
@@ -566,9 +569,9 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
 
 def illegal_para_maker(key, dup_list):
     keyword_il = key['keyword'].replace('っぽい', '')
-    i_para_1 = insert_para_maker(illegal_para[0], key, dup_list)
+    i_para_1 = insert_para_maker(rb_sex_template['illegal'][0], key, dup_list)
     i_para_1 = i_para_1.replace('<!--keyword-il-->', keyword_il)
-    i_para_2 = insert_para_maker(illegal_para[1], key, dup_list)
+    i_para_2 = insert_para_maker(rb_sex_template['illegal'][1], key, dup_list)
     i_para_2 = i_para_2.replace('<!--keyword-il-->', keyword_il)
     return i_para_1, i_para_2
 
@@ -1317,7 +1320,7 @@ def sentence_counter():
         num_d = re.findall(r'(\d+)-', t)[0]
         num_list.append(int(num_d))
     no_list = []
-    for y in sentence_num_list:
+    for y in rb_sex_template['sentence_num']:
         if y not in num_list:
             print(str(y) + ' がありません')
             no_list.append(y)
@@ -1327,7 +1330,7 @@ def sentence_counter():
 # 以下、実行
 if __name__ == '__main__':
     # 記事作成
-    main(main_list, keyword_dec_list, 193, 209)
+    main(rb_sex_template['main'], keyword_dec_list, 193, 209)
     # ファイル一括アップロード
     total_upload()
 

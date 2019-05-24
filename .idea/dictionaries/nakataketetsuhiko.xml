@@ -4,6 +4,7 @@
       <w>allist</w>
       <w>amphtml</w>
       <w>arlist</w>
+      <w>blackrhino</w>
       <w>btnli</w>
       <w>changefreq</w>
       <w>deaikei</w>
@@ -18,6 +19,7 @@
       <w>hutokuro</w>
       <w>imail</w>
       <w>kanren</w>
+      <w>kijim</w>
       <w>kijip</w>
       <w>kijoph</w>
       <w>kyoki</w>
@@ -32,12 +34,14 @@
       <w>pnav</w>
       <w>redline</w>
       <w>reibun</w>
+      <w>sakura</w>
       <w>sdatetime</w>
       <w>sefure</w>
       <w>sitelist</w>
       <w>sitename</w>
       <w>sitepage</w>
       <w>sitepagetop</w>
+      <w>stor</w>
       <w>tabn</w>
       <w>tibl</w>
     </words>
