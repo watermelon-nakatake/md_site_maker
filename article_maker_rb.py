@@ -73,9 +73,9 @@ def main(sentence_list_b, keyword_list, start, stop):
         result_a = ''.join(list_b)
         if key['id'] in illegal_id:
             print('illegal')
-            result_a = illegal_key_checker(result_a, key, dup_list_full)
-        result_a = first_insert(result_a, rb_sex_template['insert_f'], '<!--insert-first-a-->')
-        result_a = paragraph_insert(result_a, key, dup_l)
+            result_a = illegal_key_checker(result_a, key, dup_list_full, sentence_list)
+        result_a = first_insert(result_a, sentence_list['insert_f'], '<!--insert-first-a-->')
+        result_a = paragraph_insert(result_a, key, dup_l, sentence_list)
         result_a = result_a.replace("nodata", "")
         result = tag_maker(result_a)
         result = word_insert(result, key, keyword_list, stop_num)
@@ -205,13 +205,13 @@ def first_insert(main_str, insert_list, insert_str):
     return main_str
 
 
-def paragraph_insert(main_str, key, dup_list):
-    # insert_list = [make_insert_para(rb_sex_template['second_key'], dup_list)]
-    insert_list = [insert_para_maker(rb_sex_template['second_key'], key, dup_list)]
+def paragraph_insert(main_str, key, dup_list, template):
+    # insert_list = [make_insert_para(template['second_key'], dup_list)]
+    insert_list = [insert_para_maker(template['second_key'], key, dup_list)]
     count_num = main_str.count("<!--insert-para-->")
-    insert_para_list_c = copy.deepcopy(rb_sex_template['insert_para'])
+    insert_para_list_c = copy.deepcopy(template['insert_para'])
     if key['ps'] is "s":
-        insert_para_list_c.append(rb_sex_template['ps_s'])
+        insert_para_list_c.append(template['ps_s'])
     while len(insert_list) < count_num:
         # print(insert_para_list_c)
         insert_object = random.choice(insert_para_list_c)
@@ -567,17 +567,17 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     return long_str
 
 
-def illegal_para_maker(key, dup_list):
+def illegal_para_maker(key, dup_list, template):
     keyword_il = key['keyword'].replace('っぽい', '')
-    i_para_1 = insert_para_maker(rb_sex_template['illegal'][0], key, dup_list)
+    i_para_1 = insert_para_maker(template['illegal'][0], key, dup_list)
     i_para_1 = i_para_1.replace('<!--keyword-il-->', keyword_il)
-    i_para_2 = insert_para_maker(rb_sex_template['illegal'][1], key, dup_list)
+    i_para_2 = insert_para_maker(template['illegal'][1], key, dup_list)
     i_para_2 = i_para_2.replace('<!--keyword-il-->', keyword_il)
     return i_para_1, i_para_2
 
 
-def illegal_key_checker(long_str, key, dup_list):
-    il_para_1, il_para_2 = illegal_para_maker(key, dup_list)
+def illegal_key_checker(long_str, key, dup_list, template):
+    il_para_1, il_para_2 = illegal_para_maker(key, dup_list, template)
     long_str = re.sub(r'<!--il-insert-->.*<!--il-insert-e-->', '<!--il-insert-->' + str(il_para_1), long_str)
     long_str = long_str.replace('<point2>', str(il_para_2) + '<point2>')
     return long_str
@@ -1303,7 +1303,7 @@ def total_upload():
     list_upload(upload_files)
 
 
-def sentence_counter():
+def sentence_counter(template):
     with open('file_other/rb_sf_make_love20190518.pkl', 'rb') as f:
         pk_list = pickle.load(f)
     set_dic = {}
@@ -1320,7 +1320,7 @@ def sentence_counter():
         num_d = re.findall(r'(\d+)-', t)[0]
         num_list.append(int(num_d))
     no_list = []
-    for y in rb_sex_template['sentence_num']:
+    for y in template['sentence_num']:
         if y not in num_list:
             print(str(y) + ' がありません')
             no_list.append(y)
@@ -1330,7 +1330,7 @@ def sentence_counter():
 # 以下、実行
 if __name__ == '__main__':
     # 記事作成
-    main(rb_sex_template['main'], keyword_dec_list, 193, 209)
+    main(rb_sex_template, keyword_dec_list, 193, 209)
     # ファイル一括アップロード
     total_upload()
 
