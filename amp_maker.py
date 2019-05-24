@@ -6,7 +6,11 @@ import re
 
 def main(path):
     file_list = os.listdir(path)
-    with open('file_other/amp_tp.html', "r", encoding='utf-8') as g:
+    if path == 'fuck-buddy':
+        template = 'file_other/amp_tp_pref.html'
+    else:
+        template = 'file_other/amp_tp.html'
+    with open(template, "r", encoding='utf-8') as g:
         amp_str = g.read()
     for z in file_list:
         if '.html' not in z:
@@ -31,9 +35,28 @@ def main(path):
             amp_data = amp_data.replace('<!--description-->', description)
             amp_data = amp_data.replace('<!--path-->', str(path) + '/' + str(file))
             amp_data = amp_data.replace('<!--new-date-->', new_date)
+            amp_data = amp_data.replace('<img', '<amp-img')
+            if path == 'fuck-buddy':
+                img_str_picf_list = re.findall(r'<div class="picf"><amp-img ([\s\S]*?)></div>', amp_data)
+                for picf in img_str_picf_list:
+                    if 'width' not in picf:
+                        if 'alt=' in picf:
+                            picf_e = picf.replace('alt=', 'width="760" height="500" layout="responsive" alt=')
+                        else:
+                            picf_e = re.sub(r'src="../images/.*?"(\s)',
+                                            '\1width="760" height="500" layout="responsive" ', picf)
+                        amp_data = amp_data.replace(picf, picf_e)
+                img_str_sd_list = re.findall(r'<div class="sd_img">([\s\S]*?)></a></div>', amp_data)
+                for sd in img_str_sd_list:
+                    if 'width' not in sd:
+                        if 'alt=' in sd:
+                            sd_e = sd.replace('alt=', 'width="125" height="125" alt=')
+                        else:
+                            sd_e = re.sub(r'src="../images/.*?"(\s)', '\1width="125" height="125" ', sd)
+                        amp_data = amp_data.replace(sd, sd_e)
         with open('amp_file/' + file, "w") as h:
             h.write(amp_data)
 
 
 if __name__ == '__main__':
-    main('files_sf')
+    main('fuck-buddy')

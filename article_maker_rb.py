@@ -282,6 +282,7 @@ def sentence_choice(sentence_list, keyword_dic, dup_list):
     """
     # print(type(sentence_list))
     result = []
+    list_lc1 = []
     if isinstance(sentence_list, list):
         pop_data = sentence_list[0]
         # print('配列先頭')
@@ -356,6 +357,10 @@ def sentence_choice(sentence_list, keyword_dic, dup_list):
                 result = sentence_list[0]
             else:
                 result = ""
+        elif pop_data == 'lc1':
+            del sentence_list[0]
+            result = link_choice_maker(sentence_list, list_lc1, keyword_dic, dup_list)
+            print('lc1: ' + str(result))
         else:
             result = sentence_list
         if isinstance(result, list):
@@ -374,6 +379,35 @@ def sentence_choice(sentence_list, keyword_dic, dup_list):
     # print("answer")
     # print(result)
     return result
+
+
+def link_choice_maker(s_dic, lc_list, key, dup_list):
+    """
+    s_dic = ['lc1', {1: [.....], 2: [.....], 3: [....]}]
+    :param s_dic: lc1で始めるリスト内の辞書部分
+    :param lc_list:　順序を格納するリスト
+    :param key:　選ばれたキーワード
+    :param dup_list:　重複リスト
+    :return:　選択・整列された記事リストと順序のリスト
+    """
+    result_list = []
+    if not lc_list:
+        n = len(s_dic)
+        if n >= 7:
+            s_num = [n, n - 1, n - 2]
+        elif 7 > n >= 4:
+            s_num = [n, n - 1]
+        else:
+            s_num = [n]
+        c_num = random.choice(s_num)
+        keys = s_dic.keys()
+        lc_list = random.sample(keys, c_num)
+    else:
+        pass
+    for key in lc_list:
+        result_list.append(s_dic[key])
+    result = sentence_choice(result_list, key, dup_list)
+    return result, lc_list
 
 
 def choice_and_shuffle(sentence_list):
@@ -457,6 +491,7 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
         long_str = long_str.replace(search_str, replace_str)
     long_str = long_str.replace('<!--il-insert-->', '')
     long_str = long_str.replace('<!--il-insert-e-->', '')
+    # todo: ランダム形容詞の挿入
     # キーワード2の挿入
     keyword_sec = random.choice(kw_list)
     kw_list.remove(keyword_sec)
