@@ -28,20 +28,19 @@ from word_list_rb_sf import one_rss
 from word_list_rb_sf import two_rss
 from word_list_rb_sf import random_adj_list
 
-from template_rb_sex import rb_sex_template
+# from template_rb_sex import rb_sex_template
 
 from dup_list import dup_list_full
-
 
 key_list = ["st", "ch", "sc", "sh", "ps", "ps-s", "ps-p", "look", "age-o", "h2", "h3"]
 illegal_id = ['199', '200', '201', '223']
 
 
-def main(sentence_list_b, keyword_list, start, stop):
+def main(sentence_list_b, keyword_list, start, stop, local_directory):
     c_list = []
     file_list = {}
     rss_list = []
-    old_time_list = get_timestamp('files_sf')
+    old_time_list = get_timestamp(local_directory)
     template_path = 'file_other/sex1.html'
     # this_date = datetime.datetime(2019, 4, 25, 18, 00, 00)
     at_one_day = 208
@@ -78,12 +77,12 @@ def main(sentence_list_b, keyword_list, start, stop):
         result_a = paragraph_insert(result_a, key, dup_l, sentence_list)
         result_a = result_a.replace("nodata", "")
         result = tag_maker(result_a)
-        result = word_insert(result, key, keyword_list, stop_num)
+        result, random_adj = word_insert(result, key, keyword_list, stop_num)
         if 'っぽい<!--woman-y-->' in key['keyword']:
             data_keyword = key['keyword'].replace('っぽい<!--woman-y-->', '')
         else:
             data_keyword = key['keyword']
-        result = result + '<!--data#key#' + data_keyword + '#' + key['id'] + '#-->'
+        result = result + '<!--data#key#' + data_keyword + '#' + key['id'] + '#' + random_adj + '#-->'
         result = html_maker(result, key)
         # タイムスタンプ挿入
         # result, this_date, day_counter = timestamp_insert(result, at_one_day, interval, this_date, day_counter)
@@ -91,6 +90,7 @@ def main(sentence_list_b, keyword_list, start, stop):
         result = index_maker(result)
         result = wp_checker(result, key)
         c_list.append(num_code_pickup(result, key['eng']))
+        c_list.append('random_adj: ' + random_adj)
         result = re.sub(r'<!--\|.*?\|-->', '', result)
         result = result.replace('<br></p>', '</p>')
         file_name = 'sex-' + str(key['eng']) + '.html'
@@ -108,7 +108,7 @@ def main(sentence_list_b, keyword_list, start, stop):
         result = result.replace('<!--is-pub-e-->', timestamp_p)
         result = result.replace('<!--is-mod-j-->', jap_timestamp_m)
         result = result.replace('<!--is-mod-e-->', timestamp_m)
-        make_file(file_name, result)
+        make_file(file_name, result, local_directory)
         r_title = re.findall(r'<title>(.*?)</title>', result)[0]
         r_summary = re.findall(r'<meta name="description" content="(.*?)">', result)[0]
         r_content = MyHtmlStripper(main_text).value[:300]
@@ -116,13 +116,13 @@ def main(sentence_list_b, keyword_list, start, stop):
         rss_data = [file_name, r_title, r_summary, r_content, timestamp_p, timestamp_m, rss_key]
         rss_list.append(rss_data)
     c_list.append(timestamp_m)
-    save_pickle(c_list, 'rb_make_love', 'files_sf', timestamp_m)
-    html_sitemap_maker(file_list)
+    save_pickle(c_list, 'rb_make_love', local_directory, timestamp_m)
+    html_sitemap_maker(file_list, local_directory)
     xml_sitemap_maker(file_list, timestamp_m)
     # make_rss(rss_list)  # RSS新規作成の場合
     add_rss(rss_list)  # RSS追記の場合
-    relational_article('/Users/nakataketetsuhiko/PycharmProjects/reibun_sf/files_sf', timestamp_m)
-    amp_file_maker('files_sf')
+    relational_article(local_directory, timestamp_m)
+    amp_file_maker(local_directory)
 
 
 def save_pickle(data_list, file_name, directory, pub_time):
@@ -178,22 +178,14 @@ def title_choice(sentence_list, key_dec):
     return sentence_list
 
 
-def make_file(f_name, text):
-    path_w = 'files_sf/' + f_name
+def make_file(f_name, text, directory):
+    path_w = directory + '/' + f_name
     with open(path_w, mode='w') as f:
         f.write(text)
 
 
 def make_file_d(directory, f_name, text):
     path_w = directory + '/' + f_name
-    with open(path_w, mode='w') as f:
-        f.write(text)
-
-
-def make_list_file(text):
-    now = datetime.datetime.now()
-    path_w = 'files_sf_code/c' + str(now.year) + '-' + str(now.month) + '-' + str(now.day) + '-' + str(now.hour)\
-             + '-' + str(now.minute) + '.txt'
     with open(path_w, mode='w') as f:
         f.write(text)
 
@@ -494,7 +486,10 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
         if keyword_dec['rdm_adj']:
             for x in keyword_dec['rdm_adj']:
                 del rdm_adj_list[x]
-        long_str = long_str.replace('<!--random-adj-->', random.choice(rdm_adj_list))
+        random_adj = random.choice(rdm_adj_list)
+        long_str = long_str.replace('<!--random-adj-->', random_adj)
+    else:
+        random_adj = 'none'
     # キーワード2の挿入
     keyword_sec = random.choice(kw_list)
     kw_list.remove(keyword_sec)
@@ -504,12 +499,14 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     # おすすめサイトの挿入
     site_one = random.choice(stl)
     stl.remove(site_one)
-    long_str = long_str.replace('<!--site-1-->', site_one['word'])
-    long_str = long_str.replace('<!--site-1-l-->', '<a href="' + site_one['path'] + '">' + site_one['word'] + '</a>')
+    long_str = long_str.replace('<!--site-1-->', '<!--ds1-->' + site_one['word'])
+    long_str = long_str.replace('<!--site-1-l-->',
+                                '<!--ds1--><a href="' + site_one['path'] + '">' + site_one['word'] + '</a>')
     site_sec = random.choice(stl)
     stl.remove(site_sec)
-    long_str = long_str.replace('<!--site-2-->', site_sec['word'])
-    long_str = long_str.replace('<!--site-2-l-->', '<a href="' + site_sec['path'] + '">' + site_sec['word'] + '</a>')
+    long_str = long_str.replace('<!--site-2-->', '<!--ds2-->' + site_sec['word'])
+    long_str = long_str.replace('<!--site-2-l-->',
+                                '<!--ds2--><a href="' + site_sec['path'] + '">' + site_sec['word'] + '</a>')
     # 一般名詞のランダム挿入
     for dec in word_list:
         if 'plist' in dec:
@@ -537,14 +534,16 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     while '<!--link-area-->' in long_str:
         link_area = random.choice(allist)
         allist.remove(link_area)
-        area_tag = '<a href="../fuck-buddy/prf' + str(link_area['id']).zfill(2) + '-' + link_area['alpha'] + '.html">'\
-                   + link_area['ari']\
+        area_tag = '<a href="../fuck-buddy/prf' + str(link_area['id']).zfill(2) + '-' + link_area['alpha'] + '.html">' \
+                   + link_area['ari'] \
                    + '</a>'
         long_str = long_str.replace('<!--link-area-->', area_tag, 1)
+    ds_count = 3
     while '<!--site-link-->' in long_str:
         link_site = random.choice(stl)
         stl.remove(link_site)
-        long_str = long_str.replace('<!--site-link-->', link_site, 1)
+        long_str = long_str.replace('<!--site-link-->', '<!--ds' + str(ds_count) + '-->' + link_site, 1)
+        ds_count += 1
     for site_s in site_list:
         long_str = first_txt_linker(long_str, site_s['word'], site_s['path'])
     # 接続詞の挿入
@@ -564,7 +563,7 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     long_str = choice_from_str(long_str)
     long_str = long_str.replace('<!--reason-->', keyword_dec['reason'])
     long_str = page_point_insert(long_str)
-    return long_str
+    return long_str, random_adj
 
 
 def illegal_para_maker(key, dup_list, template):
@@ -616,7 +615,7 @@ def html_maker(long_str, key_dec):
     long_str = re.sub(r'<meta>.*?</meta>', meta_str_i, long_str)
     title_str = re.findall(r'<title>(.*?)</title>', long_str)
     long_str = long_str.replace('</title><meta>', '|出会い系メール例文集</title><meta>')
-    head_str = '</meta>' + amp_tag + '<h1>' + title_str[0] + '</h1><main><!--top-img-'\
+    head_str = '</meta>' + amp_tag + '<h1>' + title_str[0] + '</h1><main><!--top-img-' \
                + key_dec['id'] + '-->'
     long_str = long_str.replace('</meta>', head_str)
     footer = '<!--last-section--></main>'
@@ -879,16 +878,17 @@ def relational_article(path, mod_time):
         str_y = re.sub(r'<time itemprop="dateModified" datetime=".*?">.*?日</time> by',
                        '<time itemprop="dateModified" datetime="' + str(mod_time) + '">'
                        + jap_timestamp_maker(mod_time) + '</time> by', str_y)
-        make_file(file_s, str_y)
+        make_file(file_s, str_y, path)
 
 
-def html_sitemap_maker(file_data):
+def html_sitemap_maker(file_data, index_path):
     file_data = sorted(file_data.items())
     list_str = ['<li><a href="../make-love/' + x[0] + '">' + x[1] + '</a></li>' for x in file_data]
     list_str = '<!--make-love-entry-start-->' + ''.join(list_str) + '<!--make-love-entry-->'
     replace_html('file_other/sitemap.html', r'<!--make-love-entry-start-->[\s\S]*<!--make-love-entry-->', list_str)
     list_str = list_str.replace('href="../make-love/', 'href="')
-    replace_html('files_sf/how-to-sex.html', r'<!--make-love-entry-start-->[\s\S]*<!--make-love-entry-->', list_str)
+    replace_html(index_path + '/how-to-sex.html', r'<!--make-love-entry-start-->[\s\S]*<!--make-love-entry-->',
+                 list_str)
     return
 
 
@@ -1294,9 +1294,9 @@ def directory_to_list(path):
 
 
 # まとめてアップロード
-def total_upload():
-    directory_upload('files_sf', 'pc', 'make-love')
-    directory_upload('amp_file', 'amp', 'make-love')
+def total_upload(local_dir, remote_dir):
+    directory_upload(local_dir, 'pc', remote_dir)
+    directory_upload('amp_file', 'amp', remote_dir)
     upload_files = [('atom.xml', '', 'file_other',), ('p_sitemap.xml', '', 'file_other',),
                     ('rss10.xml', '', 'file_other',), ('rss20.xml', '', 'file_other',),
                     ('sitemap.html', 'pc/policy/', 'file_other',)]
@@ -1330,9 +1330,10 @@ def sentence_counter(template):
 # 以下、実行
 if __name__ == '__main__':
     # 記事作成
-    main(rb_sex_template, keyword_dec_list, 193, 209)
+    # main(rb_sex_template, keyword_dec_list, 193, 209, files_sf)
     # ファイル一括アップロード
-    total_upload()
+    # total_upload('files_sf', 'make-love')
+    ftp_upload('atom.xml', 'file_other', '')
 
     # print(sentence_counter())
     # article_checker("/Users/nakataketetsuhiko/PycharmProjects/create_article/files_sf").show()
