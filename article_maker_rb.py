@@ -28,7 +28,7 @@ from word_list_rb_sf import one_rss
 from word_list_rb_sf import two_rss
 from word_list_rb_sf import random_adj_list
 
-# from template_rb_sex import rb_sex_template
+from template_rb_sex import rb_sex_template
 
 from dup_list import dup_list_full
 
@@ -70,6 +70,7 @@ def main(sentence_list_b, keyword_list, start, stop, local_directory):
             list_b.remove([])
         # print(list_b)
         result_a = ''.join(list_b)
+        result_a = select_heading_insert(result_a, sentence_list)
         if key['id'] in illegal_id:
             print('illegal')
             result_a = illegal_key_checker(result_a, key, dup_list_full, sentence_list)
@@ -368,6 +369,16 @@ def sentence_choice(sentence_list, keyword_dic, dup_list):
     # print("answer")
     # print(result)
     return result
+
+
+def select_heading_insert(long_str, template_list):
+    if '<!--s-heading-' in long_str:
+        for x in range(len(template_list['s_heading'])):
+            replace_str = '<!-s-heading-' + str(x) + '-->'
+            if replace_str in long_str:
+                insert_heading = random.choice(template_list['s_heading'][x])
+                long_str = long_str.replace(replace_str, insert_heading)
+    return long_str
 
 
 def link_choice_maker(s_dic, lc_list, key, dup_list):
@@ -1330,10 +1341,10 @@ def sentence_counter(template):
 # 以下、実行
 if __name__ == '__main__':
     # 記事作成
-    # main(rb_sex_template, keyword_dec_list, 193, 209, files_sf)
+    main(rb_sex_template, keyword_dec_list, 193, 209, 'files_sf')
     # ファイル一括アップロード
     # total_upload('files_sf', 'make-love')
-    ftp_upload('atom.xml', 'file_other', '')
+    # ftp_upload('atom.xml', 'file_other', '')
 
     # print(sentence_counter())
     # article_checker("/Users/nakataketetsuhiko/PycharmProjects/create_article/files_sf").show()
