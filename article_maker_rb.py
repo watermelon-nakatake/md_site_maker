@@ -535,6 +535,7 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
         sexy_actress_name = random.choice(sal)
         sal.remove(sexy_actress_name)
         long_str = long_str.replace('<!--AV-act-->', sexy_actress_name + 'さん', 1)
+    # todo: イケメン俳優追加
     # 他のページにリンクするキーワードの挿入
     while '<!--link-word-->' in long_str:
         link_word = random.choice(kw_list)
@@ -559,6 +560,8 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
         long_str = first_txt_linker(long_str, site_s['word'], site_s['path'])
     # 接続詞の挿入
     long_str = conjunction_insert(long_str)
+    if '<!--ct-' in long_str:
+        long_str = contrast_insert(long_str)
     # 共起語の挿入
     k_list = copy.deepcopy(keyword_dec['kyoki'])
     for k_word in k_list:
@@ -575,6 +578,23 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     long_str = long_str.replace('<!--reason-->', keyword_dec['reason'])
     long_str = page_point_insert(long_str)
     return long_str, random_adj
+
+
+def contrast_insert(long_str):
+    # <!--ct-sex-1-0-->
+    contrast_list = {'sex': [['男性', '女性'], ['男', '女']]}
+    match_list = re.findall(r'<!--ct-.+?-.+?-.+?-->', long_str)
+    for x in range(0, len(match_list), 2):
+        find_list = re.findall(r'<!--ct-(.+?)-(.+?)-(.+?)-->', match_list[x])
+        cat = find_list[0][0]
+        code = find_list[0][2]
+        insert_words = random.choice(contrast_list[cat])
+        long_str = long_str.replace(match_list[x], insert_words[int(code)])
+        if code == '0':
+            long_str = long_str.replace(match_list[x + 1], insert_words[1])
+        else:
+            long_str = long_str.replace(match_list[x + 1], insert_words[0])
+    return long_str
 
 
 def illegal_para_maker(key, dup_list, template):
@@ -731,20 +751,22 @@ def conjunction_insert(long_str):
 
 
 def choice_from_str(long_str):
-    match_list = re.findall(r'<!--ya#.*?#ya-->', long_str)
-    for match_str in match_list:
-        # print(match_str)
-        choice_word_list_b = re.findall(r'(.*?)#', match_str)
-        num_w = choice_word_list_b[1]
-        choice_word_list = copy.deepcopy(choice_word_list_b)
-        insert_words = choice_word_list[2:]
-        ins_list = random.sample(insert_words, int(num_w))
-        # for i in range(int(num_w)):
-        #    ins_list.append(random.choice(insert_words))
-        f_word = ins_list[0]
-        if num_w != '1':
-            f_word = f_word + 'や' + '、'.join(ins_list[1:])
-        long_str = long_str.replace(match_str, f_word, 1)
+    connect_list = [['ya', 'や', '、'], ['to', 'と', '、'], ['dot', '、', '、'], ['no_dot', '', '']]
+    for x in connect_list:
+        match_list = re.findall(r'<!--' + x[0] + '#.*?#' + x[0] + '-->', long_str)
+        for match_str in match_list:
+            # print(match_str)
+            choice_word_list_b = re.findall(r'(.*?)#', match_str)
+            num_w = choice_word_list_b[1]
+            choice_word_list = copy.deepcopy(choice_word_list_b)
+            insert_words = choice_word_list[2:]
+            ins_list = random.sample(insert_words, int(num_w))
+            # for i in range(int(num_w)):
+            #    ins_list.append(random.choice(insert_words))
+            f_word = ins_list[0]
+            if num_w != '1':
+                f_word = f_word + x[1] + x[2].join(ins_list[1:])
+            long_str = long_str.replace(match_str, f_word, 1)
     return long_str
 
 
