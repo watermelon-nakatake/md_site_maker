@@ -17,6 +17,7 @@ from word_list_rb_sf import o_other
 from word_list_rb_sf import conjunction_list
 from word_list_rb_sf import actress_list
 from word_list_rb_sf import sexy_actress_list
+from word_list_rb_sf import actor_list
 from word_list_rb_sf import area_link_list
 from word_list_rb_sf import keyword_dec_list
 from word_list_rb_sf import site_list
@@ -34,6 +35,7 @@ from dup_list import dup_list_full
 
 key_list = ["st", "ch", "sc", "sh", "ps", "ps-s", "ps-p", "look", "age-o", "h2", "h3"]
 illegal_id = ['199', '200', '201', '223']
+link_url_str = '../make-love/sex-###.html'
 
 
 def main(sentence_list_b, keyword_list, start, stop, local_directory):
@@ -70,7 +72,6 @@ def main(sentence_list_b, keyword_list, start, stop, local_directory):
             list_b.remove([])
         # print(list_b)
         result_a = ''.join(list_b)
-        result_a = select_heading_insert(result_a, sentence_list)
         if key['id'] in illegal_id:
             print('illegal')
             result_a = illegal_key_checker(result_a, key, dup_list_full, sentence_list)
@@ -93,6 +94,8 @@ def main(sentence_list_b, keyword_list, start, stop, local_directory):
         c_list.append(num_code_pickup(result, key['eng']))
         c_list.append('random_adj: ' + random_adj)
         result = re.sub(r'<!--\|.*?\|-->', '', result)
+        if '<!--s-heading-' in result:
+            result = make_select_heading_list(result)
         result = result.replace('<br></p>', '</p>')
         file_name = 'sex-' + str(key['eng']) + '.html'
         if int(key['id']) >= 0:
@@ -371,17 +374,22 @@ def sentence_choice(sentence_list, keyword_dic, dup_list):
     return result
 
 
-def select_heading_insert(long_str, template_list):
-    if '<!--s-heading-' in long_str:
-        for x in range(len(template_list['s_heading'])):
-            replace_str = '<!-s-heading-' + str(x) + '-->'
-            if replace_str in long_str:
-                insert_heading = random.choice(template_list['s_heading'][x])
-                long_str = long_str.replace(replace_str, insert_heading)
+def make_select_heading_list(long_str):
+    # <!--s-heading-1--><a href="">, <!--s-heading-1-list-->
+    set_list = re.findall(r'<!--s-heading-(\d+)-list-->', long_str)
+    for set_h in set_list:
+        index_list = ''
+        heading_list = re.findall(r'<span id="sc\d+">.+?<!--s-heading-' + set_h + r'--></span>', long_str)
+        for h_str in heading_list:
+            id_num = re.findall(r'<span id="sc(\d+)">', h_str)[0]
+            h_title = re.findall(r'<span id="sc\d+">(.+?)<!--s-heading-', h_str)[0]
+            index_list += '<li><a href="#sc' + id_num + '">' + h_title + '</a></li>'
+        long_str = long_str.replace('<!--s-heading-' + set_h + '-list-->', index_list)
     return long_str
 
 
 def link_choice_maker(s_dic, lc_list, key, dup_list):
+    # todo: 使わなければ削除
     """
     s_dic = ['lc1', {1: [.....], 2: [.....], 3: [....]}]
     :param s_dic: lc1で始めるリスト内の辞書部分
@@ -472,6 +480,7 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
             kw_list.remove(key_p)
     atl = copy.deepcopy(actress_list)
     sal = copy.deepcopy(sexy_actress_list)
+    acl = copy.deepcopy(actor_list)
     allist = copy.deepcopy(area_link_list)
     stl = copy.deepcopy(site_list)
     # キーワードの挿入
@@ -480,6 +489,8 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     long_str = long_str.replace('<!--keyword-h-->', keyword_dec['noun'])
     long_key = keyword_dec['adj'] + keyword_dec['noun']
     long_key_list = [long_key, keyword_dec['noun']]
+    # キーワードランダムリンク
+    long_str = keyword_random_link_maker(long_str, keyword_dec, keyword_dec['keyword'], link_url_str)
     long_str = re.sub(r'<title>(.*?)<!--keyword-l-->(.*?)</title>', r'<title>\1' + long_key + r'\2</title>', long_str)
     adj_key = keyword_dec['keyword'] + keyword_dec['particle']
     long_str = long_str.replace('<!--keyword-adj-->', adj_key)
@@ -518,6 +529,10 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
     long_str = long_str.replace('<!--site-2-->', '<!--ds2-->' + site_sec['word'])
     long_str = long_str.replace('<!--site-2-l-->',
                                 '<!--ds2--><a href="' + site_sec['path'] + '">' + site_sec['word'] + '</a>')
+    one_banner_str = '<a href="' + site_one['path'] + '">' + site_one['img'] + '</a>'
+    sec_banner_str = '<a href="' + site_sec['path'] + '">' + site_sec['img'] + '</a>'
+    long_str = long_str.replace('<!--site-banner1-->', one_banner_str)
+    long_str = long_str.replace('<!--site-banner2-->', sec_banner_str)
     # 一般名詞のランダム挿入
     for dec in word_list:
         if 'plist' in dec:
@@ -535,7 +550,10 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
         sexy_actress_name = random.choice(sal)
         sal.remove(sexy_actress_name)
         long_str = long_str.replace('<!--AV-act-->', sexy_actress_name + 'さん', 1)
-    # todo: イケメン俳優追加
+    while '<!--actor-->' in long_str:
+        actor_name = random.choice(acl)
+        sal.remove(actor_name)
+        long_str = long_str.replace('<!--AV-act-->', actor_name + 'さん', 1)
     # 他のページにリンクするキーワードの挿入
     while '<!--link-word-->' in long_str:
         link_word = random.choice(kw_list)
@@ -572,12 +590,49 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num):
             long_str = long_str.replace('<!--kyoki-->', k_word, 1)
         if not k_list:
             k_list = copy.deepcopy(keyword_dec['kyoki'])
-
     # 選択文字列の挿入
+    long_str = re.sub(r'href=#(.*?)#>', r'href="\1">', long_str)
     long_str = choice_from_str(long_str)
     long_str = long_str.replace('<!--reason-->', keyword_dec['reason'])
+    # todo: 臨時の挿入
+    long_str = long_str.replace('<!--charm-p-->', '<!--charm-i-->スケベでセックスが好きなので<!--charm-e-->')
+    long_str = long_str.replace('<!--key-search-->', '<!--key-search-i-->プロフィールの属性で検索<!--key-search-e-->')
+    # long_str = long_str.replace('<!--charm-p-->', keyword_dec['charm'])
+    # long_str = long_str.replace('<!--key-search-->', keyword_dec['search'])
     long_str = page_point_insert(long_str)
     return long_str, random_adj
+
+
+def insert_serial_number(long_str):
+    x = 1
+    while '<!--serial-num-c-' in long_str:
+        y = 0
+        while '<!--serial-num-c-' + str(x) + '-->' in long_str:
+            c_chr = '&#{};'.format(str(9312 + y))
+            long_str = long_str.replace('<!--serial-num-c-' + str(x) + '-->', c_chr, 1)
+            y += 1
+        x += 1
+    return long_str
+
+
+def keyword_random_link_maker(long_str, key_dic, search_str, link_str):
+    """
+    :param long_str: 与えられた本文
+    :param key_dic: キーワード辞書
+    :param search_str: 置換する候補の文字列
+    :param link_str: urlの文字列 ex. "../dir/page-###.html" ###をkey['eng']に置換
+    :return: 置換した文字列
+    """
+    url_str = link_str.replace('###', key_dic['eng'])
+    print(search_str)
+    k_count = long_str.count(search_str)
+    print(k_count)
+    r_num = random.choice(range(0, k_count)) + 1
+    print(r_num)
+    long_str = long_str.replace(search_str, '<!--k-r-r-->', r_num)
+    long_str = long_str.replace('<!--k-r-r-->', search_str, r_num - 1)
+    long_str = long_str.replace('<!--k-r-r-->', '<a href="' + url_str + '">' + search_str + '</a>', 1)
+    return long_str
 
 
 def contrast_insert(long_str):
@@ -663,7 +718,6 @@ def html_maker(long_str, key_dec):
     long_str = long_str.replace('<point2>', point_tag_s)
     long_str = long_str.replace('<br></li>', '</li>')
     long_str = re.sub(r'(</h2>)<span', '</h2><p>', long_str)
-    long_str = re.sub(r'href=#(.*?)#>', r'href="\1">', long_str)
     return long_str
 
 
@@ -751,7 +805,7 @@ def conjunction_insert(long_str):
 
 
 def choice_from_str(long_str):
-    connect_list = [['ya', 'や', '、'], ['to', 'と', '、'], ['dot', '、', '、'], ['no_dot', '', '']]
+    connect_list = [['ya', 'や', '、'], ['to', 'と', '、'], ['dot', '、', '、'], ['no_dot', '', ''], ['toka', 'とか', '、']]
     for x in connect_list:
         match_list = re.findall(r'<!--' + x[0] + '#.*?#' + x[0] + '-->', long_str)
         for match_str in match_list:
@@ -861,6 +915,10 @@ def relational_article(path, mod_time):
     file_list = os.listdir(path)
     title_list = []
     file_list.remove('how-to-sex.html')
+    # pickleから既存記事のリスト読み込み
+    with open('pickle_data/sex_m.pkl', 'rb') as p:
+        pk_dec = pickle.load(p)
+
     for file in file_list:
         print(file)
         if '.html' in file:
@@ -883,6 +941,7 @@ def relational_article(path, mod_time):
                     for key_c in keyword_dec_list:
                         if key_c['id'] == key_id:
                             ky_list = key_c['kyoki']
+                    index_list.append(pk_dec[int(key_id)])
         for title in title_list_c:
             if title['url'] == file_s:
                 title_list_c.remove(title)
@@ -1360,10 +1419,39 @@ def sentence_counter(template):
     return no_list
 
 
+def same_key_link_after_insert(directory, pkl_path, url_str):
+    with open(pkl_path, 'rb') as f:
+        pk_dec = pickle.load(f)
+    file_list = os.listdir(directory)
+    for file_s in file_list:
+        if '.html' in file_s:
+            with open(directory + '/' + file_s, "r", encoding='utf-8') as g:
+                long_str = g.read()
+                comment_str = re.findall(r'<!--data#key#(.*?)#(.*?)#-->', long_str)
+                if len(comment_str) >= 1:
+                    key_id = comment_str[0][1]
+                    i_str = '<li><a href="' + pk_dec[int(key_id)]['url'] + '">' + pk_dec[int(key_id)]['title'] + '</a></li>'
+                    relation_str = re.findall(r'<!--kanren-->.*?<!--kanren-e-->', long_str)
+                    relation_list = re.findall(r'<li>.+?</li>', relation_str[0])
+                    relation_list.append(i_str)
+                    random.shuffle(relation_list)
+                    new_str = '<!--kanren--><section><div class="kanren"><h3>関連記事</h3><ul>'\
+                              + ''.join(relation_list) + '</ul></div></section><!--kanren-e-->'
+                    long_str = re.sub(r'<!--kanren-->.*<!--kanren-e-->', new_str, long_str)
+                    # 共通キーワードにリンク挿入
+                    this_ley = keyword_dec_list[int(key_id)]
+                    long_str = keyword_random_link_maker(long_str, this_ley, this_ley['keyword'], url_str)
+                    make_file(file_s, long_str, directory)
+
+
 # 以下、実行
 if __name__ == '__main__':
+    test_str = 'ああああ<!--serial-num-c-1-->あ<!--serial-num-c-1-->あ<!--serial-num-c-1-->あ<!--serial-num-c-1-->あ<!--serial-num-c-1-->あ<!--serial-num-c-1-->' \
+               'ああ<!--serial-num-c-2-->あああ<!--serial-num-c-2-->あああああ<!--serial-num-c-2-->ああああ<!--serial-num-c-2-->ああああああああああ'
+    print(insert_serial_number(test_str))
+
     # 記事作成
-    main(rb_sex_template, keyword_dec_list, 193, 209, 'files_sf')
+    # main(rb_sex_template, keyword_dec_list, 193, 209, 'files_sf')
     # ファイル一括アップロード
     # total_upload('files_sf', 'make-love')
     # ftp_upload('atom.xml', 'file_other', '')

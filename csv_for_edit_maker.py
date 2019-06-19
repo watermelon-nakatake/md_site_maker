@@ -84,7 +84,7 @@ def sentence_code_getter(list_str_s):
 
 if __name__ == '__main__':
     # 文章変更用の文字列作成
-    # print(word_list_maker())
+    print(word_list_maker())
     # list_joint()
     # print(word_fix(list_str))
 

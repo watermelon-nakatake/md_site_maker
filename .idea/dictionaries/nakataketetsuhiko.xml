@@ -15,6 +15,7 @@
       <w>fnav</w>
       <w>furin</w>
       <w>gnav</w>
+      <w>happymail</w>
       <w>hutoaka</w>
       <w>hutokuro</w>
       <w>imail</w>
@@ -24,12 +25,14 @@
       <w>kijoph</w>
       <w>kyoki</w>
       <w>maincontent</w>
+      <w>mintj</w>
       <w>mobnone</w>
       <w>mokuji</w>
       <w>mokujio</w>
       <w>nakataketetsuhiko</w>
       <w>navop</w>
       <w>omail</w>
+      <w>pcmax</w>
       <w>picf</w>
       <w>pnav</w>
       <w>redline</w>
@@ -45,6 +48,7 @@
       <w>tabn</w>
       <w>tari</w>
       <w>tibl</w>
+      <w>toka</w>
     </words>
   </dictionary>
 </component>

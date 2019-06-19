@@ -5,6 +5,7 @@ import re
 import io
 import urllib.request
 import requests
+import pickle
 from selenium import webdriver
 from googletrans import Translator
 # from bs4 import BeautifulSoup
@@ -16,6 +17,7 @@ from word_list_rb_sf import keyword_dec_list
 from word_list_rb_sf import word_list
 from word_list_rb_sf import word_list_fix
 from word_list_rb_sf import conjunction_list
+
 # from word_list_rb_sf import illegal_para
 
 str_a = ""
@@ -147,11 +149,12 @@ def file_pick_up(directory_str):
             print("エラー" + f_name[0])
             file_path = directory_str + "/" + file
             csv_file = open(file_path, 'r', encoding="utf-8", errors="", newline="")
-            f_e = csv.reader(csv_file, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"', skipinitialspace=True)
+            f_e = csv.reader(csv_file, delimiter=",", doublequote=True, lineterminator="\r\n", quotechar='"',
+                             skipinitialspace=True)
             for row in f_e:
                 while '' in row:
                     row.remove('')
-            # print(row)
+                # print(row)
                 k_list.append(row[0])
             k_list.pop(0)
             dec = {'key': key_name, 'kyoki': k_list}
@@ -371,7 +374,9 @@ def sentence_code_insert(list_str_s, char, line_num):
                 if "'" + char + "'" not in inner_str and "nodata" not in inner_str and "<!--insert" not in inner_str:
                     str_num += 1
                     # print(inner_str)
-                    list_str_s = list_str_s.replace(inner_str, inner_str + "<!--|" + str(line_num) + "-" + str(str_num) + "|-->'", 1)
+                    list_str_s = list_str_s.replace(inner_str,
+                                                    inner_str + "<!--|" + str(line_num) + "-" + str(str_num) + "|-->'",
+                                                    1)
                     list_str_s = list_str_s.replace("'<!--|", "<!--|")
 
     return list_str_s, line_num
@@ -523,12 +528,55 @@ def sentence_list_maker(list_str):
     print(result)
 
 
+def url_and_title_list_maker(path, pkl_name):
+    file_list = os.listdir(path)
+    title_list = {}
+    for file in file_list:
+        if '.html' in file:
+            print(file)
+            with open(path + '/' + file, "r", encoding='utf-8') as f:
+                str_x = f.read()
+                title = re.findall(r'<h1 .*?>(.*?)</h1>', str_x)
+                if '<!--data#key#' in str_x:
+                    l_key = re.findall(r'<!--data#key#(.*?)#.*?#-->', str_x)[0]
+                    id_n = int(re.findall(r'<!--data#key#.*?#(.*?)#-->', str_x)[0])
+                    dec = {'title': title[0], 'url': file, 'key': l_key}
+                    title_list[id_n] = dec
+    print(title_list)
+    with open('pickle_data/' + pkl_name + '.pkl', 'wb') as p:
+        pickle.dump(title_list, p)
+
+
+def make_str_to_list(name_str):
+    actor_list = []
+    actors = re.findall(r'\d+位：(.+?)\n', name_str)
+    for x in actors:
+        actor_list.append(x)
+    print(actor_list)
+
+
+def random_adj_list_maker(csv_path, key_list):
+    # 13 - 24
+    csv_list = change_csv(csv_path)
+    for x in range(0, len(csv_list)):
+        adj_list = []
+        for y in range(12, 37):
+            if csv_list[x][y] == '0':
+                adj_list.append(y - 12)
+                print(adj_list)
+        key_list[x]['rdm_adj'] = adj_list
+    print(key_list)
+
+
 if __name__ == '__main__':
+    # ランダム形容詞の除外リスト作成
+    random_adj_list_maker('list_csv.csv', keyword_dec_list)
+
     # ①csvファイルをリストに置換
     # print(change_csv('illegal.csv'))
 
     # ②出力されたリストを文字列として記入
-    list_str_m = "[['st', '<p>', ['ch', 'そんな気持ちで<!--google--><!--search-->をして<!--there-->にたどり着いた<!--reader-->も<!--exist-->ことでしょう。', 'そんな感じで、世の中には<!--hな--><!--keyword-h-->との<!--sex-->を希望して<!--exist--><!--reader-->も多い<!--think-->。', 'そういう<!--ya#2#疑問#願望#ya-->を持って<!--exist--><!--reader-->も<!--exist--><!--think-->。'], '</p>', '<p>',['ch', '<!--c-逆接-->、残念ながら<!--japan-->では<!--keyword-il--><!--like--><!--R18--><!--woman-y-->と<!--making-love-->などをするのは<!--illegal-->です。', '<!--c-逆接-->、<!--japan-->の法律では<!--keyword-il--><!--like--><!--R18--><!--woman-y-->と淫らな行為をすることは禁じられています。', '<!--c-逆接-->、<!--japan-->の法律では<!--keyword-il-->を含む<!--R18--><!--woman-y-->（児童）と<!--sex-->など淫らな行為（淫行）をするのは<!--illegal-->で許されません。'],['ch', '<!--absolutely-->やってはいけません。', 'もしやってしまうと、<!--ya#2#児童ポルノ法#淫行条例違反#ya-->で逮捕されることになります。', 'もし気の迷いで<!--ya#2#JK#JC#ya--><!--like--><!--R18--><!--woman-y-->と<!--sex-->したりすると、警察に逮捕されます。'],['ch', '<!--c-並列-->、<!--real2--><!--keyword-il-->を装った美人局の場合もあるので<!--well-->危険です。', 'nodata'], ['ch', '<!--c-順接-->、もしも<!--deaikei2--><!--site-->で監視の目をくぐり抜けて利用している<!--keyword-il-->を<!--find2-->も、<!--absolutely--><!--mail-->を送ったりしてはいけません。', '<!--c-順接-->、万が一不正をして<!--deaikei2--><!--site-->を使っている<!--keyword-il-->を<!--find2-->も、<!--mail-->したりしないで<!--c-対比-->通報してください。', '<!--c-順接-->、<!--deaikei2--><!--site-->を利用していて、年齢を偽って<!--entry-->している<!--keyword-il-->を見つけたら、<!--mail-->しないで<!--whore-->に通報しましょう。'],['ch', '<!--absolutely-->会って<!--sex-->しようとしてはいけません。', '<!--sex-->しようなんて考えないでください。', 'nodata'],'</p>', '<p>', ['ch', '<!--c-逆接-前提-->、<!--deaikei2--><!--site-->を使えば「<!--keyword-h-->」<!--woman-y-->となら出会うことが<!--s-can-->。', '<!--c-逆接-前提-->、<!--real2--><!--keyword-il-->ではなくて、合法な「<!--keyword-h--><!--woman-y-->」であれば、<!--deaikei2--><!--site-->で出会って<!--sex-->することが<!--s-can-->。', 'どうしても<!--keyword-il-->と<!--sex-->したい<!--reader-->は、<!--real2--><!--keyword-il-->ではなく18歳以上の「<!--keyword-h--><!--woman-y-->」と<!--deaikei2-->で出会って制服<!--sex-->しましょう。'],['ch', '高校を卒業した18歳以上の<!--woman-y-->であれば、出会おうが<!--sex-->しようが自由です。', 'nodata'], ['ch', '<!--deaikei2-->には<!--various-->タイプの<!--woman-y-->がいるので、その中には高校を卒業したばかりの若い未成年の<!--woman-y-->もいます。', '特に大手の<!--deaikei2--><!--site-->は<!--woman-->利用者が多いので、高校を卒業したばかりの若い<!--woman-y-->から熟女まで、<!--various--><!--woman-->が<!--entry-->しています。', '大手の、ファッション誌などに広告を出している<!--deaikei2--><!--site-->には18歳から20歳までの若い<!--woman-y-->が多いです。'],['ch', '<!--c-当然-->、<!--ya#2#中学#高校#ya-->の制服を持っている<!--keyword-h-->もいる<!--think2-->。', '<!--deaikei2--><!--site-->の<!--b-bbs-->や<!--profile-->の<!--photo-->を見ると、<!--keyword-h-->若い<!--look-->の<!--woman-y-->も<!--many-->見つかります。', 'その中には、一見<!--keyword-il-->にしか見えない<!--woman-y-->もいます。'],['ch', 'そういう<!--keyword-h-->合法の<!--woman-y-->であれば、問題なく出会って<!--sex-->することが<!--s-can-->。', 'その中から、<!--me-->が求める<!--keyword-h--><!--look-->の<!--woman-y-->を<!--find2-->、出会えばいいんです。', 'そういう<!--keyword-h--><!--look-->の<!--woman-y-->を狙って出会って、<!--sex-->すれば<!--good-->んです。'], ['ch', '若くて<!--keyword-h--><!--look-->の<!--woman-y-->と制服<!--sex-->すれば、<!--keyword-il-->と<!--sex-->する気分は十分味わえます。', 'nodata', '<!--R18--><!--real2--><!--keyword-il-->も、18歳の<!--keyword-h-->かわいい<!--woman-y-->も、<!--sex-->の気持ち良さは変わりません。'],'</p>', '<p>', ['ch', '<!--c-解説-->、<!--there-->では<!--keyword-h--><!--woman-y-->と<!--deaikei2--><!--site-->で出会って<!--how-to-sex-->について<!--description-->していきます。', '<!--c-解説-->、<!--there-->では<!--keyword-il-->と出会って<!--how-to-sex-->ではなく、<!--keyword-h--><!--woman-y-->と出会って<!--how-to-sex-->を<!--description-->します。', '以下では、<!--real2--><!--keyword-il-->ではなく、合法な<!--keyword-h--><!--woman-y-->と<!--surely-->出会える<!--way-->を<!--description-->します。'],'</p>'], ['st', '<p>', ['ch', '<!--crucial-->なことなので、最後にもう一回<!--ya#1#釘を刺して#念を押して#注意して#ya-->おきます。', '<!--at-first-->の<!--reader-->で書きましたが、念のためもう一度<!--ya#1#釘を刺して#念を押して#注意して#ya-->おきます。', '最後にもう一度<!--ya#1#釘を刺して#念を押して#注意して#ya-->おきます。'], ['ch', '<!--keyword-il-->と出会いたい<!--reader-->も<!--exist-->かもしれませんが、<!--R18-->児童と<!--h-2-->なことをするのは<!--illegal-->です。', '<!--keyword-il-->と出会いたくてこの<!--page-->にたどり着いた<!--man-->も多い<!--think-->が、<!--keyword-il-->と<!--sex-->すると警察に逮捕されます。', '「<!--keyword-il--> <!--sex-->」などでgoogle<!--search-->して<!--there-->を読んでいる<!--reader-->も<!--exist--><!--think-->が、<!--real2--><!--keyword-il-->と<!--sex-->するのは<!--illegal-->です。'],['ch', '<!--absolutely--><!--keyword-il-->とは<!--sex-->しないようにしてください。', '<!--c-順接-->、決して<!--real2--><!--keyword-il-->を<!--find2-->も手を出してはいけません。'],['ch', 'これは<!--certainly-->厳守してください。', 'nodata'], ['ch', 'その代わり、18歳以上の<!--keyword-h-->合法の<!--woman-y-->と<!--deaikei2-->で出会って、<!--sex-->を楽しんでください。', '本物ではなく18歳以上の<!--keyword-h-->若い<!--woman-y-->と出会って<!--sex-->して、安全に<!--sex-->を楽しんでください。', 'それよりも、<!--keyword-h-->18歳以上の<!--woman-y-->と出会って、安心して<!--sex-->を楽しみましょう。'],'</p>']]"
+    # list_str_m = "[['st', '<p>', ['ch', 'そんな気持ちで<!--google--><!--search-->をして<!--there-->にたどり着いた<!--reader-->も<!--exist-->ことでしょう。', 'そんな感じで、世の中には<!--hな--><!--keyword-h-->との<!--sex-->を希望して<!--exist--><!--reader-->も多い<!--think-->。', 'そういう<!--ya#2#疑問#願望#ya-->を持って<!--exist--><!--reader-->も<!--exist--><!--think-->。'], '</p>', '<p>',['ch', '<!--c-逆接-->、残念ながら<!--japan-->では<!--keyword-il--><!--like--><!--R18--><!--woman-y-->と<!--making-love-->などをするのは<!--illegal-->です。', '<!--c-逆接-->、<!--japan-->の法律では<!--keyword-il--><!--like--><!--R18--><!--woman-y-->と淫らな行為をすることは禁じられています。', '<!--c-逆接-->、<!--japan-->の法律では<!--keyword-il-->を含む<!--R18--><!--woman-y-->（児童）と<!--sex-->など淫らな行為（淫行）をするのは<!--illegal-->で許されません。'],['ch', '<!--absolutely-->やってはいけません。', 'もしやってしまうと、<!--ya#2#児童ポルノ法#淫行条例違反#ya-->で逮捕されることになります。', 'もし気の迷いで<!--ya#2#JK#JC#ya--><!--like--><!--R18--><!--woman-y-->と<!--sex-->したりすると、警察に逮捕されます。'],['ch', '<!--c-並列-->、<!--real2--><!--keyword-il-->を装った美人局の場合もあるので<!--well-->危険です。', 'nodata'], ['ch', '<!--c-順接-->、もしも<!--deaikei2--><!--site-->で監視の目をくぐり抜けて利用している<!--keyword-il-->を<!--find2-->も、<!--absolutely--><!--mail-->を送ったりしてはいけません。', '<!--c-順接-->、万が一不正をして<!--deaikei2--><!--site-->を使っている<!--keyword-il-->を<!--find2-->も、<!--mail-->したりしないで<!--c-対比-->通報してください。', '<!--c-順接-->、<!--deaikei2--><!--site-->を利用していて、年齢を偽って<!--entry-->している<!--keyword-il-->を見つけたら、<!--mail-->しないで<!--whore-->に通報しましょう。'],['ch', '<!--absolutely-->会って<!--sex-->しようとしてはいけません。', '<!--sex-->しようなんて考えないでください。', 'nodata'],'</p>', '<p>', ['ch', '<!--c-逆接-前提-->、<!--deaikei2--><!--site-->を使えば「<!--keyword-h-->」<!--woman-y-->となら出会うことが<!--s-can-->。', '<!--c-逆接-前提-->、<!--real2--><!--keyword-il-->ではなくて、合法な「<!--keyword-h--><!--woman-y-->」であれば、<!--deaikei2--><!--site-->で出会って<!--sex-->することが<!--s-can-->。', 'どうしても<!--keyword-il-->と<!--sex-->したい<!--reader-->は、<!--real2--><!--keyword-il-->ではなく18歳以上の「<!--keyword-h--><!--woman-y-->」と<!--deaikei2-->で出会って制服<!--sex-->しましょう。'],['ch', '高校を卒業した18歳以上の<!--woman-y-->であれば、出会おうが<!--sex-->しようが自由です。', 'nodata'], ['ch', '<!--deaikei2-->には<!--various-->タイプの<!--woman-y-->がいるので、その中には高校を卒業したばかりの若い未成年の<!--woman-y-->もいます。', '特に大手の<!--deaikei2--><!--site-->は<!--woman-->利用者が多いので、高校を卒業したばかりの若い<!--woman-y-->から熟女まで、<!--various--><!--woman-->が<!--entry-->しています。', '大手の、ファッション誌などに広告を出している<!--deaikei2--><!--site-->には18歳から20歳までの若い<!--woman-y-->が多いです。'],['ch', '<!--c-当然-->、<!--ya#2#中学#高校#ya-->の制服を持っている<!--keyword-h-->もいる<!--think2-->。', '<!--deaikei2--><!--site-->の<!--b-bbs-->や<!--profile-->の<!--photo-->を見ると、<!--keyword-h-->若い<!--look-->の<!--woman-y-->も<!--many-->見つかります。', 'その中には、一見<!--keyword-il-->にしか見えない<!--woman-y-->もいます。'],['ch', 'そういう<!--keyword-h-->合法の<!--woman-y-->であれば、問題なく出会って<!--sex-->することが<!--s-can-->。', 'その中から、<!--me-->が求める<!--keyword-h--><!--look-->の<!--woman-y-->を<!--find2-->、出会えばいいんです。', 'そういう<!--keyword-h--><!--look-->の<!--woman-y-->を狙って出会って、<!--sex-->すれば<!--good-->んです。'], ['ch', '若くて<!--keyword-h--><!--look-->の<!--woman-y-->と制服<!--sex-->すれば、<!--keyword-il-->と<!--sex-->する気分は十分味わえます。', 'nodata', '<!--R18--><!--real2--><!--keyword-il-->も、18歳の<!--keyword-h-->かわいい<!--woman-y-->も、<!--sex-->の気持ち良さは変わりません。'],'</p>', '<p>', ['ch', '<!--c-解説-->、<!--there-->では<!--keyword-h--><!--woman-y-->と<!--deaikei2--><!--site-->で出会って<!--how-to-sex-->について<!--description-->していきます。', '<!--c-解説-->、<!--there-->では<!--keyword-il-->と出会って<!--how-to-sex-->ではなく、<!--keyword-h--><!--woman-y-->と出会って<!--how-to-sex-->を<!--description-->します。', '以下では、<!--real2--><!--keyword-il-->ではなく、合法な<!--keyword-h--><!--woman-y-->と<!--surely-->出会える<!--way-->を<!--description-->します。'],'</p>'], ['st', '<p>', ['ch', '<!--crucial-->なことなので、最後にもう一回<!--ya#1#釘を刺して#念を押して#注意して#ya-->おきます。', '<!--at-first-->の<!--reader-->で書きましたが、念のためもう一度<!--ya#1#釘を刺して#念を押して#注意して#ya-->おきます。', '最後にもう一度<!--ya#1#釘を刺して#念を押して#注意して#ya-->おきます。'], ['ch', '<!--keyword-il-->と出会いたい<!--reader-->も<!--exist-->かもしれませんが、<!--R18-->児童と<!--h-2-->なことをするのは<!--illegal-->です。', '<!--keyword-il-->と出会いたくてこの<!--page-->にたどり着いた<!--man-->も多い<!--think-->が、<!--keyword-il-->と<!--sex-->すると警察に逮捕されます。', '「<!--keyword-il--> <!--sex-->」などでgoogle<!--search-->して<!--there-->を読んでいる<!--reader-->も<!--exist--><!--think-->が、<!--real2--><!--keyword-il-->と<!--sex-->するのは<!--illegal-->です。'],['ch', '<!--absolutely--><!--keyword-il-->とは<!--sex-->しないようにしてください。', '<!--c-順接-->、決して<!--real2--><!--keyword-il-->を<!--find2-->も手を出してはいけません。'],['ch', 'これは<!--certainly-->厳守してください。', 'nodata'], ['ch', 'その代わり、18歳以上の<!--keyword-h-->合法の<!--woman-y-->と<!--deaikei2-->で出会って、<!--sex-->を楽しんでください。', '本物ではなく18歳以上の<!--keyword-h-->若い<!--woman-y-->と出会って<!--sex-->して、安全に<!--sex-->を楽しんでください。', 'それよりも、<!--keyword-h-->18歳以上の<!--woman-y-->と出会って、安心して<!--sex-->を楽しみましょう。'],'</p>']]"
 
     # ③文字列中の特定ワードを置換用タグに置き換え
     # ④出力された文字列を文字列として保存
@@ -551,3 +599,10 @@ if __name__ == '__main__':
     # keyword_duplicate_check(keyword_dec_list)
 
     # print(len(keyword_dec_list))
+
+    # 関連記事用のリスト作成 ピックル保存
+    # url_and_title_list_maker('files_sf', 'sex_m')
+
+    # 文章から名前などを抽出
+    # sample_str = ''
+    # make_str_to_list(sample_str)
