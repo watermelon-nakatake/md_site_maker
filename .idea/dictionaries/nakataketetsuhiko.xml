@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="nakataketetsuhiko">
     <words>
+      <w>aijin</w>
       <w>allist</w>
       <w>amphtml</w>
       <w>arlist</w>
@@ -17,6 +18,7 @@
       <w>furin</w>
       <w>gnav</w>
       <w>happymail</w>
+      <w>htalk</w>
       <w>hutoaka</w>
       <w>hutokuro</w>
       <w>imail</w>
@@ -25,8 +27,11 @@
       <w>kijip</w>
       <w>kijoph</w>
       <w>kyoki</w>
+      <w>mailform</w>
       <w>maincontent</w>
       <w>majime</w>
+      <w>marriedwoman</w>
+      <w>meaningofwarikiri</w>
       <w>mintj</w>
       <w>mobnone</w>
       <w>mokuji</w>
@@ -43,6 +48,9 @@
       <w>sakura</w>
       <w>sdatetime</w>
       <w>sefure</w>
+      <w>sexfriend</w>
+      <w>sexfriendmail</w>
+      <w>sexfriendprofile</w>
       <w>sitelist</w>
       <w>sitename</w>
       <w>sitepage</w>
@@ -52,6 +60,7 @@
       <w>tari</w>
       <w>tibl</w>
       <w>toka</w>
+      <w>wmail</w>
     </words>
   </dictionary>
 </component>
