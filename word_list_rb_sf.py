@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 
 word_list = [
+    # beginner
+    {'before': '<!--d-beginner-->',
+     'after': ["<!--deaikei-->初心者", "<!--deaikei-->のビギナー"]},
+    # make-love
     {'before': '<!--make-love-->',
      'after': ["<!--sex-->する", 'ヤる'],
      'plist': [0.7, 0.3]},
+    {'before': '<!--can-make-love-m-->',
+     'after': ["出会って<!--sex-->できる", "<!--sex-->できる", 'ヤれる'],
+     'plist': [0.4, 0.4, 0.2]},
     {'before': '<!--can-make-love-->',
      'after': ["<!--sex-->できる", 'ヤれる'],
      'plist': [0.7, 0.3]},
@@ -13,6 +20,8 @@ word_list = [
     {'before': '<!--search-partner-->',
      'after': ["<!--sex-->の相手を探す", "<!--sex-->目的の<!--woman-->を見つける", '<!--sex-->相手を募集する'],
      'plist': [0.7, 0.2, 0.1]},
+    {'before': '<!--search-sex-partner-->',
+     'after': ["<!--sex-partner-->の探し方", "<!--sex-partner-->の見つけ方", "<!--sex-partner-->を探す方法"]},
     {'before': '<!--sex-partner-->',
      'after': ["<!--sex-->の相手", "<!--sex-->できる<!--woman-->"],
      'plist': [0.7, 0.3]},
@@ -25,6 +34,20 @@ word_list = [
     {'before': '<!--how-to-sex-d-->',
      'after': ["出会い系で<!--sex-->する方法", "出会い系で出会って<!--sex-->する方法", "<!--sex-->目的で出会い系で出会う方法"],
      'plist': [0.7, 0.2, 0.1]},
+    {'before': '<!--want-sex-->',
+     'after': ["出会って<!--sex-->したい", "<!--sex-->したい", "ヤりたい"]},
+    {'before': '<!--easy-sex-->',
+     'after': ["<!--sex-->しやすい", "<!--easily--><!--can-make-love-->"]},
+    {'before': '<!--look-sex-can-->',
+     'after': ["<!--sex-->できそうな", "比較的<!--easily--><!--sex-->できそうな"],
+     'plist': [0.5, 0.3, 0.2]},
+    {'before': '<!--sex-candidate-->',
+     'after': ["<!--sex-->できそうな<!--woman-->", "ヤれそうな<!--woman-->"]},
+    {'before': '<!--be-sex-->',
+     'after': ["<!--deaikei-->で出会って<!--sex-->する", "<!--deaikei-->で<!--sex-->する", '出会って<!--sex-->する']},
+    {'before': '<!--sex-relation-->',
+     'after': ["<!--sex-->する関係", "<!--sefure-->関係"]},
+    # fuck-buddy
     {'before': '<!--easy-sefure-->',
      'after': ["<!--sefure-->にしやすい", "<!--easily--><!--sefure-->にできる", "<!--sex-->して<!--easily--><!--sefure-->にできる"],
      'plist': [0.5, 0.3, 0.2]},
@@ -72,6 +95,7 @@ word_list = [
     {'before': '<!--sefure-->',
      'after': ["セフレ", "セックスフレンド"],
      'plist': [0.9, 0.1]},
+    # 以下、共通
     {'before': '<!--listen-->',
      'after': ["話を聞いて", "話に耳を傾けて"]},
     {'before': '<!--profile-->',

@@ -1567,7 +1567,7 @@ if __name__ == '__main__':
 
     # 記事作成
     # main(rb_fb_template, keyword_dec_list, 0, 209, 'files_fb', 'fuck-buddy', 'file_other/fb1.html', 'fb')  # rb_fb作成
-    main(rb_fb_template, keyword_dec_list, 0, 209, 'files_bg_ml', 'beginner-s', 'file_other/bg1.html', 'bs')  # bg_ml作成
+    # main(rb_fb_template, keyword_dec_list, 0, 209, 'files_bg_ml', 'beginner-s', 'file_other/bg1.html', 'bs')  # bg_ml作成
     # ファイル一括アップロード
     # total_upload('files_fb', 'fuck-buddy')
     # ftp_upload('atom.xml', 'file_other', '')
