@@ -20,6 +20,7 @@ from word_list_rb_sf import conjunction_list
 from word_list_rb_sf import word_list_exclusion
 
 from template_rb_fuck_buddy import rb_fb_template
+from template_bg_ml import main_sf
 
 str_a = ""
 sub_str = ""
@@ -653,20 +654,38 @@ def sentence_code_getter(list_str_s):
     return list(c_list)
 
 
+def template_word_insert(list_str):
+    str_list = re.findall(r"'(.+?)'", list_str)
+    insert_key_list = ['<!--make-love-->', '<!--can-make-love-m-->', '<!--can-make-love-->', '<!--search-partner-->',
+                       '<!--how-to-sex-->', '<!--how-to-sex-d-->', '<!--be-sex-->']
+    no_list = ['nodata', 'h1', 'h2', 'h3', 'h4', 'h5', '<p>', '</p>']
+    for str_sc in str_list:
+        if str_sc not in no_list:
+            for i_str in insert_key_list:
+                if i_str in str_sc:
+                    much_str = re.findall(r'^(.*?)' + i_str, str_sc)[0]
+                    if '<!--c-' in much_str:
+                        insert_str = re.sub(r'(<!--c-.+?-->)', '\1<!--d-beginner-->', much_str)
+                        list_str = list_str.replace(much_str, insert_str, 1)
+                    else:
+                        list_str = list_str.replace(str_sc, '<!--d-beginner-->が' + str_sc, 1)
+    return list_str
+
+
 if __name__ == '__main__':
     # keyword_dec_listのreasonにword_list挿入
     # word_list_insert_for_keyword_dec()
 
     # 長い文字列の検索
     test_str = ""
-    no_change_str_pick_up(test_str)
+    # no_change_str_pick_up(test_str)
 
     # ランダム形容詞の除外リスト作成
     # random_adj_list_maker('list_csv.csv', keyword_dec_list)
 
     # npランダムリストの個数と合計確認
-    # np_list = word_list + word_list_fix
-    # word_list_np_check(np_list)
+    np_list = word_list + word_list_fix
+    word_list_np_check(np_list)
 
     # ①csvファイルをリストに置換
     # print(change_csv('rb_sf.csv'))
@@ -697,7 +716,7 @@ if __name__ == '__main__':
     # print(len(keyword_dec_list))
 
     # 関連記事用のリスト作成 ピックル保存
-    # url_and_title_list_maker('files_fb', 'fb_m')
+    # url_and_title_list_maker('files_fb', 'fb_m20190716')
 
     # 文章から名前などを抽出
     # sample_str = ''
@@ -709,4 +728,38 @@ if __name__ == '__main__':
     # print(sentence_code_getter(list_str_t))
 
     # pickle読み出し
-    pickle_read('files_fb/rb_fuck-buddy20190712T110720.pkl')
+    # pickle_read('pickle_data/fb_m.pkl')
+
+    test_str = ""
+
+    # print(template_word_insert(test_str))
+    # print(main_sf)
+
+polite_to_flank_list = [
+    {'po': 'できました', 'fl': ['できた']},
+    {'po': 'できませんでした', 'fl': ['できなかった']},
+    {'po': 'しています', 'fl': ['している']},
+    {'po': 'してました', 'fl': ['していた']},
+    {'po': 'していました', 'fl': ['していた']},
+    {'po': 'いませんか', 'fl': ['いるだろうか']},
+    {'po': 'ませんでした', 'fl': ['なかった']},
+    {'po': 'ませんね', 'fl': ['ない']},
+    {'po': 'ますよね', 'fl': ['ると思う']},
+    {'po': '思います', 'fl': ['思う']},
+    {'po': 'んですよね？', 'fl': ['のだと思う。']},
+    {'po': 'ですよね？', 'fl': ['だ。']},
+    {'po': 'かります', 'fl': ['かる']},
+    {'po': 'します', 'fl': ['する']},
+    {'po': 'しました', 'fl': ['した']},
+    {'po': 'いました', 'fl': ['いた']},
+    {'po': 'でした', 'fl': ['だった']},
+    {'po': 'ですが', 'fl': ['だが']},
+    {'po': 'きました', 'fl': ['きた']},
+    {'po': 'ですか', 'fl': ['だろうか']},
+    {'po': 'みてください', 'fl': ['欲しい', 'みて欲しい']},
+    {'po': 'かったです', 'fl': ['かった']},
+    {'po': 'んです', 'fl': ['のだ', 'んだ', '']},
+    {'po': '可能です', 'fl': ['可能だ']},
+    {'po': 'あります', 'fl': ['ある']},
+    {'po': 'です', 'fl': ['']}
+]

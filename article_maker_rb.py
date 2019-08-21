@@ -27,8 +27,10 @@ from word_list_rb_sf import one_rss
 from word_list_rb_sf import two_rss
 from word_list_rb_sf import random_adj_list
 from word_list_rb_sf import link_word_dec
+from word_list_rb_sf import polite_to_flank_list
 # from template_rb_sex import rb_sex_template
-from template_rb_fuck_buddy import rb_fb_template
+# from template_rb_fuck_buddy import rb_fb_template
+from template_bg_ml import bg_ml_template
 
 from dup_list import dup_list_full
 from dup_list import dup_list_none
@@ -103,6 +105,7 @@ def main(sentence_list_b, keyword_list, start, stop, local_directory, remote_dir
         if '<!--s-heading-' in result:
             result = make_select_heading_list(result)
         result = result.replace('<br></p>', '</p>')
+        result = change_polite_to_flank(result)
         file_name = file_name_key + '-' + str(key['eng']) + '.html'
         if int(key['id']) >= 0:
             file_list[file_name] = re.findall(r'<h1>(.*?)</h1>', result)[0]
@@ -121,6 +124,7 @@ def main(sentence_list_b, keyword_list, start, stop, local_directory, remote_dir
         bug_checker(result)
         # print(result)
         make_file(file_name, result, local_directory)
+        return
         r_title = re.findall(r'<title>(.*?)</title>', result)[0]
         r_summary = re.findall(r'<meta name="description" content="(.*?)">', result)[0]
         r_content = MyHtmlStripper(main_text).value[:300]
@@ -135,6 +139,13 @@ def main(sentence_list_b, keyword_list, start, stop, local_directory, remote_dir
     # add_rss(rss_list, remote_directory)  # RSS追記の場合
     relational_article(local_directory, timestamp_m, remote_directory)
     amp_file_maker(local_directory)
+
+
+def change_polite_to_flank(long_str):
+    for word in polite_to_flank_list:
+        while word['po'] in long_str:
+            long_str = long_str.replace(word['po'], random.choice(word['fl']), 1)
+    return long_str
 
 
 def save_pickle(data_list, file_name, directory, pub_time):
@@ -1556,6 +1567,7 @@ def bug_checker(long_str):
 
 # todo: RSSの書式の改善
 # todo: xmlサイトマップにAMP追加
+# todo: ampの関連とリンク挿入
 
 
 # 以下、実行
@@ -1563,15 +1575,15 @@ if __name__ == '__main__':
     test_str = 'ああああ<!--@漢字@ひらがな@-->あああ<!--@漢字@-->あああ<!--@漢字@-->あああ<!--@漢字@-->あああ<!--@漢字@-->ああ' \
                'あ<!--@漢字@-->あああ<!--@漢字@-->あああ<!--@漢字@-->あああ'
 
-    # same_key_link_after_insert('files_sf_test', 'pickle_data/fb_m.pkl', '../fuck-buddy/fb-###.html')
+    # same_key_link_after_insert('files_sf_test', 'pickle_data/fb_m20190716.pkl', '../fuck-buddy/fb-###.html')
 
     # 記事作成
     # main(rb_fb_template, keyword_dec_list, 0, 209, 'files_fb', 'fuck-buddy', 'file_other/fb1.html', 'fb')  # rb_fb作成
-    # main(rb_fb_template, keyword_dec_list, 0, 209, 'files_bg_ml', 'beginner-s', 'file_other/bg1.html', 'bs')  # bg_ml作成
+    main(bg_ml_template, keyword_dec_list, 0, 209, 'files_bg_ml', 'beginner', 'file_other/bg1.html', 'bs')  # bg_ml作成
     # ファイル一括アップロード
     # total_upload('files_fb', 'fuck-buddy')
     # ftp_upload('atom.xml', 'file_other', '')
-    # directory_upload('local', 'pc', 'remote')
+    # directory_upload('files_sf_test', 'pc', 'make-love')
 
     # print(sentence_counter(rb_fb_template, 'files_fb/rb_fuck-buddy20190702T124305.pkl'))
     # article_checker("/Users/nakataketetsuhiko/PycharmProjects/create_article/files_sf").show()

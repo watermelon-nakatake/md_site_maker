@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="mail sample application">
+    <meta name="theme-color" content="#2F3BA2" />
+    <link href="app1.css" rel="stylesheet" type="text/css">
+    <link rel="manifest" href="manifest.json">
+    <!-- for iOS meta tags and icons -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="mail sample">
+<link rel="apple-touch-icon" href="images/icons/icon-152x152.png">
+
+    <title>Web Storage API example</title>
+</head>
+
+<body>
+<!--test1-->
+<div class="wrapper">
+    <ul class="tab-container">
+  <li>
+    <input class="tab-toggle" id="tab-1" type="radio" name="toggle" checked />
+    <label data-title="user data" class="tab l-b" for="tab-1">Tab 1</label>
+    <ul class="tab-content-container">
+      <li class="tab-content">
+        <form>
+            <div>
+                <label for="name">your name</label>
+                <input class="text_i" id="name" value="名前">
+            </div>
+            <div>
+                <label for="age">your age</label>
+                <input class="text_i" id="age" value="年齢">
+            </div>
+            <div>
+                <label for="area">your area</label>
+                <input class="text_i" id="area" value="地域">
+            </div>
+            <div>
+                <label for="job">your job</label>
+                <input class="text_i" id="job" value="職業">
+            </div>
+        </form>
+        <div class="arrows">
+          <label class="back" for="tab-4">&#8249;</label>
+          <label class="next" for="tab-2">&#8250;   </label>
+        </div>
+          <button onclick="installPromptEvent" id="installBtn" class="submit_i">インストールする</button>
+
+      </li>
+    </ul>
+  </li>
+  <li>
+    <input class="tab-toggle" id="tab-2" type="radio" name="toggle" />
+    <label class="tab" for="tab-2">Tab 2</label>
+    <ul class="tab-content-container">
+      <li class="tab-content">
+        <form>
+            <div>
+                <label for="step">メールの段階</label>
+                <select id="step" class="select_i">
+                    <option value="fm" selected>ファーストメール</option>
+                    <!-- <option value="sm">second</option>
+                    <option value="conversation">conversation</option>
+                    <option value="interview">interview</option> -->
+                </select>
+            </div>
+
+            <div id="lv1Outer">
+                <label for="lv1">目的</label>
+                <select id="lv1" class="select_i">
+                </select>
+            </div>
+            <div id="lv2Outer">
+                <label for="lv2">目的</label>
+                <select id="lv2" class="select_i">
+                </select>
+            </div>
+            <div id="lv3Outer">
+                <label for="lv3">目的</label>
+                <select id="lv3" class="select_i">
+                </select>
+            </div>
+            <div id="lv4Outer">
+                <label for="lv4">目的</label>
+                <select id="lv4" class="select_i">
+                </select>
+            </div>
+
+
+            <div>
+                <label for="purpose">目的</label>
+                <select id="purpose" class="select_i">
+                    <option value="gf" selected>彼女探し</option>
+                    <option value="mr">婚活</option>
+                    <option value="mf">メル友</option>
+                    <option value="ml">セックス</option>
+                    <option value="fb">セフレ</option>
+                </select>
+            </div>
+            <div>
+                <label for="sampleNo">sample number</label>
+                <select id="sampleNo" class="select_i">
+                    <option value="0" selected>1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                </select>
+            </div>
+            <!-- <div>
+                <label for="tier1">length</label>
+                <select id="tier1" class="select_i">
+                    <option value="t1s1" selected>short</option>
+                    <option value="t1s2">normal</option>
+                    <option value="t1s3">long</option>
+                </select>
+            </div>
+            <div>
+                <label for="tier2" id="t2Label">length</label>
+                <select id="tier2" class="select_i">
+                    <option id="t2s1" value="t2s1" selected>short</option>
+                    <option id="t2s2" value="t2s2">normal</option>
+                    <option id="t2s3" value="t2s3">long</option>
+                </select>
+            </div> -->
+        </form>
+          <textarea id="mailDisplay" class="textarea_i">メール例文</textarea>
+    <button onclick="copyToClipboard()" id="copyButton" class="submit_i">Copy text</button>
+        <div class="arrows">
+          <label class="back" for="tab-1">&#8249;</label>
+          <label class="next" for="tab-3">&#8250;   </label>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <input class="tab-toggle" id="tab-3" type="radio" name="toggle"/>
+    <label class="tab" for="tab-3">Tab 3</label>
+    <ul class="tab-content-container">
+      <li class="tab-content">
+       <div><a href="https://other-site/">other site</a></div>
+          <div><a href="https://other-site/">other site</a></div>
+          <div><a href="https://other-site/">other site</a></div>
+          <div><a href="https://other-site/">other site</a></div>
+        <div class="arrows">
+          <label class="back" for="tab-2">&#8249;</label>
+          <label class="next" for="tab-4">&#8250;   </label>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <input class="tab-toggle" id="tab-4" type="radio" name="toggle"/>
+    <label class="tab" for="tab-4">Tab 4</label>
+    <ul class="tab-content-container">
+      <li class="tab-content">
+        This is the final content for the tab example.
+        <div class="arrows">
+          <label class="back" for="tab-3">&#8249;</label>
+          <label class="next" for="tab-1">&#8250;   </label>
+        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+    <button onclick="installPromptEvent" id="installButton">Copy text</button>
+
+</div>
+</body>
+<script src="sample.js"></script>
+<script src="main.js"></script>
+<script>if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js')
+        .then((reg) => {
+          console.log('Service worker registered.', reg);
+        });
+  });
+}
+</script>
+</html>
