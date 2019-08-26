@@ -23,7 +23,7 @@ def ftp_upload(up_file_name, remote_dir):
 
 
 def app_upload():
-    upload_list = ['app.html', 'app1.css', 'main.js', 'manifest.json', 'offline.html', 'service-worker.js']
+    upload_list = ['app.html', 'app4.css', 'main_v08261449.js', 'manifest.json', 'offline.html', 'service-worker.js']
     for up_file in upload_list:
         ftp_upload(up_file, 'app')
 

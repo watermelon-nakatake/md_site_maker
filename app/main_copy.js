@@ -1,6 +1,25 @@
 // 例文
+
+const firstMail = {
+    彼女探し: {
+        特になし:'彼女になって',
+        趣味: '趣味が合うので彼女になってください',
+        食べ物: '好きなものが一緒だから彼女になって',
+        映画: '好きな映画が一緒だから彼女になって'
+    },
+    婚活: {
+        特になし:'結婚してください',
+        趣味: '趣味が合うので奥さんになってください',
+        食べ物: '好きなものが一緒だから奥さんになって',
+        映画: '好きな映画が一緒だから奥さんになって'},
+    セフレ: {
+        特になし:'セフレになってください',
+        趣味: '趣味が合うのでセフレになってください',
+        食べ物: '好きなものが一緒だからセフレになって',
+        映画: '好きな映画が一緒だからセフレになって'}
+};
+const fMLabel = {1:'目的', 2:'相手が興味あること'};
 /*
-const firstMail = {彼女: {趣味:'彼女になってください'}, 婚活: {食べ物:'付き合ってください'}};
 const secondMail = [['こんにちは']];
 const conversationMail = [['そういえば']];
 const datemail = [['会いませんか']];
@@ -48,10 +67,11 @@ jobForm.onchange = populateStorage;
 
 
 // 選択項目の表示
+let selectList = {0: '', 1: '', 2: 1, 3: 1, 4: 1, 5: 1};
 let stepForm1 = document.getElementById("lv1");
 let stepForm2 = document.getElementById("lv2");
 let stepForm3 = document.getElementById("lv3");
-console.log(stepForm1)
+console.log(stepForm1);
 
 
 function makeSelectStr(level, array, key) {
@@ -60,7 +80,7 @@ function makeSelectStr(level, array, key) {
     let strBox = '';
     for (let selectValue in array) {
         console.log(selectValue);
-        strBox = strBox + '<option value="' + selectValue + '" selected>' + array[selectValue] + '</option>\n';
+        strBox = strBox + '<option value="' + selectValue + '" selected>' + selectValue + '</option>\n';
     }
     document.getElementById(outerId).innerHTML = '<label for="' + levelStr + '">' + key + '</label>\n<select id="' +
         levelStr + '" class="select_i">\n' + strBox + '</select>';
@@ -71,7 +91,9 @@ function selectChoice(level) {
     let nextLevel = level + 1;
     let selectedValue = document.getElementById(thisLevelStr).value;
     localStorage.setItem('lv1Value', selectedValue);
-    makeSelectStr(nextLevel, )
+    let key = fMLabel[level + 1];
+    let array = firstMail[key];
+    makeSelectStr(nextLevel, array, key)
 }
 
 function selectChoice1() {
@@ -86,6 +108,10 @@ function selectChoice3() {
     selectChoice(3)
 }
 
+// ストレージのselectを表示
+
+
+
 stepForm1.onchange = selectChoice1;
 stepForm2.onchange = selectChoice2;
 stepForm3.onchange = selectChoice3;
@@ -99,7 +125,7 @@ stepForm3.onchange = selectChoice3;
 // let chosenStep = document.getElementById('tier1');
 // document.getElementById('t2s1').textContent = textLabel[0][0];
 
-
+/*
 // 選ばれた例文の表示
 const replaceWordList = [['name', 'name', 'replaceWord'], ['age', 'age', 'replaceAge']];
 const stepForm = document.getElementById("step");
@@ -156,6 +182,9 @@ function changeMailText() {
 stepForm.onchange = changeMailText;
 purposeForm.onchange = changeMailText;
 sampleNoForm.onchange = changeMailText;
+
+
+ */
 
 
 // 例文に個別情報挿入

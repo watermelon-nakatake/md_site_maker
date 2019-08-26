@@ -18,7 +18,7 @@
 'use strict';
 
 // CODELAB: Update cache names any time any of the cached files change.
-const CACHE_NAME = 'static-cache-v3';
+const CACHE_NAME = 'mail-app-test-v0.5';
 
 // CODELAB: Add list of files to cache here.
 const FILES_TO_CACHE = [

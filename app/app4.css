@@ -149,7 +149,6 @@ html {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background: transparent url(https://haniwaman.com/wp-content/uploads/2018/12/form-css-arrow.png) no-repeat center right 8px/16px 16px;
   border: 1px solid rgba(0, 0, 0, 0.16);
   border-radius: 0;
   color: inherit;
@@ -206,7 +205,7 @@ html {
   color: inherit;
   font-family: inherit;
   font-size: 1em;
-  height: 100px;
+  height: auto;
   padding: 0.4em 0.8em;
   width: 100%;
 }
@@ -216,6 +215,7 @@ html {
   box-shadow: none;
   outline: none;
 }
+.textarea_d{display: none}
 
 /* メディアクエリ */
 
