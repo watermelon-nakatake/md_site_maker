@@ -1,22 +1,41 @@
 // 例文
-const firstMail = {
-    0: 'はじめまして、(相手の名前)。$$(自己紹介)$$いろんなことを一緒に楽しめる彼女を探してこのサイトに登録しました。' +
+const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03'};
+const firstMailText = {
+    f00: 'はじめまして、(相手の名前)。$$(自己紹介)いろんなことを一緒に楽しめる彼女が欲しくて、このサイトに登録しました。$$' +
         '(相手の名前)のプロフィールを見て、素敵な人だなと思ったのでメールを送ってみました。まずはメールから仲良くなれたら嬉しいです。$$' +
-        '(option1)$$では、お返事待ってますね。', 1: '(相手の名前)、(自分)と結婚してください',
+        '(option1)$$では、お返事待ってますね。',
+    f01: 'はじめまして、(相手の名前)。$$(自己紹介)将来のことを考えられるような女性との出会いを探しています。$$' +
+        '(相手の名前)のプロフィールを見て、とても素敵な方だなと感じてご連絡差し上げました。まずはメールでいろいろお話しできたらと思います。$$' +
+        '(option1)$$では、お返事待ってますね。',
+    f02: 'はじめまして、(相手の名前)。$$(自己紹介)実際に会うとかは考えずに純粋にメールのやりとりを楽しめるメル友を探しています。$$' +
+        '(相手の名前)のプロフィールを見て、お話しするのが楽しそうだなと思ったのでメールさせてもらいました。よかったらメル友になってください。$$' +
+        '(option1)$$では、期待してお返事お待ちします。',
+    f03: 'はじめまして、(相手の名前)。$$(自己紹介)彼女とかではなくて、一緒にいろいろ楽しめるような女性との出会いを探しています。$$' +
+        '(相手の名前)のプロフィールを見て、とても素敵な方だなと思ったのでメッセージ送ってみました。' +
+        'まずはメールでいろいろお話しして、仲良くなったら遊んだり、お酒を飲んだりしましょう。$$' +
+        '(option1)$$では、お返事待ってますね。',
+    f04: 'はじめまして、(相手の名前)。$$(自己紹介)彼女とかじゃなくて、お互い都合がいいときにちょっと遊んだりできるような相手を探してます。$$' +
+        '(相手の名前)のプロフィールを見て、とてもいい感じの人だなと思ったのでメッセージ送ってみました。' +
+        'まずはメールでいろいろお話しして、仲良くなったら遊んだり、お酒を飲んだりしましょう。$$' +
+        '(option1)$$では、お返事を超期待して待ってますね！'
+};
 
-    2: '(相手の名前)、(自分)のメル友になってください', 3: '(相手の名前)、(自分)のフレンドになってください'
-};
 const optionArray1 = {
-    0: '(相手の名前)はお休みの日とかはどんなことをして過ごされてるんですか？。',
-    1: '(相手の名前)は映画がお好きなんですね。(自分)も好きです。(相手の名前)は特に好きな映画とかありますか？',
-    2: '(相手の名前)は食べることが好きなんですね。(自分)も食べるの好きです。(相手の名前)は特に好きな食べ物とかありますか？',
-    3: '(相手の名前)は音楽がお好きなんですね。(自分)も音楽聴くの好きです。(相手の名前)はどんなジャンルの音楽をよくきかれるんですか？'
+    0: 'ところで、(相手の名前)はお休みの日とかはどんなことをして過ごされてるんですか？。よかったら教えてください！',
+    1: 'プロフィールに書いてあったんですけど、(相手の名前)は映画がお好きなんですね。(自分)も好きです。(相手の名前)は特に好きな映画とかありますか？',
+    2: 'プロフ見たんですけど、(相手の名前)は食べることが好きなんですね。(自分)も食べるの好きです。(相手の名前)は特に好きな食べ物とかありますか？',
+    3: 'そうそう、(相手の名前)は音楽がお好きなんですね。(自分)も音楽聴くの好きです。(相手の名前)はどんなジャンルの音楽をよくきかれるんですか？'
 };
+const sFTop = '(自分)は(自分の名前)といいます。';
 const selfIntroArray = {
     yyy: '(自分)は(地域)在住の(自分の名前)といいます。(年齢)歳で(職業)をしています。',
-    yyn: '(自分)は(自分の名前)といいます。(年齢)歳で(地域)に住んでいます',
-    yny: '(自分)は(自分の名前)といいます。(年齢)歳で仕事は(職業)をしています。',
-    nyy: '', ynn: '', nyn: '', nny: '', nnn: ''
+    yyn: sFTop + '(年齢)歳で(地域)に住んでいます。',
+    yny: sFTop + '(年齢)歳で仕事は(職業)をしています。',
+    nyy: sFTop + '(地域)で(職業)をしています。',
+    ynn: sFTop + '歳は(年齢)歳です。',
+    nyn: sFTop + '(地域)に住んでます。',
+    nny: sFTop + '仕事は(職業)をしています。',
+    nnn: sFTop
 };
 // 見出しとselect value
 // step 0; first mail  1: second  3: conversation  4: date
@@ -82,8 +101,6 @@ jobForm.onchange = populateStorage;
 meForm.onchange = populateStorage;
 
 //自己紹介
-
-
 function selfIntroductionMaker() {
     let currentName = localStorage.getItem('name');
     let currentAge = localStorage.getItem('age');
@@ -95,13 +112,20 @@ function selfIntroductionMaker() {
     if (!currentName) {
         alert('お名前（ニックネーム）を記入してください。')
     }
-    for (let checkI in checkItem) {
-        if (checkI) {
-            checkBox += 'y'
-        } else {
+    if (!currentMe) {
+        currentMe = '私';
+    }
+    console.log(currentArea);
+    for (let i = 0; i < checkItem.length; i += 1) {
+        let checkI = checkItem[i];
+        if (!checkI) {
             checkBox += 'n'
+        } else {
+            checkBox += 'y'
         }
     }
+    console.log(checkBox);
+
     let result = selfIntroArray[checkBox].replace('(自分)', currentMe);
     result = result.replace('(自分の名前)', currentName);
     result = result.replace('(年齢)', currentAge);
@@ -122,7 +146,7 @@ function displayText() {
     let step = dataArrayD['step'];
     let lv1 = dataArrayD['lv1'];
     let op1 = dataArrayD['op1'];
-    let baseText = firstMail[lv1];
+    let baseText = firstMailText[firstMail[lv1]];
     if (baseText.indexOf('(option1)') !== -1) {
         console.log(dataArrayD['op1']);
         console.log(optionArray1[dataArrayD['op1']]);
@@ -149,7 +173,11 @@ function displayText() {
         + '</p>';
     document.getElementById('mailDisplayD').value = replaceAll(baseText, '$$', '\n')
 }
-
+// 各所クリックで例文更新
+let selectFormHerName = document.getElementById("herName");
+selectFormHerName.onchange = displayText;
+let selectFormTab1 = document.getElementById("tab-1");
+selectFormTab1.onclick = displayText;
 
 // selectを表示
 let selectFormLv1 = document.getElementById("lv1");
@@ -218,6 +246,7 @@ selectFormLv1.onchange = selectChangeLv1;
 selectFormOp1.onchange = selectChangeOp1;
 
 
+
 // テキストのコピー
 function execCopy(string) {
 
@@ -257,5 +286,12 @@ button.onclick = function () {
     }
 };
 
+//リンクのクリックカウントとURL変更
+let clickCountW = 0;
+
+function clickCounter(siteName) {
+
+}
+
 //最初の処理
-displayText();
+//displayText();
