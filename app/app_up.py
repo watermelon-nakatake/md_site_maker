@@ -28,5 +28,12 @@ def app_upload():
         ftp_upload(up_file, 'app')
 
 
+def test_upload():
+    upload_list = ['index.html', 'app7.css', 'main_v08281427.js', 'manifest.json', 'offline.html', 'service-worker.js']
+    for up_file in upload_list:
+        ftp_upload(up_file, 'test_app')
+
+
 # 以下実行
-app_upload()
+# app_upload()
+test_upload()

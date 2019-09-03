@@ -138,6 +138,10 @@ body{margin: 0}
     height: 40px;
     padding: 0.4em 0.8em;
     width: 100%;
+    background-image: url("images/pencil.png");
+    background-position: 97% 13px;
+    background-repeat: no-repeat;
+    background-size: 15px;
 }
 
 .text_i:focus {
@@ -231,14 +235,22 @@ body{margin: 0}
 
 .siteLink {
     width: 90%;
-    height: 40px;
-    margin: 10px auto;
+    height: 50px;
+    margin: 20px auto;
+    border: 1px solid #9B9B9B;
+    background-color: #79eada;
+    border-radius: 5px;
 }
 
 .siteLink a {
     width: 100%;
     height: 40px;
+    text-align: center;
     text-decoration: none;
+    display: block;
+    padding: 15px 0;
+    font-size: 20px;
+    color: #ffffff;
 }
 
 #dis_list {
@@ -248,7 +260,9 @@ body{margin: 0}
 #dis_list li {
     margin-top: 20px;
 }
-
+#op2Outer {
+    display: none;
+}
 /* メディアクエリ */
 
 @media (min-width: 500px) {

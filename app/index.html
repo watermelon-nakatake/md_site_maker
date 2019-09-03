@@ -27,49 +27,72 @@
             <ul class="tab-content-container">
                 <li class="tab-content">
 
-                        <div>
-                            <label for="step">メールの段階</label>
-                            <select id="step" class="select_i">
-                                <option value="" selected disabled>select</option>
-                                <option value="fm">一番最初に送るメール</option>
-                                <option value="sm">最初の返信メール(自分スタート)</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label for="step">メールの段階</label>
+                        <select id="step" class="select_i">
+                            <option value="" disabled>select</option>
+                            <option value="0" id="firstD">一番最初に送るメール</option>
+                            <option value="1">最初の返信メール(自分スタート)</option>
+                        </select>
+                    </div>
 
-                        <div id="lv1Outer">
-                            <label for="lv1">目的</label>
-                            <select id="lv1" class="select_i">
-                                <option value="" selected disabled>select</option>
-                                <option value="0" class="gray">彼女探し</option>
-                                <option value="1">婚活</option>
-                                <option value="2">メル友募集</option>
-                                <option value="3">セフレ探し</option>
-                                <option value="4">セックス</option>
-                            </select>
-                        </div>
-
-
-                        <div id="op1Outer">
-                            <label for="op1">相手の興味あること</label>
-                            <select id="op1" class="select_i">
-                                <option value="" selected disabled>select</option>
-                                <option value="0" selected>特になし</option>
-                                <option value="1">映画</option>
-                                <option value="2">グルメ</option>
-                                <option value="3">音楽</option>
-                            </select>
-                        </div>
+                    <div id="lv1Outer">
+                        <label for="lv1" id="lv1Label">目的</label>
+                        <select id="lv1" class="select_i">
+                            <option value="" disabled>select</option>
+                            <option value="0">彼女探し</option>
+                            <option value="1">婚活</option>
+                            <option value="2">メル友募集</option>
+                            <option value="3">セフレ探し</option>
+                            <option value="4">セックス</option>
+                        </select>
+                    </div>
 
 
-                        <div>
-                            <label for="herName">相手の名前</label>
-                            <input class="text_i" id="herName" placeholder="input">
-                        </div>
-                        <label for="mailDisplayD">メール本文</label>
-                        <div id="mailDisplay" class="textarea_i">ここにメール本文が表示されます。</div>
+                    <div id="op1Outer">
+                        <label for="op1" id="op1Label">相手の興味あること</label>
+                        <select id="op1" class="select_i">
+                            <option value="" disabled>select</option>
+                            <option value="0">特になし</option>
+                            <option value="1">映画</option>
+                            <option value="2">グルメ</option>
+                            <option value="3">音楽</option>
+                        </select>
+                    </div>
+
+                    <div id="op2Outer">
+                        <label for="op2" id="op2Label">メールを送る時間帯</label>
+                        <select id="op2" class="select_i">
+                            <option value="" disabled>select</option>
+                            <option value="0">朝</option>
+                            <option value="1">昼</option>
+                            <option value="2">夜</option>
+                        </select>
+                    </div>
+                    <div id="op3Outer">
+                        <label for="op3" id="op3Label">会話の話題</label>
+                        <select id="op3" class="select_i">
+                            <option value="" disabled>select</option>
+                            <option value="0">朝</option>
+                            <option value="1">昼</option>
+                            <option value="2">夜</option>
+                        </select>
+                    </div>
 
 
-                        <textarea id="mailDisplayD" class="textarea_d"></textarea>
+                    <div>
+                        <label for="herName">相手の名前</label>
+                        <input class="text_i" id="herName" placeholder="input">
+                    </div>
+                    <div id="herAnswerOuter">
+                        <label for="herAnswer">質問への相手の答え</label>
+                        <input class="text_i" id="herAnswer" placeholder="input">
+                    </div>
+                    <label for="mailDisplayD">メール本文</label>
+                    <div id="mailDisplay" class="textarea_i">ここにメール本文が表示されます。</div>
+
+
+                    <textarea id="mailDisplayD" class="textarea_d"></textarea>
 
                     <button id="copyButton" class="submit_i">本文をコピー</button>
 
@@ -88,26 +111,26 @@
             <ul class="tab-content-container">
                 <li class="tab-content">
 
-                        <div>
-                            <label for="name">名前 (必須)</label>
-                            <input class="text_i" id="name" placeholder="input">
-                        </div>
-                        <div>
-                            <label for="age">年齢 数字のみ 任意</label>
-                            <input class="text_i" id="age" placeholder="input">
-                        </div>
-                        <div>
-                            <label for="area">住んでいる地域 任意</label>
-                            <input class="text_i" id="area" placeholder="input">
-                        </div>
-                        <div>
-                            <label for="job">職業 任意</label>
-                            <input class="text_i" id="job" placeholder="input">
-                        </div>
-                        <div>
-                            <label for="me">自分の呼び方 (必須)</label>
-                            <input class="text_i" id="me" placeholder="input">
-                        </div>
+                    <div>
+                        <label for="name">名前 (必須)</label>
+                        <input class="text_i" id="name" placeholder="input">
+                    </div>
+                    <div>
+                        <label for="age">年齢 数字のみ 任意</label>
+                        <input class="text_i" id="age" placeholder="input">
+                    </div>
+                    <div>
+                        <label for="area">住んでいる地域 任意</label>
+                        <input class="text_i" id="area" placeholder="input">
+                    </div>
+                    <div>
+                        <label for="job">職業 任意</label>
+                        <input class="text_i" id="job" placeholder="input">
+                    </div>
+                    <div>
+                        <label for="me">自分の呼び方 (必須)</label>
+                        <input class="text_i" id="me" placeholder="input">
+                    </div>
 
 
                     <div class="arrows">
@@ -123,10 +146,10 @@
             <ul class="tab-content-container">
                 <li class="tab-content">
                     <p>このリンクから主要な出会い系サイトに直接アクセスできます。</p>
-                    <div class="siteLink"><a href="dsite/550909/">ワクワクメール</a></div>
-                    <div class="siteLink"><a href="dsite/happymail/">ハッピーメール</a></div>
-                    <div class="siteLink"><a href="dsite/mintj/">ミントC!Jメール</a></div>
-                    <div class="siteLink"><a href="dsite/pcmax/">PCMAX</a></div>
+                    <div class="siteLink"><a href="dsite/550909" id="countWk" target="_blank">ワクワクメール</a></div>
+                    <div class="siteLink"><a href="dsite/happymail" id="countHm" target="_blank">ハッピーメール</a></div>
+                    <div class="siteLink"><a href="dsite/mintj" id="countMj" target="_blank">ミントC!Jメール</a></div>
+                    <div class="siteLink"><a href="dsite/pcmax" id="countPc" target="_blank">PCMAX</a></div>
                     <div class="arrows">
                         <label class="back" for="tab-2">&#8249;</label>
                         <label class="next" for="tab-4">&#8250; </label>
@@ -139,19 +162,23 @@
             <label class="tab" for="tab-4">使い方</label>
             <ul class="tab-content-container">
                 <li class="tab-content">
-                <ul id="dis_list"><li>まず「プロフ」に名前や年齢、自分の呼び方（一人称）などご自分の情報を記入してください</li>
-                <li>「メール作成」で現在のメールの段階やご自分の目的、相手のプロフィール情報などを選択するとメールの文章が自動作成されます。</li><li>「Copy text」を押すとメール本文をコピーできます。そのままメールにペーストして使ってください。</li></ul></li>
-                    <div class="arrows">
-                        <label class="back" for="tab-3">&#8249;</label>
-                        <label class="next" for="tab-1">&#8250; </label>
-                    </div>
+                    <ul id="dis_list">
+                        <li>まず「プロフ」に名前や年齢、自分の呼び方（一人称）などご自分の情報を記入してください</li>
+                        <li>「メール作成」で現在のメールの段階やご自分の目的、相手のプロフィール情報などを選択するとメールの文章が自動作成されます。</li>
+                        <li>「Copy text」を押すとメール本文をコピーできます。そのままメールにペーストして使ってください。</li>
+                    </ul>
+                </li>
+                <div class="arrows">
+                    <label class="back" for="tab-3">&#8249;</label>
+                    <label class="next" for="tab-1">&#8250; </label>
+                </div>
                 </li>
             </ul>
         </li>
     </ul>
 
 
-    </div>
+</div>
 </body>
 <script src="main_v08281427.js"></script>
 <script>if ('serviceWorker' in navigator) {
