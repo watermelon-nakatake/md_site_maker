@@ -1,6 +1,10 @@
 // 例文
+
 const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03'};
-const firstMailText = {
+const secondMail = {0: 's00', 1: 's01', 2: 's02'};
+const post = {0: 'p00', 1: 'p01', 2: 'p02', 3: 'p03', 4: 'p04'};
+const mailList = [firstMail, secondMail, post];
+const mailTextList = {
     f00: 'はじめまして、(herName)。$$(自己紹介)いろんなことを一緒に楽しめる彼女が欲しくて、このサイトに登録しました。$$' +
         '(herName)のプロフィールを見て、素敵な人だなと思ったのでメールを送ってみました。まずはメールからゆっくり仲良くなれたら嬉しいです。$$' +
         '(option1)$$では、お返事待ってますね。',
@@ -17,18 +21,40 @@ const firstMailText = {
     f04: 'はじめまして、(herName)。$$(自己紹介)彼女とかじゃなくて、お互い都合がいいときにちょっと遊んだりできるような相手を探してます。$$' +
         '(herName)のプロフィールを見て、とてもいい感じの人だなと思ったのでメッセージ送ってみました。' +
         'まずはメールでいろいろお話しして、仲良くなったら遊んだり、お酒を飲んだりしましょう。$$' +
-        '(option1)$$では、お返事を超期待して待ってますね！'
-};
-const secondMail = {0: 's00', 1: 's01', 2: 's02'};
-const secondMailText = {
+        '(option1)$$では、お返事を超期待して待ってますね！',
     s00: '(herName)、(option2)。$$メールありがとうございます。(herName)とはぜひ仲良くなりたいと思っていたので、とても嬉しいです。' +
         'これからよろしくお願いしますね。仲良くしてくださいね。$$(option3)',
     s01: '(herName)、(option2)。$$返信ありがとうございます。(herName)とはぜひお話ししてみたいと思っていたので、とても嬉しいです。' +
         'これからよろしくお願いしますね。$$(以下、相手からの質問への回答とその質問に関係するこちらからの新しい質問)',
     s02: '(herName)、(option2)。$$返信ありがとうございます。(herName)からお返事をもらえてすごく嬉しいです。' +
-        'これからよろしくお願いしますね。$$(option1)'
+        'これからよろしくお願いしますね。$$(option1)',
+    p00: '書き込みを見てくださってありがとうございます。$$' +
+        '仲の良い友達からは「お前に彼女がいないのはおかしい」とか言われるけど、心から大事にできる人とお付き合いしたいと思っているので' +
+        'なかなかいい出会いがありません。$$' +
+        'ということで、真面目にお付き合いできる女性を探してます。メールからゆっくり仲良くなれたら嬉しいです。$$' +
+        '少し自己紹介しますね。(自己紹介)' +
+        '普段仕事が忙しいので、休みの日とかは体を動かしたり美味しいものを食べたりしてストレス解消しています。$$' +
+        'では、気になる方はお気軽にメールくださいね。$$' +
+        'いい方と出会えたらこの書き込みは消しますのでお急ぎください（笑）',
+    p01: '書き込みを見てくださってありがとうございます。$$(自己紹介)' +
+        '年齢的に最近結婚のことも考えるようになってきたので、将来のことも考えられるような素敵な女性との出会いを探しています。$$かなり真剣です。$$' +
+        '優しくて一緒にいろいろなことにチャレンジできるような女性が好きなので、そういう方と知り合えたら嬉しいです。' +
+        'まずはメールからゆっくりお話しして、仲良くなりましょう。$$' +
+        '本気でお付き合いできる方と知り合えたら、この書き込みは消しますね。$$メールお待ちしています。',
+    p02: '書き込みを見てくださってありがとうございます。$$' +
+        '純粋にメールだけでやり取りして会話を楽しめる女性のメール友達が欲しくて書き込みをしました。$$' +
+        '(趣味)が好きなので、(趣味)についていろいろ語り合えるようなメル友さんができるととても嬉しいです。もちろん(趣味)に興味ない方でもOKです。$$' +
+        '「会おう」とかは絶対に言わないので、安心してメールしてきてくださいね。',
+    p03: '書き込み見てくださってありがとうございます。$$' +
+        '彼女を探しているというわけではないんですが、一緒に遊んだり美味しいものを食べたり、その他のことも楽しめる素敵な女性を探してます。$$' +
+        '(自分)は女性に喜んでもらうのが好きなので、いい意味でかなり尽くしますよ！$$' +
+        '年齢は気にしないけど、あまりぽっちゃりし過ぎてなくて優しい女性が好きですね。$$' +
+        '気になった方は、お気軽にメールをお送りください。期待して待ってます！',
+    p04: '最近仕事をがんばり過ぎて、ちょっと疲れがたまってます。こんな時は美味しいお酒と食事で疲れを吹き飛ばしたい･･･。$$' +
+        '美味しい料理とお酒が大好きな女の子、いらっしゃったらメールで教えてください！$$' +
+        '(自分)と飲みに行きましょう！$$行きたいお店があればそこでもいいですし、特になければ(自分)のおすすめのお店でご馳走します。$$' +
+        'お時間はそちらの都合に合わせますよ。$$楽しい飲み会にしたいですね。'
 };
-
 const optionArray1 = {
     0: 'ところで、(herName)はお休みの日とかはどんなことをして過ごされてるんですか？。よかったら教えてください！',
     1: 'プロフィールに書いてあったんですけど、(herName)は映画がお好きなんですね。(自分)も好きです。(herName)は特に好きな映画とかありますか？',
@@ -47,12 +73,23 @@ const optionArray3 = {
         'どんな(herAnswer)が特にお気に入りですか？',
     1: '(herName)、(herAnswer)がお気に入りなんですね。(自分)も観ましたけど、(herAnswer)いいですよね〜。$$' +
         '映画は劇場でご覧になることが多いですか？それとも自宅で？',
-    2: '(herAnswer)がお好きなんですね。確かに美味しいですもんね。(herName)の気持ちよく分かります。',
-    3: 'そうそう、(herName)は音楽がお好きなんですね。(自分)も音楽聴くの好きです。(herName)はどんなジャンルの音楽をよくきかれるんですか？',
-    4: '(herName)、スポーツがお好きなんですね。(自分)も体動かすのも見るのも好きです。(herName)が特に好きなスポーツって何ですか？',
-    5: '(herName)さんのプロフィールを見たら、ドライブが好きって書いてあったんですけど、どの辺りによくドライブに行かれるんですか？'
+    2: '(herAnswer)がお好きなんですね。確かに美味しいですもんね。(herName)の気持ちよく分かります。' +
+        '$$(herName)はお気に入りの美味しい(herAnswer)のお店とかありますか？',
+    3: '(herName)、(herAnswer)がお好きなんですね。(自分)も少し聴くけどいいですよね。$$ライブとかにも行ったりされるんですか？',
+    4: '(herName)、(herAnswer)が好きなんですか。一緒ですね！(自分)も(herAnswer)好きです。$$' +
+        '観るだけじゃなくて、自分でも(herAnswer)されるんですか？',
+    5: '(herName)は(herAnswer)によくドライブに行かれるんですね。(自分)もたまに行きます。気持ちいいですよね。$$' +
+        'ドライブはご自分で運転していくんですか？それともお友達とかとです？'
 };
-const optionList = ['option1', 'option2', 'option3'];
+const optionArray4 = {
+    0: '',
+    1: '(自分)が映画が好きなので、話のタネにあなたの好きな映画もよかったら教えてくださいね。$$',
+    2: '(自分)が食べることが好きなので、話のタネにあなたの好きな食べ物もよかったら教えてくださいね。$$',
+    3: '(自分)が音楽を聴くの好きなので、話のタネにあなたの好きなミュージシャンもよかったら教えてくださいね。$$',
+    4: '(自分)がスポーツが好きなので、話のタネにあなたの好きなスポーツもよかったら教えてくださいね。$$',
+    5: '(自分)がドライブが好きなので、話のタネにあなたの好きなドライブスポットもよかったら教えてくださいね。$$'
+};
+const optionArray = [optionArray1, optionArray2, optionArray3, optionArray4];
 const sFTop = '(自分)は(自分の名前)といいます。';
 const selfIntroArray = {
     yyy: '(自分)は(地域)在住の(自分の名前)といいます。(年齢)歳で(職業)をしています。',
@@ -65,20 +102,23 @@ const selfIntroArray = {
     nnn: sFTop
 };
 const labelArray = {
-    '0': ['目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し'],
-    '1': ['状況', '質問の回答した', '答えずに質問してきた', 'そっけない一言メール']
+    '0': ['目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
+    '1': ['状況', '質問の回答した', '答えずに質問してきた', 'そっけない一言メール'],
+    '2': ['目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
 };
 const optionLabel = {
     op1: ['相手が興味あるもの', '特になし', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
     op2: ['メール送信の時間帯', '朝', '昼', '夜'],
-    op3: ['会話の話題', '休みにすること', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ']
+    op3: ['会話の話題', '休みにすること', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
+    op4: ['女性への質問', '質問しない', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ']
 };
-const replaceWordList = [['(名前)', 'name'], ['(年齢)', 'age'], ['(地域)', 'area'], ['(職業)', 'job'], ['(自分)', 'me']];
-const optionWordList = [['option1', 'op1'], ['option2', 'op2'], ['option3', 'op3']];
+const replaceWordList = [['(名前)', 'name'], ['(年齢)', 'age'], ['(地域)', 'area'], ['(職業)', 'job'], ['(自分)', 'me'],
+['(趣味)', 'hobby']];
+const optionWordList = [['option1', 'op1'], ['option2', 'op2'], ['option3', 'op3'], ['option4', 'op4']];
 const insertList = ['herName', 'herAnswer'];
 // データ格納
 //localStorage.clear();
-let dataArray = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0};
+let dataArray = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0};
 let storageArray = JSON.parse(localStorage.getItem('dataArray'));
 let currentArray = dataArray;
 if (storageArray != null) {
@@ -90,7 +130,15 @@ let nameForm = document.getElementById('name');
 let ageForm = document.getElementById('age');
 let areaForm = document.getElementById('area');
 let jobForm = document.getElementById('job');
+let hobbyForm = document.getElementById('hobby');
 let meForm = document.getElementById('me');
+
+nameForm.onchange = populateStorage;
+ageForm.onchange = populateStorage;
+areaForm.onchange = populateStorage;
+jobForm.onchange = populateStorage;
+hobbyForm.onchange = populateStorage;
+meForm.onchange = populateStorage;
 
 if (!localStorage.getItem('name')) {
     populateStorage();
@@ -99,41 +147,26 @@ if (!localStorage.getItem('name')) {
 }
 
 function populateStorage() {
-    localStorage.setItem('name', document.getElementById('name').value);
-    localStorage.setItem('age', document.getElementById('age').value);
-    localStorage.setItem('area', document.getElementById('area').value);
-    localStorage.setItem('job', document.getElementById('job').value);
-    localStorage.setItem('me', document.getElementById('me').value);
-
+    for (let i = 0;i < replaceWordList.length;i++){
+        let replaceWord = replaceWordList[i][1];
+        localStorage.setItem(replaceWord, document.getElementById(replaceWord).value);
+    }
     setStyles();
 }
 
 function setStyles() {
-    let currentName = localStorage.getItem('name');
-    let currentAge = localStorage.getItem('age');
-    let currentArea = localStorage.getItem('area');
-    let currentJob = localStorage.getItem('job');
-    let currentMe = localStorage.getItem('me');
-
-    document.getElementById('name').value = currentName;
-    document.getElementById('age').value = currentAge;
-    document.getElementById('area').value = currentArea;
-    document.getElementById('job').value = currentJob;
-    document.getElementById('me').value = currentMe;
+    for (let j = 0;j < replaceWordList.length;j++){
+        let setWord = replaceWordList[j][1];
+        document.getElementById(setWord).value = localStorage.getItem(setWord);
+    }
 }
 
-nameForm.onchange = populateStorage;
-ageForm.onchange = populateStorage;
-areaForm.onchange = populateStorage;
-jobForm.onchange = populateStorage;
-meForm.onchange = populateStorage;
-
-//自己紹介
 function selfIntroductionMaker() {
     let currentName = localStorage.getItem('name');
     let currentAge = localStorage.getItem('age');
     let currentArea = localStorage.getItem('area');
     let currentJob = localStorage.getItem('job');
+    let currentHobby = localStorage.getItem('hobby');
     let currentMe = localStorage.getItem('me');
     let checkItem = [currentAge, currentArea, currentJob];
     let checkBox = '';
@@ -158,65 +191,62 @@ function selfIntroductionMaker() {
     result = result.replace('(年齢)', currentAge);
     result = result.replace('(地域)', currentArea);
     result = result.replace('(職業)', currentJob);
+    result = result.replace('(趣味)', currentHobby);
     return result
 }
 
 // 例文の表示
-
 function replaceAll(str, before, after) {
     return str.split(before).join(after);
 }
 
-function displayText() {
-    let dataArrayD = JSON.parse(localStorage.getItem('dataArray'));
-    let step = dataArrayD['step'];
-    let lv1 = dataArrayD['lv1'];
-    let op1 = dataArrayD['op1'];
-    let op2 = dataArrayD['op2'];
-    let op3 = dataArrayD['op3'];
-    let baseText = '';
-    switch (step) {
-        case 0:
-            baseText = firstMailText[firstMail[lv1]];
-            break;
-        case 1:
-            baseText = secondMailText[secondMail[lv1]];
-            break;
-        default:
-            baseText = firstMailText[firstMail[lv1]]
-    }
-    let beforeReplace = baseText;
-    console.log(baseText);
-    if (baseText.indexOf('(option1)') !== -1) {
-        console.log('option1のreplace');
-        baseText = replaceAll(baseText, '(option1)', optionArray1[op1]);
-        console.log(baseText)
-    }
-    if (baseText.indexOf('(option2)') !== -1) {
-        baseText = replaceAll(baseText, '(option2)', optionArray2[op2])
-    }
-    if (baseText.indexOf('(option3)') !== -1) {
-        baseText = replaceAll(baseText, '(option3)', optionArray3[op3])
-    }
-    for (let i = 0; i < replaceWordList.length; i += 1) {
-        let replaceWord = replaceWordList[i];
-        if (baseText.indexOf(replaceWord[0]) !== -1) {
-            baseText = replaceAll(baseText, replaceWord[0], localStorage.getItem(replaceWord[1]))
-        }
-    }
-    let hAForm = document.getElementById('herAnswerOuter');
-    console.log(baseText);
-    console.log(baseText.indexOf('herAnswer') !== -1);
-    if (baseText.indexOf('herAnswer') !== -1) {
+function baseTextChoice() {
+    let dataArray = JSON.parse(localStorage.getItem('dataArray'));
+    return mailTextList[mailList[Number(dataArray['step'])][Number(dataArray['lv1'])]]
+}
+
+function multipleOptionDisplay(baseText, optionCode) {
+    let hAForm = document.getElementById(optionCode + 'Outer');
+    if (baseText.indexOf(optionCode) !== -1) {
         hAForm.style.display = 'block';
-        document.getElementById('herAnswer').value = '';
     } else {
         hAForm.style.display = 'none'
     }
-    //自己紹介挿入
+    return baseText
+}
+
+function displayText(clickId) {
+    let baseText = baseTextChoice();
+    let beforeReplace = baseText;
+    baseText = optionInsert(baseText);
+    baseText = wordReplace(baseText);
+    baseText = multipleOptionDisplay(baseText, 'herAnswer');
+    if (clickId !== 'herAnswer') {
+        document.getElementById('herAnswer').value = ''
+    }
     if (baseText.indexOf('(自己紹介)') !== -1) {
         baseText = baseText.replace('(自己紹介)', selfIntroductionMaker())
     }
+    baseText = wordInsert(baseText);
+    document.getElementById('mailDisplay').innerHTML = '<p>' + replaceAll(baseText, '$$', '<br>')
+        + '</p>';
+    document.getElementById('mailDisplayD').value = replaceAll(baseText, '$$', '\n');
+    return beforeReplace
+}
+
+function optionInsert(baseText) {
+    let dataArray = JSON.parse(localStorage.getItem('dataArray'));
+    for (let i = 0; i < optionWordList.length; i++) {
+        if (baseText.indexOf(optionWordList[i][0]) !== -1) {
+            let optionValue = Number(dataArray[optionWordList[i][1]]);
+            let replaceWord = '(' + optionWordList[i][0] + ')';
+            baseText = replaceAll(baseText, replaceWord, optionArray[i][optionValue]);
+        }
+    }
+    return baseText
+}
+
+function wordInsert(baseText) {
     for (let i = 0; i < insertList.length; i++) {
         let insertStr = insertList[i];
         let searchStr = '(' + insertStr + ')';
@@ -228,30 +258,37 @@ function displayText() {
             }
         }
     }
+    return baseText
+}
 
-    document.getElementById('mailDisplay').innerHTML = '<p>' + replaceAll(baseText, '$$', '<br>')
-        + '</p>';
-    document.getElementById('mailDisplayD').value = replaceAll(baseText, '$$', '\n');
-
-
-    return beforeReplace
+function wordReplace(baseText) {
+    for (let i = 0; i < replaceWordList.length; i += 1) {
+        let replaceWord = replaceWordList[i];
+        if (baseText.indexOf(replaceWord[0]) !== -1) {
+            baseText = replaceAll(baseText, replaceWord[0], localStorage.getItem(replaceWord[1]))
+        }
+    }
+    return baseText
 }
 
 // 各所クリックで例文更新
 let selectFormHerName = document.getElementById("herName");
-selectFormHerName.onchange = displayText;
+selectFormHerName.onchange = displayTextHA;
 let selectFormHerAnswer = document.getElementById("herAnswer");
-selectFormHerAnswer.onchange = displayText;
+selectFormHerAnswer.onchange = displayTextHA;
 let selectFormTab1 = document.getElementById("tab-1");
-selectFormTab1.onclick = displayText;
+selectFormTab1.onclick = displayTextHA;
+function displayTextHA () {
+    displayText('herAnswer')
+}
 
 // selectを表示
 let selectFormStep = document.getElementById("step");
 let selectFormLv1 = document.getElementById("lv1");
-//let selectFormLv2 = document.getElementById("lv2");
 let selectFormOp1 = document.getElementById("op1");
 let selectFormOp2 = document.getElementById("op2");
 let selectFormOp3 = document.getElementById("op3");
+let selectFormOp4 = document.getElementById("op4");
 
 function makeSelectOrder(levelStr) {
     let selectOrder = '';
@@ -278,8 +315,7 @@ function makeSelectOrder(levelStr) {
 function makeOptionStr(optionNum) {
     console.log(optionNum);
     let strArray = optionLabel[optionNum];
-
-    let optionStr = '<option value="" disabled>select</option>';
+    let optionStr = '';
     let key = strArray[0];
     let labelId = optionNum + 'Label';
     let optionId = optionNum + 'Outer';
@@ -289,16 +325,16 @@ function makeOptionStr(optionNum) {
     document.getElementById(optionNum).innerHTML = optionStr;
     document.getElementById(labelId).textContent = key;
     let opForm = document.getElementById(optionNum);
-    opForm.style.display = 'block';
+    let opOutForm = document.getElementById(optionId);
+    opOutForm.style.display = 'block';
     opForm.options[0].selected = true
 }
-//todo: 共通部分をfunctionに
 
 function makeSelectStr(levelStr) {
     console.log(levelStr);
     let selectOrder = makeSelectOrder(levelStr);
     let strArray = labelArray[selectOrder];
-    let optionStr = '<option value="" disabled>select</option>';
+    let optionStr = '';
     let key = strArray[0];
     let labelId = levelStr + 'Label';
     for (let i = 1; i < strArray.length; i += 1) {
@@ -328,16 +364,22 @@ function selectChange(level) {
     console.log(selectedValue);
     console.log(arrayData);
     localStorage.setItem('dataArray', JSON.stringify(arrayData));
+    if (arrayData['step'] === 2) {
+        document.getElementById('herNameOuter').style.display = 'none'
+    } else {
+        document.getElementById('herNameOuter').style.display = 'block'
+    }
+
     let currentText = displayText();
     console.log(currentText);
     optionSelectDisplay(currentText)
 }
 
 function optionSelectDisplay(currentText) {
-    for (let i = 0; i < optionList.length; i++) {
-        console.log(optionList[i]);
-        console.log(currentText.indexOf(optionList[i]) !== -1);
-        if (currentText.indexOf(optionList[i]) !== -1) {
+    for (let i = 0; i < optionWordList.length; i++) {
+        console.log(optionWordList[i][0]);
+        console.log(currentText.indexOf(optionWordList[i][0]) !== -1);
+        if (currentText.indexOf(optionWordList[i][0]) !== -1) {
             makeOptionStr(optionWordList[i][1])
         } else {
             let opForm = document.getElementById(optionWordList[i][1] + 'Outer');
@@ -384,11 +426,17 @@ function selectChangeOp3() {
     optionClicked('op3')
 }
 
+function selectChangeOp4() {
+    console.log('selectChangeOp4 start');
+    optionClicked('op4')
+}
+
 selectFormStep.onchange = selectChangeStep;
 selectFormLv1.onchange = selectChangeLv1;
 selectFormOp1.onchange = selectChangeOp1;
 selectFormOp2.onchange = selectChangeOp2;
 selectFormOp3.onchange = selectChangeOp3;
+selectFormOp4.onchange = selectChangeOp4;
 
 
 // テキストのコピー
@@ -504,6 +552,7 @@ function firstInitialize() {
     document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
     document.getElementById('op2').options[Number(currentData['op2'])].selected = true;
     document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
+    document.getElementById('op4').options[Number(currentData['op4'])].selected = true;
 }
 
 firstInitialize();

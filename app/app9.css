@@ -263,6 +263,9 @@ body{margin: 0}
 #op2Outer {
     display: none;
 }
+#op4Outer {
+    display: none;
+}
 /* メディアクエリ */
 
 @media (min-width: 500px) {

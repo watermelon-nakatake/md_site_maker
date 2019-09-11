@@ -4,6 +4,7 @@
       <w>aijin</w>
       <w>allist</w>
       <w>amphtml</w>
+      <w>applicaton</w>
       <w>arlist</w>
       <w>beforeinstallprompt</w>
       <w>blackrhino</w>
@@ -24,6 +25,7 @@
       <w>hutoaka</w>
       <w>hutokuro</w>
       <w>imail</w>
+      <w>imgsrc</w>
       <w>kanren</w>
       <w>kijim</w>
       <w>kijip</w>
@@ -34,6 +36,7 @@
       <w>majime</w>
       <w>marriedwoman</w>
       <w>meaningofwarikiri</w>
+      <w>menub</w>
       <w>mintj</w>
       <w>mobnone</w>
       <w>mokuji</w>
@@ -42,6 +45,7 @@
       <w>nashi</w>
       <w>navop</w>
       <w>omail</w>
+      <w>otherart</w>
       <w>pcmax</w>
       <w>picf</w>
       <w>pnav</w>
@@ -57,11 +61,15 @@
       <w>sitename</w>
       <w>sitepage</w>
       <w>sitepagetop</w>
+      <w>spanclass</w>
+      <w>spanitemprop</w>
       <w>stor</w>
       <w>tabn</w>
       <w>tari</w>
+      <w>teisite</w>
       <w>tibl</w>
       <w>toka</w>
+      <w>wakuwakumail</w>
       <w>wmail</w>
     </words>
   </dictionary>

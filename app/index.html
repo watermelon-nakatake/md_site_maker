@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。">
     <meta name="theme-color" content="#2F3BA2"/>
-    <link href="app7.css" rel="stylesheet" type="text/css">
+    <link href="app9.css" rel="stylesheet" type="text/css">
     <link rel="manifest" href="manifest.json">
     <!-- for iOS meta tags and icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,6 +33,7 @@
                             <option value="" disabled>select</option>
                             <option value="0" id="firstD">一番最初に送るメール</option>
                             <option value="1">最初の返信メール(自分スタート)</option>
+                            <option value="2">掲示板への書き込み</option>
                         </select>
                     </div>
 
@@ -44,7 +45,7 @@
                             <option value="1">婚活</option>
                             <option value="2">メル友募集</option>
                             <option value="3">セフレ探し</option>
-                            <option value="4">セックス</option>
+                            <option value="4">すぐ会える女性</option>
                         </select>
                     </div>
 
@@ -78,15 +79,26 @@
                             <option value="2">夜</option>
                         </select>
                     </div>
-
-
-                    <div>
-                        <label for="herName">相手の名前</label>
-                        <input class="text_i" id="herName" placeholder="input">
+                    <div id="op4Outer">
+                        <label for="op4" id="op4Label">女性への質問</label>
+                        <select id="op4" class="select_i">
+                            <option value="" disabled>select</option>
+                            <option value="0">質問しない</option>
+                            <option value="1">映画</option>
+                            <option value="2">グルメ</option>
+                            <option value="3">音楽</option>
+                        </select>
                     </div>
+
+
+
                     <div id="herAnswerOuter">
                         <label for="herAnswer">質問への相手の答え</label>
                         <input class="text_i" id="herAnswer" placeholder="input">
+                    </div>
+                    <div id="herNameOuter">
+                        <label for="herName">相手の名前</label>
+                        <input class="text_i" id="herName" placeholder="input">
                     </div>
                     <label for="mailDisplayD">メール本文</label>
                     <div id="mailDisplay" class="textarea_i">ここにメール本文が表示されます。</div>
@@ -101,7 +113,7 @@
                         <label class="back" for="tab-4">&#8249;</label>
                         <label class="next" for="tab-2">&#8250; </label>
                     </div>
-                    <div><p>version0.63 (Beta)</p></div>
+                    <div><p>version0.71 (Beta)</p></div>
                 </li>
             </ul>
         </li>
@@ -126,6 +138,10 @@
                     <div>
                         <label for="job">職業 任意</label>
                         <input class="text_i" id="job" placeholder="input">
+                    </div>
+                    <div>
+                        <label for="hobby">趣味 任意</label>
+                        <input class="text_i" id="hobby" placeholder="input">
                     </div>
                     <div>
                         <label for="me">自分の呼び方 (必須)</label>
@@ -180,7 +196,7 @@
 
 </div>
 </body>
-<script src="main_v08281427.js"></script>
+<script src="main_v09091206.js"></script>
 <script>if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
