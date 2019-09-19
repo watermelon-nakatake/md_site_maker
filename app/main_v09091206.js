@@ -1,13 +1,14 @@
 // 例文
-
 const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03'};
 const secondMail = {0: 's00', 1: 's01', 2: 's02'};
 const post = {0: 'p00', 1: 'p01', 2: 'p02', 3: 'p03', 4: 'p04'};
-const mailList = [firstMail, secondMail, post];
+const address = {0: 'a00', 1: 'a01'};
+const dateMail = {0: 'd00', 1:'d01', 2:'d02'};
+const mailList = [firstMail, secondMail, post, address, dateMail];
 const mailTextList = {
     f00: 'はじめまして、(herName)。$$(自己紹介)いろんなことを一緒に楽しめる彼女が欲しくて、このサイトに登録しました。$$' +
         '(herName)のプロフィールを見て、素敵な人だなと思ったのでメールを送ってみました。まずはメールからゆっくり仲良くなれたら嬉しいです。$$' +
-        '(option1)$$では、お返事待ってますね。',
+        '(option1)$$では、お返事待ってますね。[敬語を使って書くことで、誠実な人だという印象を与えます。',
     f01: 'はじめまして、(herName)。$$(自己紹介)将来のことを考えられるような女性との出会いを探しています。$$' +
         '(herName)のプロフィールを見て、とても素敵な方だなと感じてご連絡差し上げました。まずはメールでいろいろお話しできたらと思います。$$' +
         '(option1)$$では、お返事待ってますね。',
@@ -53,7 +54,14 @@ const mailTextList = {
     p04: '最近仕事をがんばり過ぎて、ちょっと疲れがたまってます。こんな時は美味しいお酒と食事で疲れを吹き飛ばしたい･･･。$$' +
         '美味しい料理とお酒が大好きな女の子、いらっしゃったらメールで教えてください！$$' +
         '(自分)と飲みに行きましょう！$$行きたいお店があればそこでもいいですし、特になければ(自分)のおすすめのお店でご馳走します。$$' +
-        'お時間はそちらの都合に合わせますよ。$$楽しい飲み会にしたいですね。'
+        'お時間はそちらの都合に合わせますよ。$$楽しい飲み会にしたいですね。',
+    a00: '(herName)とお話しするのすごく楽しいです。もっとたくさんお話ししたいので、よかったら連絡先を交換して直接やりとりしませんか？$$' +
+        'ラインIDでも携帯とかのメールアドレスでもどっちでもいいですよ。でも、嫌な時はもう少しサイト内でメールするから言ってくださいね。',
+    a01: '(herName)さんとメールするの、すごく楽しいです。(herName)さんとは気が合いそうです。$$' +
+        'もしよかったら、ラインIDとかメアド交換して、直接やり取りしませんか？その方がサイト経由でメールするよりスムーズにやり取りできますし。$$' +
+        'もちろん、知り合ったばかりでまだ早いと(heraName)さんが思うなら、まだ全然大丈夫ですよ！',
+    d00: '(herName)、もしよかったら来週の土曜日くらいに一緒に映画観に行きませんか？(herName)が観たいって言ってた(oi相手が観たいと言っていた映画))観に行きましょう！',
+    d01: '(herName)、もしよかったら来週の土曜日くらいに一緒に？(herName)が観たいって言ってた映画観に行きましょう！'
 };
 const optionArray1 = {
     0: 'ところで、(herName)はお休みの日とかはどんなことをして過ごされてるんですか？。よかったら教えてください！',
@@ -102,9 +110,11 @@ const selfIntroArray = {
     nnn: sFTop
 };
 const labelArray = {
-    '0': ['目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
-    '1': ['状況', '質問の回答した', '答えずに質問してきた', 'そっけない一言メール'],
-    '2': ['目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
+    '0': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
+    '1': ['相手からのメールの内容', '質問に答えてくれた', '質問に答えずに別の質問してきた', 'そっけない一言メール'],
+    '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
+    '3': ['連絡先交換する口実', 'もっと話しがしたいから', 'ラインの方が便利だから'],
+    '4': ['会おうと誘う口実', '食事に誘う', '飲みに誘う', '遊びに誘う']
 };
 const optionLabel = {
     op1: ['相手が興味あるもの', '特になし', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
@@ -205,6 +215,15 @@ function baseTextChoice() {
     return mailTextList[mailList[Number(dataArray['step'])][Number(dataArray['lv1'])]]
 }
 
+function display_comment(baseText) {
+    if (baseText.indexOf('[') !== -1) {
+        let textList = baseText.split('[');
+        baseText = textList[0];
+        document.getElementById('comment').textContent = textList[1]
+    }
+    return baseText
+}
+
 function multipleOptionDisplay(baseText, optionCode) {
     let hAForm = document.getElementById(optionCode + 'Outer');
     if (baseText.indexOf(optionCode) !== -1) {
@@ -218,6 +237,7 @@ function multipleOptionDisplay(baseText, optionCode) {
 function displayText(clickId) {
     let baseText = baseTextChoice();
     let beforeReplace = baseText;
+    baseText = display_comment(baseText);
     baseText = optionInsert(baseText);
     baseText = wordReplace(baseText);
     baseText = multipleOptionDisplay(baseText, 'herAnswer');
@@ -312,18 +332,21 @@ function makeSelectOrder(levelStr) {
 }
 
 
-function makeOptionStr(optionNum) {
-    console.log(optionNum);
-    let strArray = optionLabel[optionNum];
+function choiceOptionId(optionNum, strArray) {
     let optionStr = '';
     let key = strArray[0];
     let labelId = optionNum + 'Label';
-    let optionId = optionNum + 'Outer';
     for (let i = 1; i < strArray.length; i += 1) {
         optionStr += '<option value="' + String(i - 1) + '" selected>' + strArray[i] + '</option>\n';
     }
     document.getElementById(optionNum).innerHTML = optionStr;
     document.getElementById(labelId).textContent = key;
+}
+
+function makeOptionStr(optionNum) {
+    console.log(optionNum);
+    let optionId = optionNum + 'Outer';
+    choiceOptionId(optionNum, optionLabel[optionNum]);
     let opForm = document.getElementById(optionNum);
     let opOutForm = document.getElementById(optionId);
     opOutForm.style.display = 'block';
@@ -333,6 +356,8 @@ function makeOptionStr(optionNum) {
 function makeSelectStr(levelStr) {
     console.log(levelStr);
     let selectOrder = makeSelectOrder(levelStr);
+    choiceOptionId(levelStr, labelArray[selectOrder]);
+    /*
     let strArray = labelArray[selectOrder];
     let optionStr = '';
     let key = strArray[0];
@@ -342,6 +367,7 @@ function makeSelectStr(levelStr) {
     }
     document.getElementById(levelStr).innerHTML = optionStr;
     document.getElementById(labelId).textContent = key;
+    */
     document.getElementById(levelStr).options[0].selected = true
 }
 
@@ -369,7 +395,6 @@ function selectChange(level) {
     } else {
         document.getElementById('herNameOuter').style.display = 'block'
     }
-
     let currentText = displayText();
     console.log(currentText);
     optionSelectDisplay(currentText)
@@ -556,3 +581,5 @@ function firstInitialize() {
 }
 
 firstInitialize();
+
+//todo: xcc対策

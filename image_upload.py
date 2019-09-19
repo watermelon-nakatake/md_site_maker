@@ -1,40 +1,38 @@
+# -*- coding: utf-8 -*-
 from PIL import Image, ImageDraw, ImageFont
 import os
 import re
-from reibun_upload import ftp_upload
+import reibun_upload
+import amp_file_maker
+import datetime
 
 
 def insert_img_tag(image_name_list, article_path_long):
-    # ファイルへのimgタグ挿入
     with open(article_path_long, 'r', encoding='utf-8') as f:
         file_str = f.read()
-        if 'pic250' not in file_str:
-            if 'alt_img_t' not in file_str:
-                h1str_list = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.+?)</h1>', file_str)
-                if h1str_list:
-                    alt_str = h1str_list[0]
-                else:
-                    alt_str = '出会い系画像'
-                if image_name_list:
-                    file_str = file_str.replace('<span itemprop="name">ゴーヤン</span></span></a></div>',
-                                                '<span itemprop="name">ゴーヤン</span></span></a></div>'
-                                                + '<div class="alt_img_t"><img src="../images/art_images/' +
-                                                image_name_list[0]
-                                                + '" alt="' + alt_str + 'の画像"></div>')
-                with open(article_path_long, 'w', encoding='utf-8') as g:
-                    g.write(file_str)
+        if 'alt_img_t' not in file_str:
+            h1str_list = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.+?)</h1>', file_str)
+            if h1str_list:
+                alt_str = h1str_list[0]
             else:
-                print('there is alt_t images already!')
+                alt_str = '出会い系画像'
+            if image_name_list:
+                file_str = file_str.replace('<span itemprop="name">ゴーヤン</span></span></a></div>',
+                                            '<span itemprop="name">ゴーヤン</span></span></a></div>' +
+                                            '<div class="alt_img_t"><img src="../images/art_images/'
+                                            + image_name_list[0] + '" alt="' + alt_str + 'の画像"></div>')
+            file_str = reibun_upload.insert_mod_timestamp(file_str)
+            with open(article_path_long, 'w', encoding='utf-8') as g:
+                g.write(file_str)
         else:
-            print('there is pic250 images already!')
+            print('there is alt_t images already!')
 
 
 def image_insert(article_path_long, color_str):
     color_list = {'w': (255, 255, 255), 'b': (0, 0, 0)}
     with open(article_path_long, "r", encoding="utf-8") as t:
         text_str = t.read()
-        str_list = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.+?)</h1>',
-                              text_str)
+        str_list = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.+?)</h1>', text_str)
         if str_list:
             title = str_list[0]
         else:
@@ -66,18 +64,37 @@ def image_insert(article_path_long, color_str):
         img.save('reibun/amp/images/art_images/' + new_name)
         image_name_list.append(new_name)
         os.remove('insert_image/' + img_name)
-        ftp_upload(['reibun/pc/images/art_images/' + new_name])
-        ftp_upload(['reibun/amp/images/art_images/' + new_name])
+        reibun_upload.ftp_upload(['reibun/pc/images/art_images/' + new_name])
+        reibun_upload.ftp_upload(['reibun/amp/images/art_images/' + new_name])
     insert_img_tag(image_name_list, article_path_long)
-    ftp_upload([article_path_long])
+    reibun_upload.ftp_upload([article_path_long])
 
 
 def images_add_to_rb(target_file, color):
     image_insert(target_file, color)
-    ftp_upload([target_file])
-    # todo: ampの更新も追加
+    amp_file_maker.add_amp_file(target_file)
+    today = datetime.date.today()
+    reibun_upload.xml_sitemap_update({target_file.replace('reibun/pc/', ''): today})
+    reibun_upload.ftp_upload(['reibun/p_sitemap.xml'])
 
 
-# 以下実行
+def wrong_img_delete(file_name):
+    del_name = file_name.replace('.html', '')
+    pc_list = os.listdir('reibun/pc/images/art_images/')
+    if del_name + '.jpg' in pc_list:
+        os.remove('reibun/pc/images/art_images/' + del_name + '.jpg')
+        os.remove('reibun/amp/images/art_images/' + del_name + '.jpg')
+    else:
+        return
+    for i in range(1, 5):
+        if del_name + '_' + str(i) + '.jpg' in pc_list:
+            os.remove('reibun/pc/images/art_images/' + del_name + '.jpg')
+            os.remove('reibun/amp/images/art_images/' + del_name + '.jpg')
+        else:
+            return
+
+
 if __name__ == '__main__':
-    images_add_to_rb('reibun/pc/majime/mail-applicaton.html', 'b')
+    images_add_to_rb('reibun/pc/majime/m2htalk.html', 'b')
+    # reibun_upload.ftp_upload(['reibun/pc/majime/m0sexfriend.html'])
+    # wrong_img_delete('fwari')

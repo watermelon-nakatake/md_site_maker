@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 from ftplib import FTP
 import os
 import time
 import re
 import datetime
-from article_maker_rb import amp_maker
-from amp_file_maker import amp_maker
+import amp_file_maker
+import random
 
 
 def ftp_upload(up_file_list):
@@ -24,6 +25,14 @@ def ftp_upload(up_file_list):
     return
 
 
+def insert_mod_timestamp(main_str):
+    today = datetime.date.today()
+    main_str = re.sub(r'<time itemprop="dateModified" datetime="(.*?)</time>',
+                      '<time itemprop="dateModified" datetime="' + str(today) + '">' + str(today.year) + '年'
+                      + str(today.month) + '月' + str(today.day) + '日</time>', main_str)
+    return main_str
+
+
 # ampファイルを作成
 def make_amp_total():
     dir_list = ['caption', 'majime', 'qa', 'site', 'policy']
@@ -35,9 +44,7 @@ def make_amp_total():
             file_path = current_path + '/' + file
             mod_time = os.path.getmtime(file_path)
             if now - mod_time < 86400:
-                with open('file_other/amp_tp.html', "r", encoding='utf-8') as g:
-                    tmp_str = g.read()
-                    amp_maker(file_path, file_path.replace('/pc/', '/amp/'), tmp_str)
+                amp_file_maker.amp_maker(file_path)
                 print('make amp: ' + file_path)
 
 
@@ -77,7 +84,7 @@ def modify_stamp_insert():
             mod_time = os.path.getmtime(file_path)
             mod_date = datetime.date.fromtimestamp(mod_time)
             print(mod_date)
-            mod_date_list[file] = str(mod_date)
+            mod_date_list[directory + '/' + file] = str(mod_date)
             with open(file_path, "r", encoding='utf-8') as f:
                 main_str = f.read()
                 print(file)
@@ -96,15 +103,21 @@ def modify_stamp_insert():
                                           + str(mod_date.day) + '日</time>', main_str)
                         with open(file_path, "w") as h:
                             h.write(main_str)
-        if mod_date_list:
-            with open('reibun/p_sitemap.xml', encoding='utf-8') as g:
-                sitemap_str = g.read()
-                for page in mod_date_list:
-                    sitemap_str = re.sub(
-                        '<loc>https://www.demr.jp/pc/' + directory + '/' + page + '</loc><lastmod>(.+?)</lastmod>',
-                        '<loc>https://www.demr.jp/pc/' + directory + '/' + page + '</loc><lastmod>'
-                        + mod_date_list[page] + '</lastmod>', sitemap_str)
+    if mod_date_list:
+        xml_sitemap_update(mod_date_list)
     return mod_list
+
+
+def xml_sitemap_update(mod_date_list):
+    with open('reibun/p_sitemap.xml', 'r', encoding='utf-8') as g:
+        sitemap_str = g.read()
+        for page in mod_date_list:
+            sitemap_str = re.sub(
+                '<loc>https://www.demr.jp/pc/' + page + '</loc><lastmod>(.+?)</lastmod>',
+                '<loc>https://www.demr.jp/pc/' + page + '</loc><lastmod>'
+                + str(mod_date_list[page]) + '</lastmod>', sitemap_str)
+    with open('reibun/p_sitemap.xml', "w") as f:
+        f.write(sitemap_str)
 
 
 def jap_date_insert():
@@ -136,9 +149,12 @@ def tab_and_line_feed_remover(file_path):
         for x in str_list:
             y = x.strip()
             result += y
-        result = result.replace('span class', 'span class')
-        result = result.replace('img src', 'img src')
-        result = result.replace('span itemprop', 'span itemprop')
+        result = result.replace('spanclass', 'span class')
+        result = result.replace('imgsrc', 'img src')
+        result = result.replace('spanitemprop', 'span itemprop')
+        result = result.replace('spanclass', 'span class')
+        result = result.replace('ahref', 'a href')
+        result = result.replace('timeitemprop', 'time itemprop')
         # print(result)
     with open(file_path, 'w', encoding='utf-8') as w:
         w.write(result)
@@ -159,7 +175,7 @@ def total_update():
     for file in html_list_maker(dir_list):
         tab_and_line_feed_remover(file)
     mod_list = modify_stamp_insert()
-    amp_maker(mod_list)
+    amp_file_maker.amp_maker(mod_list)
     modified_file_upload()
     ftp_upload(['reibun/p_sitemap.xml'])
 
@@ -183,8 +199,75 @@ def link_check(url):
     print(result)
 
 
+def relational_article_insert(title, url, long_str):
+    relational_list = re.findall(r'<div class="kanren">.+?</div>', long_str)
+    if relational_list:
+        if url not in relational_list[0]:
+            ch_list = re.findall(r'<li>.+?</li>', relational_list[0])
+            ch_list.append('<li><a href="' + url + '">' + title + '</a></li>')
+            random.shuffle(ch_list)
+            list_str = '<div class="kanren"><h2>関連記事</h2><ul>' + ''.join(ch_list) + '</ul></div>'
+            long_str = long_str.replace(relational_list[0], list_str)
+            long_str = insert_mod_timestamp(long_str)
+    return long_str
+
+
+def all_file_relational_art_insert(title, url):
+    pc_dir_list = ['majime', 'qa', 'site']  # 'caption',
+    mod_list = []
+    for directory in pc_dir_list:
+        file_list = os.listdir('reibun/pc/' + directory)
+        for file_name in file_list:
+            if '.html' in file_name:
+                file_path = 'reibun/pc/' + directory + '/' + file_name
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    main_str = f.read()
+                    if 'class="kanren"' in main_str:
+                        main_str = relational_article_insert(title, url, main_str)
+                        main_str = insert_mod_timestamp(main_str)
+                        main_str = path_directory_adjuster(main_str, file_path)
+                        with open(file_path, 'w', encoding='utf-8') as g:
+                            g.write(main_str)
+                            mod_list.append(file_path)
+    amp_file_maker.amp_maker(mod_list)
+    ftp_upload(mod_list)
+    ftp_upload([x.replace('/pc/', '/amp/') for x in mod_list])
+
+
+def path_directory_adjuster(long_str, file_path):
+    own_directory = re.findall(r'/pc/(.+?)/', file_path)[0]
+    long_str = long_str.replace('../../pc/' + own_directory + '/', '')
+    long_str = long_str.replace('../' + own_directory + '/', '')
+    long_str = long_str.replace('href=""', 'href="../' + own_directory + '/"')
+    return long_str
+
+
+def all_file_rework():
+    pc_dir_list = ['caption', 'majime', 'qa', 'site']
+    mod_list = []
+    for directory in pc_dir_list:
+        file_list = os.listdir('reibun/pc/' + directory)
+        for file_name in file_list:
+            if '.html' in file_name:
+                file_path = 'reibun/pc/' + directory + '/' + file_name
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    main_str = f.read()
+                    if 'href=""' in main_str:
+                        main_str = main_str.replace('href=""', 'href="../' + directory + '/"')
+                        with open(file_path, 'w', encoding='utf-8') as g:
+                            g.write(main_str)
+                            mod_list.append(file_path)
+    amp_file_maker.amp_maker(mod_list)
+    ftp_upload(mod_list)
+    ftp_upload([x.replace('/pc/', '/amp/') for x in mod_list])
+
+
+# todo: サイドバーのリンクをpickle使って統一＆自動で作成(タイトル読み取り、整列、自動追加）
+# todo: 新規記事追加の省力化　ever note等からのインポートファイルで作成
+# todo: ABテストのscript作成
+
 if __name__ == '__main__':
-    total_update()
+    # total_update()
     # tab_and_line_feed_remover('reibun/pc/majime/m0_2_1_test.html')
     # link_check('app/')
     # modify_stamp_insert()
@@ -192,4 +275,8 @@ if __name__ == '__main__':
     # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
-    # ftp_upload(['reibun/index.html'])
+    ftp_upload(['reibun/index.html'])
+    # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
+    # all_file_rework()
+
+

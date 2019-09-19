@@ -117,10 +117,6 @@ stepForm2.onchange = selectChoice2;
 stepForm3.onchange = selectChoice3;
 
 
-//todo: functionの引数に配列の該当する中身と階層を渡す
-//todo: 中身をhtmlに入れて表示　forでselectを作る
-
-
 // const textLabel = [['choice'], [], []]
 // let chosenStep = document.getElementById('tier1');
 // document.getElementById('t2s1').textContent = textLabel[0][0];

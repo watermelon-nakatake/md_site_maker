@@ -502,7 +502,6 @@ def word_insert(long_str, keyword_dec, keyword_list, stop_num, remote_dir, name_
         long_str = long_str.replace('<!--random-adj-->', random_adj)
     else:
         random_adj = 'none'
-    # todo: 臨時の挿入
     long_str = long_str.replace('<!--charm-p-->', '<!--charm-i-xxx-->スケベでセックスが好き<!--charm-e-xxx-->')
     long_str = long_str.replace('<!--key-search-->', '<!--key-search-i-xxx-->プロフィールの属性で検索' +
                                 '<!--key-search-e-xxx-->')

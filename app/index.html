@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-15766143-9"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-15766143-9', { 'optimize_id': 'GTM-5FVP33R'});</script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +35,8 @@
                             <option value="0" id="firstD">一番最初に送るメール</option>
                             <option value="1">最初の返信メール(自分スタート)</option>
                             <option value="2">掲示板への書き込み</option>
+                            <option value="3">連絡先(ラインID等)を聞くメール</option>
+                            <option value="4">リアルで会おうと誘うメール</option>
                         </select>
                     </div>
 
@@ -92,6 +95,10 @@
 
 
 
+                    <div id="optionInputOuter">
+                        <label for="optionInput">質問への相手の答え</label>
+                        <input class="text_i" id="optionInput" placeholder="input">
+                    </div>
                     <div id="herAnswerOuter">
                         <label for="herAnswer">質問への相手の答え</label>
                         <input class="text_i" id="herAnswer" placeholder="input">
@@ -107,13 +114,14 @@
                     <textarea id="mailDisplayD" class="textarea_d"></textarea>
 
                     <button id="copyButton" class="submit_i">本文をコピー</button>
+                    <div id="comment">ワンポイント</div>
 
 
                     <div class="arrows">
                         <label class="back" for="tab-4">&#8249;</label>
                         <label class="next" for="tab-2">&#8250; </label>
                     </div>
-                    <div><p>version0.71 (Beta)</p></div>
+                    <div><p>version0.72 (Beta)</p></div>
                 </li>
             </ul>
         </li>
