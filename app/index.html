@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。">
     <meta name="theme-color" content="#2F3BA2"/>
-    <link href="app9.css" rel="stylesheet" type="text/css">
+    <link href="app10.css" rel="stylesheet" type="text/css">
     <link rel="manifest" href="manifest.json">
     <!-- for iOS meta tags and icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -96,12 +96,8 @@
 
 
                     <div id="optionInputOuter">
-                        <label for="optionInput">質問への相手の答え</label>
+                        <label for="optionInput" id="optionLabel">optionInput</label>
                         <input class="text_i" id="optionInput" placeholder="input">
-                    </div>
-                    <div id="herAnswerOuter">
-                        <label for="herAnswer">質問への相手の答え</label>
-                        <input class="text_i" id="herAnswer" placeholder="input">
                     </div>
                     <div id="herNameOuter">
                         <label for="herName">相手の名前</label>
@@ -114,14 +110,15 @@
                     <textarea id="mailDisplayD" class="textarea_d"></textarea>
 
                     <button id="copyButton" class="submit_i">本文をコピー</button>
-                    <div id="comment">ワンポイント</div>
+                    <div id="opo"><div id="opl">ワンポイントアドバイス</div>
+                    <div id="comment">ワンポイント</div></div>
 
 
                     <div class="arrows">
                         <label class="back" for="tab-4">&#8249;</label>
                         <label class="next" for="tab-2">&#8250; </label>
                     </div>
-                    <div><p>version0.72 (Beta)</p></div>
+                    <div><p>version0.73 (Beta)</p></div>
                 </li>
             </ul>
         </li>
@@ -204,7 +201,7 @@
 
 </div>
 </body>
-<script src="main_v09091206.js"></script>
+<script src="main_v09201406.js"></script>
 <script>if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')

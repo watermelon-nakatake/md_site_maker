@@ -105,7 +105,7 @@ def amp_maker(pc_path_list):
                 gtag_i = g_tag_insert(content)
                 if gtag_i:
                     amp_data = amp_data.replace('{"trackPageview": {"on": "visible","request": "pageview"}}}',
-                                                '{"trackPageview": {"on": "visible","request": "pageview"},' + gtag_i + '}}')
+                                                '{"trackPageview": {"on": "visible","request": "pageview"}' + gtag_i + '}}')
             with open(amp_path, "w") as h:
                 h.write(amp_data)
             relation_file_upload(amp_data)

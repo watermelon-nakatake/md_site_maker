@@ -975,7 +975,8 @@ def anchor_insert(str_a):
 
 def make_list(input_file):
     matched_list = re.findall(r'<h[234]>.*?</h[234]>', input_file)
-    # matched_list.remove('<h2>関連記事</h2>')
+    if '<h2>関連記事</h2>' in matched_list:
+        matched_list.remove('<h2>関連記事</h2>')
     result = []
     for x in matched_list:
         x = re.sub(r'[0-9]\.\s', '', x)

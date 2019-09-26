@@ -94,7 +94,33 @@ def wrong_img_delete(file_name):
             return
 
 
+def paragraph_insert(file_path, title, insert_str):
+    with open(file_path, 'r', encoding='utf-8')as f:
+        long_str = f.read()
+        max_num = 0
+        index_match = re.findall(r'<nav id="mokuji">(.+?)</nav>', long_str)
+        if index_match:
+            index_ch_list = re.findall(r'<a href="(.+?)">', index_match[0])
+            if index_ch_list:
+                num_list = [int(re.findall(r'\d+', i_ch)[0]) for i_ch in index_ch_list]
+                num_list.sort()
+                max_num = num_list[-1]
+        if '</section><section><div class="kanren"><h2>関連記事</h2>' in long_str:
+            long_str = long_str.replace('</section><section><div class="kanren"><h2>関連記事</h2>',
+                                        '</section><section><h2><span id="sc' + str(max_num) + '">' + title
+                                        + '</span></h2>' + insert_str
+                                        + '</section><section><div class="kanren"><h2>関連記事</h2>')
+            long_str = long_str.replace('</ol></div></nav></div>', '<li><a href="#sc' + str(max_num) + '">' + title
+                                        + '</a></li></ol></div></nav></div>')
+            print(long_str)
+            with open(file_path, 'w', encoding='utf-8') as g:
+                g.write(long_str)
+        else:
+            print('error: There is no kanren or not 1 line')
+
+
 if __name__ == '__main__':
-    images_add_to_rb('reibun/pc/majime/m2htalk.html', 'b')
+    # images_add_to_rb('reibun/pc/majime/m2htalk.html', 'b')
     # reibun_upload.ftp_upload(['reibun/pc/majime/m0sexfriend.html'])
     # wrong_img_delete('fwari')
+    paragraph_insert('reibun/pc/caption/fwari.html', 'テスト', '<p>ここでテストします</p>')

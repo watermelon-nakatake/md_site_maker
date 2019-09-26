@@ -2,24 +2,29 @@
 const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03'};
 const secondMail = {0: 's00', 1: 's01', 2: 's02'};
 const post = {0: 'p00', 1: 'p01', 2: 'p02', 3: 'p03', 4: 'p04'};
-const address = {0: 'a00', 1: 'a01'};
-const dateMail = {0: 'd00', 1:'d01', 2:'d02'};
+const address = {0: 'a00', 1: 'a01', 2:'a02'};
+const dateMail = {0: 'd00', 1:'d01', 2:'d02', 3:'d03'};
 const mailList = [firstMail, secondMail, post, address, dateMail];
 const mailTextList = {
     f00: 'はじめまして、(herName)。$$(自己紹介)いろんなことを一緒に楽しめる彼女が欲しくて、このサイトに登録しました。$$' +
-        '(herName)のプロフィールを見て、素敵な人だなと思ったのでメールを送ってみました。まずはメールからゆっくり仲良くなれたら嬉しいです。$$' +
-        '(option1)$$では、お返事待ってますね。[敬語を使って書くことで、誠実な人だという印象を与えます。',
+        '(herName)のプロフィールを見て、素敵な人だなと思ったのでメールを送ってみました。' +
+        'まずはメールからゆっくり仲良くなれたら嬉しいです。$$' +
+        '(option1)$$では、お返事待ってますね。' +
+        '[敬語を使って書くことで、誠実な人だという印象を与えます。$$また、相手を褒めることでこちらの印象をよくすることができます。',
     f01: 'はじめまして、(herName)。$$(自己紹介)将来のことを考えられるような女性との出会いを探しています。$$' +
-        '(herName)のプロフィールを見て、とても素敵な方だなと感じてご連絡差し上げました。まずはメールでいろいろお話しできたらと思います。$$' +
+        '(herName)のプロフィールを見て、とても素敵な方だなと感じてご連絡差し上げました。' +
+        'まずはメールでいろいろお話しできたらと思います。$$' +
         '(option1)$$では、お返事待ってますね。',
     f02: 'はじめまして、(herName)。$$(自己紹介)実際に会うとかは考えずに純粋にメールのやりとりを楽しめるメル友を探しています。$$' +
-        '(herName)のプロフィールを見て、お話しするのが楽しそうだなと思ったのでメールさせてもらいました。よかったらメル友になってください。$$' +
+        '(herName)のプロフィールを見て、お話しするのが楽しそうだなと思ったのでメールさせてもらいました。' +
+        'よかったらメル友になってください。$$' +
         '(option1)$$では、期待してお返事お待ちします。',
     f03: 'はじめまして、(herName)。$$(自己紹介)彼女とかではなくて、一緒にいろいろ楽しめるような女性との出会いを探しています。$$' +
         '(herName)のプロフィールを見て、とても素敵な方だなと思ったのでメッセージ送ってみました。' +
         'まずはメールでいろいろお話しして、仲良くなったら遊んだり、お酒を飲んだりしましょう。$$' +
         '(option1)$$では、お返事待ってますね。',
-    f04: 'はじめまして、(herName)。$$(自己紹介)彼女とかじゃなくて、お互い都合がいいときにちょっと遊んだりできるような相手を探してます。$$' +
+    f04: 'はじめまして、(herName)。$$(自己紹介)彼女とかじゃなくて、お互い都合がいいときにちょっと遊んだりできるような' +
+        '相手を探してます。$$' +
         '(herName)のプロフィールを見て、とてもいい感じの人だなと思ったのでメッセージ送ってみました。' +
         'まずはメールでいろいろお話しして、仲良くなったら遊んだり、お酒を飲んだりしましょう。$$' +
         '(option1)$$では、お返事を超期待して待ってますね！',
@@ -38,16 +43,19 @@ const mailTextList = {
         'では、気になる方はお気軽にメールくださいね。$$' +
         'いい方と出会えたらこの書き込みは消しますのでお急ぎください（笑）',
     p01: '書き込みを見てくださってありがとうございます。$$(自己紹介)' +
-        '年齢的に最近結婚のことも考えるようになってきたので、将来のことも考えられるような素敵な女性との出会いを探しています。$$かなり真剣です。$$' +
+        '年齢的に最近結婚のことも考えるようになってきたので、将来のことも考えられるような素敵な女性との出会いを探しています。$$' +
+        'かなり真剣です。$$' +
         '優しくて一緒にいろいろなことにチャレンジできるような女性が好きなので、そういう方と知り合えたら嬉しいです。' +
         'まずはメールからゆっくりお話しして、仲良くなりましょう。$$' +
         '本気でお付き合いできる方と知り合えたら、この書き込みは消しますね。$$メールお待ちしています。',
     p02: '書き込みを見てくださってありがとうございます。$$' +
         '純粋にメールだけでやり取りして会話を楽しめる女性のメール友達が欲しくて書き込みをしました。$$' +
-        '(趣味)が好きなので、(趣味)についていろいろ語り合えるようなメル友さんができるととても嬉しいです。もちろん(趣味)に興味ない方でもOKです。$$' +
+        '(趣味)が好きなので、(趣味)についていろいろ語り合えるようなメル友さんができるととても嬉しいです。' +
+        'もちろん(趣味)に興味ない方でもOKです。$$' +
         '「会おう」とかは絶対に言わないので、安心してメールしてきてくださいね。',
     p03: '書き込み見てくださってありがとうございます。$$' +
-        '彼女を探しているというわけではないんですが、一緒に遊んだり美味しいものを食べたり、その他のことも楽しめる素敵な女性を探してます。$$' +
+        '彼女を探しているというわけではないんですが、一緒に遊んだり美味しいものを食べたり、' +
+        'その他のことも楽しめる素敵な女性を探してます。$$' +
         '(自分)は女性に喜んでもらうのが好きなので、いい意味でかなり尽くしますよ！$$' +
         '年齢は気にしないけど、あまりぽっちゃりし過ぎてなくて優しい女性が好きですね。$$' +
         '気になった方は、お気軽にメールをお送りください。期待して待ってます！',
@@ -55,20 +63,46 @@ const mailTextList = {
         '美味しい料理とお酒が大好きな女の子、いらっしゃったらメールで教えてください！$$' +
         '(自分)と飲みに行きましょう！$$行きたいお店があればそこでもいいですし、特になければ(自分)のおすすめのお店でご馳走します。$$' +
         'お時間はそちらの都合に合わせますよ。$$楽しい飲み会にしたいですね。',
-    a00: '(herName)とお話しするのすごく楽しいです。もっとたくさんお話ししたいので、よかったら連絡先を交換して直接やりとりしませんか？$$' +
+    a00: '(herName)とお話しするのすごく楽しいです。もっとたくさんお話ししたいので、' +
+        'よかったら連絡先を交換して直接やりとりしませんか？$$' +
         'ラインIDでも携帯とかのメールアドレスでもどっちでもいいですよ。でも、嫌な時はもう少しサイト内でメールするから言ってくださいね。',
-    a01: '(herName)さんとメールするの、すごく楽しいです。(herName)さんとは気が合いそうです。$$' +
-        'もしよかったら、ラインIDとかメアド交換して、直接やり取りしませんか？その方がサイト経由でメールするよりスムーズにやり取りできますし。$$' +
-        'もちろん、知り合ったばかりでまだ早いと(heraName)さんが思うなら、まだ全然大丈夫ですよ！',
-    d00: '(herName)、もしよかったら来週の土曜日くらいに一緒に映画観に行きませんか？(herName)が観たいって言ってた(oi相手が観たいと言っていた映画))観に行きましょう！',
-    d01: '(herName)、もしよかったら来週の土曜日くらいに一緒に？(herName)が観たいって言ってた映画観に行きましょう！'
+    a01: '(herName)とメールするの、すごく楽しいです。(herName)とは気が合いそうです。$$' +
+        'もしよかったら、ラインIDとかメアド交換して、直接やり取りしませんか？$$' +
+        'その方がサイト経由でメールするよりスムーズにやり取りできますし。$$' +
+        'もちろん、知り合ったばかりでまだ早いと(herName)が思うなら、まだ全然大丈夫ですよ！',
+    a02: 'ごめんなさい。$$' +
+        '(herName)とメールするのすごく楽しいからもっとメールしていたいんだけど、ポイントがなくなったからしばらくメールできません。' +
+        'ポイントを買い足したら、またすぐメールしますね。$$ひょっとしたら少し時間がかかるかも知れないけど･･･。$$' +
+        'それか、ぼくLINE使ってるのでそっちの方ならすぐにまたお返事できると思います。$$念のためIDを教えておきますね。$$' +
+        '(oi自分のラインID) です。' +
+        '[この聞き方は、「ポイントがない ＝ お金がない」でマイナスイメージを与える場合があるのであまりおすすめしません。$$' +
+        'もしダメになってもいい相手に対して、最後の１通で送る時などに利用すると良いと思います。',
+    d00: '(herName)、来週の金曜日の夜とか空いてます？$$もしよかったら一緒に映画観に行きませんか？$$' +
+        '(herName)が観たいって言ってた(oi映画の作品名)観に行きましょう！',
+    d01: '(herName)、この間のメールで(oi相手の好きな食べ物)好きだって言ってましたよね？$$' +
+        '(oi相手の好きな食べ物)の美味しいお店があるんですけど、よかったら一緒に食べに行きませんか？$$' +
+        '前から(自分)も行ってみたいって思ってたんですけど、なかなか一緒に行ってくれる友達がいなくって。',
+    d02: '(herName)、来週の金曜日の夜って何か予定入ってます？$$' +
+        '(自分)ここ最近仕事が忙しかったんですけど、それがやっと終わって自分的に打ち上げしたい気分なんです。$$' +
+        'もし(herName)さえよければ、一緒にお酒飲みたいなと思って。$$' +
+        'お店は、この間見つけた美味しそうな(oi相手が好きな料理)のお店を考えてます。$$' +
+        'ご都合どうですか？もちろんご馳走しますよ（笑）',
+    d03: '今度の金曜日、仕事で(oi相手の住んでいるor職場の地名)に行くことになりました。' +
+        'そのまま直帰するんですけど、せっかくだから、もし良かったら一緒にご飯でも食べませんか？$$' +
+        '(herName)さんおすすめの美味しいお店とかあったらぜひ教えてください！' +
+        '[これは意外に成功しやすい誘い方です。$$' +
+        '本当で仕事で行く用事があればベストですが、もしもなくても仕事で行くということにして誘ってOKです。'
 };
 const optionArray1 = {
     0: 'ところで、(herName)はお休みの日とかはどんなことをして過ごされてるんですか？。よかったら教えてください！',
-    1: 'プロフィールに書いてあったんですけど、(herName)は映画がお好きなんですね。(自分)も好きです。(herName)は特に好きな映画とかありますか？',
-    2: 'プロフ見たんですけど、(herName)は食べることが好きなんですね。(自分)も食べるの好きです。(herName)は特に好きな食べ物とかありますか？',
-    3: 'そうそう、(herName)は音楽がお好きなんですね。(自分)も音楽聴くの好きです。(herName)はどんなジャンルの音楽をよくきかれるんですか？',
-    4: '(herName)、スポーツがお好きなんですね。(自分)も体動かすのも見るのも好きです。(herName)が特に好きなスポーツって何ですか？',
+    1: 'プロフィールに書いてあったんですけど、(herName)は映画がお好きなんですね。(自分)も好きです。' +
+        '(herName)は特に好きな映画とかありますか？',
+    2: 'プロフ見たんですけど、(herName)は食べることが好きなんですね。(自分)も食べるの好きです。' +
+        '(herName)は特に好きな食べ物とかありますか？',
+    3: 'そうそう、(herName)は音楽がお好きなんですね。(自分)も音楽聴くの好きです。' +
+        '(herName)はどんなジャンルの音楽をよくきかれるんですか？',
+    4: '(herName)、スポーツがお好きなんですね。(自分)も体動かすのも見るのも好きです。' +
+        '(herName)が特に好きなスポーツって何ですか？',
     5: '(herName)のプロフィールを見たら、ドライブが好きって書いてあったんですけど、どの辺りによくドライブに行かれるんですか？'
 };
 const optionArray2 = {
@@ -77,16 +111,18 @@ const optionArray2 = {
     2: 'こんばんは！'
 };
 const optionArray3 = {
-    0: '(herName)はお休みの日は(herAnswer)されてるんですね。(自分)も(herAnswer)することよくあります。$$' +
-        'どんな(herAnswer)が特にお気に入りですか？',
-    1: '(herName)、(herAnswer)がお気に入りなんですね。(自分)も観ましたけど、(herAnswer)いいですよね〜。$$' +
+    0: '(herName)はお休みの日は(oi質問に対する相手の答え)されてるんですね。(自分)も(oi質問に対する相手の答え)することよくあります。$$' +
+        'どんな(oi質問に対する相手の答え)が特にお気に入りですか？',
+    1: '(herName)、(oi質問に対する相手の答え)がお気に入りなんですね。' +
+        '(自分)も観ましたけど、(oi質問に対する相手の答え)いいですよね〜。$$' +
         '映画は劇場でご覧になることが多いですか？それとも自宅で？',
-    2: '(herAnswer)がお好きなんですね。確かに美味しいですもんね。(herName)の気持ちよく分かります。' +
-        '$$(herName)はお気に入りの美味しい(herAnswer)のお店とかありますか？',
-    3: '(herName)、(herAnswer)がお好きなんですね。(自分)も少し聴くけどいいですよね。$$ライブとかにも行ったりされるんですか？',
-    4: '(herName)、(herAnswer)が好きなんですか。一緒ですね！(自分)も(herAnswer)好きです。$$' +
-        '観るだけじゃなくて、自分でも(herAnswer)されるんですか？',
-    5: '(herName)は(herAnswer)によくドライブに行かれるんですね。(自分)もたまに行きます。気持ちいいですよね。$$' +
+    2: '(oi質問に対する相手の答え)がお好きなんですね。確かに美味しいですもんね。(herName)の気持ちよく分かります。' +
+        '$$(herName)はお気に入りの美味しい(oi質問に対する相手の答え)のお店とかありますか？',
+    3: '(herName)、(oi質問に対する相手の答え)がお好きなんですね。(自分)も少し聴くけどいいですよね。$$' +
+        'ライブとかにも行ったりされるんですか？',
+    4: '(herName)、(oi質問に対する相手の答え)が好きなんですか。一緒ですね！(自分)も(oi質問に対する相手の答え)好きです。$$' +
+        '観るだけじゃなくて、自分でも(oi質問に対する相手の答え)されるんですか？',
+    5: '(herName)は(oi質問に対する相手の答え)によくドライブに行かれるんですね。(自分)もたまに行きます。気持ちいいですよね。$$' +
         'ドライブはご自分で運転していくんですか？それともお友達とかとです？'
 };
 const optionArray4 = {
@@ -113,8 +149,8 @@ const labelArray = {
     '0': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
     '1': ['相手からのメールの内容', '質問に答えてくれた', '質問に答えずに別の質問してきた', 'そっけない一言メール'],
     '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
-    '3': ['連絡先交換する口実', 'もっと話しがしたいから', 'ラインの方が便利だから'],
-    '4': ['会おうと誘う口実', '食事に誘う', '飲みに誘う', '遊びに誘う']
+    '3': ['連絡先交換する口実', 'もっと話しがしたいから', 'ラインの方が便利だから', 'ポイントがないから'],
+    '4': ['会おうと誘う口実', '映画に誘う', '食事に誘う', '飲みに誘う', '仕事で行くついでに誘う']
 };
 const optionLabel = {
     op1: ['相手が興味あるもの', '特になし', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
@@ -125,7 +161,7 @@ const optionLabel = {
 const replaceWordList = [['(名前)', 'name'], ['(年齢)', 'age'], ['(地域)', 'area'], ['(職業)', 'job'], ['(自分)', 'me'],
 ['(趣味)', 'hobby']];
 const optionWordList = [['option1', 'op1'], ['option2', 'op2'], ['option3', 'op3'], ['option4', 'op4']];
-const insertList = ['herName', 'herAnswer'];
+const insertList = ['herName'];
 // データ格納
 //localStorage.clear();
 let dataArray = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0};
@@ -195,7 +231,6 @@ function selfIntroductionMaker() {
         }
     }
     console.log(checkBox);
-
     let result = selfIntroArray[checkBox].replace('(自分)', currentMe);
     result = result.replace('(自分の名前)', currentName);
     result = result.replace('(年齢)', currentAge);
@@ -219,17 +254,24 @@ function display_comment(baseText) {
     if (baseText.indexOf('[') !== -1) {
         let textList = baseText.split('[');
         baseText = textList[0];
-        document.getElementById('comment').textContent = textList[1]
+        document.getElementById('comment').innerHTML = textList[1].replace('$$', '<br>')
+        document.getElementById('opo').style.display = 'block'
+    } else {
+        document.getElementById('comment').textContent = '';
+        document.getElementById('opo').style.display = 'none'
     }
     return baseText
 }
 
-function multipleOptionDisplay(baseText, optionCode) {
-    let hAForm = document.getElementById(optionCode + 'Outer');
-    if (baseText.indexOf(optionCode) !== -1) {
-        hAForm.style.display = 'block';
+function optionInputDisplay(baseText) {
+    let oIForm = document.getElementById('optionInputOuter');
+    if (baseText.indexOf('(oi') !== -1) {
+        oIForm.style.display = 'block';
+        let matchList = baseText.match(/\(oi.+?\)/);
+        document.getElementById('optionLabel').textContent
+            = matchList[0].replace(/\(oi(.+?)\)/, '$1')
     } else {
-        hAForm.style.display = 'none'
+        oIForm.style.display = 'none'
     }
     return baseText
 }
@@ -240,9 +282,18 @@ function displayText(clickId) {
     baseText = display_comment(baseText);
     baseText = optionInsert(baseText);
     baseText = wordReplace(baseText);
-    baseText = multipleOptionDisplay(baseText, 'herAnswer');
-    if (clickId !== 'herAnswer') {
-        document.getElementById('herAnswer').value = ''
+    baseText = optionInputDisplay(baseText);
+    if (clickId !== 'optionInput') {
+        if (clickId !== 'herName') {
+            document.getElementById('optionInput').value = ''
+        }
+    }
+    if (baseText.indexOf('(oi') !== -1) {
+        if (document.getElementById('optionInput').value) {
+            baseText = replaceAll(baseText, /\(oi.+?\)/, document.getElementById('optionInput').value)
+        } else {
+            baseText = replaceAll(baseText,'(oi', '(')
+        }
     }
     if (baseText.indexOf('(自己紹介)') !== -1) {
         baseText = baseText.replace('(自己紹介)', selfIntroductionMaker())
@@ -270,7 +321,6 @@ function wordInsert(baseText) {
     for (let i = 0; i < insertList.length; i++) {
         let insertStr = insertList[i];
         let searchStr = '(' + insertStr + ')';
-        //相手の名前の置換
         if (baseText.indexOf(searchStr) !== -1) {
             let herNameText = document.getElementById(insertStr).value;
             if (herNameText) {
@@ -278,6 +328,7 @@ function wordInsert(baseText) {
             }
         }
     }
+
     return baseText
 }
 
@@ -294,12 +345,17 @@ function wordReplace(baseText) {
 // 各所クリックで例文更新
 let selectFormHerName = document.getElementById("herName");
 selectFormHerName.onchange = displayTextHA;
-let selectFormHerAnswer = document.getElementById("herAnswer");
-selectFormHerAnswer.onchange = displayTextHA;
+// let selectFormHerAnswer = document.getElementById("herAnswer");
+// selectFormHerAnswer.onchange = displayTextHA;
+let selectFormOptionInput = document.getElementById("optionInput");
+selectFormOptionInput.onchange = displayTextOI;
 let selectFormTab1 = document.getElementById("tab-1");
 selectFormTab1.onclick = displayTextHA;
 function displayTextHA () {
     displayText('herAnswer')
+}
+function displayTextOI () {
+    displayText('optionInput')
 }
 
 // selectを表示
@@ -327,10 +383,8 @@ function makeSelectOrder(levelStr) {
         default:
             selectOrder = '0'
     }
-    console.log(selectOrder);
     return selectOrder
 }
-
 
 function choiceOptionId(optionNum, strArray) {
     let optionStr = '';
@@ -396,14 +450,11 @@ function selectChange(level) {
         document.getElementById('herNameOuter').style.display = 'block'
     }
     let currentText = displayText();
-    console.log(currentText);
     optionSelectDisplay(currentText)
 }
 
 function optionSelectDisplay(currentText) {
     for (let i = 0; i < optionWordList.length; i++) {
-        console.log(optionWordList[i][0]);
-        console.log(currentText.indexOf(optionWordList[i][0]) !== -1);
         if (currentText.indexOf(optionWordList[i][0]) !== -1) {
             makeOptionStr(optionWordList[i][1])
         } else {
@@ -567,7 +618,6 @@ formDSPc.onclick = clickAHPc;
 function firstInitialize() {
     console.log('re-start');
     let currentData = JSON.parse(localStorage.getItem('dataArray'));
-    console.log(currentData);
     initializeSiteCounter();
     document.getElementById('step').options[Number(currentData['step']) + 1].selected = true;
     makeSelectStr('lv1');

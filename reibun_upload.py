@@ -275,7 +275,7 @@ if __name__ == '__main__':
     # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
-    ftp_upload(['reibun/index.html'])
+    ftp_upload(['reibun/amp/majime/m0happymail.html'])
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
     # all_file_rework()
 
