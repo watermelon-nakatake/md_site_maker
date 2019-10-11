@@ -177,7 +177,7 @@ def total_update():
     mod_list = modify_stamp_insert()
     amp_file_maker.amp_maker(mod_list)
     modified_file_upload()
-    ftp_upload(['reibun/p_sitemap.xml'])
+    ftp_upload(['reibun/p_sitemap.xml', 'reibun/index.html'])
 
 
 def link_checker(url, target_html_list):
@@ -262,6 +262,55 @@ def all_file_rework():
     ftp_upload([x.replace('/pc/', '/amp/') for x in mod_list])
 
 
+def twitter_card_insert(long_str, file_path):
+    img = 'images/mailgirl250w1.jpg'
+    title = '出会い系メール例文集'
+    desc = '出会い系サイトで役立つメールの例文をご紹介しています。'
+    title_l = re.findall(r'<title>(.+?)</title>', long_str)
+    if title_l:
+        title = title_l[0]
+    desc_l = re.findall(r'<meta name="description" content="(.+?)">', long_str)
+    if desc_l:
+        desc = desc_l[0]
+    if 'alt_img_t' in long_str:
+        img_l = re.findall(r'<div class="alt_img_t"><img src="(.+?)" alt="', long_str)
+        if img_l:
+            img = img_l[0]
+    elif 'pic25o' in long_str:
+        img_l = re.findall(r'<div class="pic250"><img src="(.+?)" width="250"', long_str)
+        if img_l:
+            img = img_l[0]
+            if '"' in img:
+                print('pic250 is wrong order! : ' + file_path)
+    url = file_path.replace('reibun/pc/', 'https://www.demr.jp/pc/')
+    img = img.replace('../images/', '/images/')
+    if 'twitter:card' not in long_str:
+        card_str = '<meta name="twitter:card" content="summary" />' \
+                   '<meta name="twitter:site" content="@goyan_demr" /><meta property="og:url" content="'\
+                   + url + '" /><meta property="og:title" content="' + title\
+                   + '" /><meta property="og:description" content="' + desc\
+                   + '" /><meta property="og:image" content="https://www.demr.jp/pc' + img + '" />'
+        long_str = long_str.replace('</head>', card_str + '</head>')
+    return long_str
+
+
+def total_twitter_card_insert():
+    pc_dir_list = ['caption', 'majime', 'qa', 'site']
+    update_list = []
+    for directory in pc_dir_list:
+        file_list = os.listdir('reibun/pc/' + directory)
+        for file_name in file_list:
+            if '.html' in file_name:
+                file_path = 'reibun/pc/' + directory + '/' + file_name
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    main_str = f.read()
+                    main_str = twitter_card_insert(main_str, file_path)
+                with open(file_path, 'w', encoding='utf-8') as g:
+                    g.write(main_str)
+                    update_list.append(file_path)
+    ftp_upload(update_list)
+
+
 # todo: サイドバーのリンクをpickle使って統一＆自動で作成(タイトル読み取り、整列、自動追加）
 # todo: 新規記事追加の省力化　ever note等からのインポートファイルで作成
 # todo: ABテストのscript作成
@@ -275,8 +324,9 @@ if __name__ == '__main__':
     # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
-    ftp_upload(['reibun/amp/majime/m0happymail.html'])
+    # ftp_upload(['reibun/amp/majime/m0happymail.html'])
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
     # all_file_rework()
+    total_twitter_card_insert()
 
 

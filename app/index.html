@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。">
+    <title>出会い系メール例文アプリ</title>
+    <meta name="description" content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。当然無料で利用できてダウンロードも不要です。新しい例文をどんどん追加中！">
     <meta name="theme-color" content="#2F3BA2"/>
     <link href="app10.css" rel="stylesheet" type="text/css">
     <link rel="manifest" href="manifest.json">
@@ -14,8 +15,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="mail sample">
     <link rel="apple-touch-icon" href="images/icons/icon-152x152-1.png">
-
-    <title>出会い系メール例文アプリ</title>
+    <!-- twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@goyan_demr" />
+    <meta property="og:url" content="https://www.demr.jp/app/" />
+    <meta property="og:title" content="出会い系メール例文アプリ|出会い系メール例文集" />
+    <meta property="og:description" content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。当然無料で利用できます。" />
+    <meta property="og:image" content="https://www.demr.jp/pc/images/demr_mgirl_1200x630.jpg" />
 </head>
 
 <body>
@@ -35,6 +41,7 @@
                             <option value="0" id="firstD">一番最初に送るメール</option>
                             <option value="1">最初の返信メール(自分スタート)</option>
                             <option value="2">掲示板への書き込み</option>
+                            <option value="5">仲良くなるための話題と会話例文</option>
                             <option value="3">連絡先(ラインID等)を聞くメール</option>
                             <option value="4">リアルで会おうと誘うメール</option>
                         </select>
@@ -103,6 +110,8 @@
                         <label for="herName">相手の名前</label>
                         <input class="text_i" id="herName" placeholder="input">
                     </div>
+
+                    <div id="displayArea">
                     <label for="mailDisplayD">メール本文</label>
                     <div id="mailDisplay" class="textarea_i">ここにメール本文が表示されます。</div>
 
@@ -110,6 +119,9 @@
                     <textarea id="mailDisplayD" class="textarea_d"></textarea>
 
                     <button id="copyButton" class="submit_i">本文をコピー</button>
+                        </div>
+
+
                     <div id="opo"><div id="opl">ワンポイントアドバイス</div>
                     <div id="comment">ワンポイント</div></div>
 
