@@ -2,8 +2,8 @@
 const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03'};
 const secondMail = {0: 's00', 1: 's01', 2: 's02'};
 const post = {0: 'p00', 1: 'p01', 2: 'p02', 3: 'p03', 4: 'p04'};
-const address = {0: 'a00', 1: 'a01', 2:'a02'};
-const dateMail = {0: 'd00', 1:'d01', 2:'d02', 3:'d03'};
+const address = {0: 'a00', 1: 'a01', 2: 'a02'};
+const dateMail = {0: 'd00', 1: 'd01', 2: 'd02', 3: 'd03'};
 const mailList = [firstMail, secondMail, post, address, dateMail];
 const mailTextList = {
     f00: 'はじめまして、(herName)。$$(自己紹介)いろんなことを一緒に楽しめる彼女が欲しくて、このサイトに登録しました。$$' +
@@ -93,31 +93,31 @@ const mailTextList = {
         '[これは意外に成功しやすい誘い方です。$$' +
         '本当で仕事で行く用事があればベストですが、もしもなくても仕事で行くということにして誘ってOKです。'
 };
-const combo = {
-    c01: ['プロフィールを読ませていただいたんですけど、(herName)はお酒がお好きなんですね。(自分)もお酒好きです。$$' +
+const comboList = [
+    ['プロフィールに書いてあったんですけど、(herName)はお酒がお好きなんですね。(自分)もお酒好きです。$$' +
     '(herName)はどんなお酒が特にお好きなんですか？',
-        '(自分の名前)さんもお酒が好きなんですね。$$' +
-    '私はワインをよく飲んでます。',
-    '(herName)、ワインがお好きなんですね。私もワイン好きです。$$' +
-    '(herName)、ワインは赤と白どっちがお好きですか？',
+        '(herName)さんもお酒が好きなんですね。$$' +
+        '私はワインをよく飲んでます。',
+        '(herName)、ワインがお好きなんですね。私もワイン好きです。$$' +
+        '(herName)、ワインは赤と白どっちがお好きですか？',
         'ワインお好きなんですか。気が合いそうですね。$$' +
-    '私は最近は白ワインをよく飲んでます。',
+        '私は最近は白ワインをよく飲んでます。',
         '白ワインをよく飲まれるんですね。$$' +
-    '(自分)も白ワインが多いです。特に辛口をよく飲みます。$$' +
-    '私はワインの時にはチーズをよく食べてるんですけど、(herName)はどんなおつまみが好きですか？',
+        '(自分)も白ワインが多いです。特に辛口をよく飲みます。$$' +
+        '私はワインの時にはチーズをよく食べてるんですけど、(herName)はどんなおつまみが好きですか？',
         '私もチーズ好きです。カマンベールチーズをよく食べてます。$$' +
-    'あとは、生ハムとかパスタを食べてますね。',
+        'あとは、生ハムとかパスタを食べてますね。',
         'カマンベールチーズ、私もよく食べてます。$$' +
-    'あと、生ハムもいいですね。私はサラダに乗せて食べたりもします。$$' +
-    '(herName)、お酒好きだと結構強い方なんですか？どれくらい飲まれます？$$' +
-    'ちなみに(自分)はかなりお酒強いです。',
+        'あと、生ハムもいいですね。私はサラダに乗せて食べたりもします。$$' +
+        '(herName)、お酒好きだと結構強い方なんですか？どれくらい飲まれます？$$' +
+        'ちなみに(自分)はかなりお酒強いです。',
         '自分で料理作ったりされるんですね。私も料理好きです。$$' +
-    'お酒は割と強い方だと思います（笑）$$' +
-    '女子なんですけど、飲む時は一人でボトル一本空けちゃいます（笑）',
+        'お酒は割と強い方だと思います（笑）$$' +
+        '女子なんですけど、飲む時は一人でボトル一本空けちゃいます（笑）',
         'ボトル一本空ける時があるんですか？それはなかなかお強いですね。$$' +
-    '(自分)もワイン１本空けることあるけど、そのあとはいつの間にか寝てしまってます（笑）$$' +
-    '(herName)って、酔っぱらうとどんな感じになるんですか？甘えん坊になったりします？（笑）']
-};
+        '(自分)もワイン１本空けることあるけど、そのあとはいつの間にか寝てしまってます（笑）$$' +
+        '(herName)って、酔っぱらうとどんな感じになるんですか？甘えん坊になったりします？（笑）']
+];
 const optionArray1 = {
     0: 'ところで、(herName)はお休みの日とかはどんなことをして過ごされてるんですか？。よかったら教えてください！',
     1: 'プロフィールに書いてあったんですけど、(herName)は映画がお好きなんですね。(自分)も好きです。' +
@@ -175,7 +175,8 @@ const labelArray = {
     '1': ['相手からのメールの内容', '質問に答えてくれた', '質問に答えずに別の質問してきた', 'そっけない一言メール'],
     '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
     '3': ['連絡先交換する口実', 'もっと話しがしたいから', 'ラインの方が便利だから', 'ポイントがないから'],
-    '4': ['会おうと誘う口実', '映画に誘う', '食事に誘う', '飲みに誘う', '仕事で行くついでに誘う']
+    '4': ['会おうと誘う口実', '映画に誘う', '食事に誘う', '飲みに誘う', '仕事で行くついでに誘う'],
+    '5': ['会話の話題', 'お酒の話', '好きな食べ物の話', '音楽の話', 'ゲームの話']
 };
 const optionLabel = {
     op1: ['相手が興味あるもの', '特になし', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
@@ -184,7 +185,7 @@ const optionLabel = {
     op4: ['女性への質問', '質問しない', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ']
 };
 const replaceWordList = [['(名前)', 'name'], ['(年齢)', 'age'], ['(地域)', 'area'], ['(職業)', 'job'], ['(自分)', 'me'],
-['(趣味)', 'hobby']];
+    ['(趣味)', 'hobby']];
 const optionWordList = [['option1', 'op1'], ['option2', 'op2'], ['option3', 'op3'], ['option4', 'op4']];
 const insertList = ['herName'];
 // データ格納
@@ -218,7 +219,7 @@ if (!localStorage.getItem('name')) {
 }
 
 function populateStorage() {
-    for (let i = 0;i < replaceWordList.length;i++){
+    for (let i = 0; i < replaceWordList.length; i++) {
         let replaceWord = replaceWordList[i][1];
         localStorage.setItem(replaceWord, document.getElementById(replaceWord).value);
     }
@@ -226,7 +227,7 @@ function populateStorage() {
 }
 
 function setStyles() {
-    for (let j = 0;j < replaceWordList.length;j++){
+    for (let j = 0; j < replaceWordList.length; j++) {
         let setWord = replaceWordList[j][1];
         document.getElementById(setWord).value = localStorage.getItem(setWord);
     }
@@ -272,6 +273,7 @@ function replaceAll(str, before, after) {
 
 function baseTextChoice() {
     let dataArray = JSON.parse(localStorage.getItem('dataArray'));
+    console.log(dataArray);
     return mailTextList[mailList[Number(dataArray['step'])][Number(dataArray['lv1'])]]
 }
 
@@ -301,6 +303,43 @@ function optionInputDisplay(baseText) {
     return baseText
 }
 
+function displayCombo5(lv1data) {
+    console.log(lv1data);
+    let textList = comboList[Number(lv1data)];
+    let currentStr = '';
+    for (let i = 0; i < textList.length; i++) {
+        // メール文章作成
+        let textStr = textList[i];
+        currentStr = currentStr + textStr;
+        if (document.getElementById('herName').value) {
+            textStr = replaceAll(textStr, '(herName)', document.getElementById('herName').value)
+        } else {
+            textStr = replaceAll(textStr, '(herName)', '(相手の名前)')
+        }
+        textStr = wordReplace(textStr);
+        // HTMLに挿入
+        document.getElementById('mailDisplay' + String(i)).innerHTML = '<p>' + replaceAll(textStr, '$$', '<br>')
+            + '</p>';
+        if (document.getElementById('mailDisplayD' + String(i))) {
+            document.getElementById('mailDisplayD' + String(i)).value = replaceAll(textStr, '$$', '\n')
+        }
+    }
+        for (let i = 1; i < 10; i++) {
+            let elements = document.getElementsByClassName('textDisplay' + String(i));
+            if (i < textList.length){
+                for (let j = 0; j < elements.length; j++) {
+                elements[j].style.display = 'block'
+            }
+            } else {
+                for (let j = 0; j < elements.length; j++) {
+                elements[j].style.display = 'none'
+            }
+            }
+        }
+    optionInputDisplay(currentStr);
+    return currentStr
+}
+
 function displayText(clickId) {
     let baseText = baseTextChoice();
     let beforeReplace = baseText;
@@ -317,16 +356,22 @@ function displayText(clickId) {
         if (document.getElementById('optionInput').value) {
             baseText = replaceAll(baseText, /\(oi.+?\)/, document.getElementById('optionInput').value)
         } else {
-            baseText = replaceAll(baseText,'(oi', '(')
+            baseText = replaceAll(baseText, '(oi', '(')
         }
     }
     if (baseText.indexOf('(自己紹介)') !== -1) {
         baseText = baseText.replace('(自己紹介)', selfIntroductionMaker())
     }
     baseText = wordInsert(baseText);
-    document.getElementById('mailDisplay').innerHTML = '<p>' + replaceAll(baseText, '$$', '<br>')
+    document.getElementById('mailDisplay0').innerHTML = '<p>' + replaceAll(baseText, '$$', '<br>')
         + '</p>';
-    document.getElementById('mailDisplayD').value = replaceAll(baseText, '$$', '\n');
+    document.getElementById('mailDisplayD0').value = replaceAll(baseText, '$$', '\n');
+    for (let i = 10; i >= 1; i--) {
+            let elements = document.getElementsByClassName('textDisplay' + String(i));
+            for (let j = 0; j < elements.length; j++) {
+                elements[j].style.display = 'none'
+            }
+        }
     return beforeReplace
 }
 
@@ -376,11 +421,18 @@ let selectFormOptionInput = document.getElementById("optionInput");
 selectFormOptionInput.onchange = displayTextOI;
 let selectFormTab1 = document.getElementById("tab-1");
 selectFormTab1.onclick = displayTextHA;
-function displayTextHA () {
+
+function displayTextHA() {
+    if (document.getElementById('step').value !== '5') {
     displayText('herAnswer')
+        } else {
+        console.log('TextHA start');
+        displayCombo5(document.getElementById('lv1').value)
+    }
 }
-function displayTextOI () {
-    displayText('optionInput')
+
+function displayTextOI() {
+        displayText('optionInput')
 }
 
 // selectを表示
@@ -469,13 +521,19 @@ function selectChange(level) {
     console.log(selectedValue);
     console.log(arrayData);
     localStorage.setItem('dataArray', JSON.stringify(arrayData));
+
     if (arrayData['step'] === 2) {
         document.getElementById('herNameOuter').style.display = 'none'
     } else {
         document.getElementById('herNameOuter').style.display = 'block'
     }
-    let currentText = displayText();
-    optionSelectDisplay(currentText)
+    if (arrayData['step'] === 5) {
+        let comboStr = displayCombo5(arrayData['lv1']);
+        optionSelectDisplay(comboStr)
+    } else {
+        let currentText = displayText();
+        optionSelectDisplay(currentText)
+    }
 }
 
 function optionSelectDisplay(currentText) {
@@ -564,17 +622,55 @@ function execCopy(string) {
     return result;
 }
 
-let textarea = document.getElementById('mailDisplayD');
-let button = document.getElementById('copyButton');
+let textarea0 = document.getElementById('mailDisplayD0');
+let textarea2 = document.getElementById('mailDisplayD2');
+let textarea4 = document.getElementById('mailDisplayD4');
+let textarea6 = document.getElementById('mailDisplayD6');
+let textarea8 = document.getElementById('mailDisplayD8');
+let textarea10 = document.getElementById('mailDisplayD10');
 
-button.onclick = function () {
-    if (execCopy(textarea.value)) {
+
+let button0 = document.getElementById('copyButton0');
+let button2 = document.getElementById('copyButton2');
+let button4 = document.getElementById('copyButton4');
+let button6 = document.getElementById('copyButton6');
+let button8 = document.getElementById('copyButton8');
+let button10 = document.getElementById('copyButton10');
+
+button0.onclick = buttonClick0;
+button2.onclick = buttonClick2;
+button4.onclick = buttonClick4;
+button6.onclick = buttonClick6;
+button8.onclick = buttonClick8;
+button10.onclick = buttonClick10;
+
+function buttonClick0() {
+    buttonClick(textarea0);
+}
+function buttonClick2() {
+    buttonClick(textarea2);
+}
+function buttonClick4() {
+    buttonClick(textarea4);
+}
+function buttonClick6() {
+    buttonClick(textarea6);
+}
+function buttonClick8() {
+    buttonClick(textarea8);
+}
+function buttonClick10() {
+    buttonClick(textarea10);
+}
+
+function buttonClick(area) {
+    console.log('push copy');
+    if (execCopy(area.value)) {
         alert('コピーできました!')
     } else {
         alert('このブラウザでは対応していません!')
     }
-};
-
+}
 
 //リンクのクリックカウントとURL変更
 //初期化

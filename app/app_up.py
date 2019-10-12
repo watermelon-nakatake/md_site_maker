@@ -35,5 +35,5 @@ def test_upload():
 
 
 # 以下実行
-app_upload()
+# app_upload()
 test_upload()
