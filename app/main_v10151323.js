@@ -1,5 +1,5 @@
 // 例文
-const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03'};
+const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03', 4: 'f04'};
 const secondMail = {0: 's00', 1: 's01', 2: 's02'};
 const post = {0: 'p00', 1: 'p01', 2: 'p02', 3: 'p03', 4: 'p04'};
 const address = {0: 'a00', 1: 'a01', 2: 'a02'};
@@ -73,7 +73,7 @@ const mailTextList = {
     a02: 'ごめんなさい。$$' +
         '(herName)とメールするのすごく楽しいからもっとメールしていたいんだけど、ポイントがなくなったからしばらくメールできません。' +
         'ポイントを買い足したら、またすぐメールしますね。$$ひょっとしたら少し時間がかかるかも知れないけど･･･。$$' +
-        'それか、ぼくLINE使ってるのでそっちの方ならすぐにまたお返事できると思います。$$念のためIDを教えておきますね。$$' +
+        'それか、(自分)LINE使ってるのでそっちの方ならすぐにまたお返事できると思います。$$念のためIDを教えておきますね。$$' +
         '(oi自分のラインID) です。' +
         '[この聞き方は、「ポイントがない ＝ お金がない」でマイナスイメージを与える場合があるのであまりおすすめしません。$$' +
         'もしダメになってもいい相手に対して、最後の１通で送る時などに利用すると良いと思います。',
@@ -96,7 +96,7 @@ const mailTextList = {
 const comboList = [
     ['プロフィールに書いてあったんですけど、(herName)はお酒がお好きなんですね。(自分)もお酒好きです。$$' +
     '(herName)はどんなお酒が特にお好きなんですか？',
-        '(herName)さんもお酒が好きなんですね。$$' +
+        'お酒が好きなんですね。$$' +
         '私はワインをよく飲んでます。',
         '(herName)、ワインがお好きなんですね。私もワイン好きです。$$' +
         '(herName)、ワインは赤と白どっちがお好きですか？',
@@ -116,7 +116,64 @@ const comboList = [
         '女子なんですけど、飲む時は一人でボトル一本空けちゃいます（笑）',
         'ボトル一本空ける時があるんですか？それはなかなかお強いですね。$$' +
         '(自分)もワイン１本空けることあるけど、そのあとはいつの間にか寝てしまってます（笑）$$' +
-        '(herName)って、酔っぱらうとどんな感じになるんですか？甘えん坊になったりします？（笑）']
+        '(herName)って、酔っぱらうとどんな感じになるんですか？甘えん坊になったりします？（笑）'],
+    ['プロフィールの読書が好きって書いてありましたね。(自分)も本読むの好きです。$$(herName)はどんな本をよく読まれるんですか？',
+        '私はミステリーが好きです。',
+        '(herName)、ミステリーがお好きなんですね。私もミステリー好きです。$$ミステリーで特に好きな作家さんとかいます？',
+        '綾辻行人さんが好きです。',
+        '綾辻さんですか。いいですよね！私もよく読みます。$$' +
+        '綾辻さんの作品の中でどれが好きですか？私は絢辻さんだと、十角館の殺人が好きですね。',
+        '私は時計館が好きです。',
+        '時計館もいいですよね。$$(自分)が最近ハマってるのは貫井徳郎さんです。(herName)、読まれました？'],
+    ['プロフ読ませて頂いたんですけど、(herName)って音楽聴くのが好きなんですね。俺も音楽よく聴いてますよ。$$' +
+    '(herName)はどういう音楽をよく聴かれるんですか？',
+        '洋楽をよく聴いてます',
+        'へえ、洋楽聴いてるんですか。かっこいいですね。俺も洋楽聴いてみようかな。$$' +
+        '(herName)的にはどのアーティストが一番オススメですか？',
+        'サム・スミスがいいですよ',
+        'サム・スミスですね。了解です！近いうちに聴いてみますね。かなり楽しみです。$$' +
+        'サム・スミスの曲で、(herName)が特に気に入っている曲とかありますか？'],
+    ['(herName)って、今彼氏いるんですか？',
+        '今は彼氏いないです。',
+        'そうなんですか！(herName)モテそうだから彼氏いると思ってたんですけど。$$(自分)も今彼女いないんです。$$どれくらい彼氏いないんです？',
+        '１年くらいかな。',
+        '１年彼氏いないんですか。じゃあ、そろそろ寂しくなったりする頃ですね。$$(herName)、どういうタイプの男の人が好きなんですか？',
+        '優しいけど引っ張っていってくれるタイプの人が好きです。',
+        '優しいのは大事ですね。(自分)も優しい女の人が好きです。$$あと、自分の意見がある人がいいですね。$$' +
+        '引っ張っていってくれる人が好きってことは、(herName)って結構甘えん坊だったりするんですか？（笑）',
+        'どっちかというと甘えん坊タイプかもしれないですね。$$構ってくれないと寂しくなります（笑）',
+        'やっぱりそうなんだ（笑）$$そんな甘えん坊タイプなら、好きになったら一途なんでしょうね。浮気とかしたことないですよね？',
+        '実は、寂しくて浮気したことあります（笑）',
+        '浮気したことあるんですか？意外だな〜。$$でも、彼氏が構ってくれなくて寂しい時は仕方ないですよね。$$' +
+        '浮気相手はどんなタイプの男性だったんですか？' +
+        '[この会話例では、最後の方で浮気をしたことがあるか聞いています。' +
+        'ここで浮気をしたことがあると答えた女性は、遊んだりセフレにするのにはベストです。簡単に会えると思います。' +
+        '一方、彼女や結婚相手にするのはやめておいた方がいいでしょう。'],
+    ['(herName)って、食べ物ではどんなものが好きなんですか？',
+        '私は焼き鳥が好きです。',
+        '焼き鳥がお好きなんですか？(自分)も焼き鳥好きです。$$焼き鳥の中でも何か特に好きな種類ありますか？$$(自分)はハツが好きですね。',
+        'ハツ美味しいですよね。$$私は鶏皮です。太っちゃいそうだけど（笑）',
+        '鶏皮、いいですね。(自分)も焼き鳥に行ったら鶏皮は必ず食べてます。$$コラーゲンだし、お肌にないいんじゃないですか？（笑）$$' +
+        '(herName)、特にお気に入りのお店とかありますか？',
+        '焼き鳥屋さんでは○○にある○○ってお店によく行ってます。$$あそこの鶏皮はかなり美味しいです。',
+        '○○ですか。$$美味しいとは聞いてるんですけど、(自分)まだ行ったことないんですよね。行ってみたいなあ。$$' +
+        'そのうち一緒に行きましょうか（笑）$$(herName)、焼き鳥が好きってことは、お酒も好きなんですか？',
+        'そうですね、そのうち一緒に行きましょう。 $$私、お酒は飲めないんです。$$飲んだら頭痛くなっちゃって。',
+        'そうなんですか。頭痛いのは大変ですね。$$(自分)は飲めるけど、そんなに強くないです。$$じゃあ、飲み会の時はウーロン茶飲んでます？',
+        '飲み会の時はあれば炭酸水ですね。$$ジンジャーエールとかもよく飲みます。',
+        '炭酸系はさっぱりしてていいですよね。$$職場の飲み会とか、友達との女子会とか、飲み会多かったりするんですか？' +
+        '[この会話例では、好きな食べ物の話題から最終的にはお酒の話題に移っています。大人同士の会話ではこのケースも多いです。$$' +
+        '会話の中で一緒にそのうち一緒に食べに行こうと誘っていますが、これは軽く流しておいて、仲良くなってから本格的に誘いましょう。'],
+    ['(herName)のプロフィールにゲームが好きって書いてあったんですけど、どんなゲームをされるんですか？',
+        'ラインでツムツムやったり、ポコポコやったりしてます。',
+        'ツムツムとポコポコですか。自分もポコポコやってます。まだ始めたばかりですけど。$$' +
+        'でも、なかなか進まなくなって難しいですね。$$(herName)はポコポコ、どのくらい進んでるんですか？',
+        'ステージ500台に入ったばかりですね。私もなかなか進みません（笑）',
+        '500はすごいですよ！よかったらコツを教えてください。$$そうだ、(herName)ポコポコやってるなら、ラインで友達になりましょう。$$' +
+        'もうすぐイベントとかあるので、助けてください。[最近、携帯ゲームが趣味だという女性が出会い系サイトにも増えています。$$' +
+        'ラインに紐づけられている携帯ゲームだと、アイテムのやり取りなどでラインIDを教えてもらいやすかったりするので、' +
+        'ゲームネタは出会いにも使えます。']
+
 ];
 const optionArray1 = {
     0: 'ところで、(herName)はお休みの日とかはどんなことをして過ごされてるんですか？。よかったら教えてください！',
@@ -176,7 +233,7 @@ const labelArray = {
     '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
     '3': ['連絡先交換する口実', 'もっと話しがしたいから', 'ラインの方が便利だから', 'ポイントがないから'],
     '4': ['会おうと誘う口実', '映画に誘う', '食事に誘う', '飲みに誘う', '仕事で行くついでに誘う'],
-    '5': ['会話の話題', 'お酒の話', '好きな食べ物の話', '音楽の話', 'ゲームの話']
+    '5': ['会話の話題', 'お酒の話', '好きな本の話', '音楽の話', '恋愛の話', '好きな食べ物の話', 'ゲームの話']
 };
 const optionLabel = {
     op1: ['相手が興味あるもの', '特になし', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
@@ -304,7 +361,6 @@ function optionInputDisplay(baseText) {
 }
 
 function displayCombo5(lv1data) {
-    console.log(lv1data);
     let textList = comboList[Number(lv1data)];
     let currentStr = '';
     for (let i = 0; i < textList.length; i++) {
@@ -317,6 +373,10 @@ function displayCombo5(lv1data) {
             textStr = replaceAll(textStr, '(herName)', '(相手の名前)')
         }
         textStr = wordReplace(textStr);
+        if (textStr.indexOf('[') !== -1) {
+            let textList = textStr.split('[');
+            textStr = textList[0]
+        }
         // HTMLに挿入
         document.getElementById('mailDisplay' + String(i)).innerHTML = '<p>' + replaceAll(textStr, '$$', '<br>')
             + '</p>';
@@ -324,19 +384,20 @@ function displayCombo5(lv1data) {
             document.getElementById('mailDisplayD' + String(i)).value = replaceAll(textStr, '$$', '\n')
         }
     }
-        for (let i = 1; i < 10; i++) {
-            let elements = document.getElementsByClassName('textDisplay' + String(i));
-            if (i < textList.length){
-                for (let j = 0; j < elements.length; j++) {
+    for (let i = 1; i <= 10; i++) {
+        let elements = document.getElementsByClassName('textDisplay' + String(i));
+        if (i < textList.length) {
+            for (let j = 0; j < elements.length; j++) {
                 elements[j].style.display = 'block'
             }
-            } else {
-                for (let j = 0; j < elements.length; j++) {
+        } else {
+            for (let j = 0; j < elements.length; j++) {
                 elements[j].style.display = 'none'
             }
-            }
         }
+    }
     optionInputDisplay(currentStr);
+    display_comment(currentStr);
     return currentStr
 }
 
@@ -367,11 +428,11 @@ function displayText(clickId) {
         + '</p>';
     document.getElementById('mailDisplayD0').value = replaceAll(baseText, '$$', '\n');
     for (let i = 10; i >= 1; i--) {
-            let elements = document.getElementsByClassName('textDisplay' + String(i));
-            for (let j = 0; j < elements.length; j++) {
-                elements[j].style.display = 'none'
-            }
+        let elements = document.getElementsByClassName('textDisplay' + String(i));
+        for (let j = 0; j < elements.length; j++) {
+            elements[j].style.display = 'none'
         }
+    }
     return beforeReplace
 }
 
@@ -424,15 +485,15 @@ selectFormTab1.onclick = displayTextHA;
 
 function displayTextHA() {
     if (document.getElementById('step').value !== '5') {
-    displayText('herAnswer')
-        } else {
+        displayText('herAnswer')
+    } else {
         console.log('TextHA start');
         displayCombo5(document.getElementById('lv1').value)
     }
 }
 
 function displayTextOI() {
-        displayText('optionInput')
+    displayText('optionInput')
 }
 
 // selectを表示
@@ -502,7 +563,6 @@ function makeSelectStr(levelStr) {
     document.getElementById(levelStr).options[0].selected = true
 }
 
-
 function dataArrayOrder(level, valueO) {
     let arrayData = currentArray;
     console.log(valueO);
@@ -521,7 +581,6 @@ function selectChange(level) {
     console.log(selectedValue);
     console.log(arrayData);
     localStorage.setItem('dataArray', JSON.stringify(arrayData));
-
     if (arrayData['step'] === 2) {
         document.getElementById('herNameOuter').style.display = 'none'
     } else {
@@ -647,18 +706,23 @@ button10.onclick = buttonClick10;
 function buttonClick0() {
     buttonClick(textarea0);
 }
+
 function buttonClick2() {
     buttonClick(textarea2);
 }
+
 function buttonClick4() {
     buttonClick(textarea4);
 }
+
 function buttonClick6() {
     buttonClick(textarea6);
 }
+
 function buttonClick8() {
     buttonClick(textarea8);
 }
+
 function buttonClick10() {
     buttonClick(textarea10);
 }
@@ -678,14 +742,10 @@ let formDSWk = document.getElementById('countWk');
 let formDSHm = document.getElementById('countHm');
 let formDSMj = document.getElementById('countMj');
 let formDSPc = document.getElementById('countPc');
-
-let countW = Number(localStorage.getItem('countWk'));
-if (countW === null) {
-    localStorage.setItem('countWk', '0');
-}
+let formDSIk = document.getElementById('countIk');
 
 function initializeSiteCounter() {
-    const siteIdList = ['countWk', 'countHm', 'countMj', 'countPc'];
+    const siteIdList = ['countWk', 'countHm', 'countMj', 'countPc', 'countIk'];
     for (let i = 0; i < siteIdList.length; i += 1) {
         let siteID = siteIdList[i];
         let countNum = Number(localStorage.getItem(siteID));
@@ -698,7 +758,6 @@ function initializeSiteCounter() {
 function clickCounter(siteId) {
     let counter = Number(localStorage.getItem(siteId));
     counter++;
-    console.log(siteId + 'クリック数: ' + String(counter));
     localStorage.setItem(siteId, String(counter));
     redirectChoice(counter, siteId)
 }
@@ -707,9 +766,7 @@ function redirectChoice(count, siteId) {
     if (count > 10) {
         let currentDir = document.getElementById(siteId).href;
         if (currentDir.slice(-1) !== 'p') {
-            let altDir = currentDir + 'p';
-            console.log('リダイレクト先: ' + altDir);
-            document.getElementById(siteId).href = altDir
+            document.getElementById(siteId).href = currentDir + 'p'
         }
     }
 }
@@ -730,20 +787,32 @@ function clickAHPc() {
     clickCounter('countPc')
 }
 
+function clickAHIk() {
+    clickCounter('countIk')
+}
+
 formDSWk.onclick = clickAHWk;
 formDSHm.onclick = clickAHHm;
 formDSMj.onclick = clickAHMj;
 formDSPc.onclick = clickAHPc;
+formDSIk.onclick = clickAHIk;
 
 //最初の処理
 function firstInitialize() {
+    const initStepList = [1, 2, 3, 5, 6, 4];
     console.log('re-start');
     let currentData = JSON.parse(localStorage.getItem('dataArray'));
+    let beforeText = '';
     initializeSiteCounter();
-    document.getElementById('step').options[Number(currentData['step']) + 1].selected = true;
+    document.getElementById('step').options[initStepList[Number(currentData['step'])]].selected = true;
     makeSelectStr('lv1');
     document.getElementById('lv1').options[Number(currentData['lv1'])].selected = true;
-    let beforeText = displayText();
+    if (currentData['step'] === 5) {
+        console.log('restart by step 5');
+        beforeText = displayCombo5(currentData['lv1'])
+    } else {
+        beforeText = displayText();
+    }
     optionSelectDisplay(beforeText);
     document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
     document.getElementById('op2').options[Number(currentData['op2'])].selected = true;

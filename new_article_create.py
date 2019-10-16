@@ -3,6 +3,40 @@ import os
 import re
 import article_maker_rb
 import reibun_upload
+import markdown
+
+
+def import_from_markdown():
+    md_file_list = ['test.md']
+    with open('reibun/pc/template/pc_tmp.html', 'r', encoding='utf-8') as t:
+        tmp_str = t.read()
+    for md_file_name in md_file_list:
+        with open(md_file_name, 'r', encoding='utf-8') as f:
+            plain_txt = f.read()
+            if 'd::' in plain_txt:
+                description = re.findall(r'd::(.+?)\n', plain_txt)[0]
+            if 'f::' in plain_txt:
+                file_name = re.findall(r'f::(.+?)\n', plain_txt)[0]
+            if 'k::' in plain_txt:
+                keyword_str = re.findall(r'k::(.+?)\n', plain_txt)[0]
+                keyword = keyword_str.split(' ')
+                if '' in keyword:
+                    keyword.remove('')
+                print('keyword')
+                print(keyword)
+            con_str = markdown.markdown(plain_txt)
+            title_l = re.findall('<h1>(.+?)</h1>', con_str)
+            if title_l:
+                title = title_l[0]
+            else:
+                print('There is no title!!')
+            con_str = re.sub(r'^([\s\S]*)</h1>', '', con_str)
+            new_str = tmp_str.replace('<!--title-->', title)
+            new_str = new_str.replace('<!--main-content-->', con_str)
+            new_str = new_str.replace('<h2>', '<!--p-index--><h2>', 1)
+            new_str = article_maker_rb.index_maker(new_str)
+            new_str = article_maker_rb.section_insert(new_str)
+            print(new_str)
 
 
 def import_from_evernote(insert_dir, new_file_name):
@@ -85,4 +119,5 @@ def new_article_finish():
 
 
 if __name__ == '__main__':
-    import_from_evernote('majime', 'new_a_test')
+    # import_from_evernote('majime', 'new_a_test')
+    import_from_markdown()

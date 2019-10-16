@@ -52,6 +52,24 @@ def g_tag_insert(content_str):
     return insert_str
 
 
+def tab_and_line_feed_remover(long_str):
+    str_list = long_str.splitlines()
+    result = ''
+    for x in str_list:
+        y = x.strip()
+        result += y
+    result = result.replace('spanclass', 'span class')
+    result = result.replace('"itemtype', '" itemtype')
+    result = result.replace('"datetime=', '" datetime=')
+    result = result.replace('imgsrc', 'img src')
+    result = result.replace('spanitemprop', 'span itemprop')
+    result = result.replace('spanclass', 'span class')
+    result = result.replace('ahref', 'a href')
+    result = result.replace('timeitemprop', 'time itemprop')
+    result = result.replace('\\t', '')
+    return result
+
+
 def amp_maker(pc_path_list):
     with open('reibun/amp/template/amp_tmp.html', "r", encoding='utf-8') as g:
         tmp_str = g.read()
@@ -59,6 +77,7 @@ def amp_maker(pc_path_list):
         if '.html' in pc_path:
             with open(pc_path, "r", encoding='utf-8') as f:
                 str_x = f.read()
+                str_x = tab_and_line_feed_remover(str_x)
                 title = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.*?)</h1>', str_x)[0]
                 content = re.findall(r'ゴーヤン</span></span></a></div>(.*?)<!-- maincontentEnd -->', str_x)[0]
                 top_images = re.findall(r'<div class="alt_img_t">.+?</div>', content)
@@ -118,8 +137,8 @@ def add_amp_file(pc_path):
 
 
 if __name__ == '__main__':
-    # new_file = 'majime/mail-applicaton.html'
+    new_file = 'majime/mail-applicaton.html'
     # amp_maker(['reibun/pc/' + new_file])
-    # reibun_upload.ftp_upload(['reibun/pc/' + new_file])
-    # reibun_upload.ftp_upload(['reibun/amp/' + new_file])
-    amp_maker(['reibun/pc/site/index.html'])
+    reibun_upload.ftp_upload(['reibun/pc/' + new_file])
+    reibun_upload.ftp_upload(['reibun/amp/' + new_file])
+    # amp_maker(['reibun/pc/majime/mail-applicaton.html'])

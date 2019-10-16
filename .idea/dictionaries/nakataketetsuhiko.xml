@@ -33,12 +33,15 @@
       <w>hutokuro</w>
       <w>imail</w>
       <w>imgsrc</w>
+      <w>itemtype</w>
       <w>kakikata</w>
       <w>kanren</w>
       <w>kijim</w>
       <w>kijip</w>
       <w>kijoph</w>
       <w>kyoki</w>
+      <w>leftnav</w>
+      <w>libut</w>
       <w>mailform</w>
       <w>mailgirl</w>
       <w>maincontent</w>
@@ -74,6 +77,7 @@
       <w>sitepage</w>
       <w>sitepagetop</w>
       <w>spanclass</w>
+      <w>spanid</w>
       <w>spanitemprop</w>
       <w>stor</w>
       <w>tabn</w>

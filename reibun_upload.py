@@ -6,6 +6,7 @@ import re
 import datetime
 import amp_file_maker
 import random
+import article_maker_rb
 
 
 def ftp_upload(up_file_list):
@@ -50,7 +51,7 @@ def make_amp_total():
 
 def modified_file_upload():
     upper_dir = ['pc', 'amp']
-    dir_list = ['caption', 'majime', 'qa', 'site', 'policy']
+    dir_list = ['caption', 'majime', 'qa', 'site', 'policy', 'images']
     modified_file = []
     for upper in upper_dir:
         for directory in dir_list:
@@ -150,6 +151,10 @@ def tab_and_line_feed_remover(file_path):
             y = x.strip()
             result += y
         result = result.replace('spanclass', 'span class')
+        result = result.replace('spanid', 'span id')
+        result = result.replace('"alt=', '" alt=')
+        result = result.replace('"itemtype', '" itemtype')
+        result = result.replace('"datetime=', '" datetime=')
         result = result.replace('imgsrc', 'img src')
         result = result.replace('spanitemprop', 'span itemprop')
         result = result.replace('spanclass', 'span class')
@@ -311,22 +316,35 @@ def total_twitter_card_insert():
     ftp_upload(update_list)
 
 
+def insert_index_list(path):
+    tab_and_line_feed_remover(path)
+    with open(path, 'r', encoding='utf-8') as f:
+        new_str = f.read()
+        new_str = new_str.replace('<h2>', '<!--p-index--><h2>', 1)
+        new_str = article_maker_rb.index_maker(new_str)
+        new_str = article_maker_rb.section_insert(new_str)
+        print(new_str)
+        with open(path, 'w', encoding='utf-8') as g:
+            g.write(new_str)
+
+
 # todo: サイドバーのリンクをpickle使って統一＆自動で作成(タイトル読み取り、整列、自動追加）
 # todo: 新規記事追加の省力化　ever note等からのインポートファイルで作成
 # todo: ABテストのscript作成
 
 if __name__ == '__main__':
     # total_update()
-    # tab_and_line_feed_remover('reibun/pc/majime/m0_2_1_test.html')
+    tab_and_line_feed_remover('reibun/pc/majime/mail-applicaton.html')
     # link_check('app/')
     # modify_stamp_insert()
     # make_amp_total()
     # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
-    # ftp_upload(['reibun/amp/majime/m0happymail.html'])
+    # ftp_upload(['reibun/index.html'])
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
     # all_file_rework()
-    total_twitter_card_insert()
+    # total_twitter_card_insert()
+    # insert_index_list('reibun/pc/majime/mail-applicaton.html')
 
 
