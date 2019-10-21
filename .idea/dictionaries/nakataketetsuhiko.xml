@@ -16,6 +16,8 @@
       <w>demr</w>
       <w>dmail</w>
       <w>dousen</w>
+      <w>dousendisc</w>
+      <w>dousenin</w>
       <w>dsite</w>
       <w>efooter</w>
       <w>erotism</w>
@@ -36,12 +38,14 @@
       <w>itemtype</w>
       <w>kakikata</w>
       <w>kanren</w>
+      <w>kenmei</w>
       <w>kijim</w>
       <w>kijip</w>
       <w>kijoph</w>
       <w>kyoki</w>
       <w>leftnav</w>
       <w>libut</w>
+      <w>maijime</w>
       <w>mailform</w>
       <w>mailgirl</w>
       <w>maincontent</w>
@@ -52,10 +56,12 @@
       <w>merupa</w>
       <w>mintj</w>
       <w>mobnone</w>
+      <w>modt</w>
       <w>mokuji</w>
       <w>mokujio</w>
       <w>nakataketetsuhiko</w>
       <w>nashi</w>
+      <w>navi</w>
       <w>navop</w>
       <w>omail</w>
       <w>otherart</w>
@@ -79,6 +85,7 @@
       <w>spanclass</w>
       <w>spanid</w>
       <w>spanitemprop</w>
+      <w>sphmban</w>
       <w>stor</w>
       <w>tabn</w>
       <w>tari</w>

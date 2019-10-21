@@ -141,25 +141,32 @@ def jap_date_insert():
                 h.write(main_str)
 
 
+def tab_and_line_feed_remove_from_str(long_str):
+    str_list = long_str.splitlines()
+    result = ''
+    for x in str_list:
+        y = x.strip()
+        result += y
+    result = result.replace('spanclass', 'span class')
+    result = result.replace('spanid', 'span id')
+    result = result.replace('"alt=', '" alt=')
+    result = result.replace('"itemtype', '" itemtype')
+    result = result.replace('"datetime=', '" datetime=')
+    result = result.replace('imgsrc', 'img src')
+    result = result.replace('spanitemprop', 'span itemprop')
+    result = result.replace('spanclass', 'span class')
+    result = result.replace('ahref', 'a href')
+    result = result.replace('timeitemprop', 'time itemprop')
+    result = result.replace('description"content="', 'description" content="')
+    result = result.replace('"width="', '" width="')
+    result = result.replace('"media="', '" media="')
+    return result
+
+
 def tab_and_line_feed_remover(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
-        str_list = long_str.splitlines()
-        print(str_list)
-        result = ''
-        for x in str_list:
-            y = x.strip()
-            result += y
-        result = result.replace('spanclass', 'span class')
-        result = result.replace('spanid', 'span id')
-        result = result.replace('"alt=', '" alt=')
-        result = result.replace('"itemtype', '" itemtype')
-        result = result.replace('"datetime=', '" datetime=')
-        result = result.replace('imgsrc', 'img src')
-        result = result.replace('spanitemprop', 'span itemprop')
-        result = result.replace('spanclass', 'span class')
-        result = result.replace('ahref', 'a href')
-        result = result.replace('timeitemprop', 'time itemprop')
+        result = tab_and_line_feed_remove_from_str(long_str)
         # print(result)
     with open(file_path, 'w', encoding='utf-8') as w:
         w.write(result)
@@ -334,7 +341,7 @@ def insert_index_list(path):
 
 if __name__ == '__main__':
     # total_update()
-    tab_and_line_feed_remover('reibun/pc/majime/mail-applicaton.html')
+    tab_and_line_feed_remover('reibun/pc/majime/mail-applicaton_test.html')
     # link_check('app/')
     # modify_stamp_insert()
     # make_amp_total()

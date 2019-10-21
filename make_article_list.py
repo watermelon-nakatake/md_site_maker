@@ -27,7 +27,10 @@ def make_file_data_list():
                         img_path = img_m[0]
                     else:
                         img_path = ''
-                    data_list[directory + '/' + file_name] = [title, img_path]
+                    mod_m = re.findall(r'<time itemprop="dateModified" datetime="(.+?)">', long_str)
+                    if mod_m:
+                        mod_time = mod_m[0]
+                    data_list[directory + '/' + file_name] = [title, img_path, mod_time]
     return data_list
 
 
@@ -38,10 +41,10 @@ def make_current_file_list():
     for new_path in new_data_list:
         for old_id in old_data_list:
             if old_data_list[old_id][0] == new_path:
-                old_data_list[old_id] = [new_path, new_data_list[new_path][0], new_data_list[new_path][1]]
+                old_data_list[old_id] = new_data_list[new_path].insert(0, new_path)
                 break
         if new_path not in old_path_list:
-            old_data_list[len(old_data_list)] = [new_path, new_data_list[new_path][0], new_data_list[new_path][1]]
+            old_data_list[len(old_data_list)] = new_data_list[new_path].insert(0, new_path)
     save_data_to_pickle(old_data_list, 'title_img_list')
     save_text_file(old_data_list)
     print(old_data_list)
@@ -63,5 +66,5 @@ def read_pickle_pot(pkl_name):
 
 
 if __name__ == '__main__':
-    make_current_file_list()
-    # read_pickle_pot('title_img_list.pkl')
+    # make_current_file_list()
+    print(read_pickle_pot('title_img_list'))
