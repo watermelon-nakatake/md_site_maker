@@ -4,7 +4,8 @@ const secondMail = {0: 's00', 1: 's01', 2: 's02'};
 const post = {0: 'p00', 1: 'p01', 2: 'p02', 3: 'p03', 4: 'p04'};
 const address = {0: 'a00', 1: 'a01', 2: 'a02'};
 const dateMail = {0: 'd00', 1: 'd01', 2: 'd02', 3: 'd03'};
-const mailList = [firstMail, secondMail, post, address, dateMail];
+const profile = {0: 'i00'};
+const mailList = [firstMail, secondMail, post, address, dateMail, '', profile];
 const mailTextList = {
     f00: 'はじめまして、(herName)。$$(自己紹介)いろんなことを一緒に楽しめる彼女が欲しくて、このサイトに登録しました。$$' +
         '(herName)のプロフィールを見て、素敵な人だなと思ったのでメールを送ってみました。' +
@@ -91,7 +92,15 @@ const mailTextList = {
         'そのまま直帰するんですけど、せっかくだから、もし良かったら一緒にご飯でも食べませんか？$$' +
         '(herName)おすすめの美味しいお店とかあったらぜひ教えてください！' +
         '[これは意外に成功しやすい誘い方です。$$' +
-        '本当で仕事で行く用事があればベストですが、もしもなくても仕事で行くということにして誘ってOKです。'
+        '本当で仕事で行く用事があればベストですが、もしもなくても仕事で行くということにして誘ってOKです。',
+    i00: 'はじめまして！$$$' +
+        '(自己紹介)$$$' +
+        'ここでは新しい友達を探そうと思い登録しました。$$$' +
+        '身長(pi身長)、体重(pi体重)の(pi体型)タイプです。$$' +
+        'よく芸能人の(pi似ている芸能人1)や(pi似ている芸能人2)に似ていると言われます。$$' +
+        'でも、雰囲気は(pi雰囲気)感じだと言われます。$$' +
+        '趣味は(piスポーツ)や(pi趣味)なんかが好きです。$$$' +
+        '色々な方と出会いたいです、気軽に絡んでくださいね！ '
 };
 const comboList = [
     ['プロフィールに書いてあったんですけど、(herName)はお酒がお好きなんですね。(自分)もお酒好きです。$$' +
@@ -233,7 +242,8 @@ const labelArray = {
     '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
     '3': ['連絡先交換する口実', 'もっと話しがしたいから', 'ラインの方が便利だから', 'ポイントがないから'],
     '4': ['会おうと誘う口実', '映画に誘う', '食事に誘う', '飲みに誘う', '仕事で行くついでに誘う'],
-    '5': ['会話の話題', 'お酒の話', '好きな本の話', '音楽の話', '恋愛の話', '好きな食べ物の話', 'ゲームの話']
+    '5': ['会話の話題', 'お酒の話', '好きな本の話', '音楽の話', '恋愛の話', '好きな食べ物の話', 'ゲームの話'],
+    '6': ['出会いの目的', 'セフレ探し']
 };
 const optionLabel = {
     op1: ['相手が興味あるもの', '特になし', '映画', 'グルメ', '音楽', 'スポーツ', 'ドライブ'],
@@ -245,6 +255,7 @@ const replaceWordList = [['(名前)', 'name'], ['(年齢)', 'age'], ['(地域)',
     ['(趣味)', 'hobby']];
 const optionWordList = [['option1', 'op1'], ['option2', 'op2'], ['option3', 'op3'], ['option4', 'op4']];
 const insertList = ['herName'];
+const baseUserInfo = ['name', 'dataArray', 'randid', 'me', 'job', 'area', 'age', 'hobby'];
 // データ格納
 //localStorage.clear();
 let dataArray = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0};
@@ -262,12 +273,79 @@ let jobForm = document.getElementById('job');
 let hobbyForm = document.getElementById('hobby');
 let meForm = document.getElementById('me');
 
+let pr1Form = document.getElementById('pr1');
+let pr2Form = document.getElementById('pr2');
+let pr3Form = document.getElementById('pr3');
+let pr4Form = document.getElementById('pr4');
+let pr5Form = document.getElementById('pr5');
+let pr6Form = document.getElementById('pr6');
+let pr7Form = document.getElementById('pr7');
+let pr8Form = document.getElementById('pr8');
+let pr9Form = document.getElementById('pr9');
+let pr10Form = document.getElementById('pr10');
+let pr11Form = document.getElementById('pr11');
+
 nameForm.onchange = populateStorage;
 ageForm.onchange = populateStorage;
 areaForm.onchange = populateStorage;
 jobForm.onchange = populateStorage;
 hobbyForm.onchange = populateStorage;
 meForm.onchange = populateStorage;
+pr1Form.onchange = profileTagInput1;
+pr2Form.onchange = profileTagInput2;
+pr3Form.onchange = profileTagInput3;
+pr4Form.onchange = profileTagInput4;
+pr5Form.onchange = profileTagInput5;
+pr6Form.onchange = profileTagInput6;
+pr7Form.onchange = profileTagInput7;
+pr8Form.onchange = profileTagInput8;
+pr9Form.onchange = profileTagInput9;
+pr10Form.onchange = profileTagInput10;
+pr11Form.onchange = profileTagInput11;
+
+function profileTagInput1() {
+    profileTagInput(1)
+}
+
+function profileTagInput2() {
+    profileTagInput(2)
+}
+
+function profileTagInput3() {
+    profileTagInput(3)
+}
+
+function profileTagInput4() {
+    profileTagInput(4)
+}
+
+function profileTagInput5() {
+    profileTagInput(5)
+}
+
+function profileTagInput6() {
+    profileTagInput(6)
+}
+
+function profileTagInput7() {
+    profileTagInput(7)
+}
+
+function profileTagInput8() {
+    profileTagInput(8)
+}
+
+function profileTagInput9() {
+    profileTagInput(9)
+}
+
+function profileTagInput10() {
+    profileTagInput(10)
+}
+
+function profileTagInput11() {
+    profileTagInput(11)
+}
 
 if (!localStorage.getItem('name')) {
     populateStorage();
@@ -287,6 +365,21 @@ function setStyles() {
     for (let j = 0; j < replaceWordList.length; j++) {
         let setWord = replaceWordList[j][1];
         document.getElementById(setWord).value = localStorage.getItem(setWord);
+    }
+}
+
+function profileTagInput(prId) {
+    let prLabel = document.getElementById('prLabel' + String(prId)).textContent;
+    let prValue = document.getElementById('pr' + String(prId)).value;
+    localStorage.setItem(prLabel, prValue);
+    profileValueRewrite(prLabel, prValue)
+}
+
+function profileValueRewrite(labelStr, valueStr) {
+    for (let i = 1; i <= 10; i++) {
+        if (document.getElementById('profileLabel' + String(i)).textContent === labelStr) {
+            document.getElementById('profileInput' + String(i)).value = valueStr
+        }
     }
 }
 
@@ -331,6 +424,7 @@ function replaceAll(str, before, after) {
 function baseTextChoice() {
     let dataArray = JSON.parse(localStorage.getItem('dataArray'));
     console.log(dataArray);
+    console.log(Number(dataArray['step']));
     return mailTextList[mailList[Number(dataArray['step'])][Number(dataArray['lv1'])]]
 }
 
@@ -348,6 +442,28 @@ function display_comment(baseText) {
 }
 
 function optionInputDisplay(baseText) {
+    let pINumInIndex = document.getElementById('profileArea').innerHTML.match(/id="profileInputO/g).length;
+    if (baseText.indexOf('(pi') !== -1) {
+        let matchList = baseText.match(/\(pi.+?\)/g);
+        let matchSet = new Set(matchList);
+        let matchArray = Array.from(matchSet);
+        for (let i = 1; i < pINumInIndex + 1; i++) {
+            if (i <= matchArray.length) {
+                let pIForm = document.getElementById('profileInputOuter' + String(i));
+                pIForm.style.display = 'block';
+                document.getElementById('profileLabel' + String(i)).textContent
+                    = matchArray[i - 1].replace(/\(pi(.+?)\)/, '$1')
+            } else {
+                let pIForm = document.getElementById('profileInputOuter' + String(i));
+                pIForm.style.display = 'none';
+            }
+        }
+    } else {
+        for (let i = 1; i <= pINumInIndex; i++) {
+            let pIFormE = document.getElementById('profileInputOuter' + String(i));
+            pIFormE.style.display = 'none'
+        }
+    }
     let oIForm = document.getElementById('optionInputOuter');
     if (baseText.indexOf('(oi') !== -1) {
         oIForm.style.display = 'block';
@@ -378,10 +494,23 @@ function displayCombo5(lv1data) {
             textStr = textList[0]
         }
         // HTMLに挿入
-        document.getElementById('mailDisplay' + String(i)).innerHTML = '<p>' + replaceAll(textStr, '$$', '<br>')
-            + '</p>';
+        let p_margin = '';
+        let p_marginW = '<br>';
+        let n_margin = '';
+        let n_marginW = '\n';
+        if (localStorage.getItem('plentyMargin')) {
+            p_margin = '<br>';
+            p_marginW = '<br><br>';
+            n_margin = '\n';
+            n_margin = '\n\n'
+        }
+        let replacedText = replaceAll(textStr, '$$$', p_marginW);
+        replacedText = replaceAll(replacedText, '$$', p_margin);
+        document.getElementById('mailDisplay' + String(i)).innerHTML = '<p>' + replacedText + '</p>';
         if (document.getElementById('mailDisplayD' + String(i))) {
-            document.getElementById('mailDisplayD' + String(i)).value = replaceAll(textStr, '$$', '\n')
+            let replacedTextD = replaceAll(textStr, '$$$', n_marginW);
+            replacedTextD = replaceAll(replacedTextD, '$$', n_margin);
+            document.getElementById('mailDisplayD' + String(i)).value = replacedTextD
         }
     }
     for (let i = 1; i <= 10; i++) {
@@ -408,7 +537,7 @@ function displayText(clickId) {
     baseText = optionInsert(baseText);
     baseText = wordReplace(baseText);
     baseText = optionInputDisplay(baseText);
-    if (clickId !== 'optionInput') {
+    if (clickId.indexOf('optionInput') !== -1) {
         if (clickId !== 'herName') {
             document.getElementById('optionInput').value = ''
         }
@@ -420,13 +549,31 @@ function displayText(clickId) {
             baseText = replaceAll(baseText, '(oi', '(')
         }
     }
+    if (baseText.indexOf('(pi') !== -1) {
+        let matchList = baseText.match(/\(pi.+?\)/g);
+        let matchSet = new Set(matchList);
+        let matchArray = Array.from(matchSet);
+        for (let i = 0; i < matchArray.length; i++) {
+            let profileLabel = matchArray[i].replace('(pi', '');
+            profileLabel = profileLabel.replace(')', '');
+            if (localStorage.getItem(profileLabel)) {
+                baseText = replaceAll(baseText, matchArray[i], localStorage.getItem(profileLabel))
+            } else {
+                baseText = replaceAll(baseText, matchArray[i], matchArray[i].replace('(pi', '('))
+            }
+        }
+    }
     if (baseText.indexOf('(自己紹介)') !== -1) {
         baseText = baseText.replace('(自己紹介)', selfIntroductionMaker())
     }
     baseText = wordInsert(baseText);
+
+
     document.getElementById('mailDisplay0').innerHTML = '<p>' + replaceAll(baseText, '$$', '<br>')
         + '</p>';
     document.getElementById('mailDisplayD0').value = replaceAll(baseText, '$$', '\n');
+
+
     for (let i = 10; i >= 1; i--) {
         let elements = document.getElementsByClassName('textDisplay' + String(i));
         for (let j = 0; j < elements.length; j++) {
@@ -434,6 +581,10 @@ function displayText(clickId) {
         }
     }
     return beforeReplace
+}
+
+function marginInsert(longText) {
+
 }
 
 function optionInsert(baseText) {
@@ -459,7 +610,6 @@ function wordInsert(baseText) {
             }
         }
     }
-
     return baseText
 }
 
@@ -482,6 +632,26 @@ let selectFormOptionInput = document.getElementById("optionInput");
 selectFormOptionInput.onchange = displayTextOI;
 let selectFormTab1 = document.getElementById("tab-1");
 selectFormTab1.onclick = displayTextHA;
+let selectFormTab2 = document.getElementById("tab-2");
+selectFormTab2.onclick = profilePageDisplay;
+
+function profilePageDisplay() {
+    let j = 1;
+    for (let i = 0; i < localStorage.length; i++) {
+        let storageKey = localStorage.key(i);
+        if (localStorage.hasOwnProperty(localStorage.key(i))) {
+            if (baseUserInfo.indexOf(storageKey) < 0) {
+                document.getElementById('prLabel' + String(j)).textContent = storageKey;
+                document.getElementById('pr' + String(j)).value = localStorage.getItem(storageKey);
+                j++
+            }
+        }
+    }
+    while (j <= 11) {
+        document.getElementById('prOuter' + String(j)).style.display = 'none';
+        j++
+    }
+}
 
 function displayTextHA() {
     if (document.getElementById('step').value !== '5') {
@@ -503,6 +673,7 @@ let selectFormOp1 = document.getElementById("op1");
 let selectFormOp2 = document.getElementById("op2");
 let selectFormOp3 = document.getElementById("op3");
 let selectFormOp4 = document.getElementById("op4");
+
 
 function makeSelectOrder(levelStr) {
     let selectOrder = '';
@@ -549,17 +720,6 @@ function makeSelectStr(levelStr) {
     console.log(levelStr);
     let selectOrder = makeSelectOrder(levelStr);
     choiceOptionId(levelStr, labelArray[selectOrder]);
-    /*
-    let strArray = labelArray[selectOrder];
-    let optionStr = '';
-    let key = strArray[0];
-    let labelId = levelStr + 'Label';
-    for (let i = 1; i < strArray.length; i += 1) {
-        optionStr += '<option value="' + String(i - 1) + '" selected>' + strArray[i] + '</option>\n';
-    }
-    document.getElementById(levelStr).innerHTML = optionStr;
-    document.getElementById(labelId).textContent = key;
-    */
     document.getElementById(levelStr).options[0].selected = true
 }
 
@@ -590,7 +750,7 @@ function selectChange(level) {
         let comboStr = displayCombo5(arrayData['lv1']);
         optionSelectDisplay(comboStr)
     } else {
-        let currentText = displayText();
+        let currentText = displayText(level);
         optionSelectDisplay(currentText)
     }
 }
@@ -615,7 +775,7 @@ function optionClicked(optionId) {
     console.log(dataArray);
     localStorage.setItem('dataArray', JSON.stringify(dataArray));
     console.log(JSON.parse(localStorage.getItem('dataArray')));
-    displayText();
+    displayText(optionId);
 }
 
 function selectChangeStep() {
@@ -655,6 +815,91 @@ selectFormOp1.onchange = selectChangeOp1;
 selectFormOp2.onchange = selectChangeOp2;
 selectFormOp3.onchange = selectChangeOp3;
 selectFormOp4.onchange = selectChangeOp4;
+
+let checkFormPM = document.getElementById('plentyMargin');
+
+checkFormPM.onchange = checkChangePM;
+
+function checkChangePM() {
+    checkFormChange('plentyMargin')
+}
+
+function checkFormChange (checkID) {
+    localStorage.setItem(checkID, document.getElementById(checkID).checked);
+    displayText(checkID)
+}
+
+let profileOptionForm1 = document.getElementById('profileInput1');
+let profileOptionForm2 = document.getElementById('profileInput2');
+let profileOptionForm3 = document.getElementById('profileInput3');
+let profileOptionForm4 = document.getElementById('profileInput4');
+let profileOptionForm5 = document.getElementById('profileInput5');
+let profileOptionForm6 = document.getElementById('profileInput6');
+let profileOptionForm7 = document.getElementById('profileInput7');
+let profileOptionForm8 = document.getElementById('profileInput8');
+let profileOptionForm9 = document.getElementById('profileInput9');
+let profileOptionForm10 = document.getElementById('profileInput10');
+
+profileOptionForm1.onchange = profileChange1;
+profileOptionForm2.onchange = profileChange2;
+profileOptionForm3.onchange = profileChange3;
+profileOptionForm4.onchange = profileChange4;
+profileOptionForm5.onchange = profileChange5;
+profileOptionForm6.onchange = profileChange6;
+profileOptionForm7.onchange = profileChange7;
+profileOptionForm8.onchange = profileChange8;
+profileOptionForm9.onchange = profileChange9;
+profileOptionForm10.onchange = profileChange10;
+
+function profileChange1() {
+    profileChange(1)
+}
+
+function profileChange2() {
+    profileChange(2)
+}
+
+function profileChange3() {
+    profileChange(3)
+}
+
+function profileChange4() {
+    profileChange(4)
+}
+
+function profileChange5() {
+    profileChange(5)
+}
+
+function profileChange6() {
+    profileChange(6)
+}
+
+function profileChange7() {
+    profileChange(7)
+}
+
+function profileChange8() {
+    profileChange(8)
+}
+
+function profileChange9() {
+    profileChange(9)
+}
+
+function profileChange10() {
+    profileChange(10)
+}
+
+function profileChange(pIId) {
+    console.log('start profile change' + String(pIId));
+    let inputValue = document.getElementById('profileInput' + String(pIId)).value;
+    let profileLabel = document.getElementById('profileLabel' + String(pIId)).textContent;
+    console.log(profileLabel);
+    console.log(inputValue);
+    localStorage.setItem(profileLabel, inputValue);
+    displayText('profileInput' + String(pIId))
+}
 
 
 // テキストのコピー
@@ -799,7 +1044,7 @@ formDSIk.onclick = clickAHIk;
 
 //最初の処理
 function firstInitialize() {
-    const initStepList = [1, 2, 3, 5, 6, 4];
+    const initStepList = [2, 3, 4, 6, 7, 5, 1];
     console.log('re-start');
     let currentData = JSON.parse(localStorage.getItem('dataArray'));
     let beforeText = '';
@@ -811,9 +1056,10 @@ function firstInitialize() {
         console.log('restart by step 5');
         beforeText = displayCombo5(currentData['lv1'])
     } else {
-        beforeText = displayText();
+        beforeText = displayText('start');
     }
     optionSelectDisplay(beforeText);
+    profilePageDisplay();
     document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
     document.getElementById('op2').options[Number(currentData['op2'])].selected = true;
     document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
@@ -821,5 +1067,3 @@ function firstInitialize() {
 }
 
 firstInitialize();
-
-//todo: xcc対策
