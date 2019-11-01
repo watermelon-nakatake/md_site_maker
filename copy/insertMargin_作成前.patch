@@ -1,0 +1,15 @@
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1572579966000)
++++ .idea/vcs.xml	(date 1572582440040)
+@@ -3,5 +3,6 @@
+   <component name="VcsDirectoryMappings">
+     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+     <mapping directory="$PROJECT_DIR$/git_r" vcs="Git" />
++    <mapping directory="$PROJECT_DIR$/git_re" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
