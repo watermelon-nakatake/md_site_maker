@@ -9,7 +9,34 @@
     }
 
     gtag('js', new Date());
-    gtag('config', 'UA-15766143-9');</script>
+    gtag('config', 'UA-15766143-9');gtag('config', 'AW-701565450');</script>
+    <!-- Event snippet for リピート閲覧 conversion page -->
+<script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-701565450/4cD8COK6v7EBEIqUxM4C',
+      'value': 500.0,
+      'currency': 'JPY'
+  });
+</script>
+<!-- Event snippet for banner-click1 conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-701565450/NkBoCJiExrEBEIqUxM4C',
+      'value': 500.0,
+      'currency': 'JPY',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +44,7 @@
     <meta name="description"
           content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。当然無料で利用できてダウンロードも不要です。新しい例文をどんどん追加中！">
     <meta name="theme-color" content="#2F3BA2"/>
-    <link href="app13.css" rel="stylesheet" type="text/css">
+    <link href="app14.css" rel="stylesheet" type="text/css">
     <link rel="manifest" href="manifest.json">
     <!-- for iOS meta tags and icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -45,7 +72,6 @@
                     <div>
                         <label for="step">メールの目的（ステップ）</label>
                         <select id="step" class="select_i">
-                            <option value="" disabled>select</option>
                             <option value="6">プロフィールの自己紹介文</option>
                             <option value="0" id="firstD">一番最初に送るメール</option>
                             <option value="1">最初の返信メール(自分スタート)</option>
@@ -59,11 +85,10 @@
                     <div id="lv1Outer">
                         <label for="lv1" id="lv1Label">目的</label>
                         <select id="lv1" class="select_i">
-                            <option value="" disabled>select</option>
                             <option value="0">彼女探し</option>
                             <option value="1">婚活</option>
                             <option value="2">メル友募集</option>
-                            <option value="3">セフレ探し</option>
+                            <option value="3">遊ぶ相手探し</option>
                             <option value="4">すぐ会える女性</option>
                         </select>
                     </div>
@@ -72,7 +97,6 @@
                     <div id="op1Outer">
                         <label for="op1" id="op1Label">相手の興味あること</label>
                         <select id="op1" class="select_i">
-                            <option value="" disabled>select</option>
                             <option value="0">特になし</option>
                             <option value="1">映画</option>
                             <option value="2">グルメ</option>
@@ -83,7 +107,6 @@
                     <div id="op2Outer">
                         <label for="op2" id="op2Label">メールを送る時間帯</label>
                         <select id="op2" class="select_i">
-                            <option value="" disabled>select</option>
                             <option value="0">朝</option>
                             <option value="1">昼</option>
                             <option value="2">夜</option>
@@ -92,7 +115,6 @@
                     <div id="op3Outer">
                         <label for="op3" id="op3Label">会話の話題</label>
                         <select id="op3" class="select_i">
-                            <option value="" disabled>select</option>
                             <option value="0">朝</option>
                             <option value="1">昼</option>
                             <option value="2">夜</option>
@@ -101,11 +123,19 @@
                     <div id="op4Outer">
                         <label for="op4" id="op4Label">女性への質問</label>
                         <select id="op4" class="select_i">
-                            <option value="" disabled>select</option>
                             <option value="0">質問しない</option>
                             <option value="1">映画</option>
                             <option value="2">グルメ</option>
                             <option value="3">音楽</option>
+                        </select>
+                    </div>
+                    <div id="op5Outer">
+                        <label for="op5" id="op5Label">ひとこと</label>
+                        <select id="op5" class="select_i">
+                            <option value="0">食べるのが好き</option>
+                            <option value="1">料理始めました</option>
+                            <option value="2">旅行が好き</option>
+                            <option value="3">スポーツが好き</option>
                         </select>
                     </div>
                     <div id="optionInputOuter">
@@ -161,15 +191,20 @@
                         <input class="text_i" id="herName" placeholder="input">
                     </div>
 
-                    <div>
+                    <div class="checkOuter">
                         <label for="plentyMargin">
                             <input type="checkbox" id="plentyMargin" class="check-i"><span>余白をたっぷりとる</span></label>
+                    </div>
+                    <div class="checkOuter" id="accessToolOuter">
+                        <label for="accessTool">
+                            <input type="checkbox" id="accessTool" class="check-i"><span>メールじゃなくて「いいね」が欲しい</span></label>
                     </div>
 
                     <div class="mailbox">
                         <label for="mailDisplayD0">メール本文</label>
                         <div id="mailDisplay0" class="textarea_i m_mail">ここにメール本文が表示されます。</div>
                         <textarea id="mailDisplayD0" class="textarea_d">ここにメール本文が表示されます。</textarea>
+                        <div class="str-len" id="sl0">文字数</div>
                         <button id="copyButton0" class="submit_i">例文をコピー</button>
 
 
@@ -184,6 +219,7 @@
                         <label for="mailDisplayD2" class="textDisplay2">送信メール</label>
                         <div id="mailDisplay2" class="textarea_i textDisplay2 m_mail">送信メール本文</div>
                         <textarea id="mailDisplayD2" class="textarea_d">送信メール本文</textarea>
+                        <div class="str-len textDisplay2" id="sl2">文字数</div>
                         <button id="copyButton2" class="submit_i textDisplay2">例文をコピー</button>
 
 
@@ -198,6 +234,7 @@
                         <label for="mailDisplayD4" class="textDisplay4">送信メール</label>
                         <div id="mailDisplay4" class="textarea_i textDisplay4 m_mail">送信メール本文</div>
                         <textarea id="mailDisplayD4" class="textarea_d">送信メール本文</textarea>
+                        <div class="str-len textDisplay4" id="sl4">文字数</div>
                         <button id="copyButton4" class="submit_i textDisplay4">例文をコピー</button>
 
 
@@ -212,6 +249,7 @@
                         <label for="mailDisplayD6" class="textDisplay6">送信メール</label>
                         <div id="mailDisplay6" class="textarea_i textDisplay6 m_mail">送信メール本文</div>
                         <textarea id="mailDisplayD6" class="textarea_d">送信メール本文</textarea>
+                        <div class="str-len textDisplay6" id="sl6">文字数</div>
                         <button id="copyButton6" class="submit_i textDisplay6">例文をコピー</button>
 
 
@@ -226,6 +264,7 @@
                         <label for="mailDisplayD8" class="textDisplay8">送信メール</label>
                         <div id="mailDisplay8" class="textarea_i textDisplay8 m_mail">送信メール本文</div>
                         <textarea id="mailDisplayD8" class="textarea_d">送信メール本文</textarea>
+                        <div class="str-len textDisplay8" id="sl8">文字数</div>
                         <button id="copyButton8" class="submit_i textDisplay8">例文をコピー</button>
 
 
@@ -240,9 +279,8 @@
                         <label for="mailDisplayD10" class="textDisplay10">送信メール</label>
                         <div id="mailDisplay10" class="textarea_i textDisplay10 m_mail">送信メール本文</div>
                         <textarea id="mailDisplayD10" class="textarea_d">送信メール本文</textarea>
+                        <div class="str-len textDisplay10" id="sl10">文字数</div>
                         <button id="copyButton10" class="submit_i textDisplay10">例文をコピー</button>
-
-
                     </div>
 
 
@@ -256,12 +294,13 @@
                         <label class="back" for="tab-4">&#8249;</label>
                         <label class="next" for="tab-2">&#8250; </label>
                     </div>
-                    <div><p>version0.75 (Beta)</p></div>
-                    <div id="modt">更新:
-                        <time itemprop="dateModified" datetime="2019-10-12">2019年10月12日</time>
+                    <div class="mini_g"><p>version0.8.2 (Beta)</p></div>
+                    <div id="modt" class="mini_g">更新:
+                        <time itemprop="dateModified" datetime="2019-10-25">2019年10月25日</time>
                         by <a href="../pc/policy/profile.html"><span itemprop="author" itemscope="itemscope"
                                                                      itemtype="https://schema.org/Person"><span
                                 itemprop="name">ゴーヤン</span></span></a></div>
+                    <div id="test_display" class="mini_g"></div>
                 </li>
             </ul>
         </li>
@@ -286,10 +325,6 @@
                     <div>
                         <label for="job">職業 (任意)</label>
                         <input class="text_i" id="job" placeholder="input">
-                    </div>
-                    <div>
-                        <label for="hobby">趣味 (任意)</label>
-                        <input class="text_i" id="hobby" placeholder="input">
                     </div>
                     <div>
                         <label for="me">自分の呼び方 (必須)</label>
@@ -356,11 +391,12 @@
             <ul class="tab-content-container">
                 <li class="tab-content">
                     <p>このリンクから主要な出会い系サイトに直接アクセスできます。</p>
-                    <div class="siteLink"><a href="dsite/550909" id="countWk" target="_blank">ワクワクメール</a></div>
-                    <div class="siteLink"><a href="dsite/happymail" id="countHm" target="_blank">ハッピーメール</a></div>
-                    <div class="siteLink"><a href="dsite/mintj" id="countMj" target="_blank">ミントC!Jメール</a></div>
-                    <div class="siteLink"><a href="dsite/pcmax" id="countPc" target="_blank">PCMAX</a></div>
-                    <div class="siteLink"><a href="dsite/194964" id="countIk" target="_blank">イククル</a></div>
+                    <div class="siteLink"><a href="https://www.demr.jp/app/dsite/550909" id="countWk" class="siteLT" onclick="gtag_report_conversion">ワクワクメール<span>(R18)</span></a></div>
+                    <div class="siteLink"><a href="https://www.demr.jp/app/dsite/happymail" id="countHm" class="siteLT" onclick="gtag_report_conversion">ハッピーメール<span>(R18)</span></a></div>
+                    <div class="siteLink"><a href="https://www.demr.jp/app/dsite/mintj" id="countMj" class="siteLT" onclick="gtag_report_conversion">ミントC!Jメール<span>(R18)</span></a></div>
+                    <div class="siteLink"><a href="https://www.demr.jp/app/dsite/pcmax" id="countPc" class="siteLT" onclick="gtag_report_conversion">PCMAX<span>(R18)</span></a></div>
+                    <div class="siteLink"><a href="https://www.demr.jp/app/dsite/194964" id="countIk" class="siteLT" onclick="gtag_report_conversion">イククル<span>(R18)</span></a></div>
+                    <div class="caution"><p>※ 出会い系サイトは１８歳未満の方は利用できません。</p></div>
                     <div class="arrows">
                         <label class="back" for="tab-2">&#8249;</label>
                         <label class="next" for="tab-4">&#8250; </label>
@@ -400,7 +436,7 @@
                             <div class="ap_int"><img src="images/app_int/u2_3.png" width="300" height="534"
                                                      alt="出会い系メール例文アプリの使い方6"></div>
                             <p>項目を選ぶと、それに合ったメールが表示されて、プロフ項目や自分の名前が自動的に挿入されます。</p>
-                            <p>「出会いの目的」（彼女探しがしたいか、セフレが作りたいか）など、その段階毎に選択肢があるので、同様に選んでください。</p></section>
+                            <p>「出会いの目的」（彼女探しがしたいか、遊ぶ相手が作りたいか）など、その段階毎に選択肢があるので、同様に選んでください。</p></section>
                         <section><h3>3. 相手の名前を記入して、メールを送る</h3>
                             <div class="ap_int"><img src="images/app_int/u3_1.png" width="300" height="534"
                                                      alt="出会い系メール例文アプリの使い方7"></div>
@@ -439,7 +475,7 @@
 
 </div>
 </body>
-<script src="main_v10151323.js"></script>
+<script src="main_v10282340.js"></script>
 <script>if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')

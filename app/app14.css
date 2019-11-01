@@ -5,6 +5,7 @@
     -ms-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 html {
     margin: 0;
     font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka,
@@ -12,12 +13,35 @@ html {
     background-color: #ccc;
     height: 100vh;
 }
-body{margin: 0}
-.wrapper{width: 100%}
-h1{font-size: 0.7em;text-align: right;font-weight: normal;margin: 0;padding: 0}
-h2{color: #00a2a8}
-h3{color: #D4571B}
-section{padding-top: 20px}
+
+body {
+    margin: 0
+}
+
+.wrapper {
+    width: 100%
+}
+
+h1 {
+    font-size: 0.7em;
+    text-align: right;
+    font-weight: normal;
+    margin: 0;
+    padding: 0
+}
+
+h2 {
+    color: #00a2a8
+}
+
+h3 {
+    color: #D4571B
+}
+
+section {
+    padding-top: 20px
+}
+
 .tab-container {
     list-style-type: none;
     margin: 0 auto;
@@ -183,54 +207,54 @@ section{padding-top: 20px}
 }
 
 .check-i {
-  display: none;
+    display: none;
 }
 
 .check-i + span {
-  cursor: pointer;
-  display: inline-block;
-  margin: 0 0.2em 0;
-  padding: 0 0 0 1.2em;
-  position: relative;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 0.2em 0;
+    padding: 0 0 0 1.2em;
+    position: relative;
 }
 
 .check-i + span::before {
-  -webkit-transform: translateY(-50%);
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  border-radius: 2px;
-  content: "";
-  display: block;
-  height: 1em;
-  left: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1em;
+    -webkit-transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 2px;
+    content: "";
+    display: block;
+    height: 1em;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1em;
 }
 
 .check-i + span::after {
-  -webkit-transform: translateY(-50%) rotate(-45deg);
-  border-bottom: 3px solid rgba(0, 0, 0, 0.32);
-  border-left: 3px solid rgba(0, 0, 0, 0.32);
-  content: "";
-  display: block;
-  height: 0.6em;
-  left: 0;
-  margin-top: -0.2em;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%) rotate(-45deg);
-  transition: all 0.3s ease 0s;
-  width: 1em;
+    -webkit-transform: translateY(-50%) rotate(-45deg);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.32);
+    border-left: 3px solid rgba(0, 0, 0, 0.32);
+    content: "";
+    display: block;
+    height: 0.6em;
+    left: 0;
+    margin-top: -0.2em;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+    transition: all 0.3s ease 0s;
+    width: 1em;
 }
 
 .check-i:checked + span::after {
-  opacity: 1;
+    opacity: 1;
 }
 
-.mailbox{
+.mailbox {
     margin: 3em 0 3em;
 }
 
@@ -244,10 +268,10 @@ section{padding-top: 20px}
     cursor: pointer;
     display: inline-block;
     font-size: 1em;
-    margin: 0 0 1em 25%;
+    margin: 5px 0 1em 25%;
     padding: 0.6em 1em;
     text-decoration: none;
-    width:50%;
+    width: 50%;
 }
 
 .submit_i:hover,
@@ -255,14 +279,11 @@ section{padding-top: 20px}
     outline: none;
 }
 
-.submit_i:-moz-foucus-inner {
-    border: none;
-    padding: 0;
-}
-.downArrow{
+.downArrow {
     width: 30px;
     margin: 10px auto 0px;
 }
+
 .textarea_i {
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -276,10 +297,16 @@ section{padding-top: 20px}
     height: auto;
     padding: 0.4em 0.8em;
     width: 100%;
-    line-height: 2;
+    line-height: 2
 }
-.m_mail{background-color: #c2eeff;}
-.f_mail{background-color: #ffd5ec;}
+
+.m_mail {
+    background-color: #c2eeff;
+}
+
+.f_mail {
+    background-color: #ffd5ec;
+}
 
 .textarea_i:focus {
     border: 1px solid rgba(0, 0, 0, 0.32);
@@ -291,8 +318,16 @@ section{padding-top: 20px}
     display: none
 }
 
-.select_i, .textarea_i, .text_i {
+.select_i, .text_i {
     margin-bottom: 15px
+}
+
+.str-len {
+    margin-top: 3px;
+    text-align: right;
+    font-size: 14px;
+    color: #6E6E6E;
+    margin-right: 10px;
 }
 
 .siteLink {
@@ -315,6 +350,11 @@ section{padding-top: 20px}
     color: #000000;
 }
 
+.siteLink a span {
+    font-size: 12px;
+    padding-left: 5px;
+}
+
 #dis_list {
     list-style: circle;
 }
@@ -322,28 +362,49 @@ section{padding-top: 20px}
 #dis_list li {
     margin-top: 20px;
 }
+
 #op2Outer {
     display: none;
 }
+
 #op4Outer {
     display: none;
 }
-#opo{
+
+#opo {
     border: #f0e68c;
     padding: 10px;
     margin-top: 20px;
     background-color: #fffacd;
 }
+
 #opl {
     font-weight: bold;
 }
-#comment{
+
+#comment {
     margin-top: 5px;
     padding: 5px;
 }
-.ap_int{
+
+.ap_int {
     text-align: center;
     margin: 30px 0;
+}
+
+.checkOuter {
+    margin-top: 15px;
+}
+.caution {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+}
+.mini_g{
+    font-size: 12px;
+    color: #6E6E6E;
+    text-align: right;
 }
 
 /* メディアクエリ */

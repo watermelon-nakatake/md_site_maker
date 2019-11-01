@@ -23,17 +23,17 @@ def ftp_upload(up_file_name, remote_dir):
 
 
 def app_upload():
-    upload_list = ['index.html', 'app13.css', 'main_v10151323.js', 'manifest.json', 'offline.html', 'service-worker.js']
+    upload_list = ['index.html', 'app14.css', 'main_v10282340.js', 'manifest.json', 'offline.html', 'service-worker.js']
     for up_file in upload_list:
         ftp_upload(up_file, 'app')
 
 
 def test_upload():
-    upload_list = ['index.html', 'app13.css', 'main_v10151323.js', 'manifest.json', 'offline.html', 'service-worker.js']
+    upload_list = ['index.html', 'app14.css', 'main_v10282340.js', 'manifest.json', 'offline.html', 'service-worker.js']
     for up_file in upload_list:
         ftp_upload(up_file, 'test_app')
 
 
-# 以下実行
-#app_upload()
-test_upload()
+if __name__ == '__main__':
+    app_upload()
+    test_upload()

@@ -2,6 +2,7 @@
 import os
 import re
 import pickle
+import common_tool
 
 root_path = '/Users/nakataketetsuhiko/PycharmProjects/reibun_sf/'
 
@@ -11,29 +12,6 @@ def save_data_to_pickle(data, pickle_name):
         pickle.dump(data, p)
 
 
-def search_category(directory, file_name):
-    if directory != 'majime':
-        category = directory
-    else:
-        if 'm0' in file_name:
-            category = 'post'
-        elif 'mp_' in file_name:
-            category = 'profile'
-        elif 'm1' in file_name:
-            category = 'f_mail'
-        elif 'm2' in file_name:
-            category = 's_mail'
-        elif 'm3' in file_name:
-            category = 'date'
-        elif 'm4' in file_name:
-            category = 'how_to'
-        elif 't0_' in file_name:
-            category = 'post'
-        else:
-            category = 'majime'
-    return category
-
-
 def make_file_data_list():
     dir_list = ['policy', 'caption', 'majime', 'qa', 'site']
     data_list = {}
@@ -41,7 +19,7 @@ def make_file_data_list():
         file_list = os.listdir(root_path + 'reibun/pc/' + directory)
         for file_name in file_list:
             if '.html' in file_name and '_test' not in file_name and '_copy' not in file_name:
-                category = search_category(directory, file_name)
+                category = common_tool.search_category(directory, file_name)
                 with open(root_path + 'reibun/pc/' + directory + '/' + file_name, 'r', encoding='utf-8') as f:
                     long_str = f.read()
                     title_m = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.+?)</h1>', long_str)
@@ -96,6 +74,19 @@ def read_pickle_pot(pkl_name):
     return pk_dec
 
 
+def change_pickle(file_name, num_str, new_data):
+    pk_data = read_pickle_pot(file_name)
+    print(pk_data)
+    print(pk_data[num_str])
+    if new_data == 'delete':
+        del pk_data[num_str]
+    else:
+        pk_data[num_str] = new_data
+    print(pk_data)
+    save_data_to_pickle(pk_data, file_name)
+
+
 if __name__ == '__main__':
     # make_current_file_list()
     print(read_pickle_pot('title_img_list'))
+    # change_pickle('title_img_list', 140, 'delete')
