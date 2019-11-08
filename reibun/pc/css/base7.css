@@ -129,7 +129,7 @@ body {
     padding-top: 15px
 }
 
-#title img{
+#title img {
     width: 250px;
     height: 37px;
 }
@@ -167,11 +167,18 @@ body {
     color: #333333
 }
 
-.gnav06{
+.gnav06 {
     display: none
 }
 
-.majime #gnav li.gnav01 a, .qa #gnav li.gnav06 a, .site #gnav li.gnav03 a, .caption #gnav li.gnav05 a {
+.majime #gnav li.gnav01 a,
+.post #gnav li.gnav01 a,
+.f_mail #gnav li.gnav01 a,
+.profile #gnav li.gnav01 a,
+.s_mail #gnav li.gnav01 a,
+.date #gnav li.gnav01 a,
+.how_to #gnav li.gnav01 a,
+.qa #gnav li.gnav06 a, .site #gnav li.gnav03 a, .caption #gnav li.gnav05 a {
     color: #F60
 }
 
@@ -339,7 +346,9 @@ body {
 
 .kenmei {
     font-weight: 700;
-    margin-left: 5px
+    margin-left: 4em;
+    margin-bottom: 10px;
+    font-size: 110%;
 }
 
 .mail {
@@ -379,7 +388,7 @@ body {
 }
 
 #con3 .mail p, #con3 .wmail p {
-    padding: 5px 0;
+    padding: 15px 0;
     margin: 0
 }
 
@@ -441,7 +450,7 @@ body {
     line-height: 21px;
 }
 
-.leftnav li:last-child{
+.leftnav li:last-child {
     border-bottom: none;
 }
 
@@ -502,14 +511,10 @@ h4, .data_title {
     margin: 1.5em 0 10px 3em
 }
 
-b, strong {
-    font-weight: 400;
-    background: linear-gradient(transparent 40%, #fff099 40%);
-}
-
 .center {
     text-align: center
 }
+
 .ap_int {
     text-align: center;
     margin: 40px 0;
@@ -530,16 +535,18 @@ a:hover {
     text-decoration: underline
 }
 
-.hutoaka {
+.hutoaka, b, strong {
     color: red;
     font-weight: bold;
     font-size: 120%
 }
 
-.hutokuro {
+.hutokuro, em {
     font-weight: bold;
-    font-size: 110%
+    font-size: 110%;
+    font-style: normal;
 }
+
 
 .libut {
     width: 92%;
@@ -731,7 +738,6 @@ a:hover {
 .imgnon {
     display: none
 }
-
 
 
 .sitepage #con1 {
@@ -1254,6 +1260,126 @@ a.btn-pop {
     font-weight: bold;
     border: solid 2px #d27d00;
     margin-bottom: 15px
+}
+
+.lm_b {
+    width: 96px;
+    height: 115px;
+    background-repeat: no-repeat;
+    background-image: url(../images/common/icon_ml.png)
+}
+
+.lm_1 {
+    background-position: 0 0;
+}
+.lm_2 {
+    background-position: -96px 0;
+}
+.lm_3 {
+    background-position: -192px 0;
+}
+.lm_4 {
+    background-position: 0 -115px;
+}
+.lm_5 {
+    background-position: -96px -115px;
+}
+.lm_6 {
+    background-position: -192px -115px;
+}
+
+.rm_b {
+    width: 96px;
+    height: 115px;
+    background-position: -192px -115px;
+    background-repeat: no-repeat;
+    background-image: url(../images/common/icon_mr.png)
+}
+
+.rm_1 {
+    background-position: 0 0;
+}
+.rm_2 {
+    background-position: -96px 0;
+}
+.rm_3 {
+    background-position: -192px 0;
+}
+.rm_4 {
+    background-position: 0 -115px;
+}
+.rm_5 {
+    background-position: -96px -115px;
+}
+.rm_6 {
+    background-position: -192px -115px;
+}
+
+.fl1 {
+    width: 65%;
+    position: relative;
+    padding: 5px 5%;
+    border-radius: 10px;
+    background-color: #dcdcdc;
+    margin: 40px 10% 40px 20%;
+}
+
+/* 画像 - 絶対配置で左上に配置 */
+.fl1 .icon {
+    position: absolute;
+    left: -110px;
+    top: 0;
+}
+
+/* 三角アイコン */
+.fl1::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: -15px;
+    top: 20px;
+    border-right: 15px solid #dcdcdc;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+
+/* 吹き出し本体 */
+.fr2 {
+    width: 65%;
+    position: relative;
+    padding: 5px 5%;
+    border-radius: 10px;
+    background-color: #7fffd4;
+    margin: 40px 20% 40px 10%;
+}
+
+/* 画像 - 絶対配置で右上に配置 */
+.fr2 .icon {
+    position: absolute;
+    right: -110px;
+    top: 0;
+    op: 0;
+}
+
+/* 三角アイコン */
+.fr2::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    right: -15px;
+    top: 20px;
+    border-left: 15px solid #7fffd4;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+
+#con3 .fr2 p, #con3 .fl1 p{
+    margin: 0;
+    padding: 15px 0;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after,

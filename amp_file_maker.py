@@ -70,16 +70,43 @@ def tab_and_line_feed_remover(long_str):
     return result
 
 
+def css_insert(long_str):
+    css_str = ''
+    if 'lm_b' in long_str:
+        css_str += '.lm_b{width:4pc;height:77px;background-repeat:no-repeat;background-image:' \
+                   'url(../images/common/icon_ml_m.png)}.lm_1{background-position:0 0}' \
+                   '.lm_2{background-position:-4pc 0}.lm_3{background-position:-8pc 0}' \
+                   '.lm_4{background-position:0 -77px}.lm_5{background-position:-4pc -77px}' \
+                   '.lm_6{background-position:-8pc -77px}.fl1{width:67%;position:relative;' \
+                   'padding:20px 5%;border-radius:10px;background-color:#dcdcdc;margin:40px 0 40px 70px}' \
+                   '.fl1 .icon{position:absolute;left:-70px;top:0}.fl1:before{content:'';position:absolute;' \
+                   'display:block;width:0;height:0;left:-15px;top:20px;border-right:15px solid #dcdcdc;' \
+                   'border-top:15px solid transparent;border-bottom:15px solid transparent}'
+    if 'rm_b' in long_str:
+        css_str += '.rm_b{width:4pc;height:77px;background-repeat:no-repeat;' \
+                   'background-image:url(../images/common/icon_mr_m.png)}.rm_1{background-position:0 0}' \
+                   '.rm_2{background-position:-4pc 0}.rm_3{background-position:-8pc 0}' \
+                   '.rm_4{background-position:0 -77px}.rm_5{background-position:-4pc -77px}.' \
+                   'rm_6{background-position:-8pc -77px}.fr2{width:67%;position:relative;padding:20px 5%;' \
+                   'border-radius:10px;background-color:#7fffd4;margin:40px 70px 40px 3%}' \
+                   '.fr2 .icon{position:absolute;right:-70px;top:0}.fr2:before{content:'';position:absolute;' \
+                   'display:block;width:0;height:0;right:-15px;top:20px;border-left:15px solid #7fffd4;' \
+                   'border-top:15px solid transparent;border-bottom:15px solid transparent}'
+    long_str = long_str.replace('</style><style amp-boilerplate>', css_str + '</style><style amp-boilerplate>')
+    return long_str
+
+
 def amp_maker(pc_path_list):
     with open('reibun/amp/template/amp_tmp.html', "r", encoding='utf-8') as g:
         tmp_str = g.read()
     for pc_path in pc_path_list:
         if '.html' in pc_path:
             with open(pc_path, "r", encoding='utf-8') as f:
+                print('amp maker: ' + pc_path)
                 str_x = f.read()
                 str_x = tab_and_line_feed_remover(str_x)
                 title = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.*?)</h1>', str_x)[0]
-                content = re.findall(r'ゴーヤン</span></span></a></div>(.*?)<!-- maincontentEnd -->', str_x)[0]
+                content = re.findall(r'</time></div>(.*?)</article>', str_x)[0]
                 top_images = re.findall(r'<div class="alt_img_t">.+?</div>', content)
                 if top_images:
                     for top_img in top_images:
@@ -119,6 +146,7 @@ def amp_maker(pc_path_list):
                     if match_str_list:
                         amp_data = amp_data.replace('<!--' + x[1] + '-->', match_str_list[0])
                 relative_art = re.findall(r'<!--otherart-->(.+?)<!--otherart/end-->', str_x)
+                amp_data = css_insert(amp_data)
                 if relative_art:
                     amp_data = amp_data.replace('<!--other-a-->', match_str_list[0])
                 gtag_i = g_tag_insert(content)
@@ -127,7 +155,7 @@ def amp_maker(pc_path_list):
                                                 '{"trackPageview": {"on": "visible","request": "pageview"}' + gtag_i + '}}')
             with open(amp_path, "w") as h:
                 h.write(amp_data)
-            relation_file_upload(amp_data)
+            # relation_file_upload(amp_data)
 
 
 def add_amp_file(pc_path):

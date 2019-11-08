@@ -30,7 +30,7 @@ banner_str = '<section><h2>簡単に出会えるメールが書ける出会い�
 
 def make_file_list():
     result = []
-    for directory in ['sitepage']:  # dir_list:
+    for directory in dir_list:
         file_list = os.listdir('reibun/pc/' + directory)
         for file_name in file_list:
             if '.html' in file_name and '_test' not in file_name and '_copy' not in file_name:
@@ -51,6 +51,34 @@ def breadcrumb_maker(category, directory, file_name):
                       directory + '/' + category_name[category][1] + '"itemprop="url"><span itemprop="title">' + \
                       category_name[category][0] + '</span></a> &gt;&gt;&gt;</div>'
         return result
+
+
+def remake_html():
+    with open('pickle_pot/title_img_list.pkl', 'rb') as p:
+        pk_dec = pickle.load(p)
+    side_bar_str = make_side_bar(pk_dec, side_bar_list)
+    current_files = make_file_list()
+    current_files.append('reibun/index.html')
+    for file_name in current_files:
+        print(file_name)
+        with open(file_name, 'r', encoding='utf-8') as f:
+            new_str = f.read()
+            new_str = new_str.replace('<div class="leftnav"><div class="sbh cat-i">1</div><ul>2</ul></div>',
+                                      '<!--sb-category-->')
+            directory, category = common_tool.directory_and_category_select(file_name)
+            new_str = re.sub(r'<body class=".*?" itemscope=', r'<body class="' + category + '" itemscope=', new_str)
+            if category != 'sitepage':
+                no_sb_cat = ['majime', 'top']
+                if category not in no_sb_cat:
+                    sb_str = '<div class="leftnav"><div class="sbh cat-i">' + category_name[category][0] + '</div><ul>' \
+                             + side_bar_str[category] + '</ul></div>'
+                    new_str = new_str.replace('<!--sb-category-->', sb_str)
+                else:
+                    new_str = new_str.replace('<!--sb-category-->', '')
+            else:
+                new_str = re.sub(r'<div class="navi_brock".+?<!--sb-new--></ul></div></div>', '', new_str)
+            with open(file_name, 'w', encoding='utf-8') as g:
+                g.write(new_str)
 
 
 def file_update():
@@ -128,14 +156,14 @@ def file_update():
             directory, category = common_tool.directory_and_category_select(file_name)
             print(directory)
             print(category)
-            new_str = new_str.replace('<!--directory-->', directory)
+            new_str = new_str.replace('<!--category-->', category)
             if category != 'sitepage':
                 new_str = new_str.replace('<!--sb-pop-->', side_bar_str['pop'])
                 new_str = new_str.replace('<!--sb-new-->', side_bar_str['new'])
                 new_str = new_str.replace('<!--sb-important-->', side_bar_str['important'])
                 no_sb_cat = ['majime', 'top']
                 if category not in no_sb_cat:
-                    sb_str = '<div class="leftnav"><div class="sbh">' + category_name[category][0] + '</div><ul>' \
+                    sb_str = '<div class="leftnav"><div class="sbh cat-i">' + category_name[category][0] + '</div><ul>' \
                              + side_bar_str[category] + '</ul></div>'
                     new_str = new_str.replace('<!--sb-category-->', sb_str)
                 else:
@@ -201,10 +229,7 @@ def make_side_bar_str(id_list, pk_dec):
         copy_list = random.sample(copy_list, 20)
     random.shuffle(copy_list)
     for use_id in copy_list:
-        class_add = ''
-        if len(pk_dec[use_id][1]) <= 15:
-            class_add = ' class="he1"'
-        result_str += '<li' + class_add + '><a href="../' + pk_dec[use_id][0] + '">' + pk_dec[use_id][1] + '</a></li>'
+        result_str += '<li><a href="../' + pk_dec[use_id][0] + '">' + pk_dec[use_id][1] + '</a></li>'
     return result_str
 
 
@@ -250,6 +275,7 @@ if __name__ == '__main__':
     # import_from_evernote('majime', 'new_a_test')
     # print(make_side_bar_list([1, 3, 4, 138, 142]))
     # print(re.sub(r'/.+$', '', 'majime/m0_1.html'))
-    file_update()
+    # file_update()
     # t_str = ''
     # search_id(t_str)
+    remake_html()

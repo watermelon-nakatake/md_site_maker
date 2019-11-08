@@ -91,6 +91,7 @@ def section_insert(long_str):
 
 def directory_and_category_select(file_path):
     # file_pathはpc/やamp/以降のpath
+    print(file_path)
     directory_l = re.findall(r'^reibun/pc/(.+?)/.+$', file_path)
     if directory_l:
         directory = directory_l[0]

@@ -1,9 +1,22 @@
 import re
+import os
 import amp_file_maker
+up_dir = ['caption/', 'majime/', 'policy/', 'qa/', 'site/']
 
 
 def main():
     print('あ')
+
+
+def all_file_to_markdown():
+    change_files = []
+    for dir_u in up_dir:
+        files = os.listdir('reibun/pc/' + dir_u)
+        for file in files:
+            change_files.append('reibun/pc/' + dir_u + file)
+    for file_c in change_files:
+        print(file_c)
+        file_to_markdown(file_c)
 
 
 def file_to_markdown(file_path):
@@ -11,7 +24,6 @@ def file_to_markdown(file_path):
         long_str = f.read()
         directory = re.sub(r'reibun/pc/(.+?)/.+?.html', r'\1', file_path)
         long_str = amp_file_maker.tab_and_line_feed_remover(long_str)
-        print(long_str)
 
         title_l = re.findall(r'<title>(.+?)\|出会い系メール例文集</title>', long_str)
         if title_l:
@@ -38,12 +50,16 @@ def file_to_markdown(file_path):
         key_word_o_l = re.findall(r'<!--kw#(.+?)-->', long_str)
         if key_word_o_l:
             key_word_o = key_word_o_l[0].split('#')
+        else:
+            key_word_o = ''
         h1_l = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.+?)</h1>', long_str)
         if h1_l:
             h1 = h1_l[0]
         else:
             print('no h1 !')
             return
+        if '</article>' not in long_str:
+            long_str = long_str.replace('</section><div class="efooter">', '</section></article><div class="efooter">')
         content_l = re.findall(r'</time></div>(.+?)</article>', long_str)
         if content_l:
             content_str = html_to_markdown(content_l[0], directory)
@@ -87,8 +103,11 @@ def html_to_markdown(long_str, directory):
     long_str = long_str.replace('<div class="center"><a href="../../app/">'
                                 '<img class="app_bn1" src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">'
                                 '</a></div>', '%app_b%\n\n')
-
     long_str = re.sub(r'<div class="btnli"><ul>(.+?)</ul></div>', r'%btnli%\n\1\n\n', long_str)
+    long_str = re.sub(r'<ul class="btnli">(.+?)</ul>', r'%btnli%\n\1\n\n', long_str)
+    long_str = re.sub(r'<ul class="libut">(.+?)</ul>', r'%libut%\n\1\n\n', long_str)
+    long_str = re.sub(r'<div class="arlist"><ul>(.+?)</ul></div>', r'%arlist%\n\1\n\n', long_str)
+    long_str = re.sub(r'<ul class="arlist">(.+?)</ul>', r'%arlist%\n\1\n\n', long_str)
     long_str = re.sub(r'<li>(.+?)</li>', r'- \1\n', long_str)
 
     a_str_l = re.findall(r'<a href=".+?">.+?</a>', long_str)
@@ -99,15 +118,20 @@ def html_to_markdown(long_str, directory):
                 a_str_inner = a_str_inner_l[0]
                 if '#SC' in a_str_inner[0] or '#sc' in a_str_inner[0]:
                     url_str = a_str_inner[0].replace('SC', 'sc')
+                elif '/app/' in a_str_inner[0]:
+                    url_str = '../../../reibun/app/'
+                elif '/ds/' in a_str_inner[0]:
+                    url_str = '../../../reibun/pc/' + a_str_inner[0].replace('../ds/', 'ds/')
                 elif a_str_inner[0].count('/') == 0:
                     url_str = '../../../reibun/pc/' + directory + '/' + a_str_inner[0]
                 elif a_str_inner[0].count('/') == 2:
                     url_str = '../../../reibun/pc/' + a_str_inner[0].replace('../', '')
+
                 elif a_str_inner[0].count('/') == 4:
                     url_str = '../../../reibun/pc/' + a_str_inner[0].replace('../../', '')
                 else:
                     url_str = a_str_inner[0]
-                    print('unknown link !')
+                    print('unknown link ! : ' + url_str)
                 long_str = long_str.replace(a_str, '[' + a_str_inner[1] + '](' + url_str + ')')
 
     long_str = re.sub(r'<span class="hutoaka">(.+?)</span>', r'**\1**', long_str)
@@ -126,9 +150,10 @@ def html_to_markdown(long_str, directory):
     long_str = re.sub(r'<div class="sample">([\s\S]+?)</div>', r'\1', long_str)
     long_str = re.sub(r'<p>(.+?)</p>', r'\1\n\n', long_str)
     long_str = long_str.replace('<br>', '\n')
-    print(long_str)
+    # print(long_str)
     return long_str
 
 
 if __name__ == '__main__':
-    file_to_markdown('reibun/pc/majime/m0_3.html')
+    # file_to_markdown('reibun/pc/majime/m0_3.html')
+    all_file_to_markdown()

@@ -86,7 +86,26 @@ def change_pickle(file_name, num_str, new_data):
     save_data_to_pickle(pk_data, file_name)
 
 
+def add_to_pk_list():
+    pk_dec = read_pickle_pot('title_img_list')
+    for p_id in pk_dec:
+        with open('reibun/pc/' + pk_dec[p_id][0], 'r', encoding='utf-8') as f:
+            long_str = f.read()
+            desc_l = re.findall('<meta name="description" content="(.*?)">', long_str)
+            if desc_l:
+                desc_str = desc_l[0]
+            else:
+                desc_str = ''
+            pk_dec[p_id].append(desc_str)
+            if len(pk_dec[p_id]) < 6:
+                print('error : ' + pk_dec[p_id][0])
+    print(pk_dec)
+    save_data_to_pickle(pk_dec, 'title_img_list')
+
+
 if __name__ == '__main__':
     # make_current_file_list()
+    # add_to_pk_list()
     print(read_pickle_pot('title_img_list'))
+    print(read_pickle_pot('modify_log'))
     # change_pickle('title_img_list', 140, 'delete')

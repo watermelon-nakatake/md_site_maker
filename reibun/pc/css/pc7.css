@@ -457,11 +457,6 @@ h4, .data_title {
     margin: 1.5em 0 10px 3em
 }
 
-b, strong {
-    font-weight: 400;
-    background: linear-gradient(transparent 40%, #fff099 40%);
-}
-
 .center {
     text-align: center
 }
@@ -485,15 +480,16 @@ a:hover {
     text-decoration: underline
 }
 
-.hutoaka {
+.hutoaka, b, strong {
     color: red;
     font-weight: bold;
     font-size: 120%
 }
 
-.hutokuro {
+.hutokuro, em {
     font-weight: bold;
-    font-size: 110%
+    font-size: 110%;
+    font-style: normal;
 }
 
 .libut {
@@ -1209,6 +1205,121 @@ a.btn-pop {
     font-weight: bold;
     border: solid 2px #d27d00;
     margin-bottom: 15px
+}
+
+.lm_b {
+    width: 96px;
+    height: 115px;
+    background-repeat: no-repeat;
+    background-image: url(../images/common/icon_ml.png)
+}
+
+.lm_1 {
+    background-position: 0 0;
+}
+.lm_2 {
+    background-position: -96px 0;
+}
+.lm_3 {
+    background-position: -192px 0;
+}
+.lm_4 {
+    background-position: 0 -115px;
+}
+.lm_5 {
+    background-position: -96px -115px;
+}
+.lm_6 {
+    background-position: -192px -115px;
+}
+
+.rm_b {
+    width: 96px;
+    height: 115px;
+    background-position: -192px -115px;
+    background-repeat: no-repeat;
+    background-image: url(../images/common/icon_mr.png)
+}
+
+.rm_1 {
+    background-position: 0 0;
+}
+.rm_2 {
+    background-position: -96px 0;
+}
+.rm_3 {
+    background-position: -192px 0;
+}
+.rm_4 {
+    background-position: 0 -115px;
+}
+.rm_5 {
+    background-position: -96px -115px;
+}
+.rm_6 {
+    background-position: -192px -115px;
+}
+
+.fl1 {
+    width: 65%;
+    position: relative;
+    padding: 20px 5%;
+    border-radius: 10px;
+    background-color: #dcdcdc;
+    margin: 40px 10% 40px 20%;
+}
+
+/* 画像 - 絶対配置で左上に配置 */
+.fl1 .icon {
+    position: absolute;
+    left: -110px;
+    top: 0;
+}
+
+/* 三角アイコン */
+.fl1::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: -15px;
+    top: 20px;
+    border-right: 15px solid #dcdcdc;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+
+/* 吹き出し本体 */
+.fr2 {
+    width: 65%;
+    position: relative;
+    padding: 20px 5%;
+    border-radius: 10px;
+    background-color: #7fffd4;
+    margin: 40px 20% 40px 10%;
+}
+
+/* 画像 - 絶対配置で右上に配置 */
+.fr2 .icon {
+    position: absolute;
+    right: -110px;
+    top: 0;
+    op: 0;
+}
+
+/* 三角アイコン */
+.fr2::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    right: -15px;
+    top: 20px;
+    border-left: 15px solid #7fffd4;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after,
