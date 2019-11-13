@@ -55,9 +55,18 @@ def main(mod_hour):
     print(mod_list)
     upload_list, pk_dec, new_file_data = import_from_markdown(mod_list)
     side_bar_dec = make_all_side_bar(pk_dec)
-    change_files = insert_sidebar_to_existing_art(side_bar_dec)
+    mod_log = make_article_list.read_pickle_pot('modify_log')
+    with open('reibun/index.html', 'r', encoding='utf-8') as f:
+        index_str = f.read()
+        mod_title = re.findall(r'<div class="sbh">最近の更新記事</div><ul><li><a href=".+?">(.+?)<', index_str)[0]
+        if mod_log[-1][3] == mod_title:
+            print('change only one page')
+            insert_sidebar_to_modify_page(side_bar_dec, upload_list)
+            change_files = []
+        else:
+            change_files = insert_sidebar_to_existing_art(side_bar_dec)
+            insert_to_index_page(pk_dec)
     insert_to_top_page(side_bar_dec)
-    insert_to_index_page(pk_dec)
     xml_site_map_maker(pk_dec)
     if new_file_data:
         make_rss(new_file_data)
@@ -69,6 +78,39 @@ def main(mod_hour):
                         'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css', 'reibun/p_sitemap.xml'])
     # todo: 文中に関連記事挿入 card
     reibun_upload.ftp_upload(upload_list)
+
+
+def icon_filter(long_str):
+    long_str = long_str.replace('%l_normal%', '%lm_1%')
+    long_str = long_str.replace('%l_!%', '%lm_2%')
+    long_str = long_str.replace('%l_?%', '%lm_5%')
+    long_str = long_str.replace('%l_good%', '%lm_6%')
+    long_str = long_str.replace('%l_angry%', '%lm_4%')
+    long_str = long_str.replace('%l_palm%', '%lm_3%')
+    long_str = long_str.replace('%l_normal', '%lm_1%')
+    long_str = long_str.replace('%l_!', '%lm_2%')
+    long_str = long_str.replace('%l_?', '%lm_5%')
+    long_str = long_str.replace('%l_good', '%lm_6%')
+    long_str = long_str.replace('%l_angry', '%lm_4%')
+    long_str = long_str.replace('%l_palm', '%lm_3%')
+
+    long_str = long_str.replace('%r_normal%', '%rm_1%')
+    long_str = long_str.replace('%r_!%', '%rm_3%')
+    long_str = long_str.replace('%r_?%', '%rm_2%')
+    long_str = long_str.replace('%r_good%', '%rm_4%')
+    long_str = long_str.replace('%r_angry%', '%rm_5%')
+    long_str = long_str.replace('%r_palm%', '%rm_6%')
+    long_str = long_str.replace('%r_normal', '%rm_1%')
+    long_str = long_str.replace('%r_!', '%rm_3%')
+    long_str = long_str.replace('%r_?', '%rm_2%')
+    long_str = long_str.replace('%r_good', '%rm_4%')
+    long_str = long_str.replace('%r_angry', '%rm_5%')
+    long_str = long_str.replace('%r_palm', '%rm_6%')
+
+    if '%r_' in long_str or '%l_' in long_str:
+        print('There is wrong icon tag !')
+        return
+    return long_str
 
 
 def insert_to_top_page(side_bar_dec):
@@ -83,11 +125,14 @@ def insert_to_top_page(side_bar_dec):
         if up_str_l:
             up_str = up_str_l[0]
             up_data_l = re.findall(r'<li>.+?</li>', up_str)
-            latest_date = re.findall(r'^<li>.+? \[', up_data_l[0])[0]
+            latest_date = re.findall(r'^<li>(.+?) \[', up_data_l[0])[0]
             if latest_date == latest_art[0][1].replace('-', '/').replace('/0', '/'):
-                replace_str = re.sub(r'<li>' + latest_date + r' \[.+?<li>', '', up_str)
+                replace_str = re.sub(r'<li>' + latest_date + r' \[.+?</li>', '', up_str)
             else:
                 replace_str = up_str
+                latest_mod = re.findall(r'<li>(.+?) \[.+?<a href="(.+?)"', up_data_l[0])
+                if latest_mod[0][1] == latest_art[-1][0].replace('reibun/', ''):
+                    replace_str = replace_str.replace(up_data_l[0], '')
             add_str = ''
             for new_art in latest_art:
                 status_str = '更新' if new_art[4] == 'mod' else '追加'
@@ -227,12 +272,38 @@ def insert_sidebar_to_existing_art(side_bar_dec):
     return change_files
 
 
+def insert_sidebar_to_modify_page(side_bar_dec, upload_list):
+    for r_file in upload_list:
+        print(r_file)
+        with open(r_file, 'r', encoding='utf-8') as f:
+            long_str = f.read()
+            long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+            str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
+                               long_str)
+            if str_l:
+                category = str_l[0]
+            long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
+                              '"sbh">人気記事</div><ul>' + side_bar_dec['pop'] + '</ul></div>', long_str)
+            long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
+                              '"sbh">重要記事</div><ul>' + side_bar_dec['important'] + '</ul></div>', long_str)
+            long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
+                              '"sbh">最近の更新記事</div><ul>' + side_bar_dec['new'] + '</ul></div>', long_str)
+            if category != 'majime':
+                long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
+                                  '<div class="leftnav"><div class="sbh cat-i">' + category_name[category][0]
+                                  + '</div><ul>' + side_bar_dec[category] + '</ul></div>', long_str)
+            with open(r_file, 'w', encoding='utf-8') as g:
+                g.write(long_str)
+
+
 def make_all_side_bar(pk_dec):
     cat_dec = {'policy': [], 'caption': [], 'qa': [], 'site': [], 'post': [], 'f_mail': [], 's_mail': [],
                'date': [], 'how_to': [], 'profile': [], 'majime': []}
     pk_list = []
-    for i in pk_dec:
-        pk_list.append(pk_dec[i])
+    # for i in pk_dec:
+    #    pk_list.append(pk_dec[i])
+    pk_list = [pk_dec[i] for i in pk_dec if pk_dec[i][4] != 'policy']
+
     sorted_list = sorted(pk_list, key=lambda x: datetime.date(datetime.datetime.strptime(x[3], '%Y-%m-%d').year,
                                                               datetime.datetime.strptime(x[3], '%Y-%m-%d').month,
                                                               datetime.datetime.strptime(x[3], '%Y-%m-%d').day),
@@ -393,6 +464,7 @@ def import_from_markdown(md_file_list):
             plain_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', plain_txt)
             plain_txt = re.sub(r'%p%\n([\s\S]*?)\n\n', r'<!--point_i-->\n\n\n\1\n\n<!--e/point_i-->', plain_txt)
 
+            plain_txt = icon_filter(plain_txt)
             plain_txt = re.sub(r'%rm_(\d)%([\s\S]+?)\n\n',
                                r'<!--rm_\1-->\n\n\2\n\n<!--e/rm-->\n\n\n', plain_txt)
             plain_txt = re.sub(r'%lm_(\d)%([\s\S]+?)\n\n',
@@ -410,10 +482,9 @@ def import_from_markdown(md_file_list):
                         card_url = card_url_l[0]
                         for page_id in pk_dec:
                             if pk_dec[page_id][0] in card_url:
-                                card_str = '<div class="ar_card"><a href="{}"><div class="ar_in"><span class="p_title">' \
-                                           '{}</span><span>{}</span></div></a></div>'.format(card_url,
-                                                                                             pk_dec[page_id][1],
-                                                                                             pk_dec[page_id][4])
+                                card_str = '<div class="ar_card"><a href="{}"><div class="ar_in">' \
+                                           '<span class="p_title">{}</span><span>{}</span></div></a>' \
+                                           '</div>'.format(card_url, pk_dec[page_id][1], pk_dec[page_id][4])
                                 plain_txt = plain_txt.replace(card, card_str)
                                 break
             # コメントアウト削除
@@ -469,7 +540,8 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('</ul><!--e/arlist-->', '</ul>')
             new_str = new_str.replace('<!--arlist_b--><ul>', '<ul class="arlist" id="deaikei">')
             new_str = new_str.replace('</ul><!--e/arlist_b-->', '</ul>')
-            new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p></div>')
+            new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p>' +
+                                                      '</div>')
             new_str = new_str.replace('<!--e/point-->', '</div>')
             new_str = new_str.replace('<!--point_i-->', '<div class="in_point"><span>ポイント</span>')
             new_str = new_str.replace('<!--e/point_i-->', '</div>')
@@ -634,7 +706,7 @@ def add_pickle_dec(pk_dec, new_data):
 
 if __name__ == '__main__':
     main(1)
-    # import_from_markdown(['md_files/pc/majime/kakikata_t.md'])
+    # import_from_markdown(['md_files/pc/majime/m0_4.md'])
     # print(resize_and_rename_image('insert_image/AdobeStock_15946903.jpeg', 'majime/m0_test.html'))
     # t_l = {0: ['']}
     # print(make_all_side_bar(t_l))
@@ -644,7 +716,7 @@ if __name__ == '__main__':
     # print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
     # print([x for x in test_l if x[1] == test_l[-1][1]])
     print(str(datetime.datetime.now())[:-7])
-    print(make_article_list.read_pickle_pot('modify_log'))
+    # print(make_article_list.read_pickle_pot('modify_log'))
 
     # todo: アップロード
     # todo: 関連記事改善
