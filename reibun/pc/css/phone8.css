@@ -229,12 +229,18 @@ h1 {
     font-weight: 700;
     margin-left: 5px
 }
+.m_title{
+    font-weight: bold;
+    display: block;
+    margin-bottom: 20px;
+    font-size: 110%;
+}
 .mail {
     width: 90%;
     background-color: #cff;
     border-radius: 8px;
     -webkit-border-radius: 8px;
-    padding: 10px;
+    padding: 10px 15px;
     margin: 0 auto 20px
 }
 .wmail {
@@ -865,9 +871,9 @@ a.btn-pop {
 }
 
 .fl1 {
-    width: 67%;
+    width: 75%;
     position: relative;
-    padding: 20px 5%;
+    padding: 7px 2%;
     border-radius: 10px;
     background-color: #dcdcdc;
     margin: 40px 0 40px 70px;
@@ -921,9 +927,9 @@ a.btn-pop {
 }
 
 .fr2 {
-    width: 67%;
+    width: 75%;
     position: relative;
-    padding: 20px 5%;
+    padding: 7px 2%;
     border-radius: 10px;
     background-color: #7fffd4;
     margin: 40px 70px 40px 3%;
@@ -949,6 +955,169 @@ a.btn-pop {
     border-top: 15px solid transparent;
     border-bottom: 15px solid transparent;
 }
+
+.tb_n {
+  border-collapse: collapse;
+  margin: 40px auto;
+  padding: 0;
+  width: 650px;
+  table-layout: fixed;
+}
+
+.tb_n tr {
+  background-color: #fff;
+  border: 1px solid #bbb;
+  padding: .35em;
+}
+.tb_n th,
+.tb_n td {
+  padding: 1em 10px 1em 1em;
+  border-right: 1px solid #bbb;
+}
+.tb_n th {
+  font-size: .85em;
+}
+.tb_n thead tr{
+  background-color: #eee;
+}
+@media screen and (max-width: 600px) {
+  .tb_n {
+    border: 0;
+    width:100%
+  }
+  .tb_n th{
+    background-color: #eee;
+    display: block;
+    border-right: none;
+  }
+  .tb_n thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .tb_n tr {
+    display: block;
+    margin-bottom: .625em;
+  }
+
+  .tb_n td {
+    border-bottom: 1px solid #bbb;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+    position: relative;
+    padding: .625em .625em .625em 4em;
+    border-right: none;
+  }
+
+  .tb_n td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+  }
+
+  .tb_n td:last-child {
+    border-bottom: 0;
+  }
+}
+
+.in_point{
+    width: 80%;
+    margin: 20px auto;
+    border: none;
+    background-color: #FFD2B4;
+    padding: 10px 2%;
+}
+.in_point span {
+    display: block;
+    font-weight: bold;
+    color: #FF6600;
+}
+#con3 .in_point p{
+    font-weight: bold;
+    font-size: 120%;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.logi_box_o{
+    width: 90%;
+    padding: 0;
+    margin: 50px auto;
+    background-color: #e9e9e9;
+}
+
+.logi_box_i{
+    margin: 0;
+}
+.logi_box_e{
+    width: 34%;
+    margin: 20px 5% 20px;
+    padding: 20px 3%;
+    float: left;
+    background-color: #ffffff;
+    position: relative;
+    text-align: center;
+}
+.logi_box_e, .logi_box_e_e{
+    margin: 20px 5% 20px;
+    padding: 20px 3%;
+    float: left;
+    position: relative;
+    text-align: center;
+}
+
+.logi_box_e{
+    margin: 20px 5% 20px;
+    padding: 20px 3%;
+    float: left;
+    text-align: center;
+}
+.logi_box_e::after{
+    content: '';
+    position: absolute;
+    display: block;
+    height: 0;
+    width: 0;
+    bottom: -30px;
+    border-top: 15px solid #c0c0c0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+}
+
+.w50::after{
+    right: 40%;
+}
+.w100 ::after{
+    right: 45%;
+}
+.lb_c_w{
+    background-color: #ffffff;
+}
+.lb_c_b{
+    background-color: #00A2a8;
+    color: #ffffff;
+    font-size: 120%;
+}
+.w50{
+    width: 34%;
+}
+.w100{
+    width: 84%;
+}
+.w_500 {
+    width: 90%;
+    height: auto;
+    margin: 20px auto;
+}
+
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .btnli li:after, .dousen:after, .sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after {
     content: "";

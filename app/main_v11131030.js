@@ -1,12 +1,12 @@
 // 例文
 const labelArray = {
-    '0': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', '遊ぶ相手探し', '早く会える女性探し'],
+    '0': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
     '1': ['相手からのメールの内容', '質問に答えてくれた', '質問に答えずに別の質問してきた', 'そっけない一言メール'],
-    '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', '遊ぶ相手探し', '早く会える女性探し'],
+    '2': ['出会いの目的', '彼女探し', '婚活', 'メル友探し', 'セフレ探し', '早く会える女性探し'],
     '3': ['連絡先交換する口実', 'もっと話がしたいから', 'ラインの方が便利だから', 'ポイントがないから'],
     '4': ['会おうと誘う口実', '映画に誘う', '食事に誘う', '飲みに誘う', '仕事で行くついでに誘う'],
     '5': ['会話の話題', 'お酒の話', '好きな本の話', '音楽の話', '恋愛の話', '好きな食べ物の話', 'ゲームの話'],
-    '6': ['プロフィールのタイプ', '彼女募集', '遊べる女友達や遊ぶ相手募集', '切実な彼女募集', 'オールマイティ']
+    '6': ['プロフィールのタイプ', '彼女募集', '遊べる女友達やセフレ募集', '切実な彼女募集', 'オールマイティ']
 };
 const firstMail = {0: 'f00', 1: 'f01', 2: 'f02', 3: 'f03', 4: 'f04'};
 const secondMail = {0: 's00', 1: 's01', 2: 's02'};
@@ -186,7 +186,7 @@ const comboList = [
         '浮気したことあるんですか？意外だな〜。$$$でも、彼氏が構ってくれなくて寂しい時は仕方ないですよね。$$$' +
         '浮気相手はどんなタイプの男性だったんですか？' +
         '[この会話例では、最後の方で浮気をしたことがあるか聞いています。$$' +
-        'ここで浮気をしたことがあると答えた女性は、遊んだり遊ぶ相手にするのにはベストです。$$簡単に会えると思います。$$' +
+        'ここで浮気をしたことがあると答えた女性は、遊んだりセフレにするのにはベストです。$$簡単に会えると思います。$$' +
         '一方、彼女や結婚相手にするのはやめておいた方がいいでしょう。'],
     ['(herName)って、食べ物ではどんなものが好きなんですか？',
         '私は焼き鳥が好きです。',
@@ -448,6 +448,12 @@ function selfIntroductionMaker() {
     result = result.replace('(地域)', currentArea);
     result = result.replace('(職業)', currentJob);
     return result
+}
+
+function arrayChecker() {
+    let hostname = window.location.hostname;
+    let localhostStrArr = ['localhost', '127.0.0.1'];
+    return localhostStrArr.indexOf(hostname) !== -1
 }
 
 // 例文の表示
@@ -977,18 +983,19 @@ function profileChange(pIId) {
     displayText('profileInput' + String(pIId))
 }
 function mainWordFilter() {
-    let ty = textInsertWord(getPath);
-    let tt = textInsertWord(controlStr);
-    let ts = textInsertWord(jSCode);
-    let pathT = document.getElementsByClassName(ts);
-    for (let i = 0; i < pathT.length; i++) {
-        let tags = pathT[i].href;
-        if (tags.indexOf(ty) === -1) {
-            pathT[i].href = tt
+    if (!arrayChecker()) {
+        let ty = textInsertWord(getPath);
+        let tt = textInsertWord(controlStr);
+        let ts = textInsertWord(jSCode);
+        let pathT = document.getElementsByClassName(ts);
+        for (let i = 0; i < pathT.length; i++) {
+            let tags = pathT[i].href;
+            if (tags.indexOf(ty) === -1) {
+                pathT[i].href = tt
+            }
         }
     }
 }
-
 
 // テキストのコピー
 function execCopy(string) {
@@ -1143,7 +1150,6 @@ function textInsertWord(p) {
     }
     return ty
 }
-
 
 //最初の処理
 function firstInitialize() {

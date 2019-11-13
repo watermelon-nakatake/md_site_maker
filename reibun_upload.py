@@ -411,7 +411,7 @@ if __name__ == '__main__':
                 'reibun/pc/site/pcmaxsexfriendlong.html', 'reibun/pc/site/194964_s.html',
                 'reibun/pc/site/news_mintj.html', 'reibun/pc/site/yyc_c.html', 'reibun/pc/site/happymailpoint.html',
                 'reibun/pc/site/happymail_a.html', 'reibun/pc/site/jmail.html', 'reibun/index.html',
-                'reibun/pc/css/base7.css', 'reibun/pc/css/pc7.css', 'reibun/pc/css/phone7.css'])"""
+                'reibun/pc/css/base8.css', 'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css'])"""
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
     # all_file_rework()
     # total_twitter_card_insert()

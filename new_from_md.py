@@ -25,7 +25,8 @@ category_data = {'policy': ['ポリシー', 'index.html', 1], 's_mail': ['２通
                  'qa': ['出会い系Ｑ＆Ａ', 'index.html', 114], 'site': ['出会い系サイト情報', 'index.html', 122],
                  'post': ['掲示板例文', 'kakikata_t.html', 74], 'f_mail': ['ファーストメール例文', 'kakikata_f.html', 107],
                  'date': ['デートに誘うメール例文', 'date.html', 102], 'how_to': ['出会い系攻略法', 'kakikata_d.html', 39],
-                 'ap_mail': ['メール例文アプリ情報', 'mail-applicaton.html', 92]}
+                 'ap_mail': ['メール例文アプリ情報', 'mail-applicaton.html', 92],
+                 'majime': ['出会い系メール例文', 'index.html', 32]}
 
 
 def main(mod_hour):
@@ -45,11 +46,11 @@ def main(mod_hour):
                 if now - mod_time < st_time:
                     print('update: ' + file)
                     mod_list.append('md_files/pc/' + dir_path + file)
-        for file_a in ['md_files/index.html', 'new_art_1.md']:
+        """for file_a in ['md_files/index.html', 'new_art_1.md']:
             mod_time_a = os.path.getmtime(file_a)
             if now - mod_time_a < st_time:
                 print('update: ' + file_a)
-                mod_list.append(file_a)
+                mod_list.append(file_a)"""
     print('modify list :')
     print(mod_list)
     upload_list, pk_dec, new_file_data = import_from_markdown(mod_list)
@@ -61,9 +62,13 @@ def main(mod_hour):
     if new_file_data:
         make_rss(new_file_data)
     amp_file_maker.amp_maker(change_files)
-
+    upload_list.extend(change_files)
+    amp_upload = [x.replace('/pc/', '/amp/') for x in upload_list]
+    upload_list.extend(amp_upload)
+    upload_list.extend(['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base8.css',
+                        'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css', 'reibun/p_sitemap.xml'])
     # todo: 文中に関連記事挿入 card
-    # reibun_upload.ftp_upload(upload_list)
+    reibun_upload.ftp_upload(upload_list)
 
 
 def insert_to_top_page(side_bar_dec):
@@ -88,7 +93,7 @@ def insert_to_top_page(side_bar_dec):
                 status_str = '更新' if new_art[4] == 'mod' else '追加'
                 add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
                     new_art[1].replace('-', '/').replace('/0', '/'), category_data[new_art[2]][0],
-                    new_art[0].replace('pc/', ''), new_art[3], status_str)
+                    new_art[0].replace('reibun/', ''), new_art[3], status_str)
             long_str = long_str.replace(up_str, add_str + replace_str)
         # side bar
         long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
@@ -167,14 +172,14 @@ def xml_site_map_maker(pk_dec):
     pk_list.sort(key=lambda y: y[0])
     now = datetime.datetime.now()
     xml_str = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">' \
-              '<url><loc>https://www.demr.jp</loc><lastmod>' + str(now.date())\
+              '<url><loc>https://www.demr.jp</loc><lastmod>' + str(now.date()) \
               + '</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>'
     for page in pk_list:
         if 'index.html' in page[0]:
             page_url = page[0].replace('/index.html', '/')
         else:
             page_url = page[0]
-        xml_str += '<url><loc>https://www.demr.jp/pc/' + page_url + '</loc><lastmod>' + page[1]\
+        xml_str += '<url><loc>https://www.demr.jp/pc/' + page_url + '</loc><lastmod>' + page[1] \
                    + '</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>'
     xml_str += '</urlset>'
     with open('reibun/p_sitemap.xml', 'w', encoding='utf-8') as f:
@@ -301,7 +306,35 @@ def make_rss(new_file_data):
             atom_str = re.sub(r'<entry>.*</entry>', ''.join(item_list_a), atom_str)
             with open('reibun/atom.xml', 'w', encoding='utf-8') as k:
                 k.write(atom_str)
-    
+
+
+def insert_tag_to_top_anchor(long_str):
+    top_str_l = re.findall(r'</h1>.+?<div id="mokujio"', long_str)
+    if '<a href="#sc' in top_str_l[0]:
+        a_str_l = re.findall(r'<a href="#.+?</a>', top_str_l[0])
+        for a_str in a_str_l:
+            r_str = a_str
+            if 'class=' not in a_str:
+                l_text = re.findall(r'>(.+?)<', a_str)[0]
+                g_tag = "gtag('event','click',{'event_category':'inner_anchor','event_label':'" + l_text + "'});"
+                r_str = re.sub(r'<a href="(.+?)">',
+                               r'<a href="\1" class="top_anchor" onClick="' + g_tag + '">', r_str)
+                long_str = long_str.replace(a_str, r_str)
+    return long_str
+
+
+def insert_markdown_anchor(long_str):
+    a_str_l = re.findall(r'href="#[^s].+?"', long_str)
+    if a_str_l:
+        index_str_l = re.findall(r'<nav id="mokuji">.+?</nav>', long_str)
+        index_list = [[str_i[1], str_i[0]] for str_i in re.findall(r'<a href="(.+?)">(.+?)</a>', index_str_l[0])]
+        for a_str in a_str_l:
+            a_text = re.sub(r'href="#(.+?)"', r'\1', a_str)
+            r_str = re.sub(r'href="#(.+?)"', 'href="' + [x[1] for x in index_list if x[0] == a_text][0] + '"',
+                           a_str)
+            long_str = long_str.replace(a_str, r_str)
+    return long_str
+
 
 def import_from_markdown(md_file_list):
     upload_list = []
@@ -314,6 +347,7 @@ def import_from_markdown(md_file_list):
         print(md_file_path)
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
+            plain_txt = re.sub(r'\[\]\([\s\S]*?\)', '', plain_txt)
             if 'd::' in plain_txt:
                 description = re.findall(r'd::(.+?)\n', plain_txt)[0]
             if 'p::' in plain_txt:
@@ -357,11 +391,14 @@ def import_from_markdown(md_file_list):
             plain_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', plain_txt)
             plain_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist_b-->', plain_txt)
             plain_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', plain_txt)
+            plain_txt = re.sub(r'%p%\n([\s\S]*?)\n\n', r'<!--point_i-->\n\n\n\1\n\n<!--e/point_i-->', plain_txt)
 
             plain_txt = re.sub(r'%rm_(\d)%([\s\S]+?)\n\n',
                                r'<!--rm_\1-->\n\n\2\n\n<!--e/rm-->\n\n\n', plain_txt)
             plain_txt = re.sub(r'%lm_(\d)%([\s\S]+?)\n\n',
                                r'<!--lm_\1-->\n\n\2\n\n<!--e/lm-->\n\n\n', plain_txt)
+            plain_txt = plain_txt.replace('%sample%', '<!--sample/s-->')
+            plain_txt = plain_txt.replace('%sample/e%', '<!--sample/e-->')
 
             plain_txt = mail_sample_replace(plain_txt)
             # card挿入
@@ -374,17 +411,19 @@ def import_from_markdown(md_file_list):
                         for page_id in pk_dec:
                             if pk_dec[page_id][0] in card_url:
                                 card_str = '<div class="ar_card"><a href="{}"><div class="ar_in"><span class="p_title">' \
-                                           '{}</span><span>{}</span></div></a></div>'.format(
-                                            card_url, pk_dec[page_id][1], pk_dec[page_id][4])
+                                           '{}</span><span>{}</span></div></a></div>'.format(card_url,
+                                                                                             pk_dec[page_id][1],
+                                                                                             pk_dec[page_id][4])
                                 plain_txt = plain_txt.replace(card, card_str)
                                 break
             # コメントアウト削除
             plain_txt = re.sub(r'\(\)\[.*?\]\n', '', plain_txt)
             plain_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', plain_txt)
+            plain_txt = re.sub(r'>[\s]+?<', '><', plain_txt)
 
             print(plain_txt)
             print('markdown start!')
-            con_str = markdown.markdown(plain_txt)
+            con_str = markdown.markdown(plain_txt, extensions=['tables'])
             print(con_str)
             con_str = con_str.replace('\n', '')
             con_str = re.sub(r'^([\s\S]*)</h1>', '', con_str)
@@ -402,6 +441,9 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('<h2>', '<!--p-index--><h2>', 1)
             new_str = common_tool.index_maker(new_str)
             new_str = common_tool.section_insert(new_str)
+            if '"mokuji"' in new_str:
+                new_str = insert_markdown_anchor(new_str)
+                new_str = insert_tag_to_top_anchor(new_str)
             if category != 'majime':
                 new_str = new_str.replace('<!--sb-category-->', '<div class="leftnav"><div class="sbh cat-i"></div>'
                                                                 '<ul></ul></div>')
@@ -429,8 +471,24 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('</ul><!--e/arlist_b-->', '</ul>')
             new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p></div>')
             new_str = new_str.replace('<!--e/point-->', '</div>')
+            new_str = new_str.replace('<!--point_i-->', '<div class="in_point"><span>ポイント</span>')
+            new_str = new_str.replace('<!--e/point_i-->', '</div>')
+            new_str = new_str.replace('<ol>', '<ol class="arlist">')
             new_str = re.sub(r'。。<br />', r'。</p><p>', new_str)
             new_str = re.sub(r'。。', r'。</p><p>', new_str)
+            new_str = re.sub(r'）。<br />', r'）</p><p>', new_str)
+            new_str = re.sub(r'\)。<br />', r'\)</p><p>', new_str)
+            new_str = re.sub(r'\)。', r'\)</p><p>', new_str)
+            new_str = re.sub(r'）。', r'）</p><p>', new_str)
+            p_img_str_l = re.findall(r'<p><img .+?/></p>', new_str)
+            if p_img_str_l:
+                for p_img_str in p_img_str_l:
+                    if '/w_500/' in p_img_str and 'width="' not in p_img_str:
+                        p_img_r = re.sub(r'<p>(.+?)/></p>', r'<div class="w_500">\1 width="500" height="375"/></div>',
+                                         p_img_str)
+                    else:
+                        p_img_r = re.sub(r'<p>(.+?)/></p>', r'<div class="center">\1 /></div>', p_img_str)
+                    new_str = new_str.replace(p_img_str, p_img_r)
             for lr_str in ['r', 'l']:
                 rm_str_l = re.findall(r'<!--' + lr_str + 'm_.+?<!--e/' + lr_str + 'm-->', new_str)
                 if rm_str_l:
@@ -438,6 +496,12 @@ def import_from_markdown(md_file_list):
                         rm_replace = rm_str.replace('。', '。<br />')
                         new_str = new_str.replace(rm_str, rm_replace)
             new_str = re.sub(r'([^>])。([^<])', r'\1。<br />\2', new_str)
+            new_str = new_str.replace('。<a ', '。<br /><a ')
+            new_str = new_str.replace('。<br />）', '。）')
+            new_str = new_str.replace('。<br />)', '。)')
+            new_str = new_str.replace('！。<br />', '！<br />')
+            new_str = re.sub(r'(件名: .+?)<br />', r'<span class="m_title">\1</span>', new_str)
+            new_str = new_str.replace('<table>', '<table class="tb_n">')
 
             new_str = re.sub(r'<!--lm_(\d)-->',
                              r'<div class="fl1"><div class="icon"><div class="lm_b lm_\1"></div></div>', new_str)
@@ -448,6 +512,8 @@ def import_from_markdown(md_file_list):
 
             new_str = new_str.replace('<!--bread-->',
                                       new_article_create.breadcrumb_maker(category, directory, file_name))
+            new_str = new_str.replace('<!--sample/s-->', '<div class="sample">')
+            new_str = new_str.replace('<!--sample/e-->', '</div>')
             new_str = new_str.replace('<!--t-image-->', t_image)
             new_str = new_str.replace('<p>%libut%</p><ul>', '<ul class="libut">')
             if 'new_art' in md_file_path:
@@ -464,18 +530,23 @@ def import_from_markdown(md_file_list):
             with open('reibun/pc/' + file_name, 'w', encoding='utf-8') as g:
                 g.write(new_str)
                 upload_list.append('reibun/pc/' + file_name)
-                # new_data = [file_name, title, '', str(now.date()), category, description]
-                # pk_dec = add_pickle_dec(pk_dec, new_data)
+                new_data = [file_name, title, '', str(now.date()), category, description]
+                pk_dec = add_pickle_dec(pk_dec, new_data)
             add_modify_log('reibun/pc/' + file_name, now.date(), category, title, pub_or_mod)
     return upload_list, pk_dec, new_file_data
 
 
 def add_modify_log(mod_file_path, now, category, title, pub_or_mod):
-    # mod_log = [mod_file_path, str(now), category, title, pub_or_mod]
+    # mod_log = [[mod_file_path, str(now), category, title, pub_or_mod]]
     mod_log = make_article_list.read_pickle_pot('modify_log')
     today_mod = [x[0] for x in mod_log if x[1] == str(now)]
     if mod_file_path not in today_mod:
         mod_log.append([mod_file_path, str(now), category, title, pub_or_mod])
+    else:
+        for data in mod_log:
+            if data[0] == mod_file_path and data[1] == str(now):
+                mod_log.remove(data)
+                mod_log.append([mod_file_path, str(now), category, title, pub_or_mod])
     make_article_list.save_data_to_pickle(mod_log, 'modify_log')
 
 
@@ -502,10 +573,10 @@ def resize_and_rename_image(img_path, file_path):
         i += 1
         new_name = file_name + '_' + str(i) + '.jpg'
     img.save('reibun/pc/images/art_images/' + new_name)
-    # img.save('reibun/amp/images/art_images/' + new_name)
+    img.save('reibun/amp/images/art_images/' + new_name)
     # os.remove('insert_image/' + img_path)
-    # reibun_upload.ftp_upload(['reibun/pc/images/art_images/' + new_name])
-    # reibun_upload.ftp_upload(['reibun/amp/images/art_images/' + new_name])
+    reibun_upload.ftp_upload(['reibun/pc/images/art_images/' + new_name])
+    reibun_upload.ftp_upload(['reibun/amp/images/art_images/' + new_name])
     return '../images/art_images/' + new_name
 
 
@@ -562,8 +633,8 @@ def add_pickle_dec(pk_dec, new_data):
 
 
 if __name__ == '__main__':
-    # main(1)
-    import_from_markdown(['md_files/pc/majime/kakikata_t.md'])
+    main(1)
+    # import_from_markdown(['md_files/pc/majime/kakikata_t.md'])
     # print(resize_and_rename_image('insert_image/AdobeStock_15946903.jpeg', 'majime/m0_test.html'))
     # t_l = {0: ['']}
     # print(make_all_side_bar(t_l))
@@ -573,6 +644,7 @@ if __name__ == '__main__':
     # print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
     # print([x for x in test_l if x[1] == test_l[-1][1]])
     print(str(datetime.datetime.now())[:-7])
+    print(make_article_list.read_pickle_pot('modify_log'))
 
     # todo: アップロード
     # todo: 関連記事改善

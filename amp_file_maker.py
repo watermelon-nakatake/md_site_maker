@@ -140,6 +140,10 @@ def amp_maker(pc_path_list):
                 amp_path = pc_path.replace('/pc/', '/amp/')
                 amp_data = amp_data.replace('<!--path-->', amp_path)
                 amp_data = amp_data.replace('<!--new-date-->', new_date)
+                amp_data = amp_data.replace('<amp-img class="app_bn1" src="../images/common/app_bn_f.png" ' +
+                                            'alt="出会い系メール例文アプリ">',
+                                            '<amp-img class="app_bn1" src="../images/common/app_bn_f.png" width="336" ' +
+                                            'height="280" alt="出会い系メール例文アプリ">')
                 side_bar_list = [['人気記事', 'pop-a'], ['重要記事', 'imp-a'], ['最近の更新記事', 'new-a']]
                 for x in side_bar_list:
                     match_str_list = re.findall(r'<div class="sbh">' + x[0] + r'</div>.+?</ul>', str_x)

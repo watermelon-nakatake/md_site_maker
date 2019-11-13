@@ -97,16 +97,16 @@ body {
 
 #outline {
     text-align: left;
-    width: 100%;
-    margin: 0;
+    width: 1024px;
+    margin: 0 auto;
     padding: 0;
     overflow: hidden;
 }
 
 #con3 {
-    width: 65%;
+    width: 759px;
     position: relative;
-    padding: 20px 2% 20px 0;
+    padding: 20px 5px 20px;
     overflow: hidden;
     float: left
 }
@@ -119,8 +119,8 @@ body {
 #tibl {
     height: 70px;
     overflow: hidden;
-    width: 100%;
-    margin: 0;
+    width: 1024px;
+    margin: 0 auto;
 }
 
 #title {
@@ -129,7 +129,7 @@ body {
     padding-top: 15px
 }
 
-#title img{
+#title img {
     width: 250px;
     height: 37px;
 }
@@ -141,8 +141,53 @@ body {
     color: #464646
 }
 
-#navop, #nav-open{
-    display: none;
+#nav-close, #nav-open {
+    display: none
+}
+
+#gnav {
+    margin: 30px 0;
+    height: 60px;
+    width: 450px;
+    float: right;
+}
+
+#gnav li {
+    float: left;
+    width: 32%;
+    text-align: center;
+    list-style: none
+}
+
+#gnav a {
+    font-size: 14px;
+    text-decoration: none;
+    padding: 7px 0 5px;
+    display: block;
+    color: #333333
+}
+
+.gnav06 {
+    display: none
+}
+
+.majime #gnav li.gnav01 a,
+.post #gnav li.gnav01 a,
+.f_mail #gnav li.gnav01 a,
+.profile #gnav li.gnav01 a,
+.s_mail #gnav li.gnav01 a,
+.date #gnav li.gnav01 a,
+.how_to #gnav li.gnav01 a,
+.qa #gnav li.gnav06 a, .site #gnav li.gnav03 a, .caption #gnav li.gnav05 a {
+    color: #F60
+}
+
+#gnav a:hover {
+    background: #FFD2B4;
+    color: #F60;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s
 }
 
 #footer {
@@ -203,10 +248,17 @@ body {
     text-shadow: rgba(102, 102, 102, 1)
 }
 
-.dmail #fnav li.fnav05 a, .fmail #fnav li.fnav03 a, .home #fnav li.fnav00 a, .sefure #fnav li.fnav11 a,
-.pmail #fnav li.fnav01 a, .purpose #fnav li.fnav06 a, .qa #fnav li.fnav10 a, .sitedata #fnav li.fnav07 a,
-.smail #fnav li.fnav04 a, .tmail #fnav li.fnav02 a, .ym #fnav li.fnav06 a, .yobi #fnav li.fnav09 a,
-.yobib #fnav li.fnav09 a, .yobis #fnav li.fnav09 a {
+
+.top #fnav li.fnav00 a,
+.profile #fnav li.fnav01 a,
+.post #fnav li.fnav02 a,
+.f_mail #fnav li.fnav03 a,
+.s_mail #fnav li.fnav04 a,
+.date #fnav li.fnav05 a,
+.how_to #fnav li.fnav06 a,
+.site #fnav li.fnav07 a,
+.caution #fnav li.fnav08 a,
+.qa #fnav li.fnav09 a {
     color: #f90
 }
 
@@ -279,8 +331,10 @@ body {
 }
 
 #con3 section {
-    margin-bottom: 4em;
-    margin-top: 3em;
+    /*margin-bottom: 4em;
+    margin-top: 3em;     */
+    padding: 1.5em 0;
+
 }
 
 #con3 p {
@@ -294,7 +348,15 @@ body {
 
 .kenmei {
     font-weight: 700;
-    margin-left: 5px
+    margin-left: 4em;
+    margin-bottom: 10px;
+    font-size: 110%;
+}
+.m_title{
+    font-weight: bold;
+    display: block;
+    margin-bottom: 20px;
+    font-size: 110%;
 }
 
 .mail {
@@ -308,7 +370,7 @@ body {
 
 .wmail {
     width: 70%;
-    background-color: #FdF;
+    background-color: #ffe4e1;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     padding: 15px 20px;
@@ -334,7 +396,7 @@ body {
 }
 
 #con3 .mail p, #con3 .wmail p {
-    padding: 5px 0;
+    padding: 15px 0;
     margin: 0
 }
 
@@ -353,14 +415,14 @@ body {
 }
 
 .navi_brock {
-    width: 30%;
+    width: 254px;
     float: right;
     overflow: hidden;
     margin-top: 20px;
 }
 
 .leftnav {
-    width: 98%;
+    width: 250px;
     margin: 5px 0 10px;
     overflow: hidden;
     float: right;
@@ -370,7 +432,7 @@ body {
 
 .sbh {
     height: 25px;
-    width: 100%;
+    width: 210px;
     font-size: 15px;
     padding: 17px 0 5px 23px;
     margin: 0 auto;
@@ -382,21 +444,21 @@ body {
 
 .leftnav ul {
     display: block;
-    width: 100%;
+    width: 238px;
     padding: 0;
     margin: 0 auto;
     list-style: none
 }
 
 .leftnav li {
-    width: 94%;
-    padding: 10px 2% 9px;
+    width: 215px;
+    padding: 10px 9px 9px;
     border-bottom: dotted #e0e0e0 1px;
     margin: 0;
     line-height: 21px;
 }
 
-.leftnav li:last-child{
+.leftnav li:last-child {
     border-bottom: none;
 }
 
@@ -460,6 +522,7 @@ h4, .data_title {
 .center {
     text-align: center
 }
+
 .ap_int {
     text-align: center;
     margin: 40px 0;
@@ -481,16 +544,17 @@ a:hover {
 }
 
 .hutoaka, b, strong {
-    color: red;
+    color: #ff4500;
     font-weight: bold;
     font-size: 120%
 }
 
 .hutokuro, em {
     font-weight: bold;
-    font-size: 110%;
+    font-size: 120%;
     font-style: normal;
 }
+
 
 .libut {
     width: 92%;
@@ -682,7 +746,6 @@ a:hover {
 .imgnon {
     display: none
 }
-
 
 
 .sitepage #con1 {
@@ -992,12 +1055,12 @@ a:hover {
 }
 
 .arlist {
-    margin-left: 15%;
+    margin: 50px 0 50px 15%;
     width: 80%
 }
 
 .arlist li {
-    margin: 2em 0
+    margin: 1em 0
 }
 
 #kijip, #kijim {
@@ -1261,10 +1324,10 @@ a.btn-pop {
 }
 
 .fl1 {
-    width: 65%;
+    width: 69%;
     position: relative;
-    padding: 20px 5%;
-    border-radius: 10px;
+    padding: 5px 3%;
+    border-radius: 8px;
     background-color: #dcdcdc;
     margin: 40px 10% 40px 20%;
 }
@@ -1284,18 +1347,18 @@ a.btn-pop {
     width: 0;
     height: 0;
     left: -15px;
-    top: 20px;
+    top: 30px;
     border-right: 15px solid #dcdcdc;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
 }
 
 /* 吹き出し本体 */
 .fr2 {
-    width: 65%;
+    width: 69%;
     position: relative;
-    padding: 20px 5%;
-    border-radius: 10px;
+    padding: 5px 3%;
+    border-radius: 8px;
     background-color: #7fffd4;
     margin: 40px 20% 40px 10%;
 }
@@ -1316,14 +1379,138 @@ a.btn-pop {
     width: 0;
     height: 0;
     right: -15px;
-    top: 20px;
+    top: 30px;
     border-left: 15px solid #7fffd4;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+#con3 .fr2 p, #con3 .fl1 p{
+    margin: 0;
+    padding: 15px 0;
+}
+
+.tb_n {
+  border-collapse: collapse;
+  margin: 40px auto;
+  padding: 0;
+  width: 650px;
+  table-layout: fixed;
+}
+
+.tb_n tr {
+  background-color: #fff;
+  border: 1px solid #bbb;
+  padding: .35em;
+}
+.tb_n th,
+.tb_n td {
+  padding: 1em 10px 1em 1em;
+  border-right: 1px solid #bbb;
+}
+.tb_n th {
+  font-size: .85em;
+}
+.tb_n thead tr{
+  background-color: #eee;
+}
+
+.in_point{
+    width: 80%;
+    margin: 20px auto;
+    border: none;
+    background-color: #FFD2B4;
+    padding: 10px 2%;
+}
+.in_point span {
+    display: block;
+    font-weight: bold;
+    color: #FF6600;
+}
+#con3 .in_point p{
+    font-weight: bold;
+    font-size: 120%;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.logi_box_o{
+    width: 90%;
+    padding: 0;
+    margin: 50px auto;
+    background-color: #e9e9e9;
+}
+
+.logi_box_i{
+    margin: 0;
+}
+.logi_box_e{
+    width: 34%;
+    margin: 20px 5% 20px;
+    padding: 20px 3%;
+    float: left;
+    background-color: #ffffff;
+    position: relative;
+    text-align: center;
+}
+.logi_box_e, .logi_box_e_e{
+    margin: 20px 5% 20px;
+    padding: 20px 3%;
+    float: left;
+    position: relative;
+    text-align: center;
+}
+
+.logi_box_e{
+    margin: 20px 5% 20px;
+    padding: 20px 3%;
+    float: left;
+    text-align: center;
+}
+.logi_box_e::after{
+    content: '';
+    position: absolute;
+    display: block;
+    height: 0;
+    width: 0;
+    bottom: -30px;
+    border-top: 15px solid #c0c0c0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+}
+
+.w50::after{
+    right: 40%;
+}
+.w100 ::after{
+    right: 45%;
+}
+.lb_c_w{
+    background-color: #ffffff;
+}
+.lb_c_b{
+    background-color: #00A2a8;
+    color: #ffffff;
+    font-size: 120%;
+}
+.w50{
+    width: 34%;
+}
+.w100{
+    width: 84%;
+}
+.w_500 {
+    width: 500px;
+    height: 375px;
+    margin: 20px auto;
+}
+.top_anchor{
+    font-size: 120%;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after,
-.sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, #f_wrap:after {
+.sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, #f_wrap:after, .logi_box_i:after,
+.logi_box_o:after {
     content: "";
     display: block;
     clear: both
