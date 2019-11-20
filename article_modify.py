@@ -94,10 +94,10 @@ def html_to_markdown(long_str, directory):
     long_str = re.sub(r'<h3><span id="sc\d+">(.+?)</span></h3>', r'###\1\n\n', long_str)
     long_str = re.sub(r'<h4><span id="sc\d+">(.+?)</span></h4>', r'####\1\n\n', long_str)
     long_str = re.sub(r'<h5><span id="sc\d+">(.+?)</span></h5>', r'#####\1\n\n', long_str)
-    long_str = re.sub(r'<h2>(.+?)</h2>', r'##\1\n\n', long_str)
-    long_str = re.sub(r'<h3>(.+?)</h3>', r'###\1\n\n', long_str)
-    long_str = re.sub(r'<h4>(.+?)</h4>', r'####\1\n\n', long_str)
-    long_str = re.sub(r'<h5>(.+?)</h5>', r'#####\1\n\n', long_str)
+    long_str = re.sub(r'<h2>(.+?)</h2>', r'## \1\n\n', long_str)
+    long_str = re.sub(r'<h3>(.+?)</h3>', r'### \1\n\n', long_str)
+    long_str = re.sub(r'<h4>(.+?)</h4>', r'#### \1\n\n', long_str)
+    long_str = re.sub(r'<h5>(.+?)</h5>', r'##### \1\n\n', long_str)
     long_str = long_str.replace('<section>', '')
     long_str = long_str.replace('</section>', '')
     long_str = long_str.replace('<div class="center"><a href="../../app/">'
@@ -155,5 +155,5 @@ def html_to_markdown(long_str, directory):
 
 
 if __name__ == '__main__':
-    # file_to_markdown('reibun/pc/majime/m0_3.html')
-    all_file_to_markdown()
+    file_to_markdown('reibun/index.html')
+    # all_file_to_markdown()

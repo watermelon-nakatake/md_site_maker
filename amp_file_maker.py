@@ -3,6 +3,7 @@ import re
 import os
 import shutil
 import reibun_upload
+from PIL import Image
 
 
 def relation_file_upload(amp_str):
@@ -156,7 +157,12 @@ def amp_maker(pc_path_list):
                 gtag_i = g_tag_insert(content)
                 if gtag_i:
                     amp_data = amp_data.replace('{"trackPageview": {"on": "visible","request": "pageview"}}}',
-                                                '{"trackPageview": {"on": "visible","request": "pageview"}' + gtag_i + '}}')
+                                                '{"trackPageview": {"on": "visible","request": "pageview"}' +
+                                                gtag_i + '}}')
+                if pc_path == 'reibun/index.html':
+                    amp_data = amp_data.replace('"pc/', '"')
+                    amp_data = amp_data.replace('demr.jp/index.html', 'demr.jp/')
+
             with open(amp_path, "w") as h:
                 h.write(amp_data)
             # relation_file_upload(amp_data)
@@ -168,9 +174,43 @@ def add_amp_file(pc_path):
     reibun_upload.ftp_upload(['reibun/amp/' + file_name])
 
 
+def amp_image_filter(long_str):
+    img_str_l = re.findall(r'<amp-img.+?>', long_str)
+    if img_str_l:
+        for img_str in img_str_l:
+            if '/>' not in img_str:
+                img_str_r = img_str.replace('>', '/>')
+            else:
+                img_str_r = img_str
+            if 'width=' not in img_str or 'height=' not in img_str:
+                print(long_str)
+                img_path = re.findall(r'src="(.+?)"', img_str)[0].replace('../images/', 'reibun/pc/images/')
+                im = Image.open(img_path)
+                w, h = im.size
+                if 'width=' not in img_str:
+                    img_str_r = img_str_r.replace('/>', ' width="{}"/>'.format(str(w)))
+                if 'height=' not in img_str:
+                    img_str_r = img_str_r.replace('/>', ' height="{}"/>'.format(str(h)))
+                img_str_r = img_str_r.replace('  ', ' ')
+            long_str = long_str.replace(img_str, img_str_r)
+    return long_str
+
+
+def img_insert_size():
+    directory = 'reibun/amp/site'
+    dir_list = os.listdir(directory)
+    for file in dir_list:
+        with open(directory + '/' + file, 'r', encoding='utf-8') as f:
+            long_str = f.read()
+            long_str = amp_image_filter(long_str)
+            with open(directory + '/' + file, 'w', encoding='utf-8') as g:
+                g.write(long_str)
+
+
 if __name__ == '__main__':
-    new_file = 'majime/mail-applicaton.html'
+    img_insert_size()
+    # new_file = 'majime/mail-applicaton.html'
     # amp_maker(['reibun/pc/' + new_file])
-    reibun_upload.ftp_upload(['reibun/pc/' + new_file])
-    reibun_upload.ftp_upload(['reibun/amp/' + new_file])
+    # reibun_upload.ftp_upload(['reibun/pc/' + new_file])
+    # reibun_upload.ftp_upload(['reibun/amp/' + new_file])
     # amp_maker(['reibun/pc/majime/mail-applicaton.html'])

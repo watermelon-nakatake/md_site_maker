@@ -670,13 +670,13 @@ a:hover {
     margin: 3px 0 0
 }
 
-#updatelog {
+#log_page_list {
     margin: 15px 5px 40px 25px;
     width: 85%;
     border: none
 }
 
-#updatelog li {
+#log_page_list li {
     list-style: none;
     margin: 3px 0 0
 }

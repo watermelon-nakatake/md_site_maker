@@ -134,6 +134,106 @@ body {
     height: 37px;
 }
 
+/* topページ　*/
+.top #con3 {
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.top #con3 p {
+    margin: 20px;
+}
+
+.top #header {
+    border-bottom: 1px solid #6E6E6E;
+    padding: 0
+}
+
+.top #tibl {
+    height: 100px;
+    overflow: hidden;
+    width: 1024px;
+    margin: 0 auto;
+}
+
+
+.top title {
+    padding-top: 10px;
+}
+
+.top #title img {
+    width: 400px;
+    height: 59px;
+}
+
+.top #dis {
+    float: left;
+    margin: 27px 0 0 50px;
+    font-size: 15px;
+    color: #464646;
+    font-weight: normal;
+    border: none;
+    width: auto;
+    padding: 0;
+}
+
+.t_h1 {
+    display: none;
+}
+
+.top #gnav {
+    margin: 10px 0;
+    height: 60px;
+    width: 450px;
+    float: right;
+}
+
+.top_r {
+    float: left;
+    width: 50%;
+    /*background-color: #FF6600;*/
+}
+
+.top_l {
+    float: left;
+    width: 50%;
+    /*background-color: #FFD2B4;*/
+}
+
+/*.top h1 {
+    width: 13%;
+    font-size: 12px;
+    border: none;
+    margin: 0 0 0 70%;
+    padding: 0;
+    text-align: right;
+    float: left;
+    font-weight: normal;
+}*/
+.top #modt {
+    font-size: 12px;
+    text-align: right;
+}
+
+.t_nav li {
+    float: left;
+    width: 50%;
+    margin: 0;
+    padding: 0
+}
+.tn_i {
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+.tn_r {
+    width: 320px;
+    padding: 15px;
+    float: left;
+    font-size: 15px;
+}
+
 #dis {
     float: left;
     margin: 10px 0 0 50px;
@@ -352,7 +452,8 @@ body {
     margin-bottom: 10px;
     font-size: 110%;
 }
-.m_title{
+
+.m_title {
     font-weight: bold;
     display: block;
     margin-bottom: 20px;
@@ -686,13 +787,13 @@ a:hover {
     margin: 3px 0 0 1.5em
 }
 
-#updatelog {
+#log_page_list {
     margin: 15px 5px 40px 25px;
     width: 85%;
     border: none
 }
 
-#updatelog li {
+#log_page_list li {
     list-style: none;
     margin: 3px 0 0
 }
@@ -1280,18 +1381,23 @@ a.btn-pop {
 .lm_1 {
     background-position: 0 0;
 }
+
 .lm_2 {
     background-position: -96px 0;
 }
+
 .lm_3 {
     background-position: -192px 0;
 }
+
 .lm_4 {
     background-position: 0 -115px;
 }
+
 .lm_5 {
     background-position: -96px -115px;
 }
+
 .lm_6 {
     background-position: -192px -115px;
 }
@@ -1307,18 +1413,23 @@ a.btn-pop {
 .rm_1 {
     background-position: 0 0;
 }
+
 .rm_2 {
     background-position: -96px 0;
 }
+
 .rm_3 {
     background-position: -192px 0;
 }
+
 .rm_4 {
     background-position: 0 -115px;
 }
+
 .rm_5 {
     background-position: -96px -115px;
 }
+
 .rm_6 {
     background-position: -192px -115px;
 }
@@ -1385,66 +1496,72 @@ a.btn-pop {
     border-bottom: 8px solid transparent;
 }
 
-#con3 .fr2 p, #con3 .fl1 p{
+#con3 .fr2 p, #con3 .fl1 p {
     margin: 0;
     padding: 15px 0;
 }
 
 .tb_n {
-  border-collapse: collapse;
-  margin: 40px auto;
-  padding: 0;
-  width: 650px;
-  table-layout: fixed;
+    border-collapse: collapse;
+    margin: 40px auto;
+    padding: 0;
+    width: 650px;
+    table-layout: fixed;
 }
 
 .tb_n tr {
-  background-color: #fff;
-  border: 1px solid #bbb;
-  padding: .35em;
-}
-.tb_n th,
-.tb_n td {
-  padding: 1em 10px 1em 1em;
-  border-right: 1px solid #bbb;
-}
-.tb_n th {
-  font-size: .85em;
-}
-.tb_n thead tr{
-  background-color: #eee;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    padding: .35em;
 }
 
-.in_point{
+.tb_n th,
+.tb_n td {
+    padding: 1em 10px 1em 1em;
+    border-right: 1px solid #bbb;
+}
+
+.tb_n th {
+    font-size: .85em;
+}
+
+.tb_n thead tr {
+    background-color: #eee;
+}
+
+.in_point {
     width: 80%;
     margin: 20px auto;
     border: none;
     background-color: #FFD2B4;
     padding: 10px 2%;
 }
+
 .in_point span {
     display: block;
     font-weight: bold;
     color: #FF6600;
 }
-#con3 .in_point p{
+
+#con3 .in_point p {
     font-weight: bold;
     font-size: 120%;
     margin: 0;
     padding: 10px 20px;
 }
 
-.logi_box_o{
+.logi_box_o {
     width: 90%;
     padding: 0;
     margin: 50px auto;
     background-color: #e9e9e9;
 }
 
-.logi_box_i{
+.logi_box_i {
     margin: 0;
 }
-.logi_box_e{
+
+.logi_box_e {
     width: 34%;
     margin: 20px 5% 20px;
     padding: 20px 3%;
@@ -1453,7 +1570,8 @@ a.btn-pop {
     position: relative;
     text-align: center;
 }
-.logi_box_e, .logi_box_e_e{
+
+.logi_box_e, .logi_box_e_e {
     margin: 20px 5% 20px;
     padding: 20px 3%;
     float: left;
@@ -1461,13 +1579,14 @@ a.btn-pop {
     text-align: center;
 }
 
-.logi_box_e{
+.logi_box_e {
     margin: 20px 5% 20px;
     padding: 20px 3%;
     float: left;
     text-align: center;
 }
-.logi_box_e::after{
+
+.logi_box_e::after {
     content: '';
     position: absolute;
     display: block;
@@ -1479,38 +1598,45 @@ a.btn-pop {
     border-right: 30px solid transparent;
 }
 
-.w50::after{
+.w50::after {
     right: 40%;
 }
-.w100 ::after{
+
+.w100 ::after {
     right: 45%;
 }
-.lb_c_w{
+
+.lb_c_w {
     background-color: #ffffff;
 }
-.lb_c_b{
+
+.lb_c_b {
     background-color: #00A2a8;
     color: #ffffff;
     font-size: 120%;
 }
-.w50{
+
+.w50 {
     width: 34%;
 }
-.w100{
+
+.w100 {
     width: 84%;
 }
+
 .w_500 {
     width: 500px;
     height: 375px;
     margin: 20px auto;
 }
-.top_anchor{
+
+.upper_anchor {
     font-size: 120%;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after,
 .sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, #f_wrap:after, .logi_box_i:after,
-.logi_box_o:after {
+.logi_box_o:after, .top_t_outer:after, .top_t_outer:before, .t_nav:after {
     content: "";
     display: block;
     clear: both

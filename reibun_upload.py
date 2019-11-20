@@ -160,6 +160,10 @@ def tab_and_line_feed_remove_from_str(long_str):
     result = result.replace('description"content="', 'description" content="')
     result = result.replace('"width="', '" width="')
     result = result.replace('"media="', '" media="')
+    result = result.replace('"src', '" src')
+    result = result.replace('"itemscope=', '" itemscope=')
+    result = result.replace('"itemprop=', '" itemprop=')
+    result = result.replace(', ', ',')
     return result
 
 
@@ -335,20 +339,22 @@ def insert_index_list(path):
             g.write(new_str)
 
 
-# todo: サイドバーのリンクをpickle使って統一＆自動で作成(タイトル読み取り、整列、自動追加）
-# todo: 新規記事追加の省力化　ever note等からのインポートファイルで作成
+def relational_file_
+
 # todo: ABテストのscript作成
+
 
 if __name__ == '__main__':
     # total_update()
-    # tab_and_line_feed_remover('reibun/pc/majime/mail-applicaton_test.html')
+    target = 'reibun/index.html'
+    tab_and_line_feed_remover(target)
+    ftp_upload([target])
     # link_check('app/')
     # modify_stamp_insert()
     # make_amp_total()
     # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
-    ftp_upload(['reibun/index.html'])
     """ftp_upload(['reibun/p_sitemap.xml', 'reibun/pc/policy/profile.html', 'reibun/pc/policy/index.html',
                 'reibun/pc/policy/sitemap.html', 'reibun/pc/policy/log.html',
                 'reibun/pc/caption/meaningofwarikiri.html', 'reibun/pc/caption/warikiricheck.html',

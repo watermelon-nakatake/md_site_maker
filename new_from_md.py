@@ -46,11 +46,11 @@ def main(mod_hour):
                 if now - mod_time < st_time:
                     print('update: ' + file)
                     mod_list.append('md_files/pc/' + dir_path + file)
-        """for file_a in ['md_files/index.html', 'new_art_1.md']:
+        for file_a in ['md_files/index.html', 'new_art_1.md']:
             mod_time_a = os.path.getmtime(file_a)
             if now - mod_time_a < st_time:
                 print('update: ' + file_a)
-                mod_list.append(file_a)"""
+                mod_list.append(file_a)
     print('modify list :')
     print(mod_list)
     upload_list, pk_dec, new_file_data = import_from_markdown(mod_list)
@@ -379,7 +379,7 @@ def make_rss(new_file_data):
                 k.write(atom_str)
 
 
-def insert_tag_to_top_anchor(long_str):
+def insert_tag_to_upper_anchor(long_str):
     top_str_l = re.findall(r'</h1>.+?<div id="mokujio"', long_str)
     if '<a href="#sc' in top_str_l[0]:
         a_str_l = re.findall(r'<a href="#.+?</a>', top_str_l[0])
@@ -389,7 +389,7 @@ def insert_tag_to_top_anchor(long_str):
                 l_text = re.findall(r'>(.+?)<', a_str)[0]
                 g_tag = "gtag('event','click',{'event_category':'inner_anchor','event_label':'" + l_text + "'});"
                 r_str = re.sub(r'<a href="(.+?)">',
-                               r'<a href="\1" class="top_anchor" onClick="' + g_tag + '">', r_str)
+                               r'<a href="\1" class="upper_anchor" onClick="' + g_tag + '">', r_str)
                 long_str = long_str.replace(a_str, r_str)
     return long_str
 
@@ -404,6 +404,13 @@ def insert_markdown_anchor(long_str):
             r_str = re.sub(r'href="#(.+?)"', 'href="' + [x[1] for x in index_list if x[0] == a_text][0] + '"',
                            a_str)
             long_str = long_str.replace(a_str, r_str)
+    return long_str
+
+
+def top_page_filter(long_str):
+    long_str = long_str.replace('"../../"', './')
+    long_str = long_str.replace('"../../', '"')
+    long_str = long_str.replace('"../', '"../pc/')
     return long_str
 
 
@@ -514,7 +521,7 @@ def import_from_markdown(md_file_list):
             new_str = common_tool.section_insert(new_str)
             if '"mokuji"' in new_str:
                 new_str = insert_markdown_anchor(new_str)
-                new_str = insert_tag_to_top_anchor(new_str)
+                new_str = insert_tag_to_upper_anchor(new_str)
             if category != 'majime':
                 new_str = new_str.replace('<!--sb-category-->', '<div class="leftnav"><div class="sbh cat-i"></div>'
                                                                 '<ul></ul></div>')
@@ -584,6 +591,7 @@ def import_from_markdown(md_file_list):
 
             new_str = new_str.replace('<!--bread-->',
                                       new_article_create.breadcrumb_maker(category, directory, file_name))
+            new_str = new_str.replace('"../../../reibun/pc/', '"../')
             new_str = new_str.replace('<!--sample/s-->', '<div class="sample">')
             new_str = new_str.replace('<!--sample/e-->', '</div>')
             new_str = new_str.replace('<!--t-image-->', t_image)
@@ -599,6 +607,14 @@ def import_from_markdown(md_file_list):
                 for insert_img in insert_img_l:
                     img_str = img_str_filter(insert_img, file_name)
                     new_str = new_str.replace(insert_img, img_str)
+            if md_file_path == 'md_files/index.md':
+                with open('reibun/index.index', 'r', encoding='utf-8') as h:
+                    top_long_str = h.read()
+                    mod_log = re.findall(r'<div id="update"><ul class="updli">.+?</ul></div></div>', top_long_str)[0]
+                top_page_filter(new_str)
+                new_str = new_str.replace('</article>',
+                                          '<section><div class="tabn"><h2>主な更新履歴</h2>' + mod_log +
+                                          '</section></article>')
             with open('reibun/pc/' + file_name, 'w', encoding='utf-8') as g:
                 g.write(new_str)
                 upload_list.append('reibun/pc/' + file_name)
@@ -704,8 +720,74 @@ def add_pickle_dec(pk_dec, new_data):
     return pk_dec
 
 
+def css_optimize(html_path, css_path):
+    with open(css_path, 'r', encoding='utf-8') as f:
+        css_str = f.read()
+    with open(html_path, 'r', encoding='utf-8') as g:
+        html_str = g.read()
+    css_str = css_str.replace('\n', '')
+    css_str = css_str.replace('@charset "UTF-8";', '')
+    css_str = re.sub(r';[\s]*', ';', css_str)
+    css_str = re.sub(r'\{[\s]*', '{', css_str)
+    css_str = re.sub(r',[\s]*', ',', css_str)
+    css_str = re.sub(r':[\s]*', ':', css_str)
+    css_str = re.sub(r' \{', '{', css_str)
+    css_str = re.sub(r'/\*.+?\*/', '', css_str)
+    css_str = re.sub(r'@media.*$', '', css_str)
+    css_list = css_str.split('}')
+    css_list = [c + '}' for c in css_list[:-1]]
+    css_sep_list = []
+    for line in css_list:
+        selector_str_l = re.findall(r'(.+?)\{', line)
+        if ',' in selector_str_l[0]:
+            selector_c_list = selector_str_l[0].split(',')
+        else:
+            selector_c_list = [selector_str_l[0]]
+        css_sep_list.append([selector_c_list, re.findall(r'\{([\s\S]*)\}', line)[0]])
+    print(css_sep_list)
+
+    z_l = [z.split() for z in re.findall(r'class="(.+?)"', html_str)]
+    class_list = []
+    for z_e in z_l:
+        class_list.extend(['.' + q for q in z_e])
+
+    id_list = ['#' + z for z in re.findall(r'id="(.+?)"', html_str)]
+    selector_list = class_list + id_list
+    selector_list = set(selector_list)
+    selector_list = list(selector_list)
+    selector_list.sort()
+    print(selector_list)
+
+    tag_list = re.findall('<(.+?)[ |>]', html_str)
+    tag_list = [b for b in tag_list if '/' not in b and '!' not in b]
+    tag_list = set(tag_list)
+    tag_list = list(tag_list)
+    new_list = []
+    for x in css_sep_list:
+        css_selector = []
+        for y in x[0]:
+            print(y)
+            if '.' in y or '#' in y:
+                for z in selector_list:
+                    if z in y:
+                        css_selector.append(y)
+                        break
+            else:
+                for i in tag_list:
+                    if i in y:
+                        css_selector.append(y)
+                        break
+        if css_selector:
+            new_list.append([css_selector, x[1]])
+    print(len(new_list))
+    print(new_list)
+    str_list = [','.join(a[0]) + '{' + a[1] + '}' for a in new_list]
+    new_str = '\n'.join(str_list)
+    print(new_str)
+
+
 if __name__ == '__main__':
-    main(1)
+    # main(1)
     # import_from_markdown(['md_files/pc/majime/m0_4.md'])
     # print(resize_and_rename_image('insert_image/AdobeStock_15946903.jpeg', 'majime/m0_test.html'))
     # t_l = {0: ['']}
@@ -717,6 +799,7 @@ if __name__ == '__main__':
     # print([x for x in test_l if x[1] == test_l[-1][1]])
     print(str(datetime.datetime.now())[:-7])
     # print(make_article_list.read_pickle_pot('modify_log'))
+    css_optimize('reibun/index.html', 'reibun/pc/css/top1.css')
 
     # todo: アップロード
     # todo: 関連記事改善
