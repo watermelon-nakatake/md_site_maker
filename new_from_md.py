@@ -514,7 +514,6 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('<!--file-path-->', file_name)
             new_str = new_str.replace('<!--category-->', category)
 
-            new_str = new_str.replace('<!--description-->', description)
             new_str = new_str.replace('<!--main-content-->', con_str + '<!--last-section-->')
             new_str = new_str.replace('<h2>', '<!--p-index--><h2>', 1)
             new_str = common_tool.index_maker(new_str)
@@ -595,6 +594,8 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('<!--sample/s-->', '<div class="sample">')
             new_str = new_str.replace('<!--sample/e-->', '</div>')
             new_str = new_str.replace('<!--t-image-->', t_image)
+            new_str = new_str.replace('<!--description-->', description)
+            new_str = new_str.replace('.md"', '.html"')
             new_str = new_str.replace('<p>%libut%</p><ul>', '<ul class="libut">')
             if 'new_art' in md_file_path:
                 new_str = new_str.replace('"reibun/pc/', '"../')

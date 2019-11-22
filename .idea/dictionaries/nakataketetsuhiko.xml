@@ -29,6 +29,7 @@
       <w>furin</w>
       <w>fwari</w>
       <w>gnav</w>
+      <w>googleanalytics</w>
       <w>goyan</w>
       <w>gtag</w>
       <w>happymail</w>
@@ -36,6 +37,7 @@
       <w>hutoaka</w>
       <w>hutokuro</w>
       <w>imail</w>
+      <w>imgitemprop</w>
       <w>imgsrc</w>
       <w>itemscope</w>
       <w>itemtype</w>
@@ -83,6 +85,7 @@
       <w>reibun</w>
       <w>sakura</w>
       <w>sdatetime</w>
+      <w>sdis</w>
       <w>sefure</w>
       <w>sexfriend</w>
       <w>sexfriendmail</w>
@@ -95,7 +98,9 @@
       <w>spanid</w>
       <w>spanitemprop</w>
       <w>sphmban</w>
+      <w>stit</w>
       <w>stor</w>
+      <w>syncer</w>
       <w>tabn</w>
       <w>tari</w>
       <w>teisite</w>

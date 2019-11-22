@@ -163,8 +163,23 @@ def tab_and_line_feed_remove_from_str(long_str):
     result = result.replace('"src', '" src')
     result = result.replace('"itemscope=', '" itemscope=')
     result = result.replace('"itemprop=', '" itemprop=')
+    result = result.replace('imgitemprop=', 'img itemprop=')
+    result = result.replace('"layout=', '" layout=')
+    result = result.replace('"class=', '" class=')
+    result = result.replace('"height="', '" height="')
     result = result.replace(', ', ',')
+    result = css_minify(result)
     return result
+
+
+def css_minify(long_str):
+    css_str_l = re.findall(r'<style.*?>(.+?)</style>', long_str)
+    if css_str_l:
+        for css_str in css_str_l:
+            css_str_r = css_str.replace(': ', ':')
+            css_str_r = css_str_r.replace(' {', '{')
+            long_str = long_str.replace(css_str, css_str_r)
+    return long_str
 
 
 def tab_and_line_feed_remover(file_path):
@@ -339,86 +354,57 @@ def insert_index_list(path):
             g.write(new_str)
 
 
-def relational_file_
+def relational_file_pick_up(target_file):
+    with open(target_file, 'r', encoding='utf-8') as f:
+        long_str = f.read()
+        relational_list = ['reibun/pc/css/base8.css', 'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css',
+                           'reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml', 'reibun/p_sitemap.xml',
+                           target_file]
+        p_time = 60 * 60 * 24 * 1
+        now = time.time()
+        img_list = re.findall(r'src="(.+?)"', long_str)
+        if img_list:
+            for img_path in img_list:
+                if 'http://' not in img_path and 'https://' not in img_path:
+                    if 'reibun/index.html' in target_file:
+                        img_path = img_path.replace('pc/', 'reibun/pc/')
+                    elif 'reibun/amp/index.html' == target_file:
+                        img_path = re.sub(r'^images/', 'reibun/amp/images/', img_path)
+                    elif 'reibun/amp/' in target_file:
+                        img_path = img_path.replace('../images/', 'reibun/amp/images/')
+                    else:
+                        img_path = img_path.replace('../images/', 'reibun/pc/images/')
+                    relational_list.append(img_path)
+        mod_list = [r_path for r_path in relational_list if now - os.path.getmtime(r_path) < p_time]
+        return mod_list
+
+
+def files_upload(upload_file_list):
+    modify_list = []
+    for file in upload_file_list:
+        tab_and_line_feed_remover(file)
+        add_files = relational_file_pick_up(file)
+        modify_list.extend(add_files)
+    modify_list = set(modify_list)
+    modify_list = list(modify_list)
+    ftp_upload(modify_list)
+
 
 # todo: ABテストのscript作成
 
-
 if __name__ == '__main__':
-    # total_update()
-    target = 'reibun/index.html'
-    tab_and_line_feed_remover(target)
-    ftp_upload([target])
+    target = ['reibun/amp/majime/kakikata_t.html']
+    files_upload(target)
+    # tab_and_line_feed_remover(target)
+    # ftp_upload([target])
     # link_check('app/')
     # modify_stamp_insert()
     # make_amp_total()
     # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
-    """ftp_upload(['reibun/p_sitemap.xml', 'reibun/pc/policy/profile.html', 'reibun/pc/policy/index.html',
-                'reibun/pc/policy/sitemap.html', 'reibun/pc/policy/log.html',
-                'reibun/pc/caption/meaningofwarikiri.html', 'reibun/pc/caption/warikiricheck.html',
-                'reibun/pc/caption/index.html', 'reibun/pc/caption/freesite.html', 'reibun/pc/caption/fraud.html',
-                'reibun/pc/caption/dealerprofile.html', 'reibun/pc/caption/storyofexperience.html',
-                'reibun/pc/caption/fwari.html', 'reibun/pc/caption/jkandjc.html',
-                'reibun/pc/caption/tsutsumotase.html', 'reibun/pc/caption/sakura.html',
-                'reibun/pc/caption/rapaciousdealer.html', 'reibun/pc/majime/m1remarriage.html',
-                'reibun/pc/majime/kakikata_p.html', 'reibun/pc/majime/m2conversation-technic.html',
-                'reibun/pc/majime/m2topic.html', 'reibun/pc/majime/m0bigboobs.html', 'reibun/pc/majime/m2lineid.html',
-                'reibun/pc/majime/m1netnan-sex.html', 'reibun/pc/majime/m2htalk.html', 'reibun/pc/majime/m0aijin.html',
-                'reibun/pc/majime/m2_0_1.html', 'reibun/pc/majime/m1wakuwakumail.html',
-                'reibun/pc/majime/m4manual.html', 'reibun/pc/majime/m1_8.html', 'reibun/pc/majime/m2_11.html',
-                'reibun/pc/majime/m4virgin.html', 'reibun/pc/majime/m1_9.html', 'reibun/pc/majime/index.html',
-                'reibun/pc/majime/m0bbs.html', 'reibun/pc/majime/m0sexfriend.html', 'reibun/pc/majime/m2_2_1.html',
-                'reibun/pc/majime/mp_easytocapture.html', 'reibun/pc/majime/m2.html',
-                'reibun/pc/majime/mp_sexfriendprofile.html', 'reibun/pc/majime/kakikata_d.html',
-                'reibun/pc/majime/mp_enjokousai.html', 'reibun/pc/majime/majime.html',
-                'reibun/pc/majime/m1goldenweek.html', 'reibun/pc/majime/m2marriedwomenu.html',
-                'reibun/pc/majime/m4application.html', 'reibun/pc/majime/m0marriedman.html',
-                'reibun/pc/majime/mail-applicaton_test_c.html', 'reibun/pc/majime/m4honban.html',
-                'reibun/pc/majime/m1-adult.html', 'reibun/pc/majime/m3_3.html', 'reibun/pc/majime/m2firstreply.html',
-                'reibun/pc/majime/m1middle-aged.html', 'reibun/pc/majime/m0_6.html',
-                'reibun/pc/majime/m4personal-data.html', 'reibun/pc/majime/m0sexfriendmw.html',
-                'reibun/pc/majime/m0ym.html', 'reibun/pc/majime/m4hitoduma.html',
-                'reibun/pc/majime/m1forties-and-fifties.html', 'reibun/pc/majime/m3_2.html',
-                'reibun/pc/majime/m2-sympathy.html', 'reibun/pc/majime/m2_1_2.html',
-                'reibun/pc/majime/m1marriagehunting.html', 'reibun/pc/majime/mail-applicaton_test.html',
-                'reibun/pc/majime/mp_sexy-profile.html', 'reibun/pc/majime/m1sexfriendbun.html',
-                'reibun/pc/majime/m0_10.html', 'reibun/pc/majime/m1sexfriendmail.html',
-                'reibun/pc/majime/m2conversation.html', 'reibun/pc/majime/m2_1_1.html', 'reibun/pc/majime/m0_8.html',
-                'reibun/pc/majime/m0summer.html', 'reibun/pc/majime/m3early.html', 'reibun/pc/majime/m0sexless.html',
-                'reibun/pc/majime/m2_9.html', 'reibun/pc/majime/m3first-meeting-sex.html',
-                'reibun/pc/majime/m0_4.html', 'reibun/pc/majime/kakikata_t.html', 'reibun/pc/majime/m1-beginner.html',
-                'reibun/pc/majime/m2_4.html', 'reibun/pc/majime/m1fixed-phrase.html',
-                'reibun/pc/majime/m0warikiri.html', 'reibun/pc/majime/m0mature-lady.html',
-                'reibun/pc/majime/m1_1.html', 'reibun/pc/majime/m4netnan-technique.html',
-                'reibun/pc/majime/m0virgin.html', 'reibun/pc/majime/m0_12.html', 'reibun/pc/majime/m4rookie.html',
-                'reibun/pc/majime/mp_2_1.html', 'reibun/pc/majime/t0_01bbs.html',
-                'reibun/pc/majime/m1deaiapplication.html', 'reibun/pc/majime/m2adult-relations.html',
-                'reibun/pc/majime/m1_6.html', 'reibun/pc/majime/mp_bad-personality.html',
-                'reibun/pc/majime/m0papakatsu_no_sex.html', 'reibun/pc/majime/mail-applicaton.html',
-                'reibun/pc/majime/m2papakatsu.html', 'reibun/pc/majime/mp_profile.html',
-                'reibun/pc/majime/kakikata_t_test.html', 'reibun/pc/majime/mp_self-introduction.html',
-                'reibun/pc/majime/m0happymail.html', 'reibun/pc/majime/m1marriedwoman.html',
-                'reibun/pc/majime/m0adultery.html', 'reibun/pc/majime/m1girlfriend.html',
-                'reibun/pc/majime/m4yarimokuw.html', 'reibun/pc/majime/m4yarimoku.html', 'reibun/pc/majime/date.html',
-                'reibun/pc/majime/m1january.html', 'reibun/pc/majime/m4sexfriend-netonan.html',
-                'reibun/pc/majime/m4enderiuraderi.html', 'reibun/pc/majime/m2ngword.html',
-                'reibun/pc/majime/kakikata_f.html', 'reibun/pc/majime/m2sexfriend.html', 'reibun/pc/majime/m0_3.html',
-                'reibun/pc/majime/m1sexfriendpurpose.html', 'reibun/pc/majime/m1papakatsu.html',
-                'reibun/pc/qa/q8.html', 'reibun/pc/qa/q4.html', 'reibun/pc/qa/index.html', 'reibun/pc/qa/q5.html',
-                'reibun/pc/qa/q2.html', 'reibun/pc/qa/q3.html', 'reibun/pc/qa/q1.html', 'reibun/pc/qa/q6.html',
-                'reibun/pc/qa/q7.html', 'reibun/pc/site/tel.html', 'reibun/pc/site/index.html',
-                'reibun/pc/site/jewellive.html', 'reibun/pc/site/news_pcmax.html',
-                'reibun/pc/site/registration_pcmax.html', 'reibun/pc/site/point.html',
-                'reibun/pc/site/mixisexfriend.html', 'reibun/pc/site/wakuwakutel.html',
-                'reibun/pc/site/wakuwakumailadult.html', 'reibun/pc/site/kakaotalksexfriend.html',
-                'reibun/pc/site/registration_pcmax_f.html', 'reibun/pc/site/nenrei.html',
-                'reibun/pc/site/pcmaxsexfriendlong.html', 'reibun/pc/site/194964_s.html',
-                'reibun/pc/site/news_mintj.html', 'reibun/pc/site/yyc_c.html', 'reibun/pc/site/happymailpoint.html',
-                'reibun/pc/site/happymail_a.html', 'reibun/pc/site/jmail.html', 'reibun/index.html',
-                'reibun/pc/css/base8.css', 'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css'])"""
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
     # all_file_rework()
     # total_twitter_card_insert()
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
+    # total_update()
