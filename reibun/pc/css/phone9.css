@@ -1117,6 +1117,7 @@ a.btn-pop {
     height: auto;
     margin: 20px auto;
 }
+#modt img{width: 10px;height: 10px;margin-right: 5px}
 
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .btnli li:after, .dousen:after, .sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after {

@@ -3,6 +3,7 @@ import re
 import os
 import shutil
 import reibun_upload
+import new_from_md
 from PIL import Image
 
 
@@ -98,7 +99,7 @@ def css_insert(long_str):
 
 
 def amp_maker(pc_path_list):
-    with open('reibun/amp/template/amp_tmp.html', "r", encoding='utf-8') as g:
+    with open('reibun/amp/template/amp_tmp_2.html', "r", encoding='utf-8') as g:
         tmp_str = g.read()
     for pc_path in pc_path_list:
         if '.html' in pc_path and '/sitepage/' not in pc_path:
@@ -108,7 +109,7 @@ def amp_maker(pc_path_list):
                 str_x = tab_and_line_feed_remover(str_x)
                 title = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.*?)</h1>', str_x)[0]
                 content = re.findall(r'</time></div>(.*?)</article>', str_x)[0]
-                top_images = re.findall(r'<div class="alt_img_t">.+?</div>', content)
+                """top_images = re.findall(r'<div class="alt_img_t">.+?</div>', content)
                 if top_images:
                     for top_img in top_images:
                         insert_str = top_img.replace('.jpg" alt="',
@@ -120,10 +121,11 @@ def amp_maker(pc_path_list):
                         if img_path:
                             tmp_str = tmp_str.replace(
                                 '"url": "https://www.demr.jp/pc/images/eyec.jpg","height": 464,"width": 700',
-                                '"url": "' + str(img_path[0]) + '","height": 506,"width": 759')
+                                '"url": "' + str(img_path[0]) + '","height": 506,"width": 759')"""
                 content = a_tag_filter(content)
                 content = content.replace(' target="_blank"', '')
                 content = re.sub(r'<img(.+?)>', r'<amp-img\1></amp-img>', content)
+                content = amp_image_filter(content)
                 content = re.sub(r'<a href="../ds/(.+?)" class="(.+?)" onclick="gtag\(.+?\}\);" rel="nofollow">',
                                  r'<a href="../ds/\1" class="\2" rel="nofollow">', content)
                 pub_date = re.findall(r'itemprop="datePublished" datetime="(.*?)">', str_x)[0]
@@ -132,6 +134,7 @@ def amp_maker(pc_path_list):
                 h1_str = re.findall(r'<h1 itemprop="headline alternativeHeadline name">(.*?)</h1>', str_x)[0]
                 date_data = re.findall(r'(\d{4})-(\d{2})-(\d{2})', str_x)
                 new_date = date_data[0][0] + '年' + date_data[0][1] + '月' + date_data[0][2] + '日'
+
                 amp_data = tmp_str.replace('<!--title-->', title)
                 amp_data = amp_data.replace('<!--h1-->', h1_str)
                 amp_data = amp_data.replace('<!--content-->', content)
@@ -142,19 +145,18 @@ def amp_maker(pc_path_list):
                     amp_path = 'reibun/amp/index.html'
                 else:
                     amp_path = pc_path.replace('/pc/', '/amp/')
-                amp_data = amp_data.replace('<!--path-->', amp_path)
+                amp_data = amp_data.replace('<!--path-->', amp_path.replace('reibun/amp/', ''))
                 amp_data = amp_data.replace('<!--new-date-->', new_date)
                 amp_data = amp_data.replace('<amp-img class="app_bn1" src="../images/common/app_bn_f.png" ' +
                                             'alt="出会い系メール例文アプリ">',
                                             '<amp-img class="app_bn1" src="../images/common/app_bn_f.png" width="336" ' +
-                                            'height="280" alt="出会い系メール例文アプリ">')
+                                            'height="280"  layout="responsive" alt="出会い系メール例文アプリ">')
                 side_bar_list = [['人気記事', 'pop-a'], ['重要記事', 'imp-a'], ['最近の更新記事', 'new-a']]
                 for x in side_bar_list:
                     match_str_list = re.findall(r'<div class="sbh">' + x[0] + r'</div>.+?</ul>', str_x)
                     if match_str_list:
                         amp_data = amp_data.replace('<!--' + x[1] + '-->', match_str_list[0])
                 relative_art = re.findall(r'<!--otherart-->(.+?)<!--otherart/end-->', str_x)
-                amp_data = css_insert(amp_data)
                 if relative_art:
                     amp_data = amp_data.replace('<!--other-a-->', match_str_list[0])
                 gtag_i = g_tag_insert(content)
@@ -165,7 +167,22 @@ def amp_maker(pc_path_list):
                 if pc_path == 'reibun/index.html':
                     amp_data = amp_data.replace('"pc/', '"')
                     amp_data = amp_data.replace('demr.jp/index.html', 'demr.jp/')
-
+                if '<span class="pc_none">' in amp_data:
+                    amp_data = re.sub(r'<span class="pc_none">(.+?)</span>', r'\1', amp_data)
+                    amp_data = re.sub(r'<span class="mob_none">.+?</span>', '', amp_data)
+                html_str = re.findall(r'<body.*?>([\s\S]+?)</body>', amp_data)[0]
+                css_str = re.findall(r'<style amp-custom>([\s\S]+?)</style>', amp_data)[0]
+                new_css = new_from_md.css_str_optimize(html_str, css_str)
+                amp_data = amp_data.replace(css_str, new_css)
+                main_image = re.findall(r'<img itemprop="image" src="(.+?)"', str_x)[0]
+                if 'images/eyec.jpg' not in main_image:
+                    mi_w, mi_h = search_image_size(main_image)
+                    main_image = main_image.replace('../images/', '/images/').replace('pc/image/', '/images/')
+                    amp_data = re.sub(r'"image":{"@type":.+</body>',
+                                      '"image":{"@type":"ImageObject","url":"https://www.demr.jp/pc/' + main_image +
+                                      '","height":' + str(mi_h) + ',"width":' + str(mi_w) + '}}</script></body>',
+                                      amp_data)
+                amp_data = amp_data.replace('<div id="other-a" class="as_li"><!--other-a--></div>', '')
             with open(amp_path, "w") as h:
                 h.write(amp_data)
             # relation_file_upload(amp_data)
@@ -177,28 +194,35 @@ def add_amp_file(pc_path):
     reibun_upload.ftp_upload(['reibun/amp/' + file_name])
 
 
+def search_image_size(img_str):
+    print(img_str)
+    if '../images/' in img_str:
+        img_path = img_str.replace('../images/', 'reibun/pc/images/')
+    else:
+        img_path = re.sub(r'^images/', 'reibun/pc/images/', img_str)
+    im = Image.open(img_path)
+    w, h = im.size
+    return w, h
+
+
 def amp_image_filter(long_str):
     img_str_l = re.findall(r'<amp-img.+?>', long_str)
     if img_str_l:
         for img_str in img_str_l:
-            if '/>' not in img_str:
-                img_str_r = img_str.replace('>', '/>')
+            if '/>' in img_str:
+                img_str_r = img_str.replace('/>', '>')
             else:
                 img_str_r = img_str
             if 'width=' not in img_str or 'height=' not in img_str:
                 # print(long_str)
-                if '../images/' in img_str:
-                    img_path = re.findall(r'src="(.+?)"', img_str)[0].replace('../images/', 'reibun/pc/images/')
-                else:
-                    print(img_str)
-                    img_path = re.sub(r'^images/', 'reibun/pc/images/', re.findall(r'src="(.+?)"', img_str)[0])
-                    print(img_path)
-                im = Image.open(img_path)
-                w, h = im.size
+                img_path_str = re.findall(r'src="(.+?)"', img_str)[0]
+                w, h = search_image_size(img_path_str)
                 if 'width=' not in img_str:
-                    img_str_r = img_str_r.replace('/>', ' width="{}"/>'.format(str(w)))
+                    img_str_r = img_str_r.replace('>', ' width="{}">'.format(str(w)))
                 if 'height=' not in img_str:
-                    img_str_r = img_str_r.replace('/>', ' height="{}"/>'.format(str(h)))
+                    img_str_r = img_str_r.replace('>', ' height="{}">'.format(str(h)))
+                if 'layout=' not in img_str:
+                    img_str_r = img_str_r.replace('>', ' layout="responsive">'.format(str(h)))
                 img_str_r = img_str_r.replace('  ', ' ')
             long_str = long_str.replace(img_str, img_str_r)
     return long_str
@@ -213,10 +237,23 @@ def img_insert_size(file_path):
             g.write(long_str)
 
 
+def all_amp_change_and_upload():
+    up_dir = ['caption/', 'majime/', 'policy/', 'qa/', 'site/']
+    up_files = []
+    for directory in up_dir:
+        dir_str = 'reibun/pc/' + directory
+        files = [dir_str + x for x in os.listdir(dir_str) if '_test' not in x and '_copy' not in x]
+        up_files.extend(files)
+    print(up_files)
+    amp_maker(up_files)
+    reibun_upload.ftp_upload([y.replace('/pc/', '/amp/') for y in up_files])
+
+
 if __name__ == '__main__':
-    img_insert_size('reibun/amp/index.html')
+    # img_insert_size('reibun/amp/index.html')
     # new_file = 'majime/mail-applicaton.html'
-    # amp_maker(['reibun/index.html'])
+    # amp_maker(['reibun/pc/majime/kakikata_t.html'])
     # reibun_upload.ftp_upload(['reibun/pc/' + new_file])
     # reibun_upload.ftp_upload(['reibun/amp/' + new_file])
     # amp_maker(['reibun/pc/majime/mail-applicaton.html'])
+    all_amp_change_and_upload()

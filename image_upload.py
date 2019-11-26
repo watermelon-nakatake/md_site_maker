@@ -119,19 +119,22 @@ def paragraph_insert(file_path, title, insert_str):
             print('error: There is no kanren or not 1 line')
 
 
-def make_thumbnail(file_name):
-    image_path = os.listdir('insert_image')[0]
-    im = Image.open('insert_image/' + image_path)
+def make_thumbnail(file_name, image_path):
+    im = Image.open(image_path)
+    """
     width, height = 759, 506
     im_small = im.resize((width, height))
     im_small.save('reibun/pc/images/art_images/' + file_name + '_1.jpg')
     im_small.save('reibun/amp/images/art_images/' + file_name + '_1.jpg')
+    im_small.save('md_files/pc/images/art_images/' + file_name + '_1.jpg')
+    """
     w, h = im.size
     cut_width = (w - h) / 2
     im_crop = im.crop((cut_width, 0, cut_width + h, h))
     im_resize = im_crop.resize((200, 200))
     im_resize.save('reibun/pc/images/art_images/' + file_name + '_thumb.jpg')
     im_resize.save('reibun/amp/images/art_images/' + file_name + '_thumb.jpg')
+    im_resize.save('md_files/pc/images/art_images/' + file_name + '_thumb.jpg')
     if h >= w // 1.618:
         gr_h = w // 1.618
         h_a = (h - gr_h) // 2
@@ -141,13 +144,22 @@ def make_thumbnail(file_name):
         w_a = (w - gr_w) // 2
         im_gr = im.crop((w_a, 0, gr_w + w_a, h))
     im_gr_r = im_gr.resize((760, 470))
-    im_gr_r.save('reibun/pc/images/art_images/' + file_name + '_gr.jpg')
-    im_gr_r.save('reibun/amp/images/art_images/' + file_name + '_gr.jpg')
+    im_gr_r.save('reibun/pc/images/art_images/' + file_name + '_1_gr.jpg')
+    im_gr_r.save('reibun/amp/images/art_images/' + file_name + '_1_gr.jpg')
+    im_gr_r.save('md_files/pc/images/art_images/' + file_name + '_1_gr.jpg')
     im_thumb = im_crop.resize((64, 64))
     im_thumb.save('reibun/pc/images/art_images/' + file_name + '_thumb_s.jpg')
     im_thumb.save('reibun/amp/images/art_images/' + file_name + '_thumb_s.jpg')
+    im_thumb.save('md_files/pc/images/art_images/' + file_name + '_thumb_s.jpg')
     im.save('image_stock/' + file_name + '_1.jpg')
-    os.remove('insert_image/' + image_path)
+    os.remove(image_path)
+    add_img = ['reibun/pc/images/art_images/' + file_name + '_thumb.jpg',
+               'reibun/amp/images/art_images/' + file_name + '_thumb.jpg',
+               'reibun/pc/images/art_images/' + file_name + '_1_gr.jpg',
+               'reibun/amp/images/art_images/' + file_name + '_1_gr.jpg',
+               'reibun/pc/images/art_images/' + file_name + '_thumb_s.jpg',
+               'reibun/amp/images/art_images/' + file_name + '_thumb_s.jpg']
+    return add_img
 
 
 if __name__ == '__main__':

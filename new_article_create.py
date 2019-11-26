@@ -82,8 +82,8 @@ def remake_html():
 
 
 def file_update():
-    upload_list = ['reibun/p_sitemap.xml', 'reibun/pc/css/base8.css', 'reibun/pc/css/pc8.css',
-                   'reibun/pc/css/phone8.css',
+    upload_list = ['reibun/p_sitemap.xml', 'reibun/pc/css/base9.css', 'reibun/pc/css/pc9.css',
+                   'reibun/pc/css/phone9.css',
                    'reibun/pc/sitepage/yyc.html', 'reibun/pc/sitepage/meru-para.html',
                    'reibun/pc/sitepage/wakuwakumail.html', 'reibun/pc/sitepage/loveseach.html',
                    'reibun/pc/sitepage/pcmax.html', 'reibun/pc/sitepage/mintj.html', 'reibun/pc/sitepage/194964.html',

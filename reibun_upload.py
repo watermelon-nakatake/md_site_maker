@@ -357,7 +357,7 @@ def insert_index_list(path):
 def relational_file_pick_up(target_file):
     with open(target_file, 'r', encoding='utf-8') as f:
         long_str = f.read()
-        relational_list = ['reibun/pc/css/base8.css', 'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css',
+        relational_list = ['reibun/pc/css/base9.css', 'reibun/pc/css/pc9.css', 'reibun/pc/css/phone9.css',
                            'reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml', 'reibun/p_sitemap.xml',
                            target_file]
         p_time = 60 * 60 * 24 * 1
@@ -393,7 +393,7 @@ def files_upload(upload_file_list):
 # todo: ABテストのscript作成
 
 if __name__ == '__main__':
-    target = ['reibun/amp/majime/kakikata_t.html']
+    target = ['reibun/amp/majime/mail-applicaton.html']
     files_upload(target)
     # tab_and_line_feed_remover(target)
     # ftp_upload([target])

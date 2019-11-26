@@ -12,6 +12,7 @@ import make_article_list
 import new_article_create
 import amp_file_maker
 import reibun_upload
+import image_upload
 
 side_bar_list = {'important': [0, 19, 55, 65, 77, 98, 124], 'pop': [22, 24, 25, 30, 34, 38, 56, 100, 104]}
 category_name = {'policy': ['ポリシー', 'index.html'], 'caption': ['出会い系の予備知識', 'index.html'],
@@ -35,6 +36,8 @@ def main(mod_hour):
     :param mod_hour: 今回更新するファイルの更新時から現時点までの経過時間（時間） int形式
     :return: none
     """
+    add_files = ['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base9.css', 'reibun/pc/css/pc9.css',
+                 'reibun/pc/css/phone9.css', 'reibun/p_sitemap.xml']
     mod_list = []
     now = time.time()
     st_time = 60 * 60 * mod_hour
@@ -46,7 +49,7 @@ def main(mod_hour):
                 if now - mod_time < st_time:
                     print('update: ' + file)
                     mod_list.append('md_files/pc/' + dir_path + file)
-        for file_a in ['md_files/index.html', 'new_art_1.md']:
+        for file_a in ['md_files/index.md']:  # , 'new_art_1.md'
             mod_time_a = os.path.getmtime(file_a)
             if now - mod_time_a < st_time:
                 print('update: ' + file_a)
@@ -56,7 +59,7 @@ def main(mod_hour):
     upload_list, pk_dec, new_file_data = import_from_markdown(mod_list)
     side_bar_dec = make_all_side_bar(pk_dec)
     mod_log = make_article_list.read_pickle_pot('modify_log')
-    with open('reibun/index.html', 'r', encoding='utf-8') as f:
+    with open('reibun/pc/majime/index.html', 'r', encoding='utf-8') as f:
         index_str = f.read()
         mod_title = re.findall(r'<div class="sbh">最近の更新記事</div><ul><li><a href=".+?">(.+?)<', index_str)[0]
         if mod_log[-1][3] == mod_title:
@@ -66,18 +69,30 @@ def main(mod_hour):
         else:
             change_files = insert_sidebar_to_existing_art(side_bar_dec)
             insert_to_index_page(pk_dec)
-    insert_to_top_page(side_bar_dec)
+    insert_to_top_page()
     xml_site_map_maker(pk_dec)
     if new_file_data:
         make_rss(new_file_data)
-    amp_file_maker.amp_maker(change_files)
+    amp_file_maker.amp_maker([x for x in change_files if '/amp/' not in x])
     upload_list.extend(change_files)
     amp_upload = [x.replace('/pc/', '/amp/') for x in upload_list]
     upload_list.extend(amp_upload)
-    upload_list.extend(['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base8.css',
-                        'reibun/pc/css/pc8.css', 'reibun/pc/css/phone8.css', 'reibun/p_sitemap.xml'])
+    upload_list.extend(add_files)
     # todo: 文中に関連記事挿入 card
+    upload_list = set(upload_list)
+    upload_list = list(upload_list)
+    print(upload_list)
     reibun_upload.ftp_upload(upload_list)
+
+
+def modify_file_check(now, st_time, file_list):
+    result = []
+    for file_path in file_list:
+        mod_time = os.path.getmtime(file_path)
+        print(file_path + ' : ' + str(now - mod_time))
+        if now - mod_time < st_time:
+            result.append(file_path)
+    return result
 
 
 def icon_filter(long_str):
@@ -113,11 +128,11 @@ def icon_filter(long_str):
     return long_str
 
 
-def insert_to_top_page(side_bar_dec):
+def insert_to_top_page():
+    today = datetime.date.today()
     mod_log = make_article_list.read_pickle_pot('modify_log')
     latest_art = [x for x in mod_log if x[1] == mod_log[-1][1]]
     latest_art.reverse()
-    print(latest_art)
     with open('reibun/index.html', 'r', encoding='utf-8') as f:
         long_str = f.read()
         # 更新記事一覧
@@ -130,7 +145,7 @@ def insert_to_top_page(side_bar_dec):
                 replace_str = re.sub(r'<li>' + latest_date + r' \[.+?</li>', '', up_str)
             else:
                 replace_str = up_str
-                latest_mod = re.findall(r'<li>(.+?) \[.+?<a href="(.+?)"', up_data_l[0])
+                latest_mod = re.findall(r'<li>(.+?) \[.*?<a href="(.+?)"', up_data_l[0])
                 if latest_mod[0][1] == latest_art[-1][0].replace('reibun/', ''):
                     replace_str = replace_str.replace(up_data_l[0], '')
             add_str = ''
@@ -140,16 +155,24 @@ def insert_to_top_page(side_bar_dec):
                     new_art[1].replace('-', '/').replace('/0', '/'), category_data[new_art[2]][0],
                     new_art[0].replace('reibun/', ''), new_art[3], status_str)
             long_str = long_str.replace(up_str, add_str + replace_str)
-        # side bar
-        long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
-                          '"sbh">人気記事</div><ul>' + side_bar_dec['pop'].replace('../', 'pc/') + '</ul></div>',
-                          long_str)
-        long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
-                          '"sbh">重要記事</div><ul>' + side_bar_dec['important'].replace('../', 'pc/') + '</ul></div>',
-                          long_str)
-        long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
-                          '"sbh">最近の更新記事</div><ul>' + side_bar_dec['new'].replace('../', 'pc/') + '</ul></div>',
-                          long_str)
+            insert_to_amp_top(add_str + replace_str)
+            long_str = re.sub(r'<time itemprop="dateModified" datetime=".+?">.+?</time>',
+                              '<time itemprop="dateModified" datetime="' + str(today) + '">'
+                              + str(today).replace('-0', '/').replace('-', '/') + '</time>', long_str)
+        with open('reibun/index.html', 'w', encoding='utf-8') as g:
+            g.write(long_str)
+
+
+def insert_to_amp_top(replace_str):
+    today = datetime.date.today()
+    with open('reibun/index.html', 'r', encoding='utf-8') as f:
+        long_str = f.read()
+        long_str = re.sub(r'<ul class="updli">.+?</ul>', '<ul class="updli">' + replace_str + '</ul>', long_str)
+        long_str = re.sub(r'</amp-img>.+?</time>',
+                          '</amp-img>' + str(today).replace('-0', '/').replace('-', '/') + '</time>', long_str)
+        long_str = re.sub(r'"dateModified": ".+?","description":',
+                          '"dateModified": "' + str(today) + '","description":', long_str)
+
         with open('reibun/index.html', 'w', encoding='utf-8') as g:
             g.write(long_str)
 
@@ -248,8 +271,46 @@ def insert_sidebar_to_existing_art(side_bar_dec):
     for dir_r in up_dir[:-1]:
         r_files = os.listdir('reibun/pc/' + dir_r)
         for r_file in r_files:
-            print(r_file)
             with open('reibun/pc/' + dir_r + '/' + r_file, 'r', encoding='utf-8') as f:
+                long_str = f.read()
+                long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+                str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
+                                   long_str)
+                if str_l:
+                    category = str_l[0]
+                long_str = insert_sidebar_to_str(long_str, side_bar_dec, category)
+                with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
+                    g.write(long_str)
+                    change_files.append('reibun/pc/' + dir_r + r_file)
+
+            with open('reibun/amp/' + dir_r + '/' + r_file, 'r', encoding='utf-8') as h:
+                amp_str = h.read()
+                amp_str = insert_sidebar_to_str(amp_str, side_bar_dec, category)
+                with open('reibun/amp/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as i:
+                    i.write(amp_str)
+    change_files.extend([x.replace('/pc/', '/amp/') for x in change_files])
+    return change_files
+
+
+def insert_sidebar_to_str(long_str, side_bar_dec, category):
+    long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
+                      '"sbh">人気記事</div><ul>' + side_bar_dec['pop'] + '</ul></div>', long_str)
+    long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
+                      '"sbh">重要記事</div><ul>' + side_bar_dec['important'] + '</ul></div>', long_str)
+    long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
+                      '"sbh">最近の更新記事</div><ul>' + side_bar_dec['new'] + '</ul></div>', long_str)
+    if category != 'majime':
+        long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
+                          '<div class="leftnav"><div class="sbh cat-i">' + category_name[category][0]
+                          + '</div><ul>' + side_bar_dec[category] + '</ul></div>', long_str)
+    return long_str
+
+
+def insert_sidebar_to_modify_page(side_bar_dec, upload_list):
+    for r_file in upload_list:
+        print(r_file)
+        if '.html' in r_file:
+            with open(r_file, 'r', encoding='utf-8') as f:
                 long_str = f.read()
                 long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
                 str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
@@ -266,40 +327,14 @@ def insert_sidebar_to_existing_art(side_bar_dec):
                     long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
                                       '<div class="leftnav"><div class="sbh cat-i">' + category_name[category][0]
                                       + '</div><ul>' + side_bar_dec[category] + '</ul></div>', long_str)
-                with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
+                with open(r_file, 'w', encoding='utf-8') as g:
                     g.write(long_str)
-                    change_files.append('reibun/pc/' + dir_r + r_file)
-    return change_files
-
-
-def insert_sidebar_to_modify_page(side_bar_dec, upload_list):
-    for r_file in upload_list:
-        print(r_file)
-        with open(r_file, 'r', encoding='utf-8') as f:
-            long_str = f.read()
-            long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
-            str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
-                               long_str)
-            if str_l:
-                category = str_l[0]
-            long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
-                              '"sbh">人気記事</div><ul>' + side_bar_dec['pop'] + '</ul></div>', long_str)
-            long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
-                              '"sbh">重要記事</div><ul>' + side_bar_dec['important'] + '</ul></div>', long_str)
-            long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
-                              '"sbh">最近の更新記事</div><ul>' + side_bar_dec['new'] + '</ul></div>', long_str)
-            if category != 'majime':
-                long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
-                                  '<div class="leftnav"><div class="sbh cat-i">' + category_name[category][0]
-                                  + '</div><ul>' + side_bar_dec[category] + '</ul></div>', long_str)
-            with open(r_file, 'w', encoding='utf-8') as g:
-                g.write(long_str)
 
 
 def make_all_side_bar(pk_dec):
     cat_dec = {'policy': [], 'caption': [], 'qa': [], 'site': [], 'post': [], 'f_mail': [], 's_mail': [],
                'date': [], 'how_to': [], 'profile': [], 'majime': []}
-    pk_list = []
+    # pk_list = []
     # for i in pk_dec:
     #    pk_list.append(pk_dec[i])
     pk_list = [pk_dec[i] for i in pk_dec if pk_dec[i][4] != 'policy']
@@ -425,6 +460,7 @@ def import_from_markdown(md_file_list):
         print(md_file_path)
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
+            md_replace_str = plain_txt
             plain_txt = re.sub(r'\[\]\([\s\S]*?\)', '', plain_txt)
             if 'd::' in plain_txt:
                 description = re.findall(r'd::(.+?)\n', plain_txt)[0]
@@ -558,6 +594,7 @@ def import_from_markdown(md_file_list):
             new_str = re.sub(r'\)。<br />', r'\)</p><p>', new_str)
             new_str = re.sub(r'\)。', r'\)</p><p>', new_str)
             new_str = re.sub(r'）。', r'）</p><p>', new_str)
+            new_str, add_list = img_str_filter(new_str, file_name, md_replace_str, md_file_path)
             p_img_str_l = re.findall(r'<p><img .+?/></p>', new_str)
             if p_img_str_l:
                 for p_img_str in p_img_str_l:
@@ -603,11 +640,7 @@ def import_from_markdown(md_file_list):
                 new_file_data.append([file_name, title, description])
             else:
                 pub_or_mod = 'mod'
-            insert_img_l = re.findall(r'<p><img.+?></p>', new_str)
-            if insert_img_l:
-                for insert_img in insert_img_l:
-                    img_str = img_str_filter(insert_img, file_name)
-                    new_str = new_str.replace(insert_img, img_str)
+            upload_list.extend(add_list)
             if md_file_path == 'md_files/index.md':
                 with open('reibun/index.index', 'r', encoding='utf-8') as h:
                     top_long_str = h.read()
@@ -639,34 +672,51 @@ def add_modify_log(mod_file_path, now, category, title, pub_or_mod):
     make_article_list.save_data_to_pickle(mod_log, 'modify_log')
 
 
-def img_str_filter(img_str, file_path):
-    img_data_l = re.findall(r'alt="(.*?)" src="(.+?)"', img_str)
-    if img_data_l:
-        if 'insert_image' in img_data_l[0][1]:
-            img_url = img_data_l[0][1]
-            new_img_path = resize_and_rename_image(img_url, file_path)
-            img_str = '<div class="alt_img_t"><img alt="{}" src="{}" /></div>'.format(img_data_l[0][0], new_img_path)
-    print('insert_image: ' + img_str)
-    return img_str
+def img_str_filter(long_str, file_name, md_str, md_file_path):
+    add_list = []
+    insert_img_l = re.findall(r'<p><img.+?></p>', long_str)
+    if insert_img_l:
+        for img_str in insert_img_l:
+            img_data_l = re.findall(r'alt="(.*?)" src="(.+?)"', img_str)
+            if 'insert_image/' in img_data_l[0][1]:
+                img_url = img_data_l[0][1]
+                new_img_path, add_img = resize_and_rename_image(img_url, file_name)
+                insert_str = '<div class="alt_img_t"><img src="{}" alt="{}" /></div>'.format(new_img_path,
+                                                                                             img_data_l[0][0])
+                long_str = long_str.replace(img_str, insert_str)
+                md_str = md_str.replace(img_url, new_img_path)
+                add_list.extend(add_img)
+            else:
+                img_url = img_data_l[0][1]
+                insert_str = '<div class="alt_img_t"><img src="{}" alt="{}" /></div>'.format(img_url, img_data_l[0][0])
+                long_str = long_str.replace(img_str, insert_str)
+    with open(md_file_path, 'w', encoding='utf-8') as f:
+        f.write(md_str)
+    return long_str, add_list
 
 
 def resize_and_rename_image(img_path, file_path):
-    file_name = re.sub(r'^.*?/(.+?).html', r'\1', file_path)
-    img = Image.open(img_path)
-    width, height = 759, 506
-    img = img.resize((width, height))
+    file_name = re.sub(r'^.*/(.+?).html', r'\1', file_path)
     current_images = os.listdir('reibun/pc/images/art_images')
-    i = 1
-    new_name = file_name + '_' + str(i) + '.jpg'
-    while new_name in current_images:
-        i += 1
-        new_name = file_name + '_' + str(i) + '.jpg'
-    img.save('reibun/pc/images/art_images/' + new_name)
-    img.save('reibun/amp/images/art_images/' + new_name)
-    # os.remove('insert_image/' + img_path)
-    reibun_upload.ftp_upload(['reibun/pc/images/art_images/' + new_name])
-    reibun_upload.ftp_upload(['reibun/amp/images/art_images/' + new_name])
-    return '../images/art_images/' + new_name
+    if file_name + '_1_gr.jpg' in current_images:
+        i = 2
+        new_name = file_name + '_' + str(i) + '_gr.jpg'
+        while new_name in current_images:
+            i += 1
+            new_name = file_name + '_' + str(i) + '_gr.jpg'
+        image_path = re.sub(r'^.+insert_image/', 'insert_image/', img_path)
+        img = Image.open(image_path)
+        img_gr = img.resize((760, 470))
+        img_gr.save('reibun/pc/images/art_images/' + new_name)
+        img_gr.save('reibun/amp/images/art_images/' + new_name)
+        img_gr.save('md_files/pc/images/art_images/' + new_name)
+        img.save('image_stock/' + file_name + '_' + str(i) + '.jpg')
+        os.remove(img_path.replace('../../../../', ''))
+        add_img = ['reibun/pc/images/art_images/' + new_name, 'reibun/amp/images/art_images/' + new_name]
+    else:
+        add_img = image_upload.make_thumbnail(file_name, img_path.replace('../../../', ''))
+        new_name = file_name + '_1_gr.jpg'
+    return '../images/art_images/' + new_name, add_img
 
 
 def mail_sample_replace(long_str):
@@ -726,26 +776,30 @@ def css_optimize(html_path, css_path):
         css_str = f.read()
     with open(html_path, 'r', encoding='utf-8') as g:
         html_str = g.read()
+    return css_str_optimize(html_str, css_str)
+
+
+def css_str_optimize(html_str, css_str):
     css_str = css_str.replace('\n', '')
     css_str = css_str.replace('@charset "UTF-8";', '')
     css_str = re.sub(r';[\s]*', ';', css_str)
-    css_str = re.sub(r'\{[\s]*', '{', css_str)
+    css_str = re.sub(r'{[\s]*', '{', css_str)
     css_str = re.sub(r',[\s]*', ',', css_str)
     css_str = re.sub(r':[\s]*', ':', css_str)
-    css_str = re.sub(r' \{', '{', css_str)
+    css_str = re.sub(r' {', '{', css_str)
     css_str = re.sub(r'/\*.+?\*/', '', css_str)
     css_str = re.sub(r'@media.*$', '', css_str)
     css_list = css_str.split('}')
     css_list = [c + '}' for c in css_list[:-1]]
     css_sep_list = []
     for line in css_list:
-        selector_str_l = re.findall(r'(.+?)\{', line)
+        selector_str_l = re.findall(r'(.+?){', line)
         if ',' in selector_str_l[0]:
             selector_c_list = selector_str_l[0].split(',')
         else:
             selector_c_list = [selector_str_l[0]]
-        css_sep_list.append([selector_c_list, re.findall(r'\{([\s\S]*)\}', line)[0]])
-    print(css_sep_list)
+        css_sep_list.append([selector_c_list, re.findall(r'{([\s\S]*)\}', line)[0]])
+    # print(css_sep_list)
 
     z_l = [z.split() for z in re.findall(r'class="(.+?)"', html_str)]
     class_list = []
@@ -757,7 +811,7 @@ def css_optimize(html_path, css_path):
     selector_list = set(selector_list)
     selector_list = list(selector_list)
     selector_list.sort()
-    print(selector_list)
+    # print(selector_list)
 
     tag_list = re.findall('<(.+?)[ |>]', html_str)
     tag_list = [b for b in tag_list if '/' not in b and '!' not in b]
@@ -767,7 +821,7 @@ def css_optimize(html_path, css_path):
     for x in css_sep_list:
         css_selector = []
         for y in x[0]:
-            print(y)
+            # print(y)
             if '.' in y or '#' in y:
                 for z in selector_list:
                     if z in y:
@@ -780,15 +834,16 @@ def css_optimize(html_path, css_path):
                         break
         if css_selector:
             new_list.append([css_selector, x[1]])
-    print(len(new_list))
-    print(new_list)
+    # print(len(new_list))
+    # print(new_list)
     str_list = [','.join(a[0]) + '{' + a[1] + '}' for a in new_list]
-    new_str = '\n'.join(str_list)
-    print(new_str)
+    new_str = ''.join(str_list)
+    # print(new_str)
+    return new_str
 
 
 if __name__ == '__main__':
-    # main(1)
+    main(2)
     # import_from_markdown(['md_files/pc/majime/m0_4.md'])
     # print(resize_and_rename_image('insert_image/AdobeStock_15946903.jpeg', 'majime/m0_test.html'))
     # t_l = {0: ['']}
@@ -800,7 +855,7 @@ if __name__ == '__main__':
     # print([x for x in test_l if x[1] == test_l[-1][1]])
     print(str(datetime.datetime.now())[:-7])
     # print(make_article_list.read_pickle_pot('modify_log'))
-    css_optimize('reibun/index.html', 'reibun/pc/css/top1.css')
+    # print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
 
     # todo: アップロード
     # todo: 関連記事改善
