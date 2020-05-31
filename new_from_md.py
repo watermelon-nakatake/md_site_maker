@@ -36,8 +36,8 @@ def main(mod_hour):
     :param mod_hour: 今回更新するファイルの更新時から現時点までの経過時間（時間） int形式
     :return: none
     """
-    add_files = ['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base9.css', 'reibun/pc/css/pc9.css',
-                 'reibun/pc/css/phone9.css', 'reibun/p_sitemap.xml']
+    add_files = ['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base11.css', 'reibun/pc/css/pc11.css',
+                 'reibun/pc/css/phone11.css', 'reibun/p_sitemap.xml']
     mod_list = []
     now = time.time()
     st_time = 60 * 60 * mod_hour
@@ -48,41 +48,54 @@ def main(mod_hour):
                 mod_time = os.path.getmtime('md_files/pc/' + dir_path + file)
                 if now - mod_time < st_time:
                     print('update: ' + file)
-                    mod_list.append('md_files/pc/' + dir_path + file)
+                    mod_list.append(['md_files/pc/' + dir_path + file, mod_time])
         for file_a in ['md_files/index.md']:  # , 'new_art_1.md'
             mod_time_a = os.path.getmtime(file_a)
             if now - mod_time_a < st_time:
                 print('update: ' + file_a)
-                mod_list.append(file_a)
+                mod_list.append([file_a, mod_time_a])
+    mod_list.sort(key=lambda x: x[1], reverse=True)
     print('modify list :')
     print(mod_list)
-    upload_list, pk_dec, new_file_data = import_from_markdown(mod_list)
+    upload_list, pk_dec, new_file_data = import_from_markdown([y[0] for y in mod_list])
+    upload_list = modify_file_check(now, st_time, upload_list)
     side_bar_dec = make_all_side_bar(pk_dec)
     mod_log = make_article_list.read_pickle_pot('modify_log')
     with open('reibun/pc/majime/index.html', 'r', encoding='utf-8') as f:
         index_str = f.read()
         mod_title = re.findall(r'<div class="sbh">最近の更新記事</div><ul><li><a href=".+?">(.+?)<', index_str)[0]
-        if mod_log[-1][3] == mod_title:
+        print('mod_title : ' + mod_title)
+        print('mod_log[3] : ' + re.sub(r'【.+?】', '', mod_log[-1][3]))
+        if re.sub(r'【.+?】', '', mod_log[-1][3]) == mod_title:
             print('change only one page')
             insert_sidebar_to_modify_page(side_bar_dec, upload_list)
             change_files = []
+            if mod_log[-1][0] in ['reibun/pc/majime/majime.html', 'reibun/pc/majime/index.html']:
+                insert_to_index_page(pk_dec)
         else:
             change_files = insert_sidebar_to_existing_art(side_bar_dec)
             insert_to_index_page(pk_dec)
     insert_to_top_page()
     xml_site_map_maker(pk_dec)
-    if new_file_data:
-        make_rss(new_file_data)
+    make_rss(new_file_data)
     amp_file_maker.amp_maker([x for x in change_files if '/amp/' not in x])
     upload_list.extend(change_files)
     amp_upload = [x.replace('/pc/', '/amp/') for x in upload_list]
     upload_list.extend(amp_upload)
-    upload_list.extend(add_files)
+    upload_list.extend(modify_file_check(now, st_time, add_files))
     # todo: 文中に関連記事挿入 card
     upload_list = set(upload_list)
     upload_list = list(upload_list)
+    upload_list.sort()
     print(upload_list)
     reibun_upload.ftp_upload(upload_list)
+
+
+def pick_up_same_name_images(file_path):
+    file_name = re.sub(r'.*/(.+?).html', r'\1', file_path)
+    img_list = os.listdir('reibun/pc/images/art_images')
+    up_list = ['reibun/pc/images/art_images/' + x for x in img_list if file_name in x]
+    return up_list
 
 
 def modify_file_check(now, st_time, file_list):
@@ -153,7 +166,7 @@ def insert_to_top_page():
                 status_str = '更新' if new_art[4] == 'mod' else '追加'
                 add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
                     new_art[1].replace('-', '/').replace('/0', '/'), category_data[new_art[2]][0],
-                    new_art[0].replace('reibun/', ''), new_art[3], status_str)
+                    new_art[0].replace('reibun/', ''), re.sub(r'【.+?】', '', new_art[3]), status_str)
             long_str = long_str.replace(up_str, add_str + replace_str)
             insert_to_amp_top(add_str + replace_str)
             long_str = re.sub(r'<time itemprop="dateModified" datetime=".+?">.+?</time>',
@@ -229,7 +242,8 @@ def insert_to_index_page(pk_dec):
                 for m_cat in ['ap_mail', 'profile', 'post', 'f_mail', 's_mail', 'date', 'how_to', 'majime']:
                     cat_str_m = cat_index_str_maker(h_dec[m_cat], directory)
                     long_str = re.sub(r'<!--' + m_cat + '-i/s-->.*?<!--' + m_cat + '-i/e-->',
-                                      '<!--' + m_cat + '-i/s-->' + cat_str_m + '<!--' + m_cat + '-i/e-->',
+                                      '<!--' + m_cat + '-i/s-->' + cat_str_m.replace(' id="cat_index"', '')
+                                      + '<!--' + m_cat + '-i/e-->',
                                       long_str)
                 with open('reibun/pc/majime/index.html', 'w', encoding='utf-8') as j:
                     j.write(long_str)
@@ -255,13 +269,14 @@ def xml_site_map_maker(pk_dec):
 
 
 def cat_index_str_maker(cat_dec, directory):
-    cat_str = '<ul class="libut">'
+    cat_str = '<ul class="libut" id="cat_index">'
     for page_i in cat_dec:
         if len(page_i) < 3:
-            cat_str += '<li><a href="{}">{}</a></li>'.format(page_i[0].replace(directory + '/', ''), page_i[1])
+            cat_str += '<li><a href="{}">{}</a></li>'.format(page_i[0].replace(directory + '/', ''),
+                                                             re.sub(r'【.+?】', '', page_i[1]))
         else:
             cat_str += '<li><a href="{}">{}<span>{}</span></a></li>'.format(page_i[0].replace(directory + '/', ''),
-                                                                            page_i[1], page_i[2])
+                                                                            re.sub(r'【.+?】', '', page_i[1]), page_i[2])
     cat_str += '</ul>'
     return cat_str
 
@@ -282,11 +297,10 @@ def insert_sidebar_to_existing_art(side_bar_dec):
                 with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
                     g.write(long_str)
                     change_files.append('reibun/pc/' + dir_r + r_file)
-
-            with open('reibun/amp/' + dir_r + '/' + r_file, 'r', encoding='utf-8') as h:
+            with open('reibun/amp/' + dir_r + r_file, 'r', encoding='utf-8') as h:
                 amp_str = h.read()
                 amp_str = insert_sidebar_to_str(amp_str, side_bar_dec, category)
-                with open('reibun/amp/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as i:
+                with open('reibun/amp/' + dir_r + r_file, 'w', encoding='utf-8') as i:
                     i.write(amp_str)
     change_files.extend([x.replace('/pc/', '/amp/') for x in change_files])
     return change_files
@@ -344,14 +358,16 @@ def make_all_side_bar(pk_dec):
                                                               datetime.datetime.strptime(x[3], '%Y-%m-%d').day),
                          reverse=True)
     new_art = sorted_list[:10]
-    new_str = ''.join(['<li><a href="../{}">{}</a></li>'.format(y[0], y[1]) for y in new_art])
+    new_str = ''.join(['<li><a href="../{}">{}</a></li>'.format(y[0], re.sub(r'【.+?】', '', y[1])) for y in new_art])
     for id_pk in pk_dec:
-        cat_dec[pk_dec[id_pk][4]].append('<li><a href="../{}">{}</a></li>'.format(pk_dec[id_pk][0], pk_dec[id_pk][1]))
+        cat_dec[pk_dec[id_pk][4]].append('<li><a href="../{}">{}</a></li>'.format(
+            pk_dec[id_pk][0], re.sub(r'【.+?】', '', pk_dec[id_pk][1])))
     result_dec = {x: ''.join(cat_dec[x]) for x in cat_dec}
     result_dec['new'] = new_str
     for z in side_bar_list:
         result_dec[z] = ''.join(
-            ['<li><a href="../{}">{}</a></li>'.format(pk_dec[use_id][0], pk_dec[use_id][1]) for use_id in
+            ['<li><a href="../{}">{}</a></li>'.format(pk_dec[use_id][0],
+                                                      re.sub(r'【.+?】', '', pk_dec[use_id][1])) for use_id in
              side_bar_list[z]])
     return result_dec
 
@@ -360,45 +376,55 @@ def make_rss(new_file_data):
     now = datetime.datetime.now()
     now_str = str(now)[:-7]
     # rss1.0
-    with open('reibun/rss10.xml', 'r', encoding='utf-8') as f:
+    with open('reibun/pc/template/rss10.xml', 'r', encoding='utf-8') as f:
         rss1_str = f.read()
-        rss1_str = re.sub(r'<dc:date>.*?</dc:date>', '<dc:date>' + now_str + ' +9:00</dc:date>', rss1_str)
-        list_str_l = re.findall(r'<rdf:Seq>.*?</rdf:Seq>', rss1_str)
-        url_list = re.findall(r'<rdf:li rdf:resource=".+?" />', list_str_l[0])
-        item_list_s = re.findall(r'</channel>.+?</rdf:RDF>', rss1_str)[0]
-        item_list = re.findall(r'<item rdf:about=".+?</item>', item_list_s)
-        if len(url_list) + len(new_file_data) >= 10:
-            url_list = url_list[:-(len(url_list) + len(new_file_data) - 10)]
-        for new_data in new_file_data:
-            url_list.insert(0, '<rdf:li rdf:resource="https://www.demr.jp/pc/' + new_data[0] + '" />')
-            item_list.insert(0, '<item rdf:about="https://www.demr.jp/pc/{}"><title>{}</title><link>{}</link>'
-                                '<description><![CDATA[{}]]></description><dc:creator>mail@demr.jp (goyan)</dc:creator>'
-                                '<dc:date>{}</dc:date></item>'.format(new_data[0], new_data[1], new_data[0],
-                                                                      new_data[2], now_str))
-        rss1_str = rss1_str.replace(list_str_l[0], '<rdf:Seq>' + ''.join(url_list) + '</rdf:Seq>')
-        rss1_str = rss1_str.replace(item_list_s, '</channel>' + ''.join(item_list) + '<</rdf:RDF>')
+        if new_file_data:
+            rss1_str = re.sub(r'<dc:date>.*?</dc:date>', '<dc:date>' + now_str + ' +9:00</dc:date>', rss1_str)
+            list_str_l = re.findall(r'<rdf:Seq>.*?</rdf:Seq>', rss1_str)
+            url_list = re.findall(r'<rdf:li rdf:resource=".+?" />', list_str_l[0])
+            item_list_s = re.findall(r'</channel>.+?</rdf:RDF>', rss1_str)[0]
+            item_list = re.findall(r'<item rdf:about=".+?</item>', item_list_s)
+            if len(url_list) + len(new_file_data) >= 10:
+                url_list = url_list[:-(len(url_list) + len(new_file_data) - 10)]
+            for new_data in new_file_data:
+                url_list.insert(0, '<rdf:li rdf:resource="https://www.demr.jp/pc/' + new_data[0] + '" />')
+                item_list.insert(0, '<item rdf:about="https://www.demr.jp/pc/{}"><title>{}</title><link>{}</link>'
+                                    '<description><![CDATA[{}]]></description><dc:creator>mail@demr.jp (goyan)</dc:creator>'
+                                    '<dc:date>{}</dc:date></item>'.format(new_data[0], new_data[1], new_data[0],
+                                                                          new_data[2], now_str))
+            rss1_str = rss1_str.replace(list_str_l[0], '<rdf:Seq>' + ''.join(url_list) + '</rdf:Seq>')
+            rss1_str = rss1_str.replace(item_list_s, '</channel>' + ''.join(item_list) + '<</rdf:RDF>')
+        else:
+            rss1_str = re.sub(r'<items><rdf:Seq><rdf:li rdf:resource="記事1のURL" /></rdf:Seq></items>',
+                              r'<items><rdf:Seq></rdf:Seq></items>', rss1_str)
+            rss1_str = re.sub(r'</channel>.+?</rdf:RDF>',
+                              r'</channel></rdf:RDF>', rss1_str)
         with open('reibun/rss10.xml', 'w', encoding='utf-8') as g:
             g.write(rss1_str)
     # rss2.0
-    with open('reibun/rss20.xml', 'r', encoding='utf-8') as h:
+    with open('reibun/pc/template/rss20.xml', 'r', encoding='utf-8') as h:
         rss2_str = h.read()
-        now_j = now + datetime.timedelta(hours=9)
-        now_tuple = now_j.timetuple()
-        now_timestamp = time.mktime(now_tuple)
-        rfc_str = utils.formatdate(now_timestamp)[:-6]
-        item_list_2 = re.findall(r'<item>.+?</item>', rss2_str)
-        if len(item_list_2) + len(new_file_data) >= 10:
-            item_list_2 = item_list_2[:-(len(item_list_2) + len(new_file_data) - 10)]
-        for new_data in new_file_data:
-            item_list_2.insert(0, '<item><title>{}</title><link>https://www.demr.jp/pc/{}</link><description>{}'
-                                  '</description><pubDate>{} +0900</pubDate></item>'.format(new_data[1], new_data[0],
-                                                                                            new_data[2], rfc_str))
-        rss2_str = re.sub(r'<item>.*</item>', ''.join(item_list_2), rss2_str)
+        if new_file_data:
+            now_j = now + datetime.timedelta(hours=9)
+            now_tuple = now_j.timetuple()
+            now_timestamp = time.mktime(now_tuple)
+            rfc_str = utils.formatdate(now_timestamp)[:-6]
+            item_list_2 = re.findall(r'<item>.+?</item>', rss2_str)
+            if len(item_list_2) + len(new_file_data) >= 10:
+                item_list_2 = item_list_2[:-(len(item_list_2) + len(new_file_data) - 10)]
+            for new_data in new_file_data:
+                item_list_2.insert(0, '<item><title>{}</title><link>https://www.demr.jp/pc/{}</link><description>{}'
+                                      '</description><pubDate>{} +0900</pubDate></item>'.format(new_data[1], new_data[0],
+                                                                                                new_data[2], rfc_str))
+            rss2_str = re.sub(r'<item>.*</item>', ''.join(item_list_2), rss2_str)
+        else:
+            rss2_str = re.sub(r'<item>.+?</channel>', r'</channel>', rss2_str)
         with open('reibun/rss20.xml', 'w', encoding='utf-8') as i:
             i.write(rss2_str)
-        # atom
-        with open('reibun/atom.xml', 'r', encoding='utf-8') as j:
-            atom_str = j.read()
+    # atom
+    with open('reibun/pc/template/atom.xml', 'r', encoding='utf-8') as j:
+        atom_str = j.read()
+        if new_file_data:
             atom_str = re.sub(r'</title><updated>.*?</updated><link', '</title><updated>' + now_str + '</updated><link',
                               atom_str)
             item_list_a = re.findall(r'<entry>.+?</entry>', atom_str)
@@ -410,8 +436,10 @@ def make_rss(new_file_data):
                                       "<summary>{}</summary></entry>".format(new_data[0], new_data[1], new_data[0],
                                                                              now_str, new_data[2]))
             atom_str = re.sub(r'<entry>.*</entry>', ''.join(item_list_a), atom_str)
-            with open('reibun/atom.xml', 'w', encoding='utf-8') as k:
-                k.write(atom_str)
+        else:
+            atom_str = re.sub(r'<entry>.*?</entry>', '<entry></entry>', atom_str)
+        with open('reibun/atom.xml', 'w', encoding='utf-8') as k:
+            k.write(atom_str)
 
 
 def insert_tag_to_upper_anchor(long_str):
@@ -446,6 +474,29 @@ def top_page_filter(long_str):
     long_str = long_str.replace('"../../"', './')
     long_str = long_str.replace('"../../', '"')
     long_str = long_str.replace('"../', '"../pc/')
+    return long_str
+
+
+def insert_page_card(long_str, pk_dec):
+    if '[card]' in long_str:
+        card_str_l = re.findall(r'\[card\]\(.+?\)', long_str)
+        if card_str_l:
+            card_str = card_str_l[0]
+            card_url_list = re.findall(r'\((.+?)\)', card_str)
+            if card_url_list:
+                card_url = card_url_list[0]
+                c_url = card_url.replace('../../../', '')
+                for page_id in pk_dec:
+                    if pk_dec[page_id][0] in c_url:
+                        url_str = c_url.replace('reibun/pc/', '../')
+                        img_str = re.sub(r'reibun/pc/.+?/(.+?).html', r'../images/art_images/\1_thumb.jpg', c_url)
+                        replace_str = '<div class="ar_card"><a href="{}"><div class="ar_in"><div class="ac_img">' \
+                                      '<img src="{}" alt="{}"></div><div class="ac_r"><span class="p_title">{}</span>' \
+                                      '<span class="ar_dis">{}</span></div></div></a>' \
+                                      '</div>'.format(url_str, img_str, pk_dec[page_id][1], pk_dec[page_id][1],
+                                                      pk_dec[page_id][5][:100] + '...')
+                        print(replace_str)
+                        long_str = long_str.replace(card_str, replace_str)
     return long_str
 
 
@@ -488,15 +539,6 @@ def import_from_markdown(md_file_list):
                 title_str = title_l[0]
             else:
                 print('There is no title!!')
-            if 'i::' in plain_txt:
-                t_image_l = re.findall(r'i::(.+?)\n', plain_txt)
-                t_image = t_image_l[0]
-            else:
-                if '![' in plain_txt:
-                    img_l = re.findall(r'!\[.*?\]\((.+?)\)', plain_txt)
-                    t_image = re.sub(r'^.*?reibun/', 'https://www.demr.jp/', img_l[0])
-                else:
-                    t_image = 'https://www.demr.jp/pc/images/demr_mgirl_1200x630.jpg'
             plain_txt = plain_txt.replace(r'%app_b%', '<div class="center"><a href="../../app/"><img class="app_bn1" '
                                                       'src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">'
                                                       '</a></div>')
@@ -505,6 +547,7 @@ def import_from_markdown(md_file_list):
             plain_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', plain_txt)
             plain_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist_b-->', plain_txt)
             plain_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', plain_txt)
+            plain_txt = re.sub(r'%matome%\n([\s\S]*?)\n\n', r'<!--matome-->\n\n\n\1\n\n<!--e/matome-->', plain_txt)
             plain_txt = re.sub(r'%p%\n([\s\S]*?)\n\n', r'<!--point_i-->\n\n\n\1\n\n<!--e/point_i-->', plain_txt)
 
             plain_txt = icon_filter(plain_txt)
@@ -516,20 +559,11 @@ def import_from_markdown(md_file_list):
             plain_txt = plain_txt.replace('%sample/e%', '<!--sample/e-->')
 
             plain_txt = mail_sample_replace(plain_txt)
+            plain_txt = strong_insert_filter(plain_txt)
+
             # card挿入
-            if '[card](' in plain_txt:
-                card_l = re.findall(r'\[card\]\(.+?\)', plain_txt)
-                for card in card_l:
-                    card_url_l = re.findall(r'\[card\]\((.+?)\)', card)
-                    if card_url_l:
-                        card_url = card_url_l[0]
-                        for page_id in pk_dec:
-                            if pk_dec[page_id][0] in card_url:
-                                card_str = '<div class="ar_card"><a href="{}"><div class="ar_in">' \
-                                           '<span class="p_title">{}</span><span>{}</span></div></a>' \
-                                           '</div>'.format(card_url, pk_dec[page_id][1], pk_dec[page_id][4])
-                                plain_txt = plain_txt.replace(card, card_str)
-                                break
+            plain_txt = insert_page_card(plain_txt, pk_dec)
+
             # コメントアウト削除
             plain_txt = re.sub(r'\(\)\[.*?\]\n', '', plain_txt)
             plain_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', plain_txt)
@@ -585,15 +619,24 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p>' +
                                                       '</div>')
             new_str = new_str.replace('<!--e/point-->', '</div>')
+            new_str = new_str.replace('<!--matome-->', '<div id="kijim"><div class="kijoph"><p>この記事のまとめ</p>' +
+                                      '</div>')
+            new_str = new_str.replace('<!--e/matome-->', '</div>')
             new_str = new_str.replace('<!--point_i-->', '<div class="in_point"><span>ポイント</span>')
             new_str = new_str.replace('<!--e/point_i-->', '</div>')
             new_str = new_str.replace('<ol>', '<ol class="arlist">')
-            new_str = re.sub(r'。。<br />', r'。</p><p>', new_str)
-            new_str = re.sub(r'。。', r'。</p><p>', new_str)
-            new_str = re.sub(r'）。<br />', r'）</p><p>', new_str)
-            new_str = re.sub(r'\)。<br />', r'\)</p><p>', new_str)
-            new_str = re.sub(r'\)。', r'\)</p><p>', new_str)
-            new_str = re.sub(r'）。', r'）</p><p>', new_str)
+            new_str = new_str.replace('<div class="hidden_show"><ol class="arlist">', '<div class="hidden_show"><ol>')
+            new_str = new_str.replace('<br /></p>', '</p>')
+            new_str = new_str.replace('。。<br />', '。</p><p>')
+            new_str = new_str.replace('。。', '。</p><p>')
+            new_str = new_str.replace('）。<br />', '）</p><p>')
+            new_str = new_str.replace(')。<br />', ')</p><p>')
+            new_str = new_str.replace(')。', ')</p><p>')
+            new_str = new_str.replace('）。', '）</p><p>')
+            new_str = new_str.replace('？。', '？<br />')
+            new_str = new_str.replace('？。。', '？</p><p>')
+
+            new_str = logical_box_filter(new_str)
             new_str, add_list = img_str_filter(new_str, file_name, md_replace_str, md_file_path)
             p_img_str_l = re.findall(r'<p><img .+?/></p>', new_str)
             if p_img_str_l:
@@ -615,6 +658,7 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('。<br />）', '。）')
             new_str = new_str.replace('。<br />)', '。)')
             new_str = new_str.replace('！。<br />', '！<br />')
+            new_str = new_str.replace('。<br /></p>', '。</p>')
             new_str = re.sub(r'(件名: .+?)<br />', r'<span class="m_title">\1</span>', new_str)
             new_str = new_str.replace('<table>', '<table class="tb_n">')
 
@@ -630,10 +674,30 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('"../../../reibun/pc/', '"../')
             new_str = new_str.replace('<!--sample/s-->', '<div class="sample">')
             new_str = new_str.replace('<!--sample/e-->', '</div>')
+
+            if 'i::' in plain_txt:
+                t_image_l = re.findall(r'i::(.+?)\n', plain_txt)
+                t_image = t_image_l[0]
+            else:
+                if '_1_gr.jpg' in new_str:
+                    t_img_l = re.findall(r'<div class="alt_img_t"><img src="(.*?/images/art_images/.+?_1_gr\.jpg)"',
+                                         new_str)
+                    if t_img_l:
+                        t_image = t_img_l[0].replace('../images/', '')
+                    else:
+                        t_image = 'demr_mgirl_1200x630.jpg'
+                else:
+                    t_image = 'demr_mgirl_1200x630.jpg'
             new_str = new_str.replace('<!--t-image-->', t_image)
             new_str = new_str.replace('<!--description-->', description)
+            new_str = new_str.replace('<div id="footer2">出会い系サイトは18禁です。<br />18歳未満',
+                                      '<div id="footer2">出会い系サイトは18禁です。18歳未満')
             new_str = new_str.replace('.md"', '.html"')
             new_str = new_str.replace('<p>%libut%</p><ul>', '<ul class="libut">')
+            card_br_l = re.findall(r'<span class="ar_dis">.+?</span>', new_str)
+            if card_br_l:
+                for card_br in card_br_l:
+                    new_str = new_str.replace(card_br, card_br.replace('<br />', ''))
             if 'new_art' in md_file_path:
                 new_str = new_str.replace('"reibun/pc/', '"../')
                 pub_or_mod = 'pub'
@@ -641,6 +705,8 @@ def import_from_markdown(md_file_list):
             else:
                 pub_or_mod = 'mod'
             upload_list.extend(add_list)
+            upload_list.extend(pick_up_same_name_images(file_name))
+            pick_up_same_name_images(file_name)
             if md_file_path == 'md_files/index.md':
                 with open('reibun/index.index', 'r', encoding='utf-8') as h:
                     top_long_str = h.read()
@@ -656,6 +722,18 @@ def import_from_markdown(md_file_list):
                 pk_dec = add_pickle_dec(pk_dec, new_data)
             add_modify_log('reibun/pc/' + file_name, now.date(), category, title, pub_or_mod)
     return upload_list, pk_dec, new_file_data
+
+
+def logical_box_filter(long_str):
+    lg_box_str_l = re.findall(r'<div class="logi_box_e.+?>.+?</div>', long_str)
+    if lg_box_str_l:
+        for lg_box_str in lg_box_str_l:
+            box_str = re.findall(r'>(.*?)<', lg_box_str)[0]
+            if '*' in box_str:
+                box_str_r = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', box_str)
+                box_str_r = re.sub(r'\*(.+?)\*', r'<em>\1</em>', box_str_r)
+                long_str = long_str.replace(box_str, box_str_r)
+    return long_str
 
 
 def add_modify_log(mod_file_path, now, category, title, pub_or_mod):
@@ -711,7 +789,7 @@ def resize_and_rename_image(img_path, file_path):
         img_gr.save('reibun/amp/images/art_images/' + new_name)
         img_gr.save('md_files/pc/images/art_images/' + new_name)
         img.save('image_stock/' + file_name + '_' + str(i) + '.jpg')
-        os.remove(img_path.replace('../../../../', ''))
+        os.remove(img_path.replace('../../../', ''))
         add_img = ['reibun/pc/images/art_images/' + new_name, 'reibun/amp/images/art_images/' + new_name]
     else:
         add_img = image_upload.make_thumbnail(file_name, img_path.replace('../../../', ''))
@@ -733,7 +811,7 @@ def mail_sample_replace(long_str):
     f_mail_l = re.findall(r'%w%([\s\S]+?)\n\n', long_str)
     if f_mail_l:
         for f_mail in f_mail_l:
-            f_str = '<div class="wmail"><p>' + f_mail.replace('\n', '<br />') + '</p></div>'
+            f_str = '<div class="sample"><div class="wmail"><p>' + f_mail.replace('\n', '<br />') + '</p></div></div>'
             long_str = long_str.replace('%w%' + f_mail + '\n\n', f_str)
     long_str = long_str.replace('%arr' + '\n\n',
                                 '<div class="arr"><img width="17" height="17" src="../images/arr.png" alt="↓"></div>')
@@ -745,16 +823,21 @@ def mail_sample_replace(long_str):
     if '%%%' in long_str:
         long_str = re.sub(r'%%%([\s\S]+?)%%%', r'<div class="sample">\1</div>', long_str)
     else:
-        long_str = long_str.replace('</div></div><div class="arr"><img width="17" height="17" src="../images/arr.png" '
-                                    'alt="↓"></div><div class="wmail">',
-                                    '</div><div class="arr"><img width="17" height="17" src="../images/arr.png" alt="↓">'
-                                    '</div><div class="wmail">')
-        long_str = long_str.replace('</div><div class="arr"><img width="17" height="17" src="../images/arr.png" '
-                                    'alt="↓"></div><div class="sample"><div class="mail">',
-                                    '</div><div class="arr"><img width="17" height="17" src="../images/arr.png" alt="↓">'
-                                    '</div><div class="wmail">')
+        long_str = long_str.replace('</div></div><div class="arr">', '</div><div class="arr">')
+        long_str = long_str.replace('alt="↓"></div><div class="sample"><div class="mail">',
+                                    'alt="↓"></div><div class="mail">')
+        long_str = long_str.replace('alt="↓"></div><div class="sample"><div class="wmail">',
+                                    'alt="↓"></div><div class="wmail">')
         long_str = long_str.replace('</div></div><div class="cm">', '</div><div class="cm">')
         long_str = re.sub(r'<!--km-el-->[\s]*?<div class="sample">', '', long_str)
+    return long_str
+
+
+def strong_insert_filter(long_str):
+    if '*' in long_str:
+        box_str_r = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', long_str)
+        box_str_r = re.sub(r'\*(.+?)\*', r'<em>\1</em>', box_str_r)
+        long_str = long_str.replace(long_str, box_str_r)
     return long_str
 
 
@@ -843,19 +926,24 @@ def css_str_optimize(html_str, css_str):
 
 
 if __name__ == '__main__':
-    main(2)
-    # import_from_markdown(['md_files/pc/majime/m0_4.md'])
+    main(1)
+    reibun_upload.files_upload(['reibun/index.html'])
+
+    # import_from_markdown(['md_files/pc/qa/q3_test.md'])
     # print(resize_and_rename_image('insert_image/AdobeStock_15946903.jpeg', 'majime/m0_test.html'))
     # t_l = {0: ['']}
     # print(make_all_side_bar(t_l))
     # insert_to_index_page(t_l)
     # xml_site_map_maker(t_l)
-    # reibun_upload.tab_and_line_feed_remover('reibun/pc/majime/index.html')
+    # reibun_upload.tab_and_line_feed_remover('reibun/index.html')
     # print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
     # print([x for x in test_l if x[1] == test_l[-1][1]])
-    print(str(datetime.datetime.now())[:-7])
+    # print(str(datetime.datetime.now())[:-7])
     # print(make_article_list.read_pickle_pot('modify_log'))
     # print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
+
+    # make_rss([])
+    # reibun_upload.files_upload(['reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml'])
 
     # todo: アップロード
     # todo: 関連記事改善

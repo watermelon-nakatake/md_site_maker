@@ -1098,6 +1098,7 @@ function initializeSiteCounter() {
 function clickCounter(siteId) {
     let counter = Number(localStorage.getItem(siteId));
     counter++;
+    console.log(counter)
     localStorage.setItem(siteId, String(counter));
     redirectChoice(counter, siteId)
 }

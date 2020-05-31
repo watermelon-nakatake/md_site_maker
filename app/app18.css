@@ -1,3 +1,93 @@
+@charset "UTF-8";
+abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite, code, dd, del,
+details, dfn, div, dl, dt, em, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6,
+header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p,
+pre, q, samp, section, small, span, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead,
+time, tr, ul, var, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: 0 0
+}
+
+body {
+    line-height: 1
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block
+}
+
+nav ul {
+    list-style: none
+}
+
+blockquote, q {
+    quotes: none
+}
+
+blockquote:after, blockquote:before, q:after, q:before {
+    content: none
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: 0 0
+}
+
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none
+}
+
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: 700
+}
+
+del {
+    text-decoration: line-through
+}
+
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0
+}
+
+input, select {
+    vertical-align: middle
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    line-height: 0
+}
+
+
 *, *:before, *:after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -15,7 +105,8 @@ html {
 }
 
 body {
-    margin: 0
+    margin: 0;
+    color: #333333;
 }
 
 .wrapper {
@@ -88,7 +179,7 @@ section {
     background: #fff;
     position: absolute;
     top: 42px;
-    padding: 0 40px 0 20px;
+    padding: 0 20px 0 20px;
     border: 2px solid #446CB3;
     border-top: 0;
 }
@@ -330,31 +421,6 @@ section {
     margin-right: 10px;
 }
 
-.siteLink {
-    width: 90%;
-    height: 50px;
-    margin: 20px auto;
-    border: 1px solid #9B9B9B;
-    background-color: #79eada;
-    border-radius: 5px;
-}
-
-.siteLink a {
-    width: 100%;
-    height: 40px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    padding: 15px 0;
-    font-size: 20px;
-    color: #000000;
-}
-
-.siteLink a span {
-    font-size: 12px;
-    padding-left: 5px;
-}
-
 #dis_list {
     list-style: circle;
 }
@@ -398,7 +464,7 @@ section {
 .caution {
     color: red;
     font-weight: bold;
-    text-align: center;
+    font-size: 14px;
     margin-top: 30px;
 }
 .mini_g{
@@ -406,6 +472,48 @@ section {
     color: #6E6E6E;
     text-align: right;
 }
+
+.siteLink {width: 100%;
+height: 70px;
+margin-top: 35px}
+
+.sli {width: 95%;
+height: 70px;
+margin: 5px auto}
+
+.sli img{
+    width: 20%;
+    max-width: 80px;
+    height: auto;
+    float: left;
+}
+
+.slr{
+    width: 70%;
+    float: left;
+    margin: 7px 0 0 5%
+}
+
+.slsn {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    width: 100%;
+}
+.slsd{
+    font-size: 15px;
+    display: inline-block;
+    margin: 5px 0 0 5%;
+    width: 95%;
+    color: #5b5b5b;
+
+}
+.sli:after {
+    content: "";
+    display: block;
+    clear: both
+}
+
 
 /* メディアクエリ */
 

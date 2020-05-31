@@ -43,13 +43,13 @@ def breadcrumb_maker(category, directory, file_name):
     if 'index.html' in file_name:
         return result
     else:
-        result += '<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="brd2"><a href="../' +\
-                  directory + '/"itemprop="url"><span itemprop="title">' + directory_name[directory]\
-                  + '</span></a> &gt;&gt;</div>'
+        result += '<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="brd2"><a href="../' +\
+                  directory + '/"itemprop="item"><span itemprop="name">' + directory_name[directory]\
+                  + '</span></a><meta itemprop="position" content="2" /> &gt;&gt;</div>'
         if directory == 'majime' and category != 'majime':
-            result += '<div itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="brd2"><a href="../' + \
-                      directory + '/' + category_name[category][1] + '"itemprop="url"><span itemprop="title">' + \
-                      category_name[category][0] + '</span></a> &gt;&gt;&gt;</div>'
+            result += '<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="brd2"><a href="../' + \
+                      directory + '/' + category_name[category][1] + '"itemprop="item"><span itemprop="name">' + \
+                      category_name[category][0] + '</span></a><meta itemprop="position" content="3" /> &gt;&gt;&gt;</div>'
         return result
 
 
@@ -82,8 +82,8 @@ def remake_html():
 
 
 def file_update():
-    upload_list = ['reibun/p_sitemap.xml', 'reibun/pc/css/base9.css', 'reibun/pc/css/pc9.css',
-                   'reibun/pc/css/phone9.css',
+    upload_list = ['reibun/p_sitemap.xml', 'reibun/pc/css/base11.css', 'reibun/pc/css/pc11.css',
+                   'reibun/pc/css/phone11.css',
                    'reibun/pc/sitepage/yyc.html', 'reibun/pc/sitepage/meru-para.html',
                    'reibun/pc/sitepage/wakuwakumail.html', 'reibun/pc/sitepage/loveseach.html',
                    'reibun/pc/sitepage/pcmax.html', 'reibun/pc/sitepage/mintj.html', 'reibun/pc/sitepage/194964.html',

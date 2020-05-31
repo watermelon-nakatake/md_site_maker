@@ -170,7 +170,7 @@ def amp_maker(pc_path_list):
                 if '<span class="pc_none">' in amp_data:
                     amp_data = re.sub(r'<span class="pc_none">(.+?)</span>', r'\1', amp_data)
                     amp_data = re.sub(r'<span class="mob_none">.+?</span>', '', amp_data)
-                html_str = re.findall(r'<body.*?>([\s\S]+?)</body>', amp_data)[0]
+                html_str = re.findall(r'(<body.*?>[\s\S]+?</body>)', amp_data)[0]
                 css_str = re.findall(r'<style amp-custom>([\s\S]+?)</style>', amp_data)[0]
                 new_css = new_from_md.css_str_optimize(html_str, css_str)
                 amp_data = amp_data.replace(css_str, new_css)
@@ -183,6 +183,8 @@ def amp_maker(pc_path_list):
                                       '","height":' + str(mi_h) + ',"width":' + str(mi_w) + '}}</script></body>',
                                       amp_data)
                 amp_data = amp_data.replace('<div id="other-a" class="as_li"><!--other-a--></div>', '')
+                amp_data = amp_data.replace('mailform/mail.html', 'mailform/')
+                amp_data = amp_data.replace('../bookmark.html', '../../pc/bookmark.html')
             with open(amp_path, "w") as h:
                 h.write(amp_data)
             # relation_file_upload(amp_data)
@@ -195,7 +197,6 @@ def add_amp_file(pc_path):
 
 
 def search_image_size(img_str):
-    print(img_str)
     if '../images/' in img_str:
         img_path = img_str.replace('../images/', 'reibun/pc/images/')
     else:
@@ -244,7 +245,7 @@ def all_amp_change_and_upload():
         dir_str = 'reibun/pc/' + directory
         files = [dir_str + x for x in os.listdir(dir_str) if '_test' not in x and '_copy' not in x]
         up_files.extend(files)
-    print(up_files)
+    # print(up_files)
     amp_maker(up_files)
     reibun_upload.ftp_upload([y.replace('/pc/', '/amp/') for y in up_files])
 

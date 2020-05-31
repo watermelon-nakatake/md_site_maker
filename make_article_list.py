@@ -106,6 +106,6 @@ def add_to_pk_list():
 if __name__ == '__main__':
     # make_current_file_list()
     # add_to_pk_list()
-    # change_pickle('title_img_list', 9, ['caption/dealerprofile.html', '業者のプロフィールを見分ける方法', '', '2019-09-28', 'caption', '出会い系サイトを悪用している業者のプロフィールの見分け方をご紹介します。悪質業者のプロフィールの傾向/業者のプロフィールの特徴'])
+    # change_pickle('title_img_list', 140, 'delete')
     print(read_pickle_pot('title_img_list'))
     print(read_pickle_pot('modify_log'))

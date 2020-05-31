@@ -22,12 +22,19 @@ p::2012-02-15
 |テスト|テスト|テスト|
 
 
+<!--バナー-->
+
+%app_b%
+
 
 <!--ポイント-->
 
 %p%
 出会い系では掲示板書き込みして待つよりも、自分からメールする方法の方が出会える
 
+%point%
+
+%matome%
 
 
 <!--sampleタグ挿入-->
@@ -40,18 +47,20 @@ p::2012-02-15
 
 <div class="logi_box_o">
 <div class="logi_box_i">
-<div class="logi_box_e">男性</div>
-<div class="logi_box_e">女性</div>
+<div class="logi_box_e lb_c_w w100">掲示板やプロフでフェラ割募集を探す</div>
 </div>
 <div class="logi_box_i">
-<div class="logi_box_e">掲示板に書き込みしても全くメールがこない</div>
-<div class="logi_box_e">プロフィールを書いただけでたくさんのメールが来る</div>
+<div class="logi_box_e lb_c_w w100">「会おう」というメールを送る</div>
 </div>
 <div class="logi_box_i">
-<div class="logi_box_e">プロフィールを見て自分からメールする</div>
-<div class="logi_box_e">男性の掲示板やプロフィールを見る余裕はない</div>
+<div class="logi_box_e lb_c_w w100">金額などの条件を決める</div>
 </div>
-<div class="logi_box_i"><div class="logi_box_e_a_e">男性が掲示板に書き込みをしてもメールはもらえない</div></div>
+<div class="logi_box_i">
+<div class="logi_box_e lb_c_w w100">時間や待ち合わせ場所を決める</div>
+</div>
+<div class="logi_box_i">
+<div class="logi_box_e_e lb_c_b w100">実際に会って抜いてもらう</div>
+</div>
 </div>
 
 
@@ -129,9 +138,10 @@ p::2012-02-15
 
 ###スタンダードな恋愛用掲示板例文
 
-%k%本気で彼女探してます
 
-%m%書き込みをみてくださってありがとうございます。
+
+%m%件名: タイトルです
+書き込みをみてくださってありがとうございます。
 私は（年齢）歳で（住んでいる地域）在住の（自分のニックネーム）といいます。仕事は（職業）をしていて、休みの日は美味しいものを食べ歩いたりして楽しんでいます。
 しばらく恋愛はしていなかったのですが、そろそろ本気で彼女を作りたいと思ってこのサイトに初めて登録してみました。
 優しくて一緒にいろいろなことにチャレンジできるような女性が好きなので、そういう方と知り合えたら嬉しいです。
