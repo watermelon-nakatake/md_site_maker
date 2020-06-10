@@ -295,6 +295,7 @@ const optionWordList = [['option1', 'op1'], ['option2', 'op2'], ['option3', 'op3
     ['option5', 'op5']];
 const insertList = ['herName'];
 const baseUserInfo = ['name', 'dataArray', 'randid', 'me', 'job', 'area', 'age', 'hobby', 'plentyMargin', 'accessTool'];
+const profileLabelList = ['趣味', '性格', 'スポーツ', '似ている芸能人1', '似ている芸能人2', '身長', '体重', '体型']
 // データ格納
 //localStorage.clear();
 let dataArray = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0};
@@ -557,6 +558,8 @@ function displayCombo5(lv1data) {
 }
 
 function displayText(clickId) {
+    console.log(clickId);
+    console.log(typeof clickId);
     let baseText = baseTextChoice();
     let beforeReplace = baseText;
     let dataArray = JSON.parse(localStorage.getItem('dataArray'));
@@ -564,13 +567,15 @@ function displayText(clickId) {
     baseText = optionInsert(baseText);
     baseText = wordReplace(baseText);
     baseText = optionInputDisplay(baseText);
-    if (clickId.indexOf('optionInput') !== -1) {
-        if (clickId !== 'herName') {
+    if (clickId.indexOf('optionInput') === -1) {
+        if (clickId !== 'herName' && clickId !== 'plentyMargin' && clickId !== 'accessTool' && clickId !== 'op2') {
+            console.log('delete OI !');
             document.getElementById('optionInput').value = ''
         }
     }
     if (baseText.indexOf('(oi') !== -1) {
         if (document.getElementById('optionInput').value) {
+            console.log('oi表示');
             baseText = replaceAll(baseText, /\(oi.+?\)/, document.getElementById('optionInput').value)
         } else {
             baseText = replaceAll(baseText, '(oi', '(')
@@ -655,6 +660,11 @@ function optionInsert(baseText) {
         if (baseText.indexOf(optionWordList[i][0]) !== -1) {
             let optionValue = Number(dataArray[optionWordList[i][1]]);
             let replaceWord = '(' + optionWordList[i][0] + ')';
+            let insertWord = '';
+            if (optionValue) {
+                insertWord = optionArray[i][optionValue]
+            }
+            console.log(insertWord);
             baseText = replaceAll(baseText, replaceWord, optionArray[i][optionValue]);
         }
     }
@@ -701,11 +711,16 @@ function profilePageDisplay() {
     let j = 1;
     for (let i = 0; i < localStorage.length; i++) {
         let storageKey = localStorage.key(i);
+        console.log(storageKey);
         if (localStorage.hasOwnProperty(localStorage.key(i))) {
             if (baseUserInfo.indexOf(storageKey) < 0) {
-                document.getElementById('prLabel' + String(j)).textContent = storageKey;
-                document.getElementById('pr' + String(j)).value = localStorage.getItem(storageKey);
-                j++
+                if (profileLabelList.indexOf(storageKey) !== -1) {
+                    console.log('in!!')
+                    document.getElementById('prLabel' + String(j)).textContent = storageKey;
+                    document.getElementById('pr' + String(j)).value = localStorage.getItem(storageKey);
+                    document.getElementById('prOuter' + String(j)).style.display = 'block';
+                    j++
+                }
             }
         }
     }
@@ -717,7 +732,7 @@ function profilePageDisplay() {
 
 function displayTextHA() {
     if (document.getElementById('step').value !== '5') {
-        displayText('herAnswer')
+        displayText('herName')
     } else {
         console.log('TextHA start');
         displayCombo5(document.getElementById('lv1').value)
@@ -982,6 +997,7 @@ function profileChange(pIId) {
     localStorage.setItem(profileLabel, inputValue);
     displayText('profileInput' + String(pIId))
 }
+
 function mainWordFilter() {
     if (!arrayChecker()) {
         let ty = textInsertWord(getPath);
@@ -1104,7 +1120,7 @@ function clickCounter(siteId) {
 }
 
 function redirectChoice(count, siteId) {
-    if (count > 10) {
+    if (count > 20) {
         let currentDir = document.getElementById(siteId).href;
         if (currentDir.slice(-1) !== 'p') {
             document.getElementById(siteId).href = currentDir + 'p'
@@ -1178,7 +1194,10 @@ function firstInitialize() {
     document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
     document.getElementById('op2').options[Number(currentData['op2'])].selected = true;
     document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
-    document.getElementById('op4').options[Number(currentData['op4'])].selected = true
+    document.getElementById('op4').options[Number(currentData['op4'])].selected = true;
+    for (let j = 1; j < 12; j++) {
+        document.getElementById('prOuter' + String(j)).style.display = 'none'
+    }
 }
 
 firstInitialize();
