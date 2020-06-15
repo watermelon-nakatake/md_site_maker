@@ -98,6 +98,18 @@ def css_insert(long_str):
     return long_str
 
 
+def make_amp_top_page():
+    with open('reibun/index.html', "r", encoding='utf-8') as f:
+        pc_top = f.read()
+    with open('reibun/amp/index.html', "r", encoding='utf-8') as g:
+        amp_top = g.read()
+    new_str = re.findall(r'<h2>主な更新履歴</h2>.+?</article>', pc_top)[0]
+    new_str = new_str.replace('"pc/', '"')
+    amp_top = re.sub(r'<h2>主な更新履歴</h2>.+?</article>', new_str, amp_top)
+    with open('reibun/amp/index.html', "w", encoding='utf-8') as h:
+        h.write(amp_top)
+
+
 def amp_maker(pc_path_list):
     with open('reibun/amp/template/amp_tmp_2.html', "r", encoding='utf-8') as g:
         tmp_str = g.read()
@@ -188,6 +200,7 @@ def amp_maker(pc_path_list):
             with open(amp_path, "w") as h:
                 h.write(amp_data)
             # relation_file_upload(amp_data)
+    make_amp_top_page()
 
 
 def add_amp_file(pc_path):
