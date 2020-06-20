@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-15766143-9"></script>
 	<script>window.dataLayer = window.dataLayer || [];
@@ -18,24 +18,6 @@
             'value': 500.0,
             'currency': 'JPY'
         });
-	</script>
-	<!-- Event snippet for banner-click1 conversion page
-	In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-	<script>
-        function gtag_report_conversion(url) {
-            var callback = function () {
-                if (typeof (url) != 'undefined') {
-                    window.location = url;
-                }
-            };
-            gtag('event', 'conversion', {
-                'send_to': 'AW-701565450/NkBoCJiExrEBEIqUxM4C',
-                'value': 500.0,
-                'currency': 'JPY',
-                'event_callback': callback
-            });
-            return false;
-        }
 	</script>
 
 	<meta charset="utf-8">
@@ -296,11 +278,10 @@
 						<label class="back" for="tab-4">&#8249;</label>
 						<label class="next" for="tab-2">&#8250; </label>
 					</div>
-					<div class="mini_g"><p>version1.0.0</p></div>
+					<div class="mini_g"><p>version1.0.1</p></div>
 					<div id="modt" class="mini_g">更新:
-						<time itemprop="dateModified" datetime="2020-06-03">2020年6月3日</time>
-						by <a href="../pc/policy/profile.html"><span itemprop="author" itemscope="itemscope"
-						                                             itemtype="https://schema.org/Person"><span
+						<time itemprop="dateModified" datetime="2020-06-03">2020年6月16日</time>
+						by <a href="https://www.demr.jp/pc/policy/profile.html"><span itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person"><span
 								itemprop="name">ゴーヤン</span></span></a></div>
 					<div id="main_link" class="mini_g">Created by <a href="../">出会い系メール例文集</a></div>
 					<div id="test_display" class="mini_g"></div>
@@ -396,28 +377,29 @@
 					<p>このリンクから主要な出会い系サイトに直接アクセスできます。</p>
 					<ul class="slu">
 						<li class="siteLink"><a href="https://www.demr.jp/app/dsite/550909" id="countWk" class="siteLT"
-						                        onclick="gtag_report_conversion">
+						                        onclick="gtag('event', 'click', {'event_category': 'access','event_label': 'waku-app'});">
 							<div class="sli"><img src="images/wkwk_sq.gif" alt="ワクワクメール">
 								<div class="slr"><span class="slsn">ワクワクメール</span><span class="slsd">利用者が多くコスパ抜群</span>
 								</div>
 							</div>
 						</a></li>
 						<li class="siteLink"><a href="https://www.demr.jp/app/dsite/happymail" id="countHm"
-						                        class="siteLT" onclick="gtag_report_conversion">
+						                        class="siteLT"
+						                        onclick="gtag('event', 'click', {'event_category': 'access','event_label': 'hp-app'});">
 							<div class="sli"><img src="images/hm_sq.png" alt="ハッピーメール">
 								<div class="slr"><span class="slsn">ハッピーメール</span><span class="slsd">初心者でも使いやすい</span>
 								</div>
 							</div>
 						</a></li>
 						<li class="siteLink"><a href="https://www.demr.jp/app/dsite/pcmax" id="countPc" class="siteLT"
-						                        onclick="gtag_report_conversion">
+						                        onclick="gtag('event', 'click', {'event_category': 'access','event_label': 'max-app'});">
 							<div class="sli"><img src="images/max_sq.gif" alt="PCMAX">
 								<div class="slr"><span class="slsn">PCMAX</span><span class="slsd">若い女の子と出会いやすい</span>
 								</div>
 							</div>
 						</a></li>
 						<li class="siteLink"><a href="https://www.demr.jp/app/dsite/mintj" id="countMj" class="siteLT"
-						                        onclick="gtag_report_conversion">
+						                        onclick="gtag('event', 'click', {'event_category': 'access','event_label': 'mt-app'});">
 							<div class="sli"><img src="images/mint_sq.gif" alt="Jメール">
 								<div class="slr"><span class="slsn">Jメール</span><span
 										class="slsd">意外に出会える穴場</span>
@@ -425,7 +407,7 @@
 							</div>
 						</a></li>
 						<li class="siteLink"><a href="https://www.demr.jp/app/dsite/194964" id="countIk" class="siteLT"
-						                        onclick="gtag_report_conversion">
+						                        onclick="gtag('event', 'click', {'event_category': 'access','event_label': 'iq-app'});">
 							<div class="sli"><img src="images/ikukuru_sq.png" alt="イククル">
 								<div class="slr"><span class="slsn">イククル</span><span class="slsd">もっと出会いたい方に</span>
 								</div>
@@ -446,69 +428,73 @@
 			<label class="tab" for="tab-4">使い方</label>
 			<ul class="tab-content-container">
 				<li class="tab-content">
-					<p>このアプリのインストール方法は<a href="../pc/majime/mail-applicaton.html#sc6">例文アプリのインストール方法</a>で詳しく説明しています。</p>
+					<p>このアプリのインストール方法は<a
+							href="https://www.demr.jp/pc/majime/mail-applicaton.html#sc6">例文アプリのインストール方法</a>で詳しく説明しています。
+					</p>
 					<section><h2>出会いメール例文アプリの使い方</h2>
 						<p>例文アプリの使い方をご紹介します。</p>
 						<p>説明しなくても使えるような簡単なアプリにしてありますが、念のためご説明しておきます。</p>
 						<section><h3>1. プロフィールを記入</h3>
-							<div class="ap_int"><img src="images/app_int/u1_1.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u1_1.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方1"></div>
 							<p>まずは簡単にプロフィールを書きます。<br>上の方の「プロフ」タブをタップして、プロフ画面に行きます。</p>
-							<div class="ap_int"><img src="images/app_int/u1_2.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u1_2.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方2"></div>
 							<p>プロフィールの項目を記入してください。</p>
 							<p>「名前」と「自分の呼び方」は必須ですが、他の項目は書かなくてもメール作成には影響はありません。<br>もちろん全部書いた方がより出会えるようにはなりますが。</p>
 							<p>「名前」はその出会い系サイトで使っているニックネームを使ってください。</p>
-							<div class="ap_int"><img src="images/app_int/u1_3.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u1_3.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方3"></div>
 							<p>プロフィールを記入すると、メール本文に自分のニックネームなどが自動的に挿入されます。<br>このプロフィールはアプリに保存されるので、何回もプロフィールを書く必要はありません。
 							</p></section>
 						<section><h3>2. 送るメールを選ぶ</h3>
-							<div class="ap_int"><img src="images/app_int/u2_1.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u2_1.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方4"></div>
-							<div class="ap_int"><img src="images/app_int/u2_2.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u2_2.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方5"></div>
 							<p>続いて、メールの文章を選びます。</p>
 							<p>「メールの目的（ステップ）をタップして、どんなメールを送りたいか選んでください。</p>
-							<div class="ap_int"><img src="images/app_int/u2_3.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u2_3.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方6"></div>
 							<p>項目を選ぶと、それに合ったメールが表示されて、プロフ項目や自分の名前が自動的に挿入されます。</p>
 							<p>「出会いの目的」（彼女探しがしたいか、セフレが作りたいか）など、その段階毎に選択肢があるので、同様に選んでください。</p></section>
 						<section><h3>3. 相手の名前を記入して、メールを送る</h3>
-							<div class="ap_int"><img src="images/app_int/u3_1.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u3_1.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方7"></div>
 							<p>送りたいメールの文章が見つかったら、次に「相手の名前」を記入してください。<br>「さん」や「ちゃん」などの敬称を付けた名前を書きましょう。</p>
-							<div class="ap_int"><img src="images/app_int/u3_2.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u3_2.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方8"></div>
 							<p>すると、相手の名前が挿入されたメールが表示されます。<br>これでメール完成です。</p>
-							<div class="ap_int"><img src="images/app_int/u3_3.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u3_3.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方9"></div>
 							<p>「例文をコピー」ボタンをタップすると、メールの文章がコピーされます。</p>
-							<div class="ap_int"><img src="images/app_int/u3_4.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u3_4.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方10"></div>
 							<p>
 								上の方にある「リンク」タブから行ける「リンクページ」にある各出会い系サイトのリンクから、ご利用中の出会い系サイトにアクセスして、メールに文章を「ペースト」して送信してください。</p>
 							<p>なお、メール送信前にメールを一読して、相手の女性の名前を間違っていないかなどを確認した上で、送信するようにしてください。</p></section>
 						<section><h3>4. 会話のラリーの例文もあります</h3>
-							<div class="ap_int"><img src="images/app_int/u4_1.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u4_1.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方11"></div>
 							<p>「メールの目的」で「仲良くなるための話題と会話例文」などを選ぶと、相手の女性との一連の会話のやり取りの流れの例文を見ることができます。</p>
-							<div class="ap_int"><img src="images/app_int/u4_2.png" width="300" height="534"
+							<div class="ap_int"><img src="images/app_int/u4_2.png" width="400" height="711"
 							                         alt="出会い系メール例文アプリの使い方12"></div>
 							<p>ここでは、男性側のそれぞれのメールをコピーできます。</p>
 							<p>もちろん、相手の女性の反応はこの通りにはいかないので、そのまま使うことはできないので修正は必要ですが、会話が上手く続かない方などは会話の流れの参考にしてください。</p>
 						</section>
 					</section>
+					<section><p>機能やこんな例文を追加して欲しいという要望・ご意見は<a href="https://www.demr.jp/pc/mailform/mail.html">お問い合わせ</a>からどうぞ。
+					</p></section>
 				</li>
-				<div class="arrows">
-					<label class="back" for="tab-3">&#8249;</label>
-					<label class="next" for="tab-1">&#8250; </label>
-				</div>
-				</li>
+
+
 			</ul>
 		</li>
 	</ul>
-
+	<div class="arrows">
+		<label class="back" for="tab-3">&#8249;</label>
+		<label class="next" for="tab-1">&#8250; </label>
+	</div>
 
 </div>
 </body>
@@ -531,8 +517,9 @@ if ('serviceWorker' in navigator) {
                 registration.update();
             }
         })
-        .catch(err => {
+        .catch(error => {
             // 登録失敗
+            console.log('登録失敗' + error)
         });
 }
 </script>
