@@ -195,7 +195,7 @@ def amp_maker(pc_path_list):
                                       '","height":' + str(mi_h) + ',"width":' + str(mi_w) + '}}</script></body>',
                                       amp_data)
                 amp_data = amp_data.replace('<div id="other-a" class="as_li"><!--other-a--></div>', '')
-                amp_data = amp_data.replace('mailform/mail.html', 'mailform/')
+                amp_data = amp_data.replace('mailform/review.html', 'mailform/')
                 amp_data = amp_data.replace('../bookmark.html', '../../pc/bookmark.html')
             with open(amp_path, "w") as h:
                 h.write(amp_data)

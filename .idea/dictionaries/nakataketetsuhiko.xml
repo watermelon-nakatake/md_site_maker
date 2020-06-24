@@ -11,6 +11,7 @@
       <w>beforeinstallprompt</w>
       <w>blackrhino</w>
       <w>btnli</w>
+      <w>cachcopy</w>
       <w>changefreq</w>
       <w>deaikei</w>
       <w>demr</w>
@@ -43,6 +44,7 @@
       <w>ikukuru</w>
       <w>imail</w>
       <w>imgitemprop</w>
+      <w>imgnon</w>
       <w>imgsrc</w>
       <w>itemscope</w>
       <w>itemtype</w>
@@ -64,6 +66,7 @@
       <w>mailform</w>
       <w>mailgirl</w>
       <w>maincontent</w>
+      <w>maindisc</w>
       <w>majime</w>
       <w>marriedwoman</w>
       <w>matome</w>
@@ -81,6 +84,7 @@
       <w>nashi</w>
       <w>navi</w>
       <w>navop</w>
+      <w>noscroll</w>
       <w>omail</w>
       <w>otherart</w>
       <w>otherb</w>
@@ -114,6 +118,7 @@
       <w>sphmban</w>
       <w>stit</w>
       <w>stor</w>
+      <w>subdisc</w>
       <w>syncer</w>
       <w>tabn</w>
       <w>tari</w>

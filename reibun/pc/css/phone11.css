@@ -1464,18 +1464,40 @@ a.btn-pop {
     margin-left: 5%
 }
 
-.ana_box{
-    border: 1px solid #6E6E6E;
-    padding: 5%;
-    width: 80%;
-    margin: 10px auto;
-}
-.ana_i_star img {
-    width: 30%;
-    height: auto
+#review_t label {
+    display: block;
+    margin-bottom: 15px;
+    width: 90%;
+    margin-left: 5%;
 }
 
-#fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .btnli li:after, .dousen:after, .sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, .ar_card:after, .sli:after, .logi_box_i:after, .logi_box_o:after {
+#review_t input, #review_t textarea {
+    display: block;
+    margin-left: 20px;
+}
+
+#review_t input.no_br {
+    display: inline;
+    width: auto;
+    margin-top: 0;
+    line-height: 1;
+}
+.radio_o{
+    display: block;
+}
+.input_o {
+    display: block;
+    margin-bottom: 15px;
+    width: 20%;
+    float: left;
+}
+#review_t textarea{
+    width: 90%;
+}
+
+#fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .btnli li:after, .dousen:after, .sitepagetop:after,
+.eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, .ar_card:after, .sli:after, .logi_box_i:after,
+.logi_box_o:after, .ana_i:after, .k_ana_i:after, .sb_outer:after, .radio_o:after {
     content: "";
     display: block;
     clear: both
