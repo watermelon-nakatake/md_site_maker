@@ -2,24 +2,7 @@
 <html lang="ja">
 <head>
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-15766143-9"></script>
-	<script>window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'UA-15766143-9');
-    gtag('config', 'AW-701565450');</script>
-	<!-- Event snippet for リピート閲覧 conversion page -->
-	<script>
-        gtag('event', 'conversion', {
-            'send_to': 'AW-701565450/4cD8COK6v7EBEIqUxM4C',
-            'value': 500.0,
-            'currency': 'JPY'
-        });
-	</script>
-
+	<!-- Global site tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-15766143-9"></script><script>window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-15766143-9');</script><!--e/gtag-->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,7 +28,7 @@
 
 <body>
 <div class="wrapper">
-	<ul class="tab-container">
+	<ul class="tab-container" id="main_cont">
 		<li>
 			<input class="tab-toggle" id="tab-1" type="radio" name="toggle" checked/>
 			<label data-title="user data" class="tab l-b" for="tab-1">メール作成</label>
@@ -360,6 +343,10 @@
 						<label for="pr11" id="prLabel11">profile11</label>
 						<input class="text_i" id="pr11" placeholder="input">
 					</div>
+					<div id="dummyChecker">
+						<label id="dummyLabel">
+						<input type="checkbox" class="check-i" id="dumChange"><span>再起動時にダミー画面を表示</span></label>
+					</div>
 
 
 					<div class="arrows">
@@ -491,9 +478,22 @@
 			</ul>
 		</li>
 	</ul>
-	<div class="arrows">
+	<div class="arrows" id="main_arr">
 		<label class="back" for="tab-3">&#8249;</label>
 		<label class="next" for="tab-1">&#8250; </label>
+	</div>
+	<div id="dummy">
+		<div id="d_title">ビジネスメール例文集</div>
+		<ul class="d_list">
+			<li><a href="#d1">初対面の挨拶メール</a></li>
+			<li><a href="#d2">面談の御礼メール</a></li>
+		</ul>
+		<div id="r_mail">
+			<div class="d_sample"></div>
+			<div class="d_sample">
+				<a href="#d_title" id="dummy_esc">プライバシーポリシー</a>
+			</div>
+		</div>
 	</div>
 
 </div>
@@ -509,7 +509,7 @@
 }
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-        .register('/serviceworker.js')
+        .register('./service-worker.js')
         .then(registration => {
             // 登録成功
             registration.onupdatefound = function () {

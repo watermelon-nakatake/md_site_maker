@@ -167,6 +167,11 @@ def tab_and_line_feed_remove_from_str(long_str):
     result = result.replace('"layout=', '" layout=')
     result = result.replace('"class=', '" class=')
     result = result.replace('"height="', '" height="')
+    result = result.replace('"id="', '" id="')
+    result = result.replace('"id="', '" id="')
+    result = result.replace('"onclick="', '" onclick="')
+    result = result.replace('"id="', '" id="')
+    result = result.replace('"target="', '" target="')
     result = result.replace(', ', ',')
     result = css_minify(result)
     return result

@@ -286,22 +286,23 @@ def insert_sidebar_to_existing_art(side_bar_dec):
     for dir_r in up_dir[:-1]:
         r_files = os.listdir('reibun/pc/' + dir_r)
         for r_file in r_files:
-            with open('reibun/pc/' + dir_r + '/' + r_file, 'r', encoding='utf-8') as f:
-                long_str = f.read()
-                long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
-                str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
-                                   long_str)
-                if str_l:
-                    category = str_l[0]
-                long_str = insert_sidebar_to_str(long_str, side_bar_dec, category)
-                with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
-                    g.write(long_str)
-                    change_files.append('reibun/pc/' + dir_r + r_file)
-            with open('reibun/amp/' + dir_r + r_file, 'r', encoding='utf-8') as h:
-                amp_str = h.read()
-                amp_str = insert_sidebar_to_str(amp_str, side_bar_dec, category)
-                with open('reibun/amp/' + dir_r + r_file, 'w', encoding='utf-8') as i:
-                    i.write(amp_str)
+            if '_copy' not in r_file:
+                with open('reibun/pc/' + dir_r + '/' + r_file, 'r', encoding='utf-8') as f:
+                    long_str = f.read()
+                    long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+                    str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
+                                       long_str)
+                    if str_l:
+                        category = str_l[0]
+                    long_str = insert_sidebar_to_str(long_str, side_bar_dec, category)
+                    with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
+                        g.write(long_str)
+                        change_files.append('reibun/pc/' + dir_r + r_file)
+                with open('reibun/amp/' + dir_r + r_file, 'r', encoding='utf-8') as h:
+                    amp_str = h.read()
+                    amp_str = insert_sidebar_to_str(amp_str, side_bar_dec, category)
+                    with open('reibun/amp/' + dir_r + r_file, 'w', encoding='utf-8') as i:
+                        i.write(amp_str)
     change_files.extend([x.replace('/pc/', '/amp/') for x in change_files])
     return change_files
 

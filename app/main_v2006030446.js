@@ -1168,6 +1168,65 @@ function textInsertWord(p) {
     return ty
 }
 
+//ダミー画面の処理
+let dummyFlag = localStorage.getItem('dummy')
+console.log(dummyFlag);
+let dummySwitch = localStorage.getItem('dummy')
+
+if (!dummySwitch) {
+        currentData["dummy"] = false
+    } else {
+        if (currentData["dummy"] === true){
+            dummyFlag = true
+        } else if (currentData["dummy"] === false){
+            dummyFlag = false
+        }
+    }
+
+
+const dummyEsc = document.getElementById('dummy_esc');
+const dummyDiv = document.getElementById('dummy');
+const dummyChecker = document.getElementById('dummyChecker');
+const mainCont = document.getElementById('main_cont');
+const mainArr = document.getElementById('main_arr');
+
+console.log(dummyFlag);
+
+if (dummyFlag === false) {
+    dummyDiv.style.display = 'none';
+    mainCont.style.display = 'block';
+    mainArr.style.display = 'block'
+} else {
+    dummyDiv.style.display = 'block';
+    mainCont.style.display = 'none';
+    mainArr.style.display = 'none'
+}
+
+function dummyToMain() {
+    if (currentArray["dummy"] === true) {
+        let userAns = window.prompt("パスワードをどうぞ", "")
+        if (userAns === '0721') {
+            dummyFlag = false;
+            dummyDiv.style.display = 'block';
+            mainCont.style.display = 'none';
+            mainArr.style.display = 'none'
+        }
+    }
+}
+
+dummyEsc.onclick = dummyToMain;
+const dumChange = document.getElementById('dumChange');
+
+function dummyChange() {
+    console.log('change dummy')
+    localStorage.setItem('dummy', dumChange.checked);
+    console.log(localStorage.getItem('dummy'))
+
+}
+
+dumChange.onchange = dummyChange;
+
+
 //最初の処理
 function firstInitialize() {
     const initStepList = [1, 2, 3, 5, 6, 4, 0];
@@ -1176,6 +1235,15 @@ function firstInitialize() {
     console.log(currentData);
     if (currentData === null) {
         currentData = {step: 6, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0, op5: 0}
+    }
+
+    if (!currentData["op4"]) {
+        console.log('op4 on');
+        currentData["op4"] = 0;
+        console.log(currentData)
+    }
+    if (dummySwitch === null) {
+        localStorage.setItem('dummy', 'false')
     }
     let beforeText = '';
     initializeSiteCounter();
