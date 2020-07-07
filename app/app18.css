@@ -122,7 +122,9 @@ h1 {
 }
 
 h2 {
-    color: #00a2a8
+    color: #00a2a8;
+    margin: 20px 0;
+    font-size: 18px;
 }
 
 h3 {
@@ -248,7 +250,6 @@ section {
     -webkit-appearance: none;
     appearance: none;
     background-color: transparent;
-    background-image: none;
     border: 1px solid rgba(0, 0, 0, 0.16);
     border-radius: 0;
     color: inherit;
@@ -512,6 +513,57 @@ margin: 5px auto}
     content: "";
     display: block;
     clear: both
+}
+#mun_li{
+    width: 80%;
+    margin: 15px 10%;
+    list-style: disc;
+}
+#mun_li li{
+    margin-top: 10px;
+}
+/* ダミー */
+#dummy{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    background-color: #ffffff;
+}
+#dummy .text_i{
+    margin: 10px 0;
+    width: 100%;
+}
+#dummy section{
+    width: 90%;
+    margin: 20px 5%;
+}
+.text_a .text_i{
+    height: 100px;
+}
+#d_title{
+    width: 90%;
+    text-align: center;
+    font-size: 25px;
+    color: #00A2a8;
+    font-weight: 700;
+    margin: 20px 0 20px;
+}
+.d_sec{
+    font-size: 22px;
+    margin: 15px 0 20px;
+}
+.d_center{
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+}
+#hint{
+    width: 95%;
+    margin-top: 25px;
+    margin-right: 5%;
+    text-align: right;
+    font-size: 16px;
 }
 
 

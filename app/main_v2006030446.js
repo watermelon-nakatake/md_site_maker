@@ -754,7 +754,7 @@ let selectFormOp5 = document.getElementById("op5");
 
 
 function makeSelectOrder(levelStr) {
-    let selectOrder = '';
+    let selectOrder;
     let currentArray = JSON.parse(localStorage.getItem('dataArray'));
     if (!currentArray) {
         currentArray = dataArray;
@@ -1169,30 +1169,14 @@ function textInsertWord(p) {
 }
 
 //ダミー画面の処理
-let dummyFlag = localStorage.getItem('dummy')
-console.log(dummyFlag);
 let dummySwitch = localStorage.getItem('dummy')
-
-if (!dummySwitch) {
-        currentData["dummy"] = false
-    } else {
-        if (currentData["dummy"] === true){
-            dummyFlag = true
-        } else if (currentData["dummy"] === false){
-            dummyFlag = false
-        }
-    }
-
-
+let dummyFlag = dummySwitch;
 const dummyEsc = document.getElementById('dummy_esc');
 const dummyDiv = document.getElementById('dummy');
-const dummyChecker = document.getElementById('dummyChecker');
 const mainCont = document.getElementById('main_cont');
 const mainArr = document.getElementById('main_arr');
-
-console.log(dummyFlag);
-
-if (dummyFlag === false) {
+//起動時のダミー処理
+if (dummyFlag === 'false') {
     dummyDiv.style.display = 'none';
     mainCont.style.display = 'block';
     mainArr.style.display = 'block'
@@ -1201,31 +1185,53 @@ if (dummyFlag === false) {
     mainCont.style.display = 'none';
     mainArr.style.display = 'none'
 }
+if (dummySwitch === 'true') {
+    document.getElementById('dumChange').checked = true
+}
 
+//dummyページからアプリへの移動
 function dummyToMain() {
-    if (currentArray["dummy"] === true) {
-        let userAns = window.prompt("パスワードをどうぞ", "")
-        if (userAns === '0721') {
-            dummyFlag = false;
-            dummyDiv.style.display = 'block';
-            mainCont.style.display = 'none';
-            mainArr.style.display = 'none'
-        }
+    let userAns = window.prompt("パスワードをどうぞ", "");
+    if (userAns === '2020') {
+        dummyFlag = 'false';
+        dummyDiv.style.display = 'none';
+        mainCont.style.display = 'block';
+        mainArr.style.display = 'block'
     }
 }
 
 dummyEsc.onclick = dummyToMain;
+//dummyのcheckboxの操作
 const dumChange = document.getElementById('dumChange');
 
 function dummyChange() {
-    console.log('change dummy')
-    localStorage.setItem('dummy', dumChange.checked);
-    console.log(localStorage.getItem('dummy'))
-
+    localStorage.setItem('dummy', dumChange.checked)
 }
 
 dumChange.onchange = dummyChange;
 
+//dummyの文字数カウント
+const dCounterField = document.getElementById('dCounter'),
+    replaceField = document.getElementById('dReplace'),
+    replaceField1 = document.getElementById('dReplace1'),
+    replaceField2 = document.getElementById('dReplace2'),
+    replaceFieldB = document.getElementById('dReplaceB');
+
+function countStr() {
+    document.getElementById('countNum').innerText = dCounterField.value.length
+}
+dCounterField.onkeyup = countStr
+
+//dummyの文字列置換
+function replaceStr() {
+    let targetStr = replaceField.value,
+        target1 = replaceField1.value,
+        target2 = replaceField2.value;
+    targetStr = targetStr.split(target1);
+    targetStr = targetStr.join(target2);
+    replaceField.value = targetStr
+}
+replaceFieldB.onclick = replaceStr
 
 //最初の処理
 function firstInitialize() {
@@ -1238,14 +1244,15 @@ function firstInitialize() {
     }
 
     if (!currentData["op4"]) {
-        console.log('op4 on');
         currentData["op4"] = 0;
-        console.log(currentData)
     }
     if (dummySwitch === null) {
         localStorage.setItem('dummy', 'false')
     }
-    let beforeText = '';
+    if (dummySwitch === 'true') {
+        dummyFlag = 'true'
+    }
+    let beforeText;
     initializeSiteCounter();
     document.getElementById('step').options[initStepList[Number(currentData['step'])]].selected = true;
     makeSelectStr('lv1');
@@ -1255,6 +1262,9 @@ function firstInitialize() {
         beforeText = displayCombo5(currentData['lv1'])
     } else {
         beforeText = displayText('start');
+    }
+    if (localStorage.getItem('plentyMargin') === 'true') {
+        document.getElementById('plentyMargin').checked = true
     }
     mainWordFilter();
     optionSelectDisplay(beforeText);
