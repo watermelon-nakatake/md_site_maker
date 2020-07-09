@@ -559,7 +559,6 @@ function displayCombo5(lv1data) {
 
 function displayText(clickId) {
     console.log(clickId);
-    console.log(typeof clickId);
     let baseText = baseTextChoice();
     let beforeReplace = baseText;
     let dataArray = JSON.parse(localStorage.getItem('dataArray'));
@@ -1220,6 +1219,7 @@ const dCounterField = document.getElementById('dCounter'),
 function countStr() {
     document.getElementById('countNum').innerText = dCounterField.value.length
 }
+
 dCounterField.onkeyup = countStr
 
 //dummyの文字列置換
@@ -1231,6 +1231,7 @@ function replaceStr() {
     targetStr = targetStr.join(target2);
     replaceField.value = targetStr
 }
+
 replaceFieldB.onclick = replaceStr
 
 //最初の処理
@@ -1242,7 +1243,15 @@ function firstInitialize() {
     if (currentData === null) {
         currentData = {step: 6, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0, op5: 0}
     }
-
+    if (!currentData["op1"]) {
+        currentData["op1"] = 0;
+    }
+    if (!currentData["op2"]) {
+        currentData["op2"] = 0;
+    }
+    if (!currentData["op3"]) {
+        currentData["op3"] = 0;
+    }
     if (!currentData["op4"]) {
         currentData["op4"] = 0;
     }
@@ -1274,7 +1283,9 @@ function firstInitialize() {
     document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
     document.getElementById('op4').options[Number(currentData['op4'])].selected = true;
     for (let j = 1; j < 12; j++) {
-        document.getElementById('prOuter' + String(j)).style.display = 'none'
+        if (document.getElementById('prOuter' + String(j))) {
+            document.getElementById('prOuter' + String(j)).style.display = 'none'
+        }
     }
 }
 

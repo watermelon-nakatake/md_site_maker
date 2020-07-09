@@ -573,5 +573,8 @@ margin: 5px auto}
     .wrapper {
         width: 500px
     }
+    #dummy{
+        width: 500px;
+    }
 }
 

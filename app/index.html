@@ -19,7 +19,7 @@
 	<meta name="description"
 	      content="出会い系サイトで女性とやり取りするメールを自動作成できるアプリです。スマホでもPCでもどちらからでも使えます。当然無料で利用できてダウンロードも不要です。新しい例文をどんどん追加中！">
 	<meta name="theme-color" content="#2F3BA2"/>
-	<link href="app18.css" rel="stylesheet" type="text/css">
+	<link href="app20.css" rel="stylesheet" type="text/css">
 	<link rel="manifest" href="manifest.json">
 	<!-- for iOS meta tags and icons -->
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -270,14 +270,15 @@
 						<label class="back" for="tab-4">&#8249;</label>
 						<label class="next" for="tab-2">&#8250; </label>
 					</div>
-					<div class="mini_g"><p>version1.1.0</p></div>
+					<div class="mini_g"><p>version1.1.4</p></div>
 					<div id="modt" class="mini_g">更新:
-						<time itemprop="dateModified" datetime="2020-06-03">2020年7月7日</time>
+						<time itemprop="dateModified" datetime="2020-07-09">2020年7月9日</time>
 						by <a href="https://www.demr.jp/pc/policy/profile.html"><span itemprop="author"
 						                                                              itemscope="itemscope"
 						                                                              itemtype="https://schema.org/Person"><span
 								itemprop="name">ゴーヤン</span></span></a></div>
 					<div id="main_link" class="mini_g">Created by <a href="../">出会い系メール例文集</a></div>
+
 					<div id="test_display" class="mini_g"></div>
 				</li>
 			</ul>
@@ -555,29 +556,22 @@
 
 </div>
 </body>
-<script src="main_v2006030446.js"></script>
+<script src="main_v2007091333.js"></script>
 <script>if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
             .then((reg) => {
                 console.log('Service worker registered.', reg);
-            });
-    });
-}
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('./service-worker.js')
-        .then(registration => {
-            // 登録成功
-            registration.onupdatefound = function () {
-                console.log('アップデートがあります！');
-                registration.update();
-            }
-        })
-        .catch(error => {
-            // 登録失敗
-            console.log('登録失敗' + error)
-        });
+                reg.onupdatefound = function () {
+                    console.log('アップデートがあります！');
+                    reg.update();
+                }
+            })
+            .catch(error => {
+                // 登録失敗
+                console.log('登録失敗' + error)
+            })
+    })
 }
 </script>
 </html>
