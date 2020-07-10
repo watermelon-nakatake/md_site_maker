@@ -301,9 +301,7 @@ const profileLabelList = ['趣味', '性格', 'スポーツ', '似ている芸�
 let dataArray = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0};
 let storageArray = JSON.parse(localStorage.getItem('dataArray'));
 let currentArray = dataArray;
-if (storageArray != null) {
-    currentArray = storageArray
-}
+
 
 // ユーザー情報のlocal storage保存
 let nameForm = document.getElementById('name');
@@ -385,11 +383,6 @@ function profileTagInput11() {
     profileTagInput(11)
 }
 
-if (!localStorage.getItem('name')) {
-    populateStorage();
-} else {
-    setStyles();
-}
 
 function populateStorage() {
     for (let i = 0; i < replaceWordList.length; i++) {
@@ -834,10 +827,11 @@ function selectChange(level) {
 
 function optionSelectDisplay(currentText) {
     for (let i = 0; i < optionWordList.length; i++) {
+        let opForm = document.getElementById(optionWordList[i][1] + 'Outer');
         if (currentText.indexOf(optionWordList[i][0]) !== -1) {
             makeOptionStr(optionWordList[i][1])
+            opForm.style.display = 'block'
         } else {
-            let opForm = document.getElementById(optionWordList[i][1] + 'Outer');
             opForm.style.display = 'none'
         }
     }
@@ -1174,30 +1168,7 @@ const dummyEsc = document.getElementById('dummy_esc');
 const dummyDiv = document.getElementById('dummy');
 const mainCont = document.getElementById('main_cont');
 const mainArr = document.getElementById('main_arr');
-//起動時のダミー処理
-if (dummyFlag === 'false') {
-    dummyDiv.style.display = 'none';
-    mainCont.style.display = 'block';
-    mainArr.style.display = 'block'
-} else {
-    dummyDiv.style.display = 'block';
-    mainCont.style.display = 'none';
-    mainArr.style.display = 'none'
-}
-if (dummySwitch === 'true') {
-    document.getElementById('dumChange').checked = true
-}
 
-//dummyページからアプリへの移動
-function dummyToMain() {
-    let userAns = window.prompt("パスワードをどうぞ", "");
-    if (userAns === '2020') {
-        dummyFlag = 'false';
-        dummyDiv.style.display = 'none';
-        mainCont.style.display = 'block';
-        mainArr.style.display = 'block'
-    }
-}
 
 dummyEsc.onclick = dummyToMain;
 //dummyのcheckboxの操作
@@ -1236,56 +1207,102 @@ replaceFieldB.onclick = replaceStr
 
 //最初の処理
 function firstInitialize() {
-    const initStepList = [1, 2, 3, 5, 6, 4, 0];
     console.log('re-start');
-    let currentData = JSON.parse(localStorage.getItem('dataArray'));
-    console.log(currentData);
-    if (currentData === null) {
-        currentData = {step: 6, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0, op5: 0}
-    }
-    if (!currentData["op1"]) {
-        currentData["op1"] = 0;
-    }
-    if (!currentData["op2"]) {
-        currentData["op2"] = 0;
-    }
-    if (!currentData["op3"]) {
-        currentData["op3"] = 0;
-    }
-    if (!currentData["op4"]) {
-        currentData["op4"] = 0;
-    }
-    if (dummySwitch === null) {
-        localStorage.setItem('dummy', 'false')
-    }
-    if (dummySwitch === 'true') {
-        dummyFlag = 'true'
-    }
-    let beforeText;
-    initializeSiteCounter();
-    document.getElementById('step').options[initStepList[Number(currentData['step'])]].selected = true;
-    makeSelectStr('lv1');
-    document.getElementById('lv1').options[Number(currentData['lv1'])].selected = true;
-    if (currentData['step'] === 5) {
-        console.log('restart by step 5');
-        beforeText = displayCombo5(currentData['lv1'])
-    } else {
-        beforeText = displayText('start');
-    }
-    if (localStorage.getItem('plentyMargin') === 'true') {
-        document.getElementById('plentyMargin').checked = true
-    }
-    mainWordFilter();
-    optionSelectDisplay(beforeText);
-    profilePageDisplay();
-    document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
-    document.getElementById('op2').options[Number(currentData['op2'])].selected = true;
-    document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
-    document.getElementById('op4').options[Number(currentData['op4'])].selected = true;
-    for (let j = 1; j < 12; j++) {
-        if (document.getElementById('prOuter' + String(j))) {
-            document.getElementById('prOuter' + String(j)).style.display = 'none'
+    console.log(dummySwitch);
+    console.log(dummyFlag);
+    try {
+
+        if (dummyFlag === 'true') {
+            dummyDiv.style.display = 'block';
+            mainCont.style.display = 'none';
+            mainArr.style.display = 'none'
+        } else {
+            dummyDiv.style.display = 'none';
+            mainCont.style.display = 'block';
+            mainArr.style.display = 'block';
+            //起動時のダミー処理
+            console.log(dummySwitch);
+            if (dummySwitch === 'true') {
+                document.getElementById('dumChange').checked = true
+            }
+            //表示の整理
+            if (storageArray != null) {
+                currentArray = storageArray
+            }
+
+            const initStepList = [1, 2, 3, 5, 6, 4, 0];
+            let currentData = JSON.parse(localStorage.getItem('dataArray'));
+            console.log(currentData);
+            if (currentData === null) {
+                currentData = {step: 1, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0, op5: 0}
+            }
+            if (dummySwitch === null) {
+                localStorage.setItem('dummy', 'false')
+            }
+            if (dummySwitch === 'true') {
+                dummyFlag = 'true'
+            }
+            let beforeText;
+            initializeSiteCounter();
+            document.getElementById('step').options[initStepList[Number(currentData['step'])]].selected = true;
+            makeSelectStr('lv1');
+            document.getElementById('lv1').options[Number(currentData['lv1'])].selected = true;
+            if (currentData['step'] === 5) {
+                console.log('restart by step 5');
+                beforeText = displayCombo5(currentData['lv1'])
+            } else {
+                beforeText = displayText('start');
+            }
+            if (localStorage.getItem('plentyMargin') === 'true') {
+                document.getElementById('plentyMargin').checked = true
+            }
+            mainWordFilter();
+            optionSelectDisplay(beforeText);
+            profilePageDisplay();
+            for (let i = 1; i <= 5; i++) {
+                let opN = 'op' + String(i);
+                console.log(i)
+                console.log(currentData[opN])
+                if (currentData[opN]) {
+                    document.getElementById(opN).options[Number(currentData[opN])].selected = true
+                }
+            }
+            /*
+            document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
+            document.getElementById('op2').options[Number(currentData['op2'])].selected = true;
+            document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
+            document.getElementById('op4').options[Number(currentData['op4'])].selected = true;
+            */
+            for (let j = 1; j < 12; j++) {
+                if (document.getElementById('prOuter' + String(j))) {
+                    document.getElementById('prOuter' + String(j)).style.display = 'none'
+                }
+            }
+
+            if (!localStorage.getItem('name')) {
+                populateStorage();
+            } else {
+                setStyles();
+            }
         }
+    } catch (e) {
+        let eM = String(e);
+        if (e.lineNumber) {
+            // エラーの発生場所が取れる場合は、情報を追加する
+            eM += e.lineNumber;
+        } else {
+            eM += 'no number'
+        }
+        document.getElementById('eMessage').innerText = eM;
+    }
+}
+
+//dummyページからアプリへの移動
+function dummyToMain() {
+    let userAns = window.prompt("パスワードをどうぞ", "");
+    if (userAns === '2020') {
+        dummyFlag = 'false';
+        firstInitialize()
     }
 }
 

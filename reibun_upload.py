@@ -407,10 +407,10 @@ def all_pc_file_upload():
 # todo: ABテストのscript作成
 
 if __name__ == '__main__':
-    # target = ['reibun/index.html']
-    # files_upload(target)
+    target = ['reibun/index.html']
+    files_upload(target)
 
-    all_pc_file_upload()
+    # all_pc_file_upload()
 
     # tab_and_line_feed_remover(target)
     # ftp_upload([target])
