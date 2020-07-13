@@ -1,9 +1,7 @@
 @charset "UTF-8";
-abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite, code, dd, del,
-details, dfn, div, dl, dt, em, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6,
-header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p,
-pre, q, samp, section, small, span, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead,
-time, tr, ul, var, video {
+article, b, body, dd, div, dl, dt, footer, form, h1, h2, h3, h4, h5, h6,
+header, hgroup, html, img, label, li, nav, ol, p,
+section, small, span, strong, table, tbody, td, th, tr, ul {
     margin: 0;
     padding: 0;
     border: 0;
@@ -17,7 +15,7 @@ body {
     line-height: 1
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+article, footer, header, hgroup, menu, nav, section {
     display: block
 }
 
@@ -39,42 +37,6 @@ a {
     font-size: 100%;
     vertical-align: baseline;
     background: 0 0
-}
-
-ins {
-    background-color: #ff9;
-    color: #000;
-    text-decoration: none
-}
-
-mark {
-    background-color: #ff9;
-    color: #000;
-    font-style: italic;
-    font-weight: 700
-}
-
-del {
-    text-decoration: line-through
-}
-
-abbr[title], dfn[title] {
-    border-bottom: 1px dotted;
-    cursor: help
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0
-}
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0
 }
 
 input, select {
@@ -462,34 +424,40 @@ section {
 .checkOuter {
     margin-top: 15px;
 }
+
 .caution {
     color: red;
     font-weight: bold;
     font-size: 14px;
     margin-top: 30px;
 }
-.mini_g{
+
+.mini_g {
     font-size: 12px;
     color: #6E6E6E;
     text-align: right;
 }
 
-.siteLink {width: 100%;
-height: 70px;
-margin-top: 35px}
+.siteLink {
+    width: 100%;
+    height: 70px;
+    margin-top: 35px
+}
 
-.sli {width: 95%;
-height: 70px;
-margin: 5px auto}
+.sli {
+    width: 95%;
+    height: 70px;
+    margin: 5px auto
+}
 
-.sli img{
+.sli img {
     width: 20%;
     max-width: 80px;
     height: auto;
     float: left;
 }
 
-.slr{
+.slr {
     width: 70%;
     float: left;
     margin: 7px 0 0 5%
@@ -501,7 +469,8 @@ margin: 5px auto}
     display: inline-block;
     width: 100%;
 }
-.slsd{
+
+.slsd {
     font-size: 15px;
     display: inline-block;
     margin: 5px 0 0 5%;
@@ -509,39 +478,47 @@ margin: 5px auto}
     color: #5b5b5b;
 
 }
+
 .sli:after {
     content: "";
     display: block;
     clear: both
 }
-#mun_li{
+
+#mun_li {
     width: 80%;
     margin: 15px 10%;
     list-style: disc;
 }
-#mun_li li{
+
+#mun_li li {
     margin-top: 10px;
 }
+
 /* ダミー */
-#dummy{
+#dummy {
     width: 100%;
     height: auto;
     position: absolute;
     top: 0;
     background-color: #ffffff;
 }
-#dummy .text_i{
+
+#dummy .text_i {
     margin: 10px 0;
     width: 100%;
 }
-#dummy section{
+
+#dummy section {
     width: 90%;
     margin: 20px 5%;
 }
-.text_a .text_i{
+
+.text_a .text_i {
     height: 100px;
 }
-#d_title{
+
+#d_title {
     width: 90%;
     text-align: center;
     font-size: 25px;
@@ -549,16 +526,19 @@ margin: 5px auto}
     font-weight: 700;
     margin: 20px 0 20px;
 }
-.d_sec{
+
+.d_sec {
     font-size: 22px;
     margin: 15px 0 20px;
 }
-.d_center{
+
+.d_center {
     width: 100%;
     font-size: 18px;
     text-align: center;
 }
-#hint{
+
+#hint {
     width: 95%;
     margin-top: 25px;
     margin-right: 5%;
@@ -566,6 +546,12 @@ margin: 5px auto}
     font-size: 16px;
 }
 
+#profileInputOuter1, #profileInputOuter2, #profileInputOuter3, #profileInputOuter4, #profileInputOuter5,
+#profileInputOuter6, #profileInputOuter7, #profileInputOuter8, #profileInputOuter9, #profileInputOuter10,
+.textDisplay1, .textDisplay2, .textDisplay3, .textDisplay4, .textDisplay5, .textDisplay6, .textDisplay7,
+.textDisplay8, .textDisplay9, .textDisplay10, #profileInputOuter, #op4Outer, #op5Outer, #accessToolOuter {
+    display: none
+}
 
 /* メディアクエリ */
 
@@ -573,7 +559,8 @@ margin: 5px auto}
     .wrapper {
         width: 500px
     }
-    #dummy{
+
+    #dummy {
         width: 500px;
     }
 }

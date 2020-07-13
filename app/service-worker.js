@@ -1,11 +1,11 @@
 'use strict';
 
 // CODELAB: Update cache names any time any of the cached files change.
-const CACHE_NAME = 'mail-app-test-v1.1.10     ';
+const CACHE_NAME = 'mail-app-test-v1.1.15';
 
 // CODELAB: Add list of files to cache here.
 const FILES_TO_CACHE = [
-    'index.html', 'app20.css', 'main_v2007101600.js', 'images/hm_sq.png', 'images/ikukuru_sq.png',
+    'index.html', 'main_v2007110222.js', 'images/hm_sq.png', 'images/ikukuru_sq.png',
     'images/max_sq.gif', 'images/mint_sq.gif', 'images/pencil.png', 'images/select-icon.png',
     'images/to-bottom.png', 'images/wkwk_sq.gif', 'images/arr.png',
     'images/app_int/u1_1.png', 'images/app_int/u1_2.png', 'images/app_int/u1_3.png', 'images/app_int/u2_1.png',
@@ -78,6 +78,4 @@ self.addEventListener('fetch', (evt) => {
                     });
             })
     );
-
-
 });

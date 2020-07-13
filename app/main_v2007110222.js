@@ -1211,7 +1211,6 @@ function firstInitialize() {
     console.log(dummySwitch);
     console.log(dummyFlag);
     try {
-
         if (dummyFlag === 'true') {
             dummyDiv.style.display = 'block';
             mainCont.style.display = 'none';
@@ -1234,7 +1233,8 @@ function firstInitialize() {
             let currentData = JSON.parse(localStorage.getItem('dataArray'));
             console.log(currentData);
             if (currentData === null) {
-                currentData = {step: 1, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0, op5: 0}
+                currentData = {step: 0, lv1: 0, lv2: 0, lv3: 0, op1: 0, op2: 0, op3: 0, op4: 0, op5: 0};
+                localStorage.setItem('dataArray', JSON.stringify(currentData));
             }
             if (dummySwitch === null) {
                 localStorage.setItem('dummy', 'false')
@@ -1267,12 +1267,6 @@ function firstInitialize() {
                     document.getElementById(opN).options[Number(currentData[opN])].selected = true
                 }
             }
-            /*
-            document.getElementById('op1').options[Number(currentData['op1'])].selected = true;
-            document.getElementById('op2').options[Number(currentData['op2'])].selected = true;
-            document.getElementById('op3').options[Number(currentData['op3'])].selected = true;
-            document.getElementById('op4').options[Number(currentData['op4'])].selected = true;
-            */
             for (let j = 1; j < 12; j++) {
                 if (document.getElementById('prOuter' + String(j))) {
                     document.getElementById('prOuter' + String(j)).style.display = 'none'
@@ -1299,7 +1293,7 @@ function firstInitialize() {
 
 //dummyページからアプリへの移動
 function dummyToMain() {
-    let userAns = window.prompt("パスワードをどうぞ", "");
+    let userAns = window.prompt("パスワードを入力してください", "");
     if (userAns === '2020') {
         dummyFlag = 'false';
         firstInitialize()
