@@ -395,7 +395,7 @@ def files_upload(upload_file_list):
 
 
 def all_pc_file_upload():
-    up_dir = ['caption', 'majime', 'policy', 'qa', 'site', 'sitepage']
+    up_dir = ['caption', 'majime', 'policy', 'qa', 'site', 'sitepage', 'reviews']
     html_list = ['reibun/index.html', 'reibun/pc/bookmark.html']
     for directory in up_dir:
         f_list = ['reibun/pc/' + directory + '/' + x for x in os.listdir('reibun/pc/' + directory)
