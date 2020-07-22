@@ -36,7 +36,7 @@ def index_str(index_list):
         work_str = work_str.replace('¥num¥', str(i), 1)
         i += 1
     work_str = '<div id="mokujio"><nav id="mokuji"><div class="moh">目次 <span class="small">' \
-               '[<label for="label1">表示切替</label>]</span></div><input type="checkbox" id="label1"/>' \
+               '[<label for="label1">開く/閉じる</label>]</span></div><input type="checkbox" id="label1"/>' \
                '<div class="hidden_show">' + work_str + '</div></nav></div>'
     return work_str
 

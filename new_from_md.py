@@ -695,6 +695,7 @@ def import_from_markdown(md_file_list):
                                       '<div id="footer2">出会い系サイトは18禁です。18歳未満')
             new_str = new_str.replace('.md"', '.html"')
             new_str = new_str.replace('<p>%libut%</p><ul>', '<ul class="libut">')
+            new_str = json_img_data_insert(new_str)
             card_br_l = re.findall(r'<span class="ar_dis">.+?</span>', new_str)
             if card_br_l:
                 for card_br in card_br_l:
@@ -709,7 +710,7 @@ def import_from_markdown(md_file_list):
             upload_list.extend(pick_up_same_name_images(file_name))
             pick_up_same_name_images(file_name)
             if md_file_path == 'md_files/index.md':
-                with open('reibun/index.index', 'r', encoding='utf-8') as h:
+                with open('reibun/index.html', 'r', encoding='utf-8') as h:
                     top_long_str = h.read()
                     mod_log = re.findall(r'<div id="update"><ul class="updli">.+?</ul></div></div>', top_long_str)[0]
                 top_page_filter(new_str)
@@ -723,6 +724,22 @@ def import_from_markdown(md_file_list):
                 pk_dec = add_pickle_dec(pk_dec, new_data)
             add_modify_log('reibun/pc/' + file_name, now.date(), category, title, pub_or_mod)
     return upload_list, pk_dec, new_file_data
+
+
+def json_img_data_insert(long_str):
+    img_path = 'eyec.jpg'
+    height = '464'
+    width = '700'
+    if '<div class="alt_img_t">' in long_str:
+        img_l = re.findall(r'<div class="alt_img_t"><img src="\.\./images/(.+?)" alt="', long_str)
+        if img_l:
+            img_path = img_l[0]
+            height = '470'
+            width = '760'
+    i_str = long_str.replace('<!--jd-img-path-->', img_path)
+    i_str = i_str.replace('"<!--jd-height-->"', height)
+    i_str = i_str.replace('"<!--jd-width-->"', width)
+    return i_str
 
 
 def logical_box_filter(long_str):

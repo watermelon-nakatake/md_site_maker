@@ -404,12 +404,23 @@ def all_pc_file_upload():
     ftp_upload(html_list)
 
 
+def all_amp_file_upload():
+    up_dir = ['caption', 'majime', 'policy', 'qa', 'site', 'sitepage']
+    html_list = ['reibun/amp/index.html']
+    for directory in up_dir:
+        f_list = ['reibun/amp/' + directory + '/' + x for x in os.listdir('reibun/amp/' + directory)
+                  if '.html' in x and '_test' not in x and '_copy' not in x]
+        html_list.extend(f_list)
+    ftp_upload(html_list)
+
+
 # todo: ABテストのscript作成
 
 if __name__ == '__main__':
-    target = ['reibun/index.html']
+    target = ['reibun/pc/caption/fwari.html']
     files_upload(target)
 
+    # all_amp_file_upload()
     # all_pc_file_upload()
 
     # tab_and_line_feed_remover(target)
