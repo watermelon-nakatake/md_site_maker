@@ -139,7 +139,7 @@ def amp_maker(pc_path_list):
                 content = re.sub(r'<img(.+?)>', r'<amp-img\1></amp-img>', content)
                 content = amp_image_filter(content)
                 content = re.sub(r'<a href="../ds/(.+?)" class="(.+?)" onclick="gtag\(.+?\}\);" rel="nofollow">',
-                                 r'<a href="../ds/\1" class="\2" rel="nofollow">', content)
+                                 r'<a href="../ds/\1" class="\2" rel="sponsored">', content)
                 pub_date = re.findall(r'itemprop="datePublished" datetime="(.*?)">', str_x)[0]
                 mod_date = re.findall(r'itemprop="dateModified" datetime="(.*?)">', str_x)[0]
                 description = re.findall(r'<meta name="description" content="(.*?)">', str_x)[0]

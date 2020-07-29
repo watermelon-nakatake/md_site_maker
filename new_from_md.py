@@ -543,10 +543,21 @@ def import_from_markdown(md_file_list):
             plain_txt = plain_txt.replace(r'%app_b%', '<div class="center"><a href="../../app/"><img class="app_bn1" '
                                                       'src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">'
                                                       '</a></div>')
+            if '%arlist' in plain_txt:
+                arlist_o_l = re.findall(r'%arlist%\n([\s\S]*?)\n\n', plain_txt)
+                if arlist_o_l:
+                    for arlist_o in arlist_o_l:
+                        if '%%%' in arlist_o:
+                            arlist_l = re.findall(r'- (.*?)\n', arlist_o)
+                            for arlist in arlist_l:
+                                if '%%%' in arlist:
+                                    ar_re = re.sub(r'(.+?)%%%', r'<em>\1</em><br />', arlist)
+                                    plain_txt = plain_txt.replace(arlist, ar_re)
+                plain_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', plain_txt)
+                plain_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-b-->\n\n\n\1\n\n<!--e/arlist_b-->',
+                                   plain_txt)
             plain_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n', r'<!--kanren-->\n\n\n\1\n\n<!--e/kanren-->', plain_txt)
             plain_txt = re.sub(r'%btnli%\n([\s\S]*?)\n\n', r'<!--btnli-->\n\n\n\1\n\n<!--e/btnli-->', plain_txt)
-            plain_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', plain_txt)
-            plain_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist_b-->', plain_txt)
             plain_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', plain_txt)
             plain_txt = re.sub(r'%matome%\n([\s\S]*?)\n\n', r'<!--matome-->\n\n\n\1\n\n<!--e/matome-->', plain_txt)
             plain_txt = re.sub(r'%p%\n([\s\S]*?)\n\n', r'<!--point_i-->\n\n\n\1\n\n<!--e/point_i-->', plain_txt)
@@ -717,6 +728,7 @@ def import_from_markdown(md_file_list):
                 new_str = new_str.replace('</article>',
                                           '<section><div class="tabn"><h2>主な更新履歴</h2>' + mod_log +
                                           '</section></article>')
+
             with open('reibun/pc/' + file_name, 'w', encoding='utf-8') as g:
                 g.write(new_str)
                 upload_list.append('reibun/pc/' + file_name)

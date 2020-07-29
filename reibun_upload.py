@@ -417,8 +417,8 @@ def all_amp_file_upload():
 # todo: ABテストのscript作成
 
 if __name__ == '__main__':
-    target = ['reibun/pc/caption/fwari.html']
-    files_upload(target)
+    # target = ['reibun/pc/caption/fwari.html']
+    # files_upload(target)
 
     # all_amp_file_upload()
     # all_pc_file_upload()
@@ -436,3 +436,6 @@ if __name__ == '__main__':
     # total_twitter_card_insert()
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
+
+    up_files = ['reibun/amp/site/index.html']
+    ftp_upload(up_files)
