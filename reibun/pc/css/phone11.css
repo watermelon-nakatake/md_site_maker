@@ -1195,7 +1195,17 @@ a.btn-pop {
 .rm_6 {
     background-position: -128px -77px;
 }
-
+.rw_b {
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat
+}
+.rw_1{
+    background-image: url(../images/common/icon_wr_1_m.png)
+}
+.rw_2{
+    background-image: url(../images/common/icon_wr_2_m.png)
+}
 .fr2 {
     width: 75%;
     position: relative;

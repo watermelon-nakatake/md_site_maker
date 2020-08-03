@@ -155,5 +155,5 @@ def html_to_markdown(long_str, directory):
 
 
 if __name__ == '__main__':
-    file_to_markdown('reibun/index.html')
+    file_to_markdown('reibun/pc/qa/q8.html')
     # all_file_to_markdown()

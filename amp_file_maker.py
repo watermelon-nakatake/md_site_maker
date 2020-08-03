@@ -94,6 +94,14 @@ def css_insert(long_str):
                    '.fr2 .icon{position:absolute;right:-70px;top:0}.fr2:before{content:'';position:absolute;' \
                    'display:block;width:0;height:0;right:-15px;top:20px;border-left:15px solid #7fffd4;' \
                    'border-top:15px solid transparent;border-bottom:15px solid transparent}'
+    if 'rw_b' in long_str:
+        css_str += '.rw_b{width:4pc;height:64px;background-repeat:no-repeat}.rw_1{background-image:' \
+                   'url(../images/common/icon_wr_1_m.png)}.rw_2{background-image:url(../images/common/icon_wr_2_m.png)}' \
+                   '.fr2{width:67%;position:relative;padding:20px 5%;' \
+                   'border-radius:10px;background-color:#7fffd4;margin:40px 70px 40px 3%}' \
+                   '.fr2 .icon{position:absolute;right:-70px;top:0}.fr2:before{content:'';position:absolute;' \
+                   'display:block;width:0;height:0;right:-15px;top:20px;border-left:15px solid #7fffd4;' \
+                   'border-top:15px solid transparent;border-bottom:15px solid transparent}'
     long_str = long_str.replace('</style><style amp-boilerplate>', css_str + '</style><style amp-boilerplate>')
     return long_str
 
@@ -138,7 +146,7 @@ def amp_maker(pc_path_list):
                 content = content.replace(' target="_blank"', '')
                 content = re.sub(r'<img(.+?)>', r'<amp-img\1></amp-img>', content)
                 content = amp_image_filter(content)
-                content = re.sub(r'<a href="../ds/(.+?)" class="(.+?)" onclick="gtag\(.+?\}\);" rel="nofollow">',
+                content = re.sub(r'<a href="../ds/(.+?)" class="(.+?)" onclick="gtag\(.+?}\);" rel="nofollow">',
                                  r'<a href="../ds/\1" class="\2" rel="sponsored">', content)
                 pub_date = re.findall(r'itemprop="datePublished" datetime="(.*?)">', str_x)[0]
                 mod_date = re.findall(r'itemprop="dateModified" datetime="(.*?)">', str_x)[0]

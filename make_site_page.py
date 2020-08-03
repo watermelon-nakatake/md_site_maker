@@ -4,6 +4,7 @@ import datetime
 import os
 import reibun_upload
 from PIL import Image
+import make_article_list
 
 site_name_list = ['wk', 'hm', 'mt', 'mp', 'max', 'iq']
 site_page_dict = {'hm': 'happymail', 'wk': 'wakuwakumail', 'mt': 'mintj', 'max': 'pcmax', 'iq': '194964'}
@@ -228,6 +229,24 @@ def star_size_list():
         print(result)
 
 
+def manual_add_modify_log(mod_file_path_list):
+    mod_log = make_article_list.read_pickle_pot('modify_log')
+    now = datetime.date.today()
+    today_mod = [x[0] for x in mod_log if x[1] == str(now)]
+    for mod_file_path in mod_file_path_list:
+        with open(mod_file_path, 'r', encoding='utf-8') as f:
+            long_str = f.read()
+        title = re.findall(r'<title>(.+?)\|出会い系メール例文集</title>', long_str)[0]
+        if mod_file_path not in today_mod:
+            mod_log.append([mod_file_path, str(now), 'sitepage', title, 'mod'])
+        else:
+            for data in mod_log:
+                if data[0] == mod_file_path and data[1] == str(now):
+                    mod_log.remove(data)
+                    mod_log.append([mod_file_path, str(now), 'sitepage', title, 'mod'])
+    make_article_list.save_data_to_pickle(mod_log, 'modify_log')
+
+
 if __name__ == '__main__':
     # make_list_from_csv('csv_data/test_rb_csv.csv')
     # make_data('csv_data/test_rb_csv.csv')
@@ -245,4 +264,7 @@ if __name__ == '__main__':
 
     # pc_and_amp_site_page_upload()
 
-    reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
+    # reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
+
+    manual_add_modify_log(['reibun/pc/sitepage/wakuwakumail.html'])
+    print(make_article_list.read_pickle_pot('modify_log'))

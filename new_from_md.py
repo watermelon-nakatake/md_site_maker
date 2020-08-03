@@ -13,6 +13,7 @@ import new_article_create
 import amp_file_maker
 import reibun_upload
 import image_upload
+import check_mod_date
 
 side_bar_list = {'important': [0, 19, 55, 65, 77, 98, 124], 'pop': [22, 24, 25, 30, 34, 38, 56, 100, 104]}
 category_name = {'policy': ['ポリシー', 'index.html'], 'caption': ['出会い系の予備知識', 'index.html'],
@@ -27,7 +28,7 @@ category_data = {'policy': ['ポリシー', 'index.html', 1], 's_mail': ['２通
                  'post': ['掲示板例文', 'kakikata_t.html', 74], 'f_mail': ['ファーストメール例文', 'kakikata_f.html', 107],
                  'date': ['デートに誘うメール例文', 'date.html', 102], 'how_to': ['出会い系攻略法', 'kakikata_d.html', 39],
                  'ap_mail': ['メール例文アプリ情報', 'mail-applicaton.html', 92],
-                 'majime': ['出会い系メール例文', 'index.html', 32]}
+                 'majime': ['出会い系メール例文', 'index.html', 32], 'sitepage': ['出会い系サイト', 'index.html', 122]}
 
 
 def main(mod_hour):
@@ -69,7 +70,7 @@ def main(mod_hour):
         if re.sub(r'【.+?】', '', mod_log[-1][3]) == mod_title:
             print('change only one page')
             insert_sidebar_to_modify_page(side_bar_dec, upload_list)
-            change_files = []
+            change_files = upload_list
             if mod_log[-1][0] in ['reibun/pc/majime/majime.html', 'reibun/pc/majime/index.html']:
                 insert_to_index_page(pk_dec)
         else:
@@ -89,6 +90,7 @@ def main(mod_hour):
     upload_list.sort()
     print(upload_list)
     reibun_upload.ftp_upload(upload_list)
+    check_mod_date.make_mod_date_list()
 
 
 def pick_up_same_name_images(file_path):
@@ -134,6 +136,11 @@ def icon_filter(long_str):
     long_str = long_str.replace('%r_good', '%rm_4%')
     long_str = long_str.replace('%r_angry', '%rm_5%')
     long_str = long_str.replace('%r_palm', '%rm_6%')
+
+    long_str = long_str.replace('%rw_?%', '%rw_1%')
+    long_str = long_str.replace('%rw_!%', '%rw_2%')
+    long_str = long_str.replace('%rw_?', '%rw_1%')
+    long_str = long_str.replace('%rw_!', '%rw_2%')
 
     if '%r_' in long_str or '%l_' in long_str:
         print('There is wrong icon tag !')
@@ -480,7 +487,7 @@ def top_page_filter(long_str):
 
 def insert_page_card(long_str, pk_dec):
     if '[card]' in long_str:
-        card_str_l = re.findall(r'\[card\]\(.+?\)', long_str)
+        card_str_l = re.findall(r'\[card]\(.+?\)', long_str)
         if card_str_l:
             card_str = card_str_l[0]
             card_url_list = re.findall(r'\((.+?)\)', card_str)
@@ -513,7 +520,7 @@ def import_from_markdown(md_file_list):
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
             md_replace_str = plain_txt
-            plain_txt = re.sub(r'\[\]\([\s\S]*?\)', '', plain_txt)
+            plain_txt = re.sub(r'\[]\([\s\S]*?\)', '', plain_txt)
             if 'd::' in plain_txt:
                 description = re.findall(r'd::(.+?)\n', plain_txt)[0]
             if 'p::' in plain_txt:
@@ -567,6 +574,8 @@ def import_from_markdown(md_file_list):
                                r'<!--rm_\1-->\n\n\2\n\n<!--e/rm-->\n\n\n', plain_txt)
             plain_txt = re.sub(r'%lm_(\d)%([\s\S]+?)\n\n',
                                r'<!--lm_\1-->\n\n\2\n\n<!--e/lm-->\n\n\n', plain_txt)
+            plain_txt = re.sub(r'%rw_(\d)%([\s\S]+?)\n\n',
+                               r'<!--rw_\1-->\n\n\2\n\n<!--e/rw-->\n\n\n', plain_txt)
             plain_txt = plain_txt.replace('%sample%', '<!--sample/s-->')
             plain_txt = plain_txt.replace('%sample/e%', '<!--sample/e-->')
 
@@ -577,7 +586,7 @@ def import_from_markdown(md_file_list):
             plain_txt = insert_page_card(plain_txt, pk_dec)
 
             # コメントアウト削除
-            plain_txt = re.sub(r'\(\)\[.*?\]\n', '', plain_txt)
+            plain_txt = re.sub(r'\(\)\[.*?]\n', '', plain_txt)
             plain_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', plain_txt)
             plain_txt = re.sub(r'>[\s]+?<', '><', plain_txt)
 
@@ -679,7 +688,10 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('<!--e/lm-->', '</div>')
             new_str = re.sub(r'<!--rm_(\d)-->',
                              r'<div class="fr2"><div class="icon"><div class="rm_b rm_\1"></div></div>', new_str)
+            new_str = re.sub(r'<!--rw_(\d)-->',
+                             r'<div class="fr2"><div class="icon"><div class="rw_b rw_\1"></div></div>', new_str)
             new_str = new_str.replace('<!--e/rm-->', '</div>')
+            new_str = new_str.replace('<!--e/rw-->', '</div>')
 
             new_str = new_str.replace('<!--bread-->',
                                       new_article_create.breadcrumb_maker(category, directory, file_name))
@@ -911,7 +923,7 @@ def css_str_optimize(html_str, css_str):
             selector_c_list = selector_str_l[0].split(',')
         else:
             selector_c_list = [selector_str_l[0]]
-        css_sep_list.append([selector_c_list, re.findall(r'{([\s\S]*)\}', line)[0]])
+        css_sep_list.append([selector_c_list, re.findall(r'{([\s\S]*)}', line)[0]])
     # print(css_sep_list)
 
     z_l = [z.split() for z in re.findall(r'class="(.+?)"', html_str)]

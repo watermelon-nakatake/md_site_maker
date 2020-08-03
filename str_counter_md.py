@@ -2,6 +2,7 @@ import re
 
 
 def title_counter(md_path):
+    print(md_path)
     with open(md_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
         title_l = re.findall(r'(t::.+?)\n', long_str)
@@ -18,10 +19,10 @@ def title_counter(md_path):
         if main_l:
             main = main_l[0]
             main = re.sub(r'\n#* ', '\n', main)
-            main = re.sub(r'\]\(.+?\)', ']', main)
+            main = re.sub(r']\(.+?\)', ']', main)
             main = re.sub(r'%.+?%', '', main)
-            main = re.sub(r'!\[.+?\]', '', main)
-            main = re.sub(r'\[(.+?)\]', r'\1', main)
+            main = re.sub(r'!\[.+?]', '', main)
+            main = re.sub(r'\[(.+?)]', r'\1', main)
             main = re.sub(r'<.+?>', '', main)
             main = re.sub(r'\n- ', r'\n', main)
             main_len = len(main)
@@ -30,4 +31,4 @@ def title_counter(md_path):
 
 
 if __name__ == '__main__':
-    title_counter('md_files/pc/caption/jkandjc.md')
+    title_counter('md_files/pc/majime/m2papakatsu.md')
