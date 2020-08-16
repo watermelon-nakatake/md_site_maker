@@ -15,7 +15,8 @@ import reibun_upload
 import image_upload
 import check_mod_date
 
-side_bar_list = {'important': [0, 19, 55, 65, 77, 98, 124], 'pop': [22, 24, 25, 30, 34, 38, 56, 100, 104]}
+side_bar_list = {'important': [34, 76, 38, 21, 28, 49, 17, 41, 66, 43],
+                 'pop': [11, 117, 19, 107, 25, 74, 67, 98, 23, 73]}
 category_name = {'policy': ['ポリシー', 'index.html'], 'caption': ['出会い系の予備知識', 'index.html'],
                  'profile': ['プロフィール例文', 'kakikata_p.html'], 'qa': ['出会い系Ｑ＆Ａ', 'index.html'],
                  'site': ['出会い系サイト情報', 'index.html'], 'post': ['掲示板例文', 'kakikata_t.html'],
@@ -49,12 +50,18 @@ def main(mod_hour):
                 mod_time = os.path.getmtime('md_files/pc/' + dir_path + file)
                 if now - mod_time < st_time:
                     print('update: ' + file)
-                    mod_list.append(['md_files/pc/' + dir_path + file, mod_time])
+                    with open('md_files/pc/' + dir_path + file, 'r', encoding='utf-8') as h:
+                        m_str = h.read()
+                        md_title = re.findall(r't::(.+?)\n', m_str)[0]
+                    mod_list.append(['md_files/pc/' + dir_path + file, mod_time, md_title])
         for file_a in ['md_files/index.md']:  # , 'new_art_1.md'
             mod_time_a = os.path.getmtime(file_a)
             if now - mod_time_a < st_time:
                 print('update: ' + file_a)
-                mod_list.append([file_a, mod_time_a])
+                with open('md_files/pc/' + dir_path + file_a, 'r', encoding='utf-8') as g:
+                    m_str = g.read()
+                    md_title = re.findall(r't::(.+?)\n', m_str)[0]
+                mod_list.append([file_a, mod_time_a, md_title])
     mod_list.sort(key=lambda x: x[1], reverse=True)
     print('modify list :')
     print(mod_list)
@@ -74,7 +81,7 @@ def main(mod_hour):
             if mod_log[-1][0] in ['reibun/pc/majime/majime.html', 'reibun/pc/majime/index.html']:
                 insert_to_index_page(pk_dec)
         else:
-            change_files = insert_sidebar_to_existing_art(side_bar_dec)
+            change_files = insert_sidebar_to_existing_art(side_bar_dec, mod_list)
             insert_to_index_page(pk_dec)
     insert_to_top_page()
     xml_site_map_maker(pk_dec)
@@ -288,7 +295,7 @@ def cat_index_str_maker(cat_dec, directory):
     return cat_str
 
 
-def insert_sidebar_to_existing_art(side_bar_dec):
+def insert_sidebar_to_existing_art(side_bar_dec, mod_list):
     change_files = []
     for dir_r in up_dir[:-1]:
         r_files = os.listdir('reibun/pc/' + dir_r)
@@ -297,11 +304,13 @@ def insert_sidebar_to_existing_art(side_bar_dec):
                 with open('reibun/pc/' + dir_r + '/' + r_file, 'r', encoding='utf-8') as f:
                     long_str = f.read()
                     long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
-                    str_l = re.findall(r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
-                                       long_str)
+                    str_l = re.findall(
+                        r'<body class="(.+?)" itemscope="itemscope" itemtype="https://schema.org/WebPage">',
+                        long_str)
                     if str_l:
                         category = str_l[0]
                     long_str = insert_sidebar_to_str(long_str, side_bar_dec, category)
+                    long_str = modify_relation_list(long_str, mod_list)
                     with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
                         g.write(long_str)
                         change_files.append('reibun/pc/' + dir_r + r_file)
@@ -422,7 +431,8 @@ def make_rss(new_file_data):
                 item_list_2 = item_list_2[:-(len(item_list_2) + len(new_file_data) - 10)]
             for new_data in new_file_data:
                 item_list_2.insert(0, '<item><title>{}</title><link>https://www.demr.jp/pc/{}</link><description>{}'
-                                      '</description><pubDate>{} +0900</pubDate></item>'.format(new_data[1], new_data[0],
+                                      '</description><pubDate>{} +0900</pubDate></item>'.format(new_data[1],
+                                                                                                new_data[0],
                                                                                                 new_data[2], rfc_str))
             rss2_str = re.sub(r'<item>.*</item>', ''.join(item_list_2), rss2_str)
         else:
@@ -638,7 +648,7 @@ def import_from_markdown(md_file_list):
             new_str = new_str.replace('<!--arlist_b--><ul>', '<ul class="arlist" id="deaikei">')
             new_str = new_str.replace('</ul><!--e/arlist_b-->', '</ul>')
             new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p>' +
-                                                      '</div>')
+                                      '</div>')
             new_str = new_str.replace('<!--e/point-->', '</div>')
             new_str = new_str.replace('<!--matome-->', '<div id="kijim"><div class="kijoph"><p>この記事のまとめ</p>' +
                                       '</div>')
@@ -965,6 +975,22 @@ def css_str_optimize(html_str, css_str):
     new_str = ''.join(str_list)
     # print(new_str)
     return new_str
+
+
+def modify_relation_list(long_str, mod_list):
+    r_str = re.findall(r'<div class="kanren">(.+?)</div>', long_str)
+    if r_str[0]:
+        for mod in mod_list:
+            new_url = mod[0].replace('md_files/pc/', '../')
+            if new_url in r_str[0]:
+                new_title = mod[2]
+                l_str_l = re.findall(r'<li><a href="(.+?)">(.+?)</a></li>', r_str[0])
+                if l_str_l:
+                    for l_str in l_str_l:
+                        if l_str[0] == new_url:
+                            long_str = long_str.replace('<li><a href="{}">{}</a></li>'.format(new_url, l_str[1]),
+                                                        '<li><a href="{}">{}</a></li>'.format(new_url, new_title))
+    return long_str
 
 
 if __name__ == '__main__':

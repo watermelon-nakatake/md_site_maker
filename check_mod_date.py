@@ -1,6 +1,7 @@
 import csv
 import datetime
 import make_article_list
+import os
 
 
 def make_mod_date_list():
@@ -58,7 +59,69 @@ def check_number_of_days():
     return result
 
 
+def make_side_bar_article_list(list_length):
+    click_list = []
+    time_list = []
+    pk_dec = make_article_list.read_pickle_pot('title_img_list')
+    with open('/Users/nakataketetsuhiko/Downloads/https___www/ページ.csv') as f:
+        reader = csv.reader(f)
+        csv_list = [row for row in reader]
+    c_list = [y for y in csv_list[1:] if '#' not in y[0] and '/amp/' not in y[0]]
+    print('pop by click')
+    for click_a in c_list:
+        if '/pc/' in click_a[0]:
+            path = click_a[0].replace('https://www.demr.jp/pc/', '')
+            for pk_id in pk_dec:
+                if pk_dec[pk_id][0] == path:
+                    click_list.append(pk_id)
+                    print('{} : {}, {}'.format(path, str(pk_id), pk_dec[pk_id][1]))
+        if len(click_list) == list_length:
+            break
+    ga_list = make_ga_csv_list()
+    t_list = [x for x in ga_list if '#' not in x[0] and '/pc/' not in x[0] and int(x[1]) >= 100]
+    t_list.sort(key=lambda x: datetime.datetime.strptime(x[3], '%H:%M:%S'), reverse=True)
+    print('\nimportant by reading time')
+    for t_art in t_list:
+        t_path = t_art[0].replace('/amp/', '')
+        for pk_i in pk_dec:
+            if pk_dec[pk_i][0] == t_path and pk_i not in click_list:
+                time_list.append(pk_i)
+                print('{} : {}, {}, {}'.format(t_path, str(pk_i), pk_dec[pk_i][1], t_art[3]))
+                break
+        if len(time_list) == list_length:
+            break
+    print('\n')
+    print(time_list)
+    print(click_list)
+
+
+def make_ga_csv_list():
+    down_path_l = os.listdir('/Users/nakataketetsuhiko/Downloads')
+    result = []
+    for path in down_path_l:
+        if 'Analytics' in path:
+            with open('/Users/nakataketetsuhiko/Downloads/' + path) as f:
+                reader = csv.reader(f)
+                csv_list = [row for row in reader]
+            start_row = 0
+            end_row = 0
+            for i in range(len(csv_list)):
+                if len(csv_list[i]) > 2:
+                    if 'ページ別訪問数' in csv_list[i][2]:
+                        start_row = i
+                if len(csv_list[i]) >= 1:
+                    if '日の指標' in csv_list[i][0]:
+                        end_row = i
+                        break
+            result = [x for x in csv_list[start_row + 1:end_row - 2] if '/pc/' not in x[0]]
+    return result
+
+
 if __name__ == '__main__':
-    # print(make_article_list.read_pickle_pot('modify_log'))
-    # make_mod_date_list()
+    make_side_bar_article_list(10)
+    print('\n')
     next_update_target_search(100)
+
+    # print(make_article_list.read_pickle_pot('title_img_list'))
+    # make_mod_date_list()
+    # print(make_ga_csv_list())

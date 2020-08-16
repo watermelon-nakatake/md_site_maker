@@ -154,6 +154,11 @@ def html_to_markdown(long_str, directory):
     return long_str
 
 
+def relation_list_updater():
+    
+    print('a')
+
+
 if __name__ == '__main__':
     file_to_markdown('reibun/pc/qa/q8.html')
     # all_file_to_markdown()

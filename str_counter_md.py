@@ -31,4 +31,4 @@ def title_counter(md_path):
 
 
 if __name__ == '__main__':
-    title_counter('md_files/pc/majime/m2papakatsu.md')
+    title_counter('md_files/pc/majime/m1sexfriendbun.md')

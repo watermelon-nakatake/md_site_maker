@@ -10,6 +10,8 @@ site_name_list = ['wk', 'hm', 'mt', 'mp', 'max', 'iq']
 site_page_dict = {'hm': 'happymail', 'wk': 'wakuwakumail', 'mt': 'mintj', 'max': 'pcmax', 'iq': '194964'}
 # 'mp': 'meru-para'
 star_category = ['コスト', '使いやすさ', '出会える度', 'ピュア系', 'アダルト系']
+site_str = [['ハッピーメール', 'happymail'], ['ワクワクメール', 'wakuwakumail'], ['Jメール', 'mintj'], ['PCMAX', 'pcmax'],
+            ['イククル', '194964']]
 
 
 def main():
@@ -18,6 +20,26 @@ def main():
     star_count = make_ranking(star_count)
     insert_data(star_count, site_dict)
     pc_and_amp_site_page_upload()
+
+
+def insert_mod_log_to_top_page(date_str):
+    with open('reibun/index.html', 'r', encoding='utf-8') as f:
+        long_str = f.read()
+    insert = ''.join(['<li>{} [出会い系サイト情報・<a href="pc/sitepage/{}.html">{}の口コミ情報と詳細データ</a>]を更新</li>'
+                     .format(date_str, x[1], x[0]) for x in site_str])
+    print(insert)
+    long_str = re.sub(r'<div id="update"><ul class="updli">', '<div id="update"><ul class="updli">' + insert, long_str)
+    with open('reibun/index.html', 'w', encoding='utf-8') as g:
+        g.write(long_str)
+    with open('reibun/amp/index.html', 'r', encoding='utf-8') as f:
+        long_str_a = f.read()
+    insert_a = ''.join(['<li>{} [出会い系サイト情報・<a href="sitepage/{}.html">{}の口コミ情報と詳細データ</a>]を更新</li>'
+                       .format(date_str, x[1], x[0]) for x in site_str])
+    long_str_a = re.sub(r'<div id="update"><ul class="updli">', '<div id="update"><ul class="updli">' + insert_a,
+                        long_str_a)
+    with open('reibun/amp/index.html', 'w', encoding='utf-8') as g:
+        g.write(long_str_a)
+    reibun_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'])
 
 
 def pc_and_amp_site_page_upload():
@@ -37,12 +59,12 @@ def site_page_pc_to_amp_changer(amp_path):
     """
     with open(amp_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
-    long_str = pc_tp_amp_changer(long_str)
+    long_str = pc_to_amp_changer(long_str)
     with open(amp_path, 'w', encoding='utf-8') as g:
         g.write(long_str)
 
 
-def pc_tp_amp_changer(long_str):
+def pc_to_amp_changer(long_str):
     """
     文字列のimgなどをamp対応に変換する。
     :param long_str: ampに対応していない文字列
@@ -260,11 +282,12 @@ if __name__ == '__main__':
 
     # site_page_pc_to_amp_changer('reibun/amp/sitepage/194964.html')
 
-    # main()
-
     # pc_and_amp_site_page_upload()
 
     # reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
 
-    manual_add_modify_log(['reibun/pc/sitepage/wakuwakumail.html'])
+    # main()
+
+    # manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
     print(make_article_list.read_pickle_pot('modify_log'))
+    # insert_mod_log_to_top_page('2020/8/5')
