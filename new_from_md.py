@@ -14,6 +14,7 @@ import amp_file_maker
 import reibun_upload
 import image_upload
 import check_mod_date
+import relational_article
 
 side_bar_list = {'important': [34, 76, 38, 21, 28, 49, 17, 41, 66, 43],
                  'pop': [11, 117, 19, 107, 25, 74, 67, 98, 23, 73]}
@@ -527,6 +528,7 @@ def import_from_markdown(md_file_list):
         pk_dec = pickle.load(p)
     for md_file_path in md_file_list:
         print(md_file_path)
+        relational_article.collect_md_relation_title(md_file_path, pk_dec)
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
             md_replace_str = plain_txt

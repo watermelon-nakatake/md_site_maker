@@ -1,6 +1,7 @@
 import glob
 import re
-import reibun_upload
+import os
+# import reibun_upload
 
 json_tmp = '<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article",' \
            '"mainEntityOfPage":"https://www.demr.jp/pc/<!--path-->","headline":"<!--title-->",' \
@@ -62,5 +63,23 @@ def insert_json_to_str(file_path, long_str):
     return long_str
 
 
+def collect_json_data():
+    up_dir = ['caption/', 'majime/', 'policy/', 'qa/', 'site/', 'sitepage/']
+    change_files = []
+    for dir_u in up_dir:
+        files = os.listdir('reibun/pc/' + dir_u)
+        change_files.extend(['reibun/pc/' + dir_u + x for x in files if '_copy' not in x and '_test' not in x and
+                             '_ud' not in x])
+    for file in change_files:
+        with open(file, 'r', encoding='utf-8') as f:
+            long_str = f.read()
+        if '"mainEntityOfPage":"https://www.demr.jp/pc/template/pc_tmp.html"' in long_str:
+            long_str = long_str.replace('"mainEntityOfPage":"https://www.demr.jp/pc/template/pc_tmp.html"',
+                                        '"mainEntityOfPage":"https://www.demr.jp/' + file.replace('reibun/', '') + '"')
+            with open(file, 'w', encoding='utf-8') as g:
+                g.write(long_str)
+
+
 if __name__ == '__main__':
-    insert_json_to_html('reibun/pc')
+    # insert_json_to_html('reibun/pc')
+    collect_json_data()
