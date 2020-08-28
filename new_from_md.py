@@ -47,7 +47,7 @@ def main(mod_hour):
     for dir_path in up_dir[:-1]:
         mod_files = os.listdir('md_files/pc/' + dir_path)
         for file in mod_files:
-            if '.md' in file:
+            if '.md' in file and '_ud' not in file:
                 mod_time = os.path.getmtime('md_files/pc/' + dir_path + file)
                 if now - mod_time < st_time:
                     print('update: ' + file)
@@ -537,6 +537,8 @@ def import_from_markdown(md_file_list):
                 description = re.findall(r'd::(.+?)\n', plain_txt)[0]
             if 'p::' in plain_txt:
                 pub_date = re.findall(r'p::(.+?)\n', plain_txt)[0]
+            else:
+                pub_date = ''
             if 'f::' in plain_txt:
                 if 'new_art' in md_file_path:
                     file_name_l = re.findall(r'f::(.+?)\n', plain_txt)
@@ -854,6 +856,7 @@ def resize_and_rename_image(img_path, file_path):
 def mail_sample_replace(long_str):
     k_mail_l = re.findall(r'%k%([\s\S]+?)\n\n', long_str)
     if k_mail_l:
+
         for k_mail in k_mail_l:
             k_str = '<div class="sample"><div class="kenmei">' + k_mail + '</div><!--km-el-->'
             long_str = long_str.replace('%k%' + k_mail + '\n\n', k_str)
@@ -981,7 +984,7 @@ def css_str_optimize(html_str, css_str):
 
 def modify_relation_list(long_str, mod_list):
     r_str = re.findall(r'<div class="kanren">(.+?)</div>', long_str)
-    if r_str[0]:
+    if r_str:
         for mod in mod_list:
             new_url = mod[0].replace('md_files/pc/', '../')
             if new_url in r_str[0]:
@@ -998,6 +1001,8 @@ def modify_relation_list(long_str, mod_list):
 if __name__ == '__main__':
     main(1)
     reibun_upload.files_upload(['reibun/index.html'])
+    print(make_article_list.read_pickle_pot('modify_log'))
+    print(make_article_list.read_pickle_pot('title_img_list'))
 
     # import_from_markdown(['md_files/pc/qa/q3_test.md'])
     # print(resize_and_rename_image('insert_image/AdobeStock_15946903.jpeg', 'majime/m0_test.html'))
@@ -1009,7 +1014,6 @@ if __name__ == '__main__':
     # print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
     # print([x for x in test_l if x[1] == test_l[-1][1]])
     # print(str(datetime.datetime.now())[:-7])
-    # print(make_article_list.read_pickle_pot('modify_log'))
     # print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
 
     # make_rss([])
