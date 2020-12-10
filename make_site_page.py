@@ -5,6 +5,7 @@ import os
 import reibun_upload
 from PIL import Image
 import make_article_list
+import check_mod_date
 
 site_name_list = ['wk', 'hm', 'mt', 'mp', 'max', 'iq']
 site_page_dict = {'hm': 'happymail', 'wk': 'wakuwakumail', 'mt': 'mintj', 'max': 'pcmax', 'iq': '194964'}
@@ -267,6 +268,7 @@ def manual_add_modify_log(mod_file_path_list):
                     mod_log.remove(data)
                     mod_log.append([mod_file_path, str(now), 'sitepage', title, 'mod'])
     make_article_list.save_data_to_pickle(mod_log, 'modify_log')
+    check_mod_date.make_mod_date_list()
 
 
 if __name__ == '__main__':
@@ -288,6 +290,8 @@ if __name__ == '__main__':
 
     # main()
 
-    # manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
+    manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
     print(make_article_list.read_pickle_pot('modify_log'))
+    print(make_article_list.read_pickle_pot('mod_date_list'))
+    # print(make_article_list.read_pickle_pot('title_img_list'))
     # insert_mod_log_to_top_page('2020/8/5')

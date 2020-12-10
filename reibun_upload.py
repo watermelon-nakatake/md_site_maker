@@ -7,6 +7,29 @@ import datetime
 import amp_file_maker
 import common_tool
 import random
+import paramiko
+import scp
+
+
+host_name = 'blackrhino1.sakura.ne.jp'
+password_str = 'k2u5n47ku6'
+user_name = 'blackrhino1'
+
+
+def scp_upload(up_file_list):
+    with paramiko.SSHClient() as ssh:
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname=host_name, port=22, username=user_name, password=password_str)
+        # ファイルをアップロード
+        with scp.SCPClient(ssh.get_transport()) as scpc:
+            for up_file in up_file_list:
+                print('upload: ' + up_file)
+                if '/' in up_file:
+                    up_dir = re.findall(r'^(.+)/', up_file)[0]
+                else:
+                    up_dir = ''
+                scpc.put(up_file, 'www/' + up_dir)
+            print('Upload finished !')
 
 
 def ftp_upload(up_file_list):
@@ -15,8 +38,8 @@ def ftp_upload(up_file_list):
     :param up_file_list: アップロードするファイルのリスト
     :return: none
     """
-    with FTP('blackrhino1.sakura.ne.jp', passwd='k2u5n47ku6') as ftp:
-        ftp.login(user='blackrhino1', passwd='k2u5n47ku6')
+    with FTP(host_name, passwd=password_str) as ftp:
+        ftp.login(user=user_name, passwd=password_str)
         ftp.cwd('www')
         for up_file_name in up_file_list:
             with open(str(up_file_name), 'rb') as fp:
@@ -437,5 +460,6 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/amp/site/index.html']
-    ftp_upload(up_files)
+    up_files = ['reibun/amp/sitepage/mintj.html']
+    # ftp_upload(up_files)
+    scp_upload(up_files)

@@ -2,6 +2,8 @@ import csv
 import datetime
 import make_article_list
 import os
+import new_from_md
+import re
 
 
 def make_mod_date_list():
@@ -16,7 +18,7 @@ def make_mod_date_list():
     make_article_list.save_data_to_pickle(mod_list, 'mod_date_list')
 
 
-def next_update_target_search(aim_date):
+def next_update_target_search(aim_date, len_dec):
     i = 0
     with open('/Users/nakataketetsuhiko/Downloads/https___www/ページ.csv') as f:
         reader = csv.reader(f)
@@ -27,16 +29,17 @@ def next_update_target_search(aim_date):
     for i in range(len(mod_list)):
         if datetime.datetime.strptime(mod_list[i][1], '%Y-%m-%d') < limit_d:
             break
-    mod_list_n = mod_list[:i]
+    mod_list_n = mod_list[:i + 1]
     print('日数 : ' + str(check_number_of_days()) + '日間')
     print('クリック数順')
-    check_no_mod_page(mod_list_n, c_list)
+    click_list = check_no_mod_page(mod_list_n, c_list, len_dec)
     c_list.sort(key=lambda x: int(x[2]), reverse=True)
     print('表示回数順')
-    check_no_mod_page(mod_list_n, c_list)
+    display_list = check_no_mod_page(mod_list_n, c_list, len_dec)
+    return click_list, display_list
 
 
-def check_no_mod_page(mod_list, csv_list):
+def check_no_mod_page(mod_list, csv_list, len_dec):
     result = []
     url_list = [x[0] for x in mod_list]
     i = 1
@@ -44,7 +47,16 @@ def check_no_mod_page(mod_list, csv_list):
         url_str = g_data[0].replace('https://www.demr.jp', '')
         if url_str not in url_list and g_data[0] != 'https://www.demr.jp/':
             result.append(url_str)
-            print('{} : {}位, {}クリック, 表示{}回, 掲載順位平均{}'.format(str(i), url_str, g_data[1], g_data[2], g_data[4]))
+            if re.findall(r'/$', url_str):
+                url_str_n = url_str + 'index.html'
+            else:
+                url_str_n = url_str
+            if '/sitepage/' not in url_str:
+                print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}, 文字数 {}'
+                      .format(str(i), url_str, g_data[1], g_data[2], g_data[4], len_dec[url_str_n]))
+            else:
+                print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}'
+                      .format(str(i), url_str, g_data[1], g_data[2], g_data[4]))
         if len(result) == 10:
             break
         i += 1
@@ -78,7 +90,7 @@ def make_side_bar_article_list(list_length):
         if len(click_list) == list_length:
             break
     ga_list = make_ga_csv_list()
-    t_list = [x for x in ga_list if '#' not in x[0] and '/pc/' not in x[0] and int(x[1]) >= 100]
+    t_list = [x for x in ga_list if '#' not in x[0] and '/pc/' not in x[0] and int(x[1].replace(',', '')) >= 100]
     t_list.sort(key=lambda x: datetime.datetime.strptime(x[3], '%H:%M:%S'), reverse=True)
     print('\nimportant by reading time')
     for t_art in t_list:
@@ -117,10 +129,51 @@ def make_ga_csv_list():
     return result
 
 
+def count_title_str_num(len_dec):
+    result = []
+    print('タイトル文字数チェック')
+    p_data = make_article_list.read_pickle_pot('title_img_list')
+    # print(p_data)
+    short_title_l = [[len(p_data[x][1]), p_data[x][0], p_data[x][1]] for x in p_data if len(p_data[x][1]) < 20]
+    for y in sorted(short_title_l):
+        if 'policy' not in y[1]:
+            print(str(y[0]) + ' : {}  {}  {}'.format(y[1], y[2], len_dec['/pc/' + y[1]]))
+            result.append(y[1])
+    return result
+
+
+def make_to_do_list(click_list, display_list, title_list):
+    print('クリック順')
+    for x in click_list:
+        if x.replace('/pc/', '') in title_list:
+            print(x)
+    print('表示順')
+    for y in display_list:
+        if y.replace('/pc/', '') in title_list:
+            print(y)
+    print('共通')
+    for z in click_list:
+        if z in display_list:
+            print(z)
+
+
 if __name__ == '__main__':
+    pickle_dec = make_article_list.read_pickle_pot('title_img_list')
+    print(pickle_dec)
+    str_len_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][6] for x in pickle_dec}
+    # print(str_len_dec)
     make_side_bar_article_list(10)
     print('\n')
-    next_update_target_search(100)
+    c_l, d_l = next_update_target_search(100, str_len_dec)
+    print('\n')
+    t_l = count_title_str_num(str_len_dec)
+    print('\n')
+    make_to_do_list(c_l, d_l, t_l)
+    print('\n')
+    new_from_md.insert_main_length()
+
+    # print(make_article_list.read_pickle_pot('mod_date_list'))
+    # print(make_article_list.read_pickle_pot('modify_log'))
 
     # print(make_article_list.read_pickle_pot('title_img_list'))
     # make_mod_date_list()

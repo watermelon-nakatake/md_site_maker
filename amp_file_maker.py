@@ -44,7 +44,7 @@ def a_tag_filter(main_str):
 
 def g_tag_insert(content_str):
     insert_str = ''
-    g_tag_list = ['waku-otherb', 'mintj-otherb', 'happy-otherb', 'max1-otherb', 'merupa-otherb']
+    g_tag_list = ['waku-otherb', 'mintj-otherb', 'happy-otherb', 'max1-otherb', 'merupa-otherb', 'iku-otherb']
     for i in range(len(g_tag_list)):
         if g_tag_list[i] in content_str:
             event_label = g_tag_list[i].replace('-', '-amp')
@@ -146,7 +146,7 @@ def amp_maker(pc_path_list):
                 content = content.replace(' target="_blank"', '')
                 content = re.sub(r'<img(.+?)>', r'<amp-img\1></amp-img>', content)
                 content = amp_image_filter(content)
-                content = re.sub(r'<a href="../ds/(.+?)" class="(.+?)" onclick="gtag\(.+?}\);" rel="nofollow">',
+                content = re.sub(r'<a href="\.\./ds/(.+?)" class="(.+?)" onclick="gtag\(.+?}\);" rel="nofollow">',
                                  r'<a href="../ds/\1" class="\2" rel="sponsored">', content)
                 pub_date = re.findall(r'itemprop="datePublished" datetime="(.*?)">', str_x)[0]
                 mod_date = re.findall(r'itemprop="dateModified" datetime="(.*?)">', str_x)[0]
