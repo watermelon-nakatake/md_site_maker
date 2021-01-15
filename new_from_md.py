@@ -355,11 +355,12 @@ def insert_sidebar_to_existing_art(side_bar_dec, mod_list):
                     with open('reibun/pc/' + dir_r + '/' + r_file, 'w', encoding='utf-8') as g:
                         g.write(long_str)
                         change_files.append('reibun/pc/' + dir_r + r_file)
-                with open('reibun/amp/' + dir_r + r_file, 'r', encoding='utf-8') as h:
-                    amp_str = h.read()
-                    amp_str = insert_sidebar_to_str(amp_str, side_bar_dec, category)
-                    with open('reibun/amp/' + dir_r + r_file, 'w', encoding='utf-8') as i:
-                        i.write(amp_str)
+                if os.path.exists('reibun/amp/' + dir_r + r_file):
+                    with open('reibun/amp/' + dir_r + r_file, 'r', encoding='utf-8') as h:
+                        amp_str = h.read()
+                        amp_str = insert_sidebar_to_str(amp_str, side_bar_dec, category)
+                        with open('reibun/amp/' + dir_r + r_file, 'w', encoding='utf-8') as i:
+                            i.write(amp_str)
     change_files.extend([x.replace('/pc/', '/amp/') for x in change_files])
     return change_files
 
@@ -566,6 +567,7 @@ def import_from_markdown(md_file_list):
         tmp_str = t.read()
     with open('pickle_pot/title_img_list.pkl', 'rb') as p:
         pk_dec = pickle.load(p)
+        print(pk_dec)
     for md_file_path in md_file_list:
         print(md_file_path)
         relational_article.collect_md_relation_title(md_file_path, pk_dec)
@@ -796,13 +798,16 @@ def import_from_markdown(md_file_list):
                                           '</section></article>')
             str_len = count_main_str_length(new_str, file_name)
             # print(new_str)
-            with open('reibun/pc/' + file_name, 'r', encoding='utf-8') as i:
-                old_str = i.read()
-                old_title = re.findall(r'<title>(.+?)</title>', old_str)[0].replace('|出会い系メール例文集', '')
-                if old_title != title_str:
-                    title_log(file_name, title_str, str(now.date()), str_len)
-                elif str_len > count_main_str_length(old_str, file_name) + 300:
-                    title_log(file_name, title_str, str(now.date()), str_len)
+            if os.path.exists('reibun/pc/' + file_name):
+                with open('reibun/pc/' + file_name, 'r', encoding='utf-8') as i:
+                    old_str = i.read()
+                    old_title = re.findall(r'<title>(.+?)</title>', old_str)[0].replace('|出会い系メール例文集', '')
+                    if old_title != title_str:
+                        title_log(file_name, title_str, str(now.date()), str_len)
+                    elif str_len > count_main_str_length(old_str, file_name) + 300:
+                        title_log(file_name, title_str, str(now.date()), str_len)
+            else:
+                title_log(file_name, title_str, str(now.date()), str_len)
             with open('reibun/pc/' + file_name, 'w', encoding='utf-8') as g:
                 g.write(new_str)
                 upload_list.append('reibun/pc/' + file_name)
@@ -1089,7 +1094,10 @@ def insert_main_length():
 
 def title_log(file_path, title_str, now, str_len):
     pk_dec = make_article_list.read_pickle_pot('title_log')
-    pk_dec[file_path][now] = [title_str, str_len]
+    if file_path in pk_dec:
+        pk_dec[file_path][now] = [title_str, str_len]
+    else:
+        pk_dec[file_path] = {now: [title_str, str_len]}
     # print(pk_dec)
     make_article_list.save_data_to_pickle(pk_dec, 'title_log')
 
@@ -1101,18 +1109,6 @@ def make_1st_title_log():
         new_dec[pk_dec[p_id][0]] = {'2020/11/10': [pk_dec[p_id][1], pk_dec[p_id][6]]}
     print(new_dec)
     make_article_list.save_data_to_pickle(new_dec, 'title_log')
-
-
-def correct_relational_art_list():
-    dir_path = 'reibun/pc/'
-    target_dir = ['caption', 'majime', 'qa', 'policy', 'site']
-    for t_dir in target_dir:
-        file_list = os.listdir(dir_path + t_dir)
-        for file in file_list:
-            with open(dir_path + file, 'r', encoding='utf-8') as f:
-                long_str = f.read()
-
-
 
 
 if __name__ == '__main__':

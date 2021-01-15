@@ -70,5 +70,5 @@ def check_number_of_days_q():
 
 
 if __name__ == '__main__':
-    key_list = ['セフレ', '掲示板', '安全', '確実', '募集', '']
-    title_counter('md_files/pc/majime/m0sexfriend.md', key_list)
+    key_list = ['出会い系', '掲示板', '書き方', 'PCMAX', 'テンプレ', '例文', '書き込み', '最初']
+    title_counter('md_files/pc/majime/kakikata_t.md', key_list)

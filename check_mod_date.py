@@ -159,7 +159,7 @@ def make_to_do_list(click_list, display_list, title_list):
 
 if __name__ == '__main__':
     pickle_dec = make_article_list.read_pickle_pot('title_img_list')
-    print(pickle_dec)
+    # print(pickle_dec)
     str_len_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][6] for x in pickle_dec}
     # print(str_len_dec)
     make_side_bar_article_list(10)
