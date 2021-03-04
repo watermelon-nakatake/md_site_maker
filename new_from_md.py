@@ -1112,10 +1112,10 @@ def make_1st_title_log():
 
 
 if __name__ == '__main__':
-    main(1)
-    reibun_upload.files_upload(['reibun/index.html'])
+    # main(1)
+    # reibun_upload.files_upload(['reibun/index.html'])
     # print(make_article_list.read_pickle_pot('modify_log'))
-    # print(make_article_list.read_pickle_pot('title_img_list'))
+    print(make_article_list.read_pickle_pot('title_img_list'))
     # print(make_article_list.read_pickle_pot('title_log'))
 
     # insert_main_length()

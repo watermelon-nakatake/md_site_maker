@@ -451,7 +451,7 @@ if __name__ == '__main__':
     # link_check('app/')
     # modify_stamp_insert()
     # make_amp_total()
-    # modified_file_upload()
+    modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
@@ -460,6 +460,6 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/amp/sitepage/mintj.html']
+    up_files = ['reibun/404.html', 'reibun/410.html']
     # ftp_upload(up_files)
     scp_upload(up_files)
