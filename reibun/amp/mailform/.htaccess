@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(.*)$ https://www.demr.jp/pc/mailform/ [R,L]
+Order allow,deny
+Allow from all

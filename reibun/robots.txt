@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /ausb/
+Disallow: /docomo/
+Disallow: /pc/ds/
+Disallow: /amp/ds/
+Disallow: /app/dsite/
+
+Sitemap: https://www.demr.jp/p_sitemap.xml

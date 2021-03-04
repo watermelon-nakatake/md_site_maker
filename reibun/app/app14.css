@@ -1,0 +1,417 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka,
+    "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    background-color: #ccc;
+    height: 100vh;
+}
+
+body {
+    margin: 0
+}
+
+.wrapper {
+    width: 100%
+}
+
+h1 {
+    font-size: 0.7em;
+    text-align: right;
+    font-weight: normal;
+    margin: 0;
+    padding: 0
+}
+
+h2 {
+    color: #00a2a8
+}
+
+h3 {
+    color: #D4571B
+}
+
+section {
+    padding-top: 20px
+}
+
+.tab-container {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    background: #fff;
+}
+
+.tab-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tab-container .arrows {
+    display: block;
+    width: 60px;
+    font-size: 32px;
+    bottom: 10px;
+    right: 0;
+    position: absolute;
+}
+
+.tab-container .arrows label {
+    display: inline-block;
+    cursor: pointer;
+    color: #aaa;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-left: 5px;
+}
+
+.tab-container .arrows label:hover {
+    color: #333;
+}
+
+.tab-container .tab-content-container {
+    width: 100%;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    line-height: 22px;
+    background: #fff;
+    position: absolute;
+    top: 42px;
+    padding: 0 40px 0 20px;
+    border: 2px solid #446CB3;
+    border-top: 0;
+}
+
+.tab-container .tab-content-container .tab-content {
+    opacity: 0;
+    padding: 40px 0;
+    min-height: 185px;
+    transition: opacity 0.1s ease-in;
+}
+
+.tab-container .tab {
+    outline: 0;
+    float: left;
+    cursor: pointer;
+    opacity: 1;
+    width: 25%;
+    line-height: 40px;
+    display: block;
+    margin: 0;
+    position: relative;
+    background: #446CB3;
+    color: #fff;
+    text-align: center;
+    border-top: 2px solid #446CB3;
+    border-right: 2px solid #446CB3;
+}
+
+.tab-container .tab.l-b {
+    border-left: 2px solid #446CB3;
+}
+
+.tab-container .tab:hover {
+    background: #365690;
+}
+
+.tab-container .tab-toggle {
+    display: none;
+}
+
+.tab-container .tab-toggle.active + .tab, .tab-container .tab-toggle:checked + .tab {
+    background: #fff;
+    color: #333;
+}
+
+.tab-container .tab-toggle.active ~ .tab-content-container,
+.tab-container .tab-toggle:checked ~ .tab-content-container {
+    height: auto;
+    opacity: 1;
+}
+
+.tab-container .tab-toggle.active ~ .tab-content-container .tab-content,
+.tab-container .tab-toggle:checked ~ .tab-content-container .tab-content {
+    opacity: 1;
+}
+
+.tab-container .tab-toggle.active ~ .tab-content-container .tab-content label,
+.tab-container .tab-toggle:checked ~ .tab-content-container .tab-content label {
+    opacity: 1;
+}
+
+
+/* フォームのデザイン */
+.text_i {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1em;
+    height: 40px;
+    padding: 0.4em 0.8em;
+    width: 100%;
+    background-image: url("images/pencil.png");
+    background-position: 97% 13px;
+    background-repeat: no-repeat;
+    background-size: 15px;
+}
+
+.text_i:focus {
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    box-shadow: none;
+    outline: none;
+}
+
+.select_i {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 0;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1em;
+    padding: 0.4em 0.8em;
+    width: 100%;
+    background-image: url("images/select-icon.png");
+    background-position: 97% 13px;
+    background-repeat: no-repeat;
+}
+
+.select_i::-ms-expand {
+    display: none;
+}
+
+.select_i:focus {
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    box-shadow: none;
+    outline: none;
+}
+
+.check-i {
+    display: none;
+}
+
+.check-i + span {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 0.2em 0;
+    padding: 0 0 0 1.2em;
+    position: relative;
+}
+
+.check-i + span::before {
+    -webkit-transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 2px;
+    content: "";
+    display: block;
+    height: 1em;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1em;
+}
+
+.check-i + span::after {
+    -webkit-transform: translateY(-50%) rotate(-45deg);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.32);
+    border-left: 3px solid rgba(0, 0, 0, 0.32);
+    content: "";
+    display: block;
+    height: 0.6em;
+    left: 0;
+    margin-top: -0.2em;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+    transition: all 0.3s ease 0s;
+    width: 1em;
+}
+
+.check-i:checked + span::after {
+    opacity: 1;
+}
+
+.mailbox {
+    margin: 3em 0 3em;
+}
+
+.submit_i {
+    -webkit-appearance: none;
+    background-color: rgba(0, 0, 0, 0.32);
+    background-image: none;
+    border: none;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1em;
+    margin: 5px 0 1em 25%;
+    padding: 0.6em 1em;
+    text-decoration: none;
+    width: 50%;
+}
+
+.submit_i:hover,
+.submit_i:focus {
+    outline: none;
+}
+
+.downArrow {
+    width: 30px;
+    margin: 10px auto 0px;
+}
+
+.textarea_i {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    border-radius: 0;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1em;
+    height: auto;
+    padding: 0.4em 0.8em;
+    width: 100%;
+    line-height: 2
+}
+
+.m_mail {
+    background-color: #c2eeff;
+}
+
+.f_mail {
+    background-color: #ffd5ec;
+}
+
+.textarea_i:focus {
+    border: 1px solid rgba(0, 0, 0, 0.32);
+    box-shadow: none;
+    outline: none;
+}
+
+.textarea_d {
+    display: none
+}
+
+.select_i, .text_i {
+    margin-bottom: 15px
+}
+
+.str-len {
+    margin-top: 3px;
+    text-align: right;
+    font-size: 14px;
+    color: #6E6E6E;
+    margin-right: 10px;
+}
+
+.siteLink {
+    width: 90%;
+    height: 50px;
+    margin: 20px auto;
+    border: 1px solid #9B9B9B;
+    background-color: #79eada;
+    border-radius: 5px;
+}
+
+.siteLink a {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    padding: 15px 0;
+    font-size: 20px;
+    color: #000000;
+}
+
+.siteLink a span {
+    font-size: 12px;
+    padding-left: 5px;
+}
+
+#dis_list {
+    list-style: circle;
+}
+
+#dis_list li {
+    margin-top: 20px;
+}
+
+#op2Outer {
+    display: none;
+}
+
+#op4Outer {
+    display: none;
+}
+
+#opo {
+    border: #f0e68c;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #fffacd;
+}
+
+#opl {
+    font-weight: bold;
+}
+
+#comment {
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.ap_int {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.checkOuter {
+    margin-top: 15px;
+}
+.caution {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+}
+.mini_g{
+    font-size: 12px;
+    color: #6E6E6E;
+    text-align: right;
+}
+
+/* メディアクエリ */
+
+@media (min-width: 500px) {
+    .wrapper {
+        width: 500px
+    }
+}
+

