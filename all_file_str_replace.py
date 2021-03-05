@@ -6,46 +6,61 @@ import reibun_upload
 def main(replace_str_list, if_replace_str_list):
     """
     置換リストにある文字列の置換を行いアップロードまで実行
-    :param replace_str_list: [[置換前の文字列, 置換後の文字列], [..., ...], ...] main_file直下のファイルの表記で
+    :param replace_str_list: [[置換前の文字列, 置換後の文字列], [..., ...], ...] main_file/pc or amp直下のファイルの表記で
     :param if_replace_str_list: 条件付きの置換文字列のリスト（これがなければ置換する）
     :return: none
     """
-    files_dict = pick_up_all_html('reibun/pc')
+    files_dict = pick_up_all_html('reibun/amp')
+    change_list = []
     for files_name in files_dict:
         if files_name == 't2':
             replace_list = [[re.sub(r'href="(.+?)"', r'href="../\1"', x[0]),
                              re.sub(r'href="(.+?)"', r'href="../\1"', x[1])] for x in replace_str_list]
+            replace_list = [[re.sub(r'src="(.+?)"', r'src="../\1"', x[0]),
+                             re.sub(r'src="(.+?)"', r'src="../\1"', x[1])] for x in replace_list]
             if_replace_list = [[re.sub(r'href="(.+?)"', r'href="../\1"', x[0]),
                                 re.sub(r'href="(.+?)"', r'href="../\1"', x[1]),
                                 re.sub(r'href="(.+?)"', r'href="../\1"', x[2])] for x in if_replace_str_list]
+            if_replace_list = [[re.sub(r'src="(.+?)"', r'src="../\1"', x[0]),
+                                re.sub(r'src="(.+?)"', r'src="../\1"', x[1]),
+                                re.sub(r'src="(.+?)"', r'src="../\1"', x[2])] for x in if_replace_list]
         elif files_name == 't3':
             replace_list = [[re.sub(r'href="(.+?)"', r'href="../../\1"', x[0]),
                              re.sub(r'href="(.+?)"', r'href="../../\1"', x[1])] for x in replace_str_list]
+            replace_list = [[re.sub(r'src="(.+?)"', r'src="../../\1"', x[0]),
+                             re.sub(r'src="(.+?)"', r'src="../../\1"', x[1])] for x in replace_list]
             if_replace_list = [[re.sub(r'href="(.+?)"', r'href="../../\1"', x[0]),
                                 re.sub(r'href="(.+?)"', r'href="../../\1"', x[1]),
                                 re.sub(r'href="(.+?)"', r'href="../../\1"', x[2])] for x in if_replace_str_list]
+            if_replace_list = [[re.sub(r'src="(.+?)"', r'src="../../\1"', x[0]),
+                                re.sub(r'src="(.+?)"', r'src="../../\1"', x[1]),
+                                re.sub(r'src="(.+?)"', r'src="../../\1"', x[2])] for x in if_replace_list]
         elif files_name == 't0':
             replace_list = [[re.sub(r'href="(.+?)"', r'href="pc/\1"', z) for z in x] for x in replace_str_list]
+            replace_list = [[re.sub(r'src="(.+?)"', r'src="pc/\1"', z) for z in x] for x in replace_list]
             if_replace_list = [[re.sub(r'href="(.+?)"', r'href="pc/\1"', z) for z in x] for x in if_replace_str_list]
+            if_replace_list = [[re.sub(r'src="(.+?)"', r'src="pc/\1"', z) for z in x] for x in if_replace_list]
         else:
             replace_list = replace_str_list
             if_replace_list = if_replace_str_list
         for file_path in files_dict[files_name]:
             with open(file_path, 'r', encoding='utf-8') as f:
-                long_str = f.read()
-            long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
-            for re_str in replace_list:
-                long_str = re.sub(re_str[0], re_str[1], long_str)
-            for if_re_str in if_replace_list:
-                if if_re_str[0] not in long_str:
-                    long_str = re.sub(if_re_str[1], if_re_str[2], long_str)
-            with open(file_path, 'w', encoding='utf-8') as g:
-                g.write(long_str)
-    up_list = files_dict['t1'] + files_dict['t2'] + files_dict['t3']
-    up_list_e = [y for y in up_list if '/delete/' not in y and '_test' not in y and '_copy' not in y
-                 and '/template/' not in y]
-    print(up_list_e)
-    reibun_upload.ftp_upload(up_list_e)
+                base_str = f.read()
+                long_str = base_str
+                long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+                for re_str in replace_list:
+                    long_str = re.sub(re_str[0], re_str[1], long_str)
+                for if_re_str in if_replace_list:
+                    if if_re_str[0] not in long_str:
+                        long_str = re.sub(if_re_str[1], if_re_str[2], long_str)
+                if base_str != long_str:
+                    with open(file_path, 'w', encoding='utf-8') as g:
+                        g.write(long_str)
+                    change_list.append(file_path)
+    up_list = [y for y in change_list if '/delete/' not in y and '_test' not in y and '_copy' not in y
+               and '/template/' not in y]
+    print(up_list)
+    reibun_upload.scp_upload(up_list)
 
 
 def pick_up_all_html(dir_path):
@@ -62,8 +77,8 @@ def pick_up_all_html(dir_path):
 
 
 if __name__ == '__main__':
-    re_list = [['出会い系メール例文集 2009-2019', '出会い系メール例文集 2009-<span id="cp_year"></span>']]
-    if_re_list = [["getElementById('cp_year')",
-                   '><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>',
-                   '><script type="text/javascript">const now = new Date().getFullYear();const cpY = document.getElementById(\'cp_year\');if (now > 2009) {cpY.innerText = String(new Date().getFullYear())}</script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>']]
+    re_list = [['h1{font-size:20px;margin:10px 5px 5px}',
+                'h1{font-size:20px;margin:10px 5px 5px;letter-spacing: 1px;line-height:1.6}'
+                ]]
+    if_re_list = []
     main(re_list, if_re_list)

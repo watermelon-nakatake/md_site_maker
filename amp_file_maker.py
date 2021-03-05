@@ -277,5 +277,5 @@ if __name__ == '__main__':
     # amp_maker(['reibun/pc/majime/kakikata_t.html'])
     # reibun_upload.ftp_upload(['reibun/pc/' + new_file])
     # reibun_upload.ftp_upload(['reibun/amp/' + new_file])
-    # amp_maker(['reibun/pc/majime/mail-applicaton.html'])
-    all_amp_change_and_upload()
+    amp_maker(['reibun/pc/majime/mail-applicaton.html'])
+    # all_amp_change_and_upload()

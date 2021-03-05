@@ -288,7 +288,7 @@ if __name__ == '__main__':
 
     # reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
 
-    # main()
+    main()
 
     manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
     print(make_article_list.read_pickle_pot('modify_log'))
