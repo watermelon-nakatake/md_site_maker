@@ -16,8 +16,8 @@ import image_upload
 import check_mod_date
 import relational_article
 
-side_bar_list = {'important': [13, 14, 21, 49, 57, 66, 55, 41, 28, 5],
-                 'pop': [19, 117, 34, 73, 67, 23, 76, 107, 25, 11]}
+side_bar_list = {'important': [48, 21, 13, 66, 76, 112, 34, 96, 4, 25],
+                 'pop': [117, 23, 130, 67, 64, 38, 107, 19, 73, 11]}
 category_name = {'policy': ['ポリシー', 'index.html'], 'caption': ['出会い系の予備知識', 'index.html'],
                  'profile': ['プロフィール例文', 'kakikata_p.html'], 'qa': ['出会い系Ｑ＆Ａ', 'index.html'],
                  'site': ['出会い系サイト情報', 'index.html'], 'post': ['掲示板例文', 'kakikata_t.html'],
@@ -64,8 +64,8 @@ def main(mod_hour):
                     md_title = re.findall(r't::(.+?)\n', m_str)[0]
                 mod_list.append([file_a, mod_time_a, md_title])
     mod_list.sort(key=lambda x: x[1], reverse=True)
-    print('modify list :')
-    print(mod_list)
+    # print('modify list :')
+    # print(mod_list)
     upload_list, pk_dec, new_file_data = import_from_markdown([y[0] for y in mod_list])
     upload_list = modify_file_check(now, st_time, upload_list)
     side_bar_dec = make_all_side_bar(pk_dec)
@@ -88,6 +88,7 @@ def main(mod_hour):
             if mod_log[-1][0] in ['reibun/pc/majime/majime.html', 'reibun/pc/majime/index.html']:
                 insert_to_index_page(pk_dec)
         else:
+            # change_files = upload_list
             change_files = insert_sidebar_to_existing_art(side_bar_dec, mod_list)
             insert_to_index_page(pk_dec)
     insert_to_top_page()
@@ -381,7 +382,7 @@ def insert_sidebar_to_str(long_str, side_bar_dec, category):
 
 def insert_sidebar_to_modify_page(side_bar_dec, upload_list):
     for r_file in upload_list:
-        print(r_file)
+        # print(r_file)
         if '.html' in r_file:
             with open(r_file, 'r', encoding='utf-8') as f:
                 long_str = f.read()
@@ -567,7 +568,7 @@ def import_from_markdown(md_file_list):
         tmp_str = t.read()
     with open('pickle_pot/title_img_list.pkl', 'rb') as p:
         pk_dec = pickle.load(p)
-        print(pk_dec)
+        # print(pk_dec)
     for md_file_path in md_file_list:
         print(md_file_path)
         relational_article.collect_md_relation_title(md_file_path, pk_dec)
@@ -1112,10 +1113,10 @@ def make_1st_title_log():
 
 
 if __name__ == '__main__':
-    # main(1)
+    main(1)
     # reibun_upload.files_upload(['reibun/index.html'])
     # print(make_article_list.read_pickle_pot('modify_log'))
-    print(make_article_list.read_pickle_pot('title_img_list'))
+    # print(make_article_list.read_pickle_pot('title_img_list'))
     # print(make_article_list.read_pickle_pot('title_log'))
 
     # insert_main_length()

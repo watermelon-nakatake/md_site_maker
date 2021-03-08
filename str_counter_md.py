@@ -30,11 +30,9 @@ def title_counter(md_path, kw_list):
             main = re.sub(r'\*', r'', main)
             main_len = len(main)
             print('main : ' + str(main_len))
-            print('main(改行なし) : ' + str(len(main.replace('\n', ''))))
-            print('\n')
+            print('main(改行なし) : ' + str(len(main.replace('\n', ''))) + '\n')
             keyword_counter(kw_list, main)
-            print('\n')
-            sc_keyword_counter(main, md_path)
+            # sc_keyword_counter(main, md_path)
 
 
 def keyword_counter(kw_list, long_str):
@@ -70,5 +68,5 @@ def check_number_of_days_q():
 
 
 if __name__ == '__main__':
-    key_list = ['出会い系', '掲示板', '書き方', 'PCMAX', 'テンプレ', '例文', '書き込み', '最初']
-    title_counter('md_files/pc/majime/kakikata_t.md', key_list)
+    key_list = ['出会い系', 'PCMAX']
+    title_counter('md_files/pc/majime/m2sexfriend.md', key_list)
