@@ -36,7 +36,7 @@ def next_update_target_search(aim_date, len_dec):
     c_list.sort(key=lambda x: int(x[2]), reverse=True)
     print('表示回数順')
     display_list = check_no_mod_page(mod_list_n, c_list, len_dec)
-    return click_list, display_list
+    return click_list, display_list, c_list
 
 
 def check_no_mod_page(mod_list, csv_list, len_dec):
@@ -157,20 +157,38 @@ def make_to_do_list(click_list, display_list, title_list):
             print(z)
 
 
+def check_layout_flag(click_list, pk_dec):
+    print('レイアウト変更未実施')
+    new_cl = [x[0] for x in click_list]
+    i = 1
+    j = 1
+    for page in new_cl:
+        page = page.replace('https://www.demr.jp', '')
+        if '/sitepage/' not in page:
+            if not pk_dec[page]:
+                print(str(i) + ' : ' + page)
+                j += 1
+            if j > 9:
+                break
+        i += 1
+
+
 if __name__ == '__main__':
     pickle_dec = make_article_list.read_pickle_pot('title_img_list')
     # print(pickle_dec)
     str_len_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][6] for x in pickle_dec}
+    layout_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][7] for x in pickle_dec}
     # print(str_len_dec)
     make_side_bar_article_list(10)
     print('\n')
-    c_l, d_l = next_update_target_search(100, str_len_dec)
+    c_l, d_l, c_l2 = next_update_target_search(100, str_len_dec)
     print('\n')
     t_l = count_title_str_num(str_len_dec)
     print('\n')
     make_to_do_list(c_l, d_l, t_l)
     print('\n')
     new_from_md.insert_main_length()
+    check_layout_flag(c_l2, layout_dec)
 
     # print(make_article_list.read_pickle_pot('mod_date_list'))
     # print(make_article_list.read_pickle_pot('modify_log'))

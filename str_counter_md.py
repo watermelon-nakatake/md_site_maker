@@ -1,8 +1,10 @@
 import re
 import csv
+import new_from_md
+import make_article_list
 
 
-def title_counter(md_path, kw_list):
+def title_counter(md_path, kw_list, site_shift):
     print(md_path)
     with open(md_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
@@ -19,6 +21,17 @@ def title_counter(md_path, kw_list):
         main_l = re.findall(r'\n(# [\s\S]*)$', long_str)
         if main_l:
             main = main_l[0]
+            if '%ss' in main:
+                ss_list = new_from_md.site_shift_list
+                for ss_num in ss_list:
+                    if main.count('%ss' + str(ss_num) + '%') != main.count('%ss' + str(ss_num) + '%'):
+                        raise Exception('%ss の数が合っていません！！')
+                main = re.sub(r'%ss' + str(site_shift) + r'%\n([\s\S]*?)%ss' + str(site_shift) + r'e%\n',
+                              r'\1', main)
+                ss_list.remove(site_shift)
+                for s_num in ss_list:
+                    main = re.sub(r'%ss' + str(s_num) + r'%\n([\s\S]*?)%ss' + str(s_num) + r'e%\n', '', main)
+
             main = re.sub(r'\n#* ', '\n', main)
             main = re.sub(r'^# ', '', main)
             main = re.sub(r']\(.+?\)', ']', main)
@@ -67,6 +80,17 @@ def check_number_of_days_q():
     return result
 
 
+def read_this_title_log(md_path):
+    target_html = md_path.replace('md_files/pc/', '').replace('.md', '.html')
+    pk = make_article_list.read_pickle_pot('title_log')
+    for data in pk[target_html]:
+        print(data + ' : ' + pk[target_html][data][0])
+
+# todo: ハッピーメール 出会えない セフレ の新記事
+
+
 if __name__ == '__main__':
-    key_list = ['出会い系', 'PCMAX']
-    title_counter('md_files/pc/majime/m2sexfriend.md', key_list)
+    target_md = 'md_files/pc/majime/m0bbs.md'
+    key_list = ['ミント', 'ハッピーメール', 'ハピメ', 'ワクワク', 'Jメール', 'PCMAX', '婚外']
+    title_counter(target_md, key_list, 1)
+    read_this_title_log(target_md)

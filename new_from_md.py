@@ -31,12 +31,14 @@ category_data = {'policy': ['ポリシー', 'index.html', 1], 's_mail': ['２通
                  'date': ['デートに誘うメール例文', 'date.html', 102], 'how_to': ['出会い系攻略法', 'kakikata_d.html', 39],
                  'ap_mail': ['メール例文アプリ情報', 'mail-applicaton.html', 92],
                  'majime': ['出会い系メール例文', 'index.html', 32], 'sitepage': ['出会い系サイト', 'index.html', 122]}
+site_shift_list = [0, 1, 2]
 
 
-def main(mod_hour):
+def main(mod_hour, site_shift):
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param mod_hour: 今回更新するファイルの更新時から現時点までの経過時間（時間） int形式
+    :param site_shift: サイトの表示に関するフラグ
     :return: none
     """
     add_files = ['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base11.css', 'reibun/pc/css/pc11.css',
@@ -47,7 +49,7 @@ def main(mod_hour):
     for dir_path in up_dir[:-1]:
         mod_files = os.listdir('md_files/pc/' + dir_path)
         for file in mod_files:
-            if '.md' in file and '_ud' not in file:
+            if '.md' in file and '_ud' not in file and '_copy' not in file:
                 mod_time = os.path.getmtime('md_files/pc/' + dir_path + file)
                 if now - mod_time < st_time:
                     print('update: ' + file)
@@ -66,7 +68,7 @@ def main(mod_hour):
     mod_list.sort(key=lambda x: x[1], reverse=True)
     # print('modify list :')
     # print(mod_list)
-    upload_list, pk_dec, new_file_data = import_from_markdown([y[0] for y in mod_list])
+    upload_list, pk_dec, new_file_data = import_from_markdown([y[0] for y in mod_list], site_shift)
     upload_list = modify_file_check(now, st_time, upload_list)
     side_bar_dec = make_all_side_bar(pk_dec)
     mod_log = make_article_list.read_pickle_pot('modify_log')
@@ -88,7 +90,6 @@ def main(mod_hour):
             if mod_log[-1][0] in ['reibun/pc/majime/majime.html', 'reibun/pc/majime/index.html']:
                 insert_to_index_page(pk_dec)
         else:
-            # change_files = upload_list
             change_files = insert_sidebar_to_existing_art(side_bar_dec, mod_list)
             insert_to_index_page(pk_dec)
     insert_to_top_page()
@@ -109,7 +110,7 @@ def main(mod_hour):
     upload_list = list(upload_list)
     upload_list.sort()
     # print(upload_list)
-    reibun_upload.scp_upload(upload_list)
+    reibun_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x])
     check_mod_date.make_mod_date_list()
 
 
@@ -282,7 +283,7 @@ def insert_to_index_page(pk_dec):
 
 def qa_index_list_insert(pk_dec):
     qa_list = [[pk_dec[x][0], pk_dec[x][1]] for x in pk_dec if pk_dec[x][4] == 'qa']
-    print(qa_list)
+    # print(qa_list)
     for i in range(len(qa_list)):
         with open('reibun/pc/' + qa_list[i][0], 'r', encoding='utf-8') as f:
             long_str = f.read()
@@ -524,10 +525,11 @@ def insert_markdown_anchor(long_str):
         index_str_l = re.findall(r'<nav id="mokuji">.+?</nav>', long_str)
         index_list = [[str_i[1], str_i[0]] for str_i in re.findall(r'<a href="(.+?)">(.+?)</a>', index_str_l[0])]
         for a_str in a_str_l:
-            a_text = re.sub(r'href="#(.+?)"', r'\1', a_str)
-            r_str = re.sub(r'href="#(.+?)"', 'href="' + [x[1] for x in index_list if x[0] == a_text][0] + '"',
-                           a_str)
-            long_str = long_str.replace(a_str, r_str)
+            if a_str != 'href="#header"':
+                a_text = re.sub(r'href="#(.+?)"', r'\1', a_str)
+                r_str = re.sub(r'href="#(.+?)"', 'href="' + [x[1] for x in index_list if x[0] == a_text][0] + '"',
+                               a_str)
+                long_str = long_str.replace(a_str, r_str)
     return long_str
 
 
@@ -561,9 +563,10 @@ def insert_page_card(long_str, pk_dec):
     return long_str
 
 
-def import_from_markdown(md_file_list):
+def import_from_markdown(md_file_list, site_shift):
     upload_list = []
     new_file_data = []
+    site_shift_list.remove(site_shift)
     with open('reibun/pc/template/pc_tmp.html', 'r', encoding='utf-8') as t:
         tmp_str = t.read()
     with open('pickle_pot/title_img_list.pkl', 'rb') as p:
@@ -607,6 +610,17 @@ def import_from_markdown(md_file_list):
             plain_txt = plain_txt.replace(r'%app_b%', '<div class="center"><a href="../../app/"><img class="app_bn1" '
                                                       'src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">'
                                                       '</a></div>')
+            if '%ss' in plain_txt:
+                ss_flag = True
+                for ss_num in range(len(site_shift_list) + 1):
+                    if plain_txt.count('%ss' + str(ss_num) + '%') != plain_txt.count('%ss' + str(ss_num) + '%'):
+                        raise Exception('%ss の数が合っていません！！')
+                plain_txt = re.sub(r'%ss' + str(site_shift) + r'%\n([\s\S]*?)%ss' + str(site_shift) + r'e%\n',
+                                   r'\1', plain_txt)
+                for s_num in site_shift_list:
+                    plain_txt = re.sub(r'%ss' + str(s_num) + r'%\n([\s\S]*?)%ss' + str(s_num) + r'e%\n', '', plain_txt)
+            else:
+                ss_flag = False
             if '%arlist' in plain_txt:
                 arlist_o_l = re.findall(r'%arlist%\n([\s\S]*?)\n\n', plain_txt)
                 if arlist_o_l:
@@ -798,6 +812,7 @@ def import_from_markdown(md_file_list):
                                           '<section><div class="tabn"><h2>主な更新履歴</h2>' + mod_log +
                                           '</section></article>')
             str_len = count_main_str_length(new_str, file_name)
+            layout_flag = check_page_layout(new_str)
             # print(new_str)
             if os.path.exists('reibun/pc/' + file_name):
                 with open('reibun/pc/' + file_name, 'r', encoding='utf-8') as i:
@@ -813,7 +828,8 @@ def import_from_markdown(md_file_list):
                 g.write(new_str)
                 upload_list.append('reibun/pc/' + file_name)
                 if type(str_len) == int:
-                    new_data = [file_name, title, '', str(now.date()), category, description, str_len]
+                    new_data = [file_name, title, '', str(now.date()), category, description, str_len, layout_flag,
+                                ss_flag]
                 else:
                     print('エラー発生 : ' + str_len)
                     new_data = [file_name, title, '', str(now.date()), category, description, 'error']
@@ -1089,8 +1105,31 @@ def insert_main_length():
                 print('md : ' + pk_dec[i][0])
             else:
                 print('error : ' + pk_dec[i][0])
+            flag = check_page_layout(long_str)
+            if flag != pk_dec[i][7]:
+                print('flag_change : ' + file_path)
+                pk_dec[i][7] = flag
     # print(pk_dec)
     # make_article_list.save_data_to_pickle(pk_dec, 'title_img_list')
+
+
+def check_page_layout(long_str):
+    new_img = re.findall(r'class="alt_img_t"', long_str)
+    rm_str = re.findall(r'class="rm_', long_str)
+    rw_str = re.findall(r'class="rw_', long_str)
+    if new_img and (rm_str or rw_str):
+        flag = True
+    else:
+        flag = False
+    return flag
+
+
+def check_site_shift(long_str):
+    if '%ss' in long_str:
+        flag = True
+    else:
+        flag = False
+    return flag
 
 
 def title_log(file_path, title_str, now, str_len):
@@ -1113,7 +1152,8 @@ def make_1st_title_log():
 
 
 if __name__ == '__main__':
-    main(1)
+    main(1, 1)
+    # site_shift_flag ( 0: normal, 1:no jmail )
     # reibun_upload.files_upload(['reibun/index.html'])
     # print(make_article_list.read_pickle_pot('modify_log'))
     # print(make_article_list.read_pickle_pot('title_img_list'))

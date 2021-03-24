@@ -129,7 +129,7 @@ body {
     height: 37px;
 }
 
-/* topページ　*/
+/* topページ*/
 .top #con3 {
     width: 100%;
     margin-top: 0;
@@ -1095,11 +1095,6 @@ a:hover {
 .page-top {
     margin: 0;
     padding: 0;
-}
-
-.page-top p {
-    margin: 0;
-    padding: 0;
     position: fixed;
     right: 16px;
     bottom: 16px;
@@ -1117,9 +1112,13 @@ a:hover {
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
+    opacity: 0;
+}
+.move-page-top.show{
+    opacity: 1;
 }
 
-.move-page-top:hover {
+.move-page-top.show:hover {
     opacity: 0.85;
 }
 

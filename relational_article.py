@@ -43,7 +43,7 @@ def change_html_relational_list():
                         c_url = url.replace('../', '')
                     else:
                         c_url = re.findall(r'reibun/pc/(.+?)/.+?.html', md_path)[0] + '/' + url
-                    print(c_url)
+                    # print(c_url)
                     now_title = l_str[1]
                     long_str = re.sub('<li><a href="{}">{}</a></li>'.format(url, now_title),
                                       '<li><a href="{}">{}</a></li>'.format(url, pk_dec[c_url]), long_str)
@@ -64,9 +64,9 @@ def collect_md_relation_title(md_path, pk_data_b):
                 k_str_l = insert_new_article_to_relational_list_md(md_str, k_str_l)
             result = ''
             for k_str in k_str_l:
-                print(k_str)
+                # print(k_str)
                 t_url = k_str[1].replace('../../../reibun/pc/', '')
-                print(pk_data[t_url])
+                # print(pk_data[t_url])
                 result += '- [{}]({})\n'.format(pk_data[t_url], k_str[1])
             md_str = md_str.replace(k_txt[0], result + '\n')
     # print(md_str)
@@ -79,9 +79,9 @@ def change_md_relational_art_list():
     # print(p)
     k = make_article_list.read_pickle_pot('title_img_list')
     e_k = {k[x][0]: k[x][1] for x in k}
-    print(e_k)
+    # print(e_k)
     for m in p:
-        print(m)
+        # print(m)
         collect_md_relation_title(m, e_k)
 
 
@@ -107,7 +107,7 @@ def insert_new_article_to_relational_list(file_path):
                         i_text = '<a href="../majime/m4coronavirus_gf.html">' \
                                  '新型コロナとオンライン恋愛と婚活 コロナ禍での出会い系攻略法</a>'
                     l_str_l.insert(random.randrange(len(l_str_l) + 1), '<li>{}</li>'.format(i_text))
-                    print(l_str_l)
+                    # print(l_str_l)
                     new_str = long_str.replace(r_str[0], ''.join(l_str_l))
                     with open(html_path, 'w', encoding='utf-8') as g:
                         g.write(new_str)
@@ -123,7 +123,7 @@ def insert_new_article_to_relational_list_md(long_str, k_str_l):
         i_text = ['新型コロナとオンライン恋愛と婚活 コロナ禍での出会い系攻略法',
                   '../../../reibun/pc/majime/m4coronavirus_gf.html']
     k_str_l.insert(random.randrange(len(k_str_l) + 1), i_text)
-    print(k_str_l)
+    # print(k_str_l)
     return k_str_l
 
 

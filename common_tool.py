@@ -92,15 +92,15 @@ def section_insert(long_str):
 
 def directory_and_category_select(file_path):
     # file_pathはpc/やamp/以降のpath
-    print(file_path)
+    # print(file_path)
     directory_l = re.findall(r'^reibun/pc/(.+?)/.+$', file_path)
     if directory_l:
         directory = directory_l[0]
         directory = directory.replace('reibun/pc/', '')
         file_name = file_path.replace('reibun/pc/', '')
         file_name = re.sub(r'^.*?/', '', file_name)
-        print('directory: ' + directory)
-        print('file_name: ' + file_name)
+        # print('directory: ' + directory)
+        # print('file_name: ' + file_name)
         category = search_category(directory, file_name)
     else:
         directory = 'top'

@@ -983,9 +983,13 @@ a:hover {
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
+    opacity: 0;
+}
+.move-page-top.show{
+    opacity: 1;
 }
 
-.move-page-top:hover {
+.move-page-top.show:hover {
     opacity: 0.85;
 }
 
