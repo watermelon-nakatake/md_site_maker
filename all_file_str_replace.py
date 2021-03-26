@@ -77,8 +77,8 @@ def pick_up_all_html(dir_path):
 
 
 if __name__ == '__main__':
-    re_list = [['h1{font-size:20px;margin:10px 5px 5px}',
-                'h1{font-size:20px;margin:10px 5px 5px;letter-spacing: 1px;line-height:1.6}'
+    re_list = [['Allrightsreserved',
+                'All rights reserved'
                 ]]
     if_re_list = []
     main(re_list, if_re_list)

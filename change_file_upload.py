@@ -7,7 +7,8 @@ import make_article_list
 
 def search_update_file():
     last_upload = make_article_list.read_pickle_pot('last_upload')
-    all_files = glob.glob('reibun/**/**', recursive=True)
+    all_files = [x for x in glob.glob('reibun/**/**', recursive=True) if '_copy' not in x and '_test' not in x
+                 and '/template' not in x and '.cgi' not in x]
     print(all_files)
     update_files = [x for x in list(set(all_files)) if os.path.getmtime(x) > last_upload and os.path.isfile(x)]
     print(update_files)

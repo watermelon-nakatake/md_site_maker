@@ -214,10 +214,12 @@ h1 {
     font-weight: 700;
     font-size: 120%;
     border-bottom: 2px solid #00A2a8;
+    letter-spacing: 1px;
 }
 
 #con3 p {
-    margin: 10px 1em 20px 1em
+    margin: 10px 1em 20px 1em;
+    letter-spacing: 1px;
 }
 
 #con3 section {
@@ -407,13 +409,15 @@ h2 {
     font-weight: 700;
     font-size: 115%;
     background-color: #00A2a8;
-    color: #FFFFFF
+    color: #FFFFFF;
+    letter-spacing: 1px;
 }
 
 h3 {
     font-size: 110%;
     color: #00A2a8;
-    margin: 5px 0 10px 5px
+    margin: 5px 0 10px 5px;
+    letter-spacing: 1px;
 }
 
 h4, .data_title {
@@ -1507,6 +1511,21 @@ a.btn-pop {
 }
 #review_t textarea{
     width: 90%;
+}
+.rank_o{
+    padding: 4px;
+    color: #D4571B;
+    font-size: 14px;
+}
+.rank_num{
+    display: inline-block;
+    background-color: #D4571B;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: 2px;
+    font-size: 20px;
+    padding: 4px 6px;
+    margin-left: 4px;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .btnli li:after, .dousen:after, .sitepagetop:after,

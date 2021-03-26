@@ -269,10 +269,27 @@ main p {
     margin: 0 auto;
 }
 
+.ranking .maindisc {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
 .subdisc {
     margin: 15px auto 0 20px;
     padding: 0;
     font-size: 15px;
+}
+
+.ranking .subdisc {
+    margin-left: 0;
+}
+
+.ranking section {
+    margin-bottom: 80px;
+}
+
+.snsb {
+    display: none;
 }
 
 .subdisc ul {
@@ -593,16 +610,142 @@ main .dousendisc p {
 .data_comment p {
     margin: 15px 15px 30px;
 }
-.sp_comment{
+
+.sp_comment {
     width: 80%;
     margin: 25px auto 15px;
     padding: 0;
 }
-.sp_comment p{
+
+.sp_comment p {
     width: 100%;
     text-align: center;
     margin: 0;
     padding: 0;
+}
+
+
+.page-top {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 100
+}
+
+.move-page-top {
+    display: block;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    line-height: 50px;
+    text-decoration: none;
+    text-align: center;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.move-page-top.show {
+    opacity: 1;
+}
+
+.move-page-top.show:hover {
+    opacity: 0.85;
+}
+
+/*ranking*/
+.h2outer {
+    position: relative
+}
+
+.ranking h2 {
+    width: 90%;
+    color: #767676;
+    margin-left: 40px;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    background-color: #ffffff;
+    font-size: 26px;
+    padding-left: 0;
+}
+
+.ranking h2:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 13px solid #ffffff;
+    border-left: 20px solid #767676;
+    border-bottom: 13px solid #ffffff;
+    position: absolute;
+    top: 7px;
+    left: -35px;
+}
+
+.order {
+    background-color: #D4571B;
+    color: #ffffff;
+    font-size: 18px;
+    line-height: 1;
+    padding: 10px 7px 5px;
+    letter-spacing: 3px;
+}
+
+.o_num {
+    font-size: 24px;
+}
+
+.r_site_name {
+    margin-left: 10px;
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+.wk_img {
+    width: 236px;
+    height: 80px;
+    margin: 40px auto;
+}
+
+.pm_img {
+    width: 240px;
+    height: 90px;
+    margin: 40px auto;
+}
+
+.hm_img {
+    width: 234px;
+    height: 60px;
+    margin: 40px auto;
+}
+
+.iq_img {
+    width: 240px;
+    height: auto;
+    margin: 40px auto;
+}
+
+.ranking .cachcopy p {
+    font-size: 20px;
+    width: 80%;
+    margin: 0 auto 0;
+}
+
+.kuchi_go {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.ranking h4 {
+    color: #5B5B5B;
+    display: inline-block;
+    padding: 3px 5px;
+    margin-left: 0;
+    line-height: 1;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #tibl:after, .dousen:after, .sitepagetop:after,
@@ -857,6 +1000,7 @@ main .dousendisc p {
         margin: 15px auto;
     }
 
+
     .maindisc {
         font-size: 25px;
         font-weight: normal;
@@ -1021,7 +1165,7 @@ main .dousendisc p {
         float: left;
     }
 
-    #site_star_o {
+    #site_star_o, .ss_o {
         width: 58%;
         border: 1px solid #6E6E6E;
         float: left;

@@ -74,26 +74,25 @@ def make_amp_total():
 
 def modified_file_upload():
     upper_dir = ['pc', 'amp']
-    dir_list = ['caption', 'majime', 'qa', 'site', 'policy', 'images']
+    dir_list = ['caption', 'majime', 'qa', 'site', 'policy', 'images', 'sitepage', 'css']
     modified_file = []
+    now = time.time()
     for upper in upper_dir:
         for directory in dir_list:
             current_path = 'reibun/' + upper + '/' + directory
-            file_list = os.listdir(current_path)
-            now = time.time()
-            for file in file_list:
-                file_path = current_path + '/' + file
-                mod_time = os.path.getmtime(file_path)
-                print(file_path)
-                print(mod_time)
-                print(now)
-                if now - mod_time < 86400:
-                    modified_file.append(file_path)
-    print(modified_file)
-    ftp_upload(modified_file)
+            if os.path.exists(current_path):
+                file_list = os.listdir(current_path)
+                for file in file_list:
+                    file_path = current_path + '/' + file
+                    mod_time = os.path.getmtime(file_path)
+                    if now - mod_time < 8640:
+                        print(file_path)
+                        modified_file.append(file_path)
+    # print(modified_file)
+    scp_upload(modified_file)
     # amp_file = [x.replace('/pc/', '/amp/') for x in modified_file]
     # ftp_upload(amp_file)
-    ftp_upload(['reibun/index.html'])
+    # ftp_upload(['reibun/index.html'])
 
 
 def modify_stamp_insert():
@@ -187,6 +186,7 @@ def tab_and_line_feed_remove_from_str(long_str):
     result = result.replace('"itemscope=', '" itemscope=')
     result = result.replace('"itemprop=', '" itemprop=')
     result = result.replace('imgitemprop=', 'img itemprop=')
+    result = result.replace('imgwidth', 'img width')
     result = result.replace('"layout=', '" layout=')
     result = result.replace('"class=', '" class=')
     result = result.replace('"height="', '" height="')
@@ -451,7 +451,7 @@ if __name__ == '__main__':
     # link_check('app/')
     # modify_stamp_insert()
     # make_amp_total()
-    modified_file_upload()
+    # modified_file_upload()
     # print(os.listdir('reibun/pc'))
     # jap_date_insert()
     # all_file_relational_art_insert('出会い系メール自動作成アプリのご紹介', '../majime/mail-applicaton.html')
@@ -460,6 +460,6 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/404.html', 'reibun/410.html']
+    up_files = ['reibun/amp/sitepage/ranking.html', 'reibun/pc/css/site_page_style.css']
     # ftp_upload(up_files)
     scp_upload(up_files)

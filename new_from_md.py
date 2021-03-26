@@ -1095,20 +1095,21 @@ def insert_main_length():
     with open('pickle_pot/title_img_list.pkl', 'rb') as p:
         pk_dec = pickle.load(p)
     for i in pk_dec:
-        file_path = os.path.join('reibun/pc/', pk_dec[i][0])
-        with open(file_path, 'r', encoding='utf-8') as f:
-            long_str = f.read()
-            str_len = count_main_str_length(long_str, pk_dec[i][0])
-            if type(str_len) == int:
-                pk_dec[i][6] = str_len
-            elif str_len == 'there is md !':
-                print('md : ' + pk_dec[i][0])
-            else:
-                print('error : ' + pk_dec[i][0])
-            flag = check_page_layout(long_str)
-            if flag != pk_dec[i][7]:
-                print('flag_change : ' + file_path)
-                pk_dec[i][7] = flag
+        if 'site/index' not in pk_dec[i][0]:
+            file_path = os.path.join('reibun/pc/', pk_dec[i][0])
+            with open(file_path, 'r', encoding='utf-8') as f:
+                long_str = f.read()
+                str_len = count_main_str_length(long_str, pk_dec[i][0])
+                if type(str_len) == int:
+                    pk_dec[i][6] = str_len
+                elif str_len == 'there is md !':
+                    print('md : ' + pk_dec[i][0])
+                else:
+                    print('error : ' + pk_dec[i][0])
+                flag = check_page_layout(long_str)
+                if flag != pk_dec[i][7]:
+                    print('flag_change : ' + file_path)
+                    pk_dec[i][7] = flag
     # print(pk_dec)
     # make_article_list.save_data_to_pickle(pk_dec, 'title_img_list')
 

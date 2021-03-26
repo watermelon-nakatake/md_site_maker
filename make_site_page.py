@@ -20,7 +20,7 @@ def main():
     star_count, site_dict = make_data(csv_path)
     star_count = make_ranking(star_count)
     insert_data(star_count, site_dict)
-    pc_and_amp_site_page_upload()
+    # pc_and_amp_site_page_upload()
 
 
 def insert_mod_log_to_top_page(date_str):
@@ -291,7 +291,7 @@ if __name__ == '__main__':
     main()
 
     manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
-    print(make_article_list.read_pickle_pot('modify_log'))
-    print(make_article_list.read_pickle_pot('mod_date_list'))
+    # print(make_article_list.read_pickle_pot('modify_log'))
+    # print(make_article_list.read_pickle_pot('mod_date_list'))
     # print(make_article_list.read_pickle_pot('title_img_list'))
     # insert_mod_log_to_top_page('2020/8/5')

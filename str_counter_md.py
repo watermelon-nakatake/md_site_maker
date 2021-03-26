@@ -87,10 +87,11 @@ def read_this_title_log(md_path):
         print(data + ' : ' + pk[target_html][data][0])
 
 # todo: ハッピーメール 出会えない セフレ の新記事
+# todo: サイトバナー挿入script
 
 
 if __name__ == '__main__':
-    target_md = 'md_files/pc/majime/m0bbs.md'
-    key_list = ['ミント', 'ハッピーメール', 'ハピメ', 'ワクワク', 'Jメール', 'PCMAX', '婚外']
+    target_md = 'md_files/pc/majime/m1sexfriendbun.md'
+    key_list = ['ミント', 'ハッピーメール', 'ハピメ', 'ワクワク', 'Jメール', 'PCMAX', '中年']
     title_counter(target_md, key_list, 1)
     read_this_title_log(target_md)

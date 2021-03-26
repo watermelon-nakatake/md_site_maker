@@ -1652,6 +1652,22 @@ a.btn-pop {
 #review_t textarea{
     width: 90%;
 }
+.rank_o{
+    margin-left: 10px;
+    padding: 4px;
+    color: #D4571B;
+    font-size: 14px;
+}
+.rank_num{
+    display: inline-block;
+    background-color: #D4571B;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: 2px;
+    font-size: 20px;
+    padding: 4px 6px;
+    margin-left: 4px;
+}
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after, .sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, #f_wrap:after, .ar_card:after, .sli:after, .ana_i:after, .k_ana_i:after, .sb_outer:after, .radio_o:after {
     content: "";

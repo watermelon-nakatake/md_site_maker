@@ -164,10 +164,30 @@ def check_layout_flag(click_list, pk_dec):
     j = 1
     for page in new_cl:
         page = page.replace('https://www.demr.jp', '')
-        if '/sitepage/' not in page:
+        if page != '/' and '/sitepage/' not in page:
             if not pk_dec[page]:
                 print(str(i) + ' : ' + page)
                 j += 1
+            if j > 9:
+                break
+        i += 1
+
+
+def check_shift_flag(click_list, pk_dec):
+    print('shift対応未実施')
+    new_cl = [x[0] for x in click_list]
+    i = 1
+    j = 1
+    for page in new_cl:
+        # print(page)
+        page = page.replace('https://www.demr.jp', '')
+        if '/sitepage/' not in page:
+            if page != '/' and not pk_dec[page]:
+                with open('md_files/' + page.replace('.html', '.md'), 'r', encoding='utf-8') as f:
+                    long_str = f.read()
+                if 'sitepage/mintj.html' in long_str:
+                    print(str(i) + ' : ' + page)
+                    j += 1
             if j > 9:
                 break
         i += 1
@@ -178,6 +198,7 @@ if __name__ == '__main__':
     # print(pickle_dec)
     str_len_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][6] for x in pickle_dec}
     layout_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][7] for x in pickle_dec}
+    shift_dec = {'/pc/' + pickle_dec[x][0]: pickle_dec[x][8] for x in pickle_dec}
     # print(str_len_dec)
     make_side_bar_article_list(10)
     print('\n')
@@ -189,6 +210,7 @@ if __name__ == '__main__':
     print('\n')
     new_from_md.insert_main_length()
     check_layout_flag(c_l2, layout_dec)
+    check_shift_flag(c_l2, shift_dec)
 
     # print(make_article_list.read_pickle_pot('mod_date_list'))
     # print(make_article_list.read_pickle_pot('modify_log'))
