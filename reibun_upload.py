@@ -460,6 +460,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/amp/sitepage/ranking.html', 'reibun/pc/css/site_page_style.css']
+    up_files = ['reibun/pc/sitepage/ranking.html', 'reibun/amp/sitepage/ranking.html',
+                'reibun/pc/css/site_page_style.css']
     # ftp_upload(up_files)
     scp_upload(up_files)

@@ -21,9 +21,9 @@ def main():
     csv_path = 'csv_data/rb_csv.csv'
     star_count, site_dict = make_data(csv_path)
     star_count = make_ranking(star_count)
-    # insert_data(star_count, site_dict)
+    insert_data(star_count, site_dict)
     insert_to_ranking(star_count)
-    # pc_and_amp_site_page_upload()
+    pc_and_amp_site_page_upload()
 
 
 def insert_mod_log_to_top_page(date_str):
@@ -44,6 +44,46 @@ def insert_mod_log_to_top_page(date_str):
     with open('reibun/amp/index.html', 'w', encoding='utf-8') as g:
         g.write(long_str_a)
     reibun_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'])
+
+
+def insert_ranking_to_amp():
+    path_list = ['wakuwakumail.html', 'pcmax.html', 'mintj.html', '194964.html', 'happymail.html']
+    for pc_path in path_list:
+        with open('reibun/pc/sitepage/' + pc_path, 'r', encoding='utf-8') as f:
+            pc_str = f.read()
+        pc_str = reibun_upload.tab_and_line_feed_remove_from_str(pc_str)
+        data_str = re.findall(r'(<div id="site_main_data">.+?)<div class="subdisc">', pc_str)
+        base_str = data_str[0]
+        base_str = base_str.replace('<img', '<amp-img')
+        base_str = re.sub(r'id="star_i([\dt])"></span>',
+                          r'id="star_i\1" width="672" height="110" layout="responsive"></amp-img></span>', base_str)
+        print(base_str)
+        with open('reibun/amp/sitepage/' + pc_path, 'r', encoding='utf-8') as g:
+            amp_str = g.read()
+        new_str = re.sub(r'<div id="site_main_data">.+?<div class="subdisc">', base_str + '<div class="subdisc">',
+                         amp_str)
+        with open('reibun/amp/sitepage/test_' + pc_path, 'w', encoding='utf-8') as h:
+            h.write(new_str)
+
+
+def insert_site_data_to_amp():
+    path_list = ['wakuwakumail.html', 'pcmax.html', 'mintj.html', '194964.html', 'happymail.html']
+    for pc_path in path_list:
+        with open('reibun/pc/sitepage/' + pc_path, 'r', encoding='utf-8') as f:
+            pc_str = f.read()
+        pc_str = reibun_upload.tab_and_line_feed_remove_from_str(pc_str)
+        data_str = re.findall(r'(<div id="site_main_data">.+?)<div class="subdisc">', pc_str)
+        base_str = data_str[0]
+        base_str = base_str.replace('<img', '<amp-img')
+        base_str = re.sub(r'id="star_i([\dt])"></span>',
+                          r'id="star_i\1" width="672" height="110" layout="responsive"></amp-img></span>', base_str)
+        print(base_str)
+        with open('reibun/amp/sitepage/' + pc_path, 'r', encoding='utf-8') as g:
+            amp_str = g.read()
+        new_str = re.sub(r'<div id="site_main_data">.+?<div class="subdisc">', base_str + '<div class="subdisc">',
+                         amp_str)
+        with open('reibun/amp/sitepage/' + pc_path, 'w', encoding='utf-8') as h:
+            h.write(new_str)
 
 
 def pc_and_amp_site_page_upload():
@@ -139,6 +179,15 @@ def make_data(csv_path):
     return star_count, site_dict
 
 
+def pick_up_user_comment(csv_path):
+    csv_list = make_list_from_csv(csv_path)
+    comment_dict = {x: [] for x in category_code + ['t']}
+    for row in csv_list:
+        comment_dict[row[-1]].append(row)
+    print(comment_dict)
+    return comment_dict
+
+
 def star_num_maker(s_num):
     dec_num = s_num * 10
     a_num = dec_num // 10
@@ -215,7 +264,7 @@ def insert_to_ranking(site_data):
     today = datetime.date.today()
     today_str = today.strftime('%Y/%m/%d').replace('/0', '/')
     today_str2 = today.strftime('%F')
-    with open('reibun/pc/sitepage/ranking_test.html', 'r', encoding='utf-8') as f:
+    with open('reibun/pc/sitepage/ranking.html', 'r', encoding='utf-8') as f:
         long_str = f.read()
     long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
     for site_code in site_page_dict:
@@ -263,8 +312,25 @@ def insert_to_ranking(site_data):
         long_str = re.sub(r'<ul class="dr_ul" id="rd_' + category_code[j] + r'">.+?</ul>',
                           '<ul class="dr_ul" id="rd_{}">{}</ul>'.format(category_code[j], li_str), long_str)
     print(long_str)
-    with open('reibun/pc/sitepage/ranking_test.html', 'w', encoding='utf-8') as g:
+    with open('reibun/pc/sitepage/ranking.html', 'w', encoding='utf-8') as g:
         g.write(long_str)
+
+
+def insert_user_comment_to_ranking(long_str, user_data):
+    for cat_i in range(len(category_code)):
+        cat = category_code[cat_i]
+        u_str = ''
+        if user_data[cat]:
+            for user in user_data[cat]:
+                u_str += '<div class="k_ana_box"><div class="k_data_i"><span class="k_site">{}</span><span ' \
+                         'class="k_data_name">{}</span><span class="k_data_sex">{}</span><span class="k_data_age">' \
+                         '{}</span></div><div class="k_ana_i"><span class="k_ana_i_title">{}</span><span ' \
+                         'class="k_ana_i_star"><img src="../images/common/star{}.png" alt="星{}つ"></span></div><div ' \
+                         'class="k_data_comment"><span class="k_com_c">コメント</span><span class="k_com_t">{}</span>' \
+                         '</div></div>'.format(site_name_dict[user[0]], user[1], user[2], user[3], star_category[cat_i],
+                                               str(user[4 + cat_i]), str(user[4 + cat_i]), user[9])
+        long_str = re.sub(r'<!--' + cat + r'-comment-->', u_str, long_str)
+    return long_str
 
 
 def make_ranking(star_count):
@@ -348,9 +414,10 @@ if __name__ == '__main__':
 
     # reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
 
-    main()
+    # main()
+    insert_ranking_to_amp()
 
-    manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
+    # manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
     # print(make_article_list.read_pickle_pot('modify_log'))
     # print(make_article_list.read_pickle_pot('mod_date_list'))
     # print(make_article_list.read_pickle_pot('title_img_list'))
