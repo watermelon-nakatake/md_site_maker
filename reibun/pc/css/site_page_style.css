@@ -748,6 +748,41 @@ main .dousendisc p {
     line-height: 1;
 }
 
+.dr_ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.dr_ul li {
+    margin-top: 15px;
+}
+
+.dr_left {
+    display: inline-block;
+    width: 90%;
+    margin-left: 4%;
+}
+
+.dr_right {
+    width: 80%;
+    margin-left: 15%;
+}
+
+.dr_star {
+    display: inline-block;
+    width: 180px;
+}
+
+.dr_img {
+    vertical-align: -5px
+}
+
+.dr_num {
+    font-size: 24px;
+    line-height: 1;
+    margin-left: 20px;
+}
+
 #fnav:after, #gnav:after, #pnav:after, #tibl:after, .dousen:after, .sitepagetop:after,
 .eft3:after, #bread:after, .ana_i:after, .k_ana_i:after, .sb_outer:after, #review_t label:after, .cachcopy:after, #f_wrap:after, #site_star_o:after, #site_main_data:after {
     content: "";
@@ -1192,6 +1227,26 @@ main .dousendisc p {
 
     .site_data dl {
         max-width: 600px
+    }
+
+    .dr_ul {
+        width: 80%;
+        margin-top: 20px;
+        margin-left: 10%;
+    }
+
+    .dr_ul li {
+        margin-top: 35px;
+    }
+
+    .dr_left {
+        width: 45%;
+        margin-left: 4%;
+    }
+
+    .dr_right {
+        width: 45%;
+        margin-left: 5%;
     }
 }
 

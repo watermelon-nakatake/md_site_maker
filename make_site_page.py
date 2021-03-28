@@ -9,8 +9,10 @@ import check_mod_date
 
 site_name_list = ['wk', 'hm', 'mt', 'mp', 'max', 'iq']
 site_page_dict = {'hm': 'happymail', 'wk': 'wakuwakumail', 'mt': 'mintj', 'max': 'pcmax', 'iq': '194964'}
+site_name_dict = {'hm': 'ハッピーメール', 'wk': 'ワクワクメール', 'mt': 'Jメール', 'max': 'PCMAX', 'iq': 'イククル'}
 # 'mp': 'meru-para'
 star_category = ['コスト', '使いやすさ', '出会える度', 'ピュア系', 'アダルト系']
+category_code = ['c', 'u', 'd', 'p', 'a']
 site_str = [['ハッピーメール', 'happymail'], ['ワクワクメール', 'wakuwakumail'], ['Jメール', 'mintj'], ['PCMAX', 'pcmax'],
             ['イククル', '194964']]
 
@@ -19,7 +21,8 @@ def main():
     csv_path = 'csv_data/rb_csv.csv'
     star_count, site_dict = make_data(csv_path)
     star_count = make_ranking(star_count)
-    insert_data(star_count, site_dict)
+    # insert_data(star_count, site_dict)
+    insert_to_ranking(star_count)
     # pc_and_amp_site_page_upload()
 
 
@@ -205,6 +208,63 @@ def insert_data(site_data, site_user_data):
                               long_str)
             with open(site_page_path, 'w', encoding='utf-8') as g:
                 g.write(long_str)
+
+
+def insert_to_ranking(site_data):
+    print('start ranking!')
+    today = datetime.date.today()
+    today_str = today.strftime('%Y/%m/%d').replace('/0', '/')
+    today_str2 = today.strftime('%F')
+    with open('reibun/pc/sitepage/ranking_test.html', 'r', encoding='utf-8') as f:
+        long_str = f.read()
+    long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+    for site_code in site_page_dict:
+        print(site_code)
+        print(site_data[site_code])
+        this_data = site_data[site_code]
+        this_str = re.findall(r'<section class="sr_outer ' + site_code + r'">.+?<!--e/' + site_code + r'-->', long_str)
+        total_star = star_num_maker(this_data[5])
+        new_str = re.sub(r'<span class="ana_m_star"><img src="\.\./images/common/star\d+?\.png" alt="星[\d.]+?つ">'
+                         r'</span><span class="ana_m_num"><span>[\d.]+?</span>',
+                         '<span class="ana_m_star"><img src="../images/common/star{}.png" alt="星{}つ">'
+                         '</span><span class="ana_m_num"><span>{}</span>'.format(total_star, total_star, this_data[5]),
+                         this_str[0])
+        i = 0
+        for cat_str in star_category:
+            main_star = star_num_maker(this_data[i])
+            new_str = re.sub(cat_str + r'</span></span><span class="ana_i_star"><img src="\.\./images/common/'
+                                       r'star\d+?\.png" alt="星[\d.]+?つ"></span><span class="ana_i_num">'
+                                       r'<span>[\d.]+?</span>',
+                             cat_str + '</span></span><span class="ana_i_star"><img src="../images/common/star{}.png"'
+                                       ' alt="星{}つ"></span><span class="ana_i_num"><span>{}'
+                                       '</span>'.format(main_star, main_star, this_data[i]), new_str)
+            i += 1
+        long_str = long_str.replace(this_str[0], new_str)
+        long_str = re.sub(r'<time itemprop="dateModified" datetime=".+?</time>',
+                          '<time itemprop="dateModified" datetime="{}">{}</time>'.format(today_str2, today_str),
+                          long_str)
+    rank_data = [site_data[x] + [x] for x in site_data]
+    print(rank_data)
+    for j in range(5):
+        rank_data.sort(key=lambda y: y[j], reverse=True)
+        print(rank_data)
+        li_str = ''
+        rank_num = 1
+        for site_d in rank_data:
+            rd_num = star_num_maker(site_d[j])
+            li_str += '<li><span class="dr_left"><span class="order">第<span class="o_num">{}</span>位</span>' \
+                      '<a href="{}.html" class="r_site_name">{}</a></span><span class="dr_right">' \
+                      '<span class="dr_star"><img src="../images/common/star{}.png" alt="星{}つ" class="dr_img">' \
+                      '</span><span class="dr_num">{}</span></span>' \
+                      '</li>'.format(str(rank_num), site_page_dict[site_d[7]], site_name_dict[site_d[7]],
+                                     str(rd_num), str(rd_num), str(site_d[j]))
+            rank_num += 1
+        print(li_str)
+        long_str = re.sub(r'<ul class="dr_ul" id="rd_' + category_code[j] + r'">.+?</ul>',
+                          '<ul class="dr_ul" id="rd_{}">{}</ul>'.format(category_code[j], li_str), long_str)
+    print(long_str)
+    with open('reibun/pc/sitepage/ranking_test.html', 'w', encoding='utf-8') as g:
+        g.write(long_str)
 
 
 def make_ranking(star_count):
