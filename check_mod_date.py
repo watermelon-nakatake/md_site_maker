@@ -18,12 +18,33 @@ def make_mod_date_list():
     make_article_list.save_data_to_pickle(mod_list, 'mod_date_list')
 
 
+def sc_data_match_page(csv_list):
+    result = {}
+    for page in csv_list[1:]:
+        f_page = page[0].replace('https:www.demr.jp/', '').replace('amp/', 'pc/')
+        f_page = re.sub(r'^(.+)#.+', r'\1', f_page)
+        if f_page not in result:
+            result[f_page] = page + [1]
+        else:
+            # print('------------------')
+            # print(page)
+            recent_page = result[f_page]
+            # print(recent_page)
+            result[f_page] = [recent_page[0].replace('/amp/', '/pc/'), str(int(page[1]) + int(recent_page[1])),
+                              str(int(page[2]) + int(recent_page[2])), recent_page[3], recent_page[4],
+                              recent_page[5] + 1]
+            # print(result[f_page])
+    result_list = [result[x] for x in result]
+    return result_list
+
+
 def next_update_target_search(aim_date, len_dec):
     i = 0
     with open('/Users/nakataketetsuhiko/Downloads/https___www/ページ.csv') as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
-    c_list = [y for y in csv_list[1:] if '#' not in y[0] and '/amp/' not in y[0]]
+    c_list = sc_data_match_page(csv_list)
+    # c_list = [y for y in csv_list[1:] if '#' not in y[0] and '/amp/' not in y[0]]
     mod_list = make_article_list.read_pickle_pot('mod_date_list')
     limit_d = datetime.datetime.now() - datetime.timedelta(days=aim_date)
     for i in range(len(mod_list)):
@@ -36,6 +57,7 @@ def next_update_target_search(aim_date, len_dec):
     c_list.sort(key=lambda x: int(x[2]), reverse=True)
     print('表示回数順')
     display_list = check_no_mod_page(mod_list_n, c_list, len_dec)
+    c_list.sort(key=lambda x: int(x[1]), reverse=True)
     return click_list, display_list, c_list
 
 
@@ -51,12 +73,13 @@ def check_no_mod_page(mod_list, csv_list, len_dec):
                 url_str_n = url_str + 'index.html'
             else:
                 url_str_n = url_str
-            if '/sitepage/' not in url_str:
-                print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}, 文字数 {}'
-                      .format(str(i), url_str, g_data[1], g_data[2], g_data[4], len_dec[url_str_n]))
-            else:
-                print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}'
-                      .format(str(i), url_str, g_data[1], g_data[2], g_data[4]))
+            if url_str_n in len_dec:
+                if '/sitepage/' not in url_str:
+                    print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}, 文字数 {}'
+                          .format(str(i), url_str, g_data[1], g_data[2], g_data[4], len_dec[url_str_n]))
+                else:
+                    print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}'
+                          .format(str(i), url_str, g_data[1], g_data[2], g_data[4]))
         if len(result) == 10:
             break
         i += 1
@@ -165,11 +188,17 @@ def check_layout_flag(click_list, pk_dec):
     for page in new_cl:
         page = page.replace('https://www.demr.jp', '')
         if page != '/' and '/sitepage/' not in page:
-            if not pk_dec[page]:
-                print(str(i) + ' : ' + page)
-                j += 1
-            if j > 9:
-                break
+            if page in pk_dec:
+                if not pk_dec[page]:
+                    c_num = ''
+                    for cl in click_list:
+                        if page in cl[0]:
+                            c_num = cl[1]
+                            break
+                    print(str(i) + ' : ' + page + ' ' + c_num)
+                    j += 1
+                if j > 9:
+                    break
         i += 1
 
 
@@ -179,14 +208,18 @@ def check_shift_flag(click_list, pk_dec):
     i = 1
     j = 1
     for page in new_cl:
-        # print(page)
         page = page.replace('https://www.demr.jp', '')
-        if '/sitepage/' not in page:
+        if '/sitepage/' not in page and page in pk_dec:
             if page != '/' and not pk_dec[page]:
                 with open('md_files/' + page.replace('.html', '.md'), 'r', encoding='utf-8') as f:
                     long_str = f.read()
                 if 'sitepage/mintj.html' in long_str:
-                    print(str(i) + ' : ' + page)
+                    c_num = ''
+                    for cl in click_list:
+                        if page in cl[0]:
+                            c_num = cl[1]
+                            break
+                    print(str(i) + ' : ' + page + ' ' + c_num)
                     j += 1
             if j > 9:
                 break

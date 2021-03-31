@@ -41,8 +41,8 @@ def main(mod_hour, site_shift):
     :param site_shift: サイトの表示に関するフラグ
     :return: none
     """
-    add_files = ['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base11.css', 'reibun/pc/css/pc11.css',
-                 'reibun/pc/css/phone11.css', 'reibun/p_sitemap.xml']
+    add_files = ['reibun/index.html', 'reibun/amp/index.html', 'reibun/pc/css/base13.css', 'reibun/pc/css/pc13.css',
+                 'reibun/pc/css/phone13.css', 'reibun/p_sitemap.xml']
     mod_list = []
     now = time.time()
     st_time = 60 * 60 * mod_hour
@@ -104,7 +104,7 @@ def main(mod_hour, site_shift):
     upload_list.extend(change_files)
     amp_upload = [x.replace('/pc/', '/amp/') for x in upload_list]
     upload_list.extend(amp_upload)
-    upload_list.extend(modify_file_check(now, st_time, add_files))
+    upload_list.extend(add_files)
     # todo: 文中に関連記事挿入 card
     upload_list = set(upload_list)
     upload_list = list(upload_list)
@@ -634,6 +634,7 @@ def import_from_markdown(md_file_list, site_shift):
                 plain_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', plain_txt)
                 plain_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-b-->\n\n\n\1\n\n<!--e/arlist_b-->',
                                    plain_txt)
+            plain_txt = insert_site_banner(plain_txt)
             plain_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n', r'<!--kanren-->\n\n\n\1\n\n<!--e/kanren-->', plain_txt)
             plain_txt = re.sub(r'%btnli%\n([\s\S]*?)\n\n', r'<!--btnli-->\n\n\n\1\n\n<!--e/btnli-->', plain_txt)
             plain_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', plain_txt)
@@ -1150,6 +1151,18 @@ def make_1st_title_log():
         new_dec[pk_dec[p_id][0]] = {'2020/11/10': [pk_dec[p_id][1], pk_dec[p_id][6]]}
     print(new_dec)
     make_article_list.save_data_to_pickle(new_dec, 'title_log')
+
+
+def insert_site_banner(long_str):
+    b_dict = {'hm': '<a href="../../../reibun/pc/ds/happymail/" target="_blank" rel="nofollow" class="happy-otherb"'
+                    ' onclick="gtag(' + "'event', 'click', {'event_category': 'access','event_label': 'happy-otherb'}" +
+                    ');"><img src="../images/hm234x60_1214.gif" width="234" height="60" alt="ハッピーメール"></a>',
+              'mt': '<a href="../../../reibun/pc/ds/mintj/" target="_blank" class="mintj-otherb" onclick="gtag' +
+                    "('event', 'click', {'event_category': 'access','event_label': 'mintj-otherb'})" +
+                    ';"><img width="234" height="60" alt="Jメール" src="../images/mt234x60blue.gif"></a>'}
+    for site_code in b_dict:
+        long_str = long_str.replace('%bn_' + site_code + '%', '<div class="center">' + b_dict[site_code] + '</div>')
+    return long_str
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-@charset "utf-8";
+@charset "UTF-8";
 abbr, address, article, aside, audio, b, blockquote, body, canvas, caption, cite, code, dd, del, details, dfn, div, dl, dt, em, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, p, pre, q, samp, section, small, span, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, ul, var, video {
     margin: 0;
     padding: 0;
@@ -26,7 +26,7 @@ blockquote, q {
 }
 
 blockquote:after, blockquote:before, q:after, q:before {
-    content: '';
+    content: none
 }
 
 a {
@@ -92,63 +92,186 @@ body {
 
 #outline {
     text-align: left;
-    width: 100%;
-    margin: 0;
+    width: 1024px;
+    margin: 0 auto;
     padding: 0;
     overflow: hidden;
-    border: none
 }
 
 #con3 {
+    width: 759px;
     position: relative;
-    margin: 0;
-    padding: 0
+    padding: 20px 5px 20px;
+    overflow: hidden;
+    float: left
 }
 
 #header {
-    padding: 0;
-    height: 50px;
     border-bottom: 1px solid #6E6E6E;
+    padding: 0
 }
 
 #tibl {
-    height: 80px;
+    height: 70px;
     overflow: hidden;
-    z-index: 200
+    width: 1024px;
+    margin: 0 auto;
 }
 
 #title {
     float: left;
-    margin: 0 0 0 10px;
-    padding: 5px 0 0;
-    width: 60%
+    margin-left: 50px;
+    padding-top: 15px
 }
 
 #title img {
-    max-width: 100%
+    width: 250px;
+    height: 37px;
+}
+
+/* topページ*/
+.top #con3 {
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.top #con3 p {
+    margin: 20px;
+}
+
+.top #header {
+    border-bottom: 1px solid #6E6E6E;
+    padding: 0
+}
+
+.top #tibl {
+    height: 100px;
+    overflow: hidden;
+    width: 1024px;
+    margin: 0 auto;
+}
+
+.top title {
+    padding-top: 10px;
+}
+
+.top #title img {
+    width: 400px;
+    height: 59px;
+}
+
+.top #dis {
+    float: left;
+    margin: 27px 0 0 50px;
+    font-size: 15px;
+    color: #464646;
+    font-weight: normal;
+    border: none;
+    width: auto;
+    padding: 0;
+}
+
+.t_h1 {
+    display: none;
+}
+
+.top #gnav {
+    margin: 10px 0;
+    height: 60px;
+    width: 450px;
+    float: right;
+}
+
+.top_r {
+    float: left;
+    width: 50%; /*background-color: #FF6600;*/
+}
+
+.top_l {
+    float: left;
+    width: 50%; /*background-color: #FFD2B4;*/
+}
+
+/*.top h1 {width: 13%;font-size: 12px;border: none;margin: 0 0 0 70%;padding: 0;text-align: right;float: left;font-weight: normal;}*/
+.top #modt {
+    font-size: 12px;
+    text-align: right;
+}
+
+.t_nav li {
+    float: left;
+    width: 50%;
+    margin: 0;
+    padding: 0
+}
+
+.tn_i {
+    width: 150px;
+    height: 150px;
+    float: left;
+}
+
+.tn_r {
+    width: 320px;
+    padding: 15px;
+    float: left;
+    font-size: 15px;
 }
 
 #dis {
+    float: left;
+    margin: 10px 0 0 50px;
+    font-size: 12px;
+    color: #464646
+}
+
+#nav-close, #nav-open {
     display: none
 }
 
-#navop {
+#gnav {
+    margin: 30px 0;
+    height: 60px;
+    width: 450px;
+    float: right;
+}
+
+#gnav li {
+    float: left;
+    width: 32%;
+    text-align: center;
+    list-style: none
+}
+
+#gnav a {
+    font-size: 14px;
+    text-decoration: none;
+    padding: 7px 0 5px;
+    display: block;
+    color: #333333
+}
+
+.gnav06 {
     display: none
+}
+
+.majime #gnav li.gnav01 a, .post #gnav li.gnav01 a, .f_mail #gnav li.gnav01 a, .profile #gnav li.gnav01 a, .s_mail #gnav li.gnav01 a, .date #gnav li.gnav01 a, .how_to #gnav li.gnav01 a, .qa #gnav li.gnav06 a, .site #gnav li.gnav03 a, .caption #gnav li.gnav05 a {
+    color: #F60
+}
+
+#gnav a:hover {
+    background: #FFD2B4;
+    color: #F60;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s
 }
 
 #footer {
     clear: both;
     width: 100%;
-    background-color: #FFF
-}
-
-#footer2 {
-    text-align: center;
-    color: #666;
-    margin: 0 auto 0 auto;
-    width: 100%;
-    height: auto;
-    font-size: 80%
+    border-top: 2px dotted rgba(153, 153, 153, 1)
 }
 
 #footer1 {
@@ -156,30 +279,94 @@ body {
     width: 100%;
     height: auto;
     margin: 0;
-    padding-top: 5px;
+    padding: 5px 0 3px;
     text-align: center;
     color: #fff;
-    font-weight: bolder
+    font-weight: bold;
+    font-size: 14px
+}
+
+#footer a:hover {
+    color: #f60
 }
 
 .ud {
-    padding-left: 10px;
-    color: #f4b800;
-    margin: 1em 0 5px 7px;
-    min-height: 23px;
-    font-size: 115%;
-    font-weight: 700
+    display: none
+}
+
+#footer2 {
+    text-align: center;
+    color: #333;
+    margin: 0 auto 0 auto;
+    width: 100%;
+    height: auto;
+    font-size: 14px
+}
+
+#fnav {
+    padding: 7px 0;
+    width: 85%;
+    float: left;
+}
+
+#fnav li {
+    float: left;
+    width: 19.4%;
+    text-align: center;
+    list-style: none
+}
+
+#fnav a {
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 4px 0 2px;
+    display: block;
+    color: #666;
+    text-shadow: rgba(102, 102, 102, 1)
+}
+
+.top #fnav li.fnav00 a, .profile #fnav li.fnav01 a, .post #fnav li.fnav02 a, .f_mail #fnav li.fnav03 a, .s_mail #fnav li.fnav04 a, .date #fnav li.fnav05 a, .how_to #fnav li.fnav06 a, .site #fnav li.fnav07 a, .caution #fnav li.fnav08 a, .qa #fnav li.fnav09 a {
+    color: #f90
+}
+
+#fnav a:hover {
+    color: #F60;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    transition: .5s
+}
+
+.snsb {
+    width: 13%;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+.snsb1 {
+    width: 50px;
+    height: 24px;
+    float: left;
+    padding: 0;
+    margin: 15px 10px;
+    overflow: hidden
 }
 
 #pnav {
     text-align: center;
     width: 90%;
-    padding: 10px 0 5px;
+    padding: 10px 0 5px 10px;
     margin: 0 auto
 }
 
 #pnav li {
+    float: left;
     list-style: none
+}
+
+#pnav li:after {
+    content: "-"
 }
 
 #pnav a {
@@ -193,87 +380,43 @@ body {
 
 #bread {
     width: 100%;
-    float: none;
-    font-size: 11px
+    font-size: 13px;
+    margin: 0;
+    padding: 0
 }
 
 #bread a {
     color: #0074a2;
-    font-size: 11px
+    font-size: 13px;
+    margin: 0;
+    padding: 0
 }
 
 .brd1, .brd2 {
-    margin: 2px 0 7px 3px;
+    margin: 1px 0 0 8px;
+    padding: 0;
     float: left
 }
 
-h1 {
-    width: 93%;
-    padding: 5px 0 2px 5px;
-    margin: 10px 0 5px 3%;
-    font-weight: 700;
-    font-size: 120%;
-    border-bottom: 2px solid #00A2a8;
-    letter-spacing: 1px;
+#con3 section { /*margin-bottom: 4em;margin-top: 3em;     */
+    padding: 1.5em 0;
 }
 
 #con3 p {
-    margin: 10px 1em 20px 1em;
+    margin: 10px 2em 2em 3.5em;
+    font-weight: 100;
     letter-spacing: 1px;
 }
 
-#con3 section {
-    margin-bottom: 4em;
-    margin-top: 3em;
-}
-
 #sited {
-    display: block;
-    margin: 10px;
-    padding-bottom: 10px
-}
-
-#sited li {
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
-    background: -webkit-gradient(linear, left top, left bottom, from(#ffd4e3), to(#ffb1c7));
-    width: 90%;
-    margin-bottom: 5px;
-    padding: 0 5px 8px 10px;
-    list-style-type: none
-}
-
-#sited li a {
-    display: block;
-    width: 100%;
-    padding: 8px 0 0;
-    color: #fff;
-    background: url(../images/link_w.png) right center no-repeat;
-    text-decoration: none
-}
-
-.osu {
-    background: url(../images/link_w.png) right center no-repeat
-}
-
-.stit {
-    font-weight: 700;
-    font-size: 110%;
-    display: block;
-    text-shadow: -1px -1px 0 rgba(150, 150, 150, .3)
-}
-
-.sdis {
-    color: #000;
-    font-weight: 400;
-    margin: 0 0 0 5px;
-    font-size: 12px;
-    display: block
+    display: none
 }
 
 .kenmei {
     font-weight: 700;
-    margin-left: 5px
+    margin-left: 4em;
+    margin-bottom: 10px;
+    font-size: 110%;
 }
 
 .m_title {
@@ -284,25 +427,25 @@ h1 {
 }
 
 .mail {
-    width: 90%;
+    width: 70%;
     background-color: #cff;
     border-radius: 8px;
     -webkit-border-radius: 8px;
-    padding: 10px 15px;
-    margin: 0 auto 20px
+    padding: 15px 20px;
+    margin: 0 auto
 }
 
 .wmail {
-    width: 90%;
-    background-color: #fdf;
+    width: 70%;
+    background-color: #ffe4e1;
     border-radius: 8px;
     -webkit-border-radius: 8px;
-    padding: 10px 15px;
-    margin: 0 auto 20px
+    padding: 15px 20px;
+    margin: 0 auto
 }
 
 .arr {
-    padding-bottom: 10px;
+    padding: 10px 0 7px;
     margin: 0 auto;
     text-align: center
 }
@@ -313,14 +456,20 @@ h1 {
     border-width: 0
 }
 
+.sample {
+    width: 90%;
+    margin: 1em auto;
+    padding-bottom: 1em
+}
+
 #con3 .mail p, #con3 .wmail p {
     padding: 15px 0;
     margin: 0
 }
 
-.sample {
-    width: 90%;
-    margin: 0 auto 3em;
+.btnli li {
+    list-style: circle;
+    margin: 3px 0 3px 5px;
     padding: 0
 }
 
@@ -332,30 +481,27 @@ h1 {
     margin: 0
 }
 
-.mailtb {
-    margin: 10px auto;
-    width: 100%
-}
-
-.navi_brock, #fnav {
-    width: 100%;
+.navi_brock {
+    width: 254px;
+    float: right;
     overflow: hidden;
     margin-top: 20px;
 }
 
-.leftnav, #fnav {
-    width: 95%;
-    margin: 5px auto 10px;
+.leftnav {
+    width: 250px;
+    margin: 5px 0 10px;
     overflow: hidden;
+    float: right;
     border: #e0e0e0 1px solid;
     border-radius: 2px;
 }
 
-.sbh, .fnav_i {
+.sbh {
     height: 25px;
-    width: 80%;
-    font-size: 18px;
-    padding: 17px 5% 5px 5%;
+    width: 210px;
+    font-size: 15px;
+    padding: 17px 0 5px 23px;
     margin: 0 auto;
     color: #333333;
     border-bottom: #6E6E6E solid 2px;
@@ -363,37 +509,42 @@ h1 {
     line-height: 16px;
 }
 
-.leftnav ul, #fnav ul {
+.leftnav ul {
     display: block;
-    width: 90%;
+    width: 238px;
     padding: 0;
     margin: 0 auto;
     list-style: none
 }
 
-.leftnav li, #fnav li {
-    width: 90%;
-    padding: 10px 5% 9px;
+.leftnav li {
+    width: 215px;
+    padding: 10px 9px 9px;
     border-bottom: dotted #e0e0e0 1px;
     margin: 0;
     line-height: 21px;
 }
 
-.leftnav li:last-child, #fnav li:last-child {
+.leftnav li:last-child {
     border-bottom: none;
 }
 
-.leftnav li a, #fnav li a {
+.leftnav li a {
     height: 100%;
     width: 100%;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 400;
     color: #191970;
     text-decoration: none;
 }
 
+.leftnav li a:hover {
+    color: #FF8E8E
+}
+
 .blue {
-    color: #00F
+    color: #00F;
+    font-weight: bold
 }
 
 .hrd {
@@ -402,37 +553,53 @@ h1 {
     border-top: dashed 1px #999
 }
 
+h1 {
+    width: 93%;
+    padding: 5px 0 20px 15px;
+    margin: 0 0 5px 3%;
+    font-weight: bold;
+    font-size: 150%;
+    border-bottom: 2px solid #00A2a8;
+    letter-spacing: 2px;
+}
+
 h2 {
     width: 95%;
-    padding: 5px 0 2px 5%;
-    margin: 20px 0 0 0;
-    font-weight: 700;
-    font-size: 115%;
+    padding: 15px 0 15px 15px;
+    margin: 15px 0 30px 0;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 20px;
     background-color: #00A2a8;
     color: #FFFFFF;
     letter-spacing: 1px;
 }
 
 h3 {
-    font-size: 110%;
     color: #00A2a8;
-    margin: 5px 0 10px 5px;
-    letter-spacing: 1px;
+    font-size: 110%;
+    font-weight: bold;
+    margin: 1.5em 0 10px 1.3em
 }
 
 h4, .data_title {
     font-size: 105%;
     font-weight: bolder;
-    margin: 1.5em 0 10px 1em
+    margin: 1.5em 0 10px 3em
 }
 
 .center {
     text-align: center
 }
 
+.ap_int {
+    text-align: center;
+    margin: 40px 0;
+}
+
 a, a:link {
     color: #0074a2;
-    text-decoration: underline
+    text-decoration: underline;
 }
 
 a:visited {
@@ -440,21 +607,26 @@ a:visited {
     text-decoration: underline
 }
 
+a:hover {
+    color: #D4571B;
+    text-decoration: underline
+}
+
 .hutoaka, b, strong {
-    color: red;
+    color: #ff4500;
     font-weight: bold;
     font-size: 120%
 }
 
 .hutokuro, em {
     font-weight: bold;
-    font-size: 110%;
-    font-style: normal
+    font-size: 120%;
+    font-style: normal;
 }
 
 .libut {
-    width: 95%;
-    margin: 5px auto 0;
+    width: 92%;
+    margin: 20px 0 30px 50px;
     padding: 15px 0
 }
 
@@ -477,7 +649,7 @@ a:visited {
     color: #666666;
     text-decoration: none;
     font-weight: 600;
-    font-size: 105%;
+    font-size: 110%;
     display: block
 }
 
@@ -488,7 +660,7 @@ a:visited {
 .libut li span {
     color: #9B9B9B;
     margin: 0 0 0 10px;
-    font-size: 90%;
+    font-size: 80%;
     display: block;
     font-weight: normal
 }
@@ -496,38 +668,54 @@ a:visited {
 #mokujio {
     width: 100%;
     position: relative;
-    margin-bottom: 20px
+    margin-bottom: 40px
 }
 
 #mokuji {
-    width: 90%;
-    border: 1px solid #CCCCCC;
-    padding: 3%;
+    width: 520px;
+    border: 1px solid #ccc;
+    padding: 20px 1em 15px 0;
     margin: 10px auto 20px auto;
     background: #efefef;
 }
 
 .moh {
     text-align: center;
-    margin: 5px auto;
+    margin: 5px auto 10px;
     color: #0074a2;
-    font-size: 120%
+    font-size: 120%;
+    font-weight: bold
+}
+
+#mokuji ol li a {
+    text-decoration: none;
+    color: #0074a2
 }
 
 #mokuji ol {
     counter-reset: section;
     list-style-type: none;
-    margin: 5px 0 5px 0.7em;
+    margin: 0 0 0 1.5em;
 }
 
 #mokuji ol li {
+    width: 100%;
     margin: 5px 0;
+}
+
+#mokuji ol li a {
+    width: 100%;
+}
+
+#mokuji ol li a:hover {
+    text-decoration: underline;
+    color: #D4571B;
 }
 
 #mokuji ol li:before {
     counter-increment: section;
     color: #0074a2;
-    content: counters(section, "-") " ";
+    content: counters(section, ".") " ";
 }
 
 .small {
@@ -558,37 +746,55 @@ a:visited {
     opacity: 1;
 }
 
-.btnli li {
-    border-radius: 5px;
-    background: -webkit-gradient(linear, left top, left bottom, from(#c3fb00), to(#9cc900));
-    margin: 5px auto;
-    padding: 0 10px;
+#update {
+    margin: 15px 5px 40px 25px;
+    width: 93%;
+    height: 13em;
+    overflow: scroll;
+    border: #333 1px
+}
+
+#update li {
+    list-style: none;
+    margin: 3px 0 0 1.5em
+}
+
+#log_page_list {
+    margin: 15px 5px 40px 25px;
+    width: 85%;
+    border: none
+}
+
+#log_page_list li {
+    list-style: none;
+    margin: 3px 0 0
+}
+
+.mailtb {
+    margin: 10px auto;
+    width: 70%
+}
+
+.pic250, .pic330 {
+    float: right;
+    margin: 10px
+}
+
+.picf {
+    width: 100%
+}
+
+.picf img {
     width: 80%;
-    list-style: none
-}
-
-.btnli li a {
-    display: block;
-    width: 90%;
-    font-size: 110%;
-    padding: 10px 5% 10px 3%;
-    color: #fff;
-    font-weight: 700;
-    text-shadow: -1px -1px 0 rgba(150, 150, 150, .3);
-    text-decoration: none;
-    background: url(../images/link_w.png) right center no-repeat;
-    float: left
-}
-
-.scol {
-    margin-left: 3em
+    margin: 10px 8% 10px 12%;
 }
 
 #modt {
     text-align: right;
     margin-bottom: 40px;
-    font-size: 80%;
-    margin-right: 10px
+    font-size: 70%;
+    width: 95%;
+    margin-right: 5%
 }
 
 .efooter {
@@ -614,58 +820,23 @@ a:visited {
     display: none
 }
 
-.snsb {
-    display: none;
-    overflow: hidden;
-    width: 100%;
-    margin: 40px 0 20px
-}
-
-.snsb1 {
-    display: none
-}
-
-.tabn {
-    display: none
-}
-
-.pic250, .pic330 {
-    width: 100%;
-    margin: 10px auto;
-    text-align: center
-}
-
-.picf {
-    width: 100%
-}
-
-.picf img {
-    width: 80%;
-    margin: 10px 8% 10px 12%;
-}
-
 .sitepage #con1 {
     width: 100%;
+    float: left;
     margin-right: 0
 }
 
 .sitepage #con2 {
     width: 100%;
+    float: left;
     margin-left: 0;
     margin-right: 0
 }
 
 .sitepage #con3 {
+    width: 100%;
     position: relative;
     margin: 0
-}
-
-.sitepage #header {
-    height: 50px
-}
-
-.sitepage #tibl {
-    height: 50px
 }
 
 .sitepage .sitepagetop {
@@ -674,12 +845,26 @@ a:visited {
 }
 
 .sitepage #con3 .cachcopy {
-    width: 100%;
-    font-size: 24px
+    width: 480px;
+    float: left;
+    font-size: 24px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0
 }
 
-.sitepage .sp300x300, .sitepage .sp400x400 {
-    display: none
+.sitepage .sp400x400 {
+    width: 400px;
+    height: 400px;
+    float: right;
+    margin-right: 20px
+}
+
+.sitepage .sp300x300 {
+    width: 300px;
+    height: 300px;
+    float: right;
+    margin-right: 30px
 }
 
 .sitepage #con3 p {
@@ -687,163 +872,211 @@ a:visited {
     margin: 0
 }
 
-.sitepage #con3 .maindisc {
-    width: 90%;
-    font-size: 20px;
-    font-weight: 800;
+.sitepage h1 {
+    width: 95%;
+    padding: 5px 0 2px 15px;
+    margin: 0 0 15px 3%;
+    border-left: 10px solid #00A2a8;
+    font-weight: 700;
+    font-size: 300%;
+    color: #00A2a8
+}
+
+.sitepage h2 {
+    background: 0 0;
+    width: 97%;
+    padding: 5px 0 2px 5px;
+    margin: 55px 0 15px;
+    border-bottom: none;
+    font-size: 30px;
+    font-weight: 700;
+    color: rgba(0, 153, 255, 1)
+}
+
+.sitepage .maindisc {
+    font-size: 30px;
+    font-weight: normal;
     color: #000;
-    margin: 0 auto 0 auto
+    margin: 0 0 0 30px
 }
 
 .sitepage #con3 .maindisc p {
-    margin: 0 auto;
-    padding: 0
+    margin: 0
 }
 
 .sitepage #con3 .subdisc {
-    margin: 5px auto 20px 20px;
-    padding: 0
+    width: 400px;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 30px auto 0
 }
 
 .sitepage #con3 .subdisc ul {
-    width: 90%;
-    margin: 0 0 0 10%;
+    margin: 0 0 0 1em;
     padding: 0
 }
 
-.sitepage #con3 .subdisc li {
-    margin: 3px 0;
+.sitepage #con3 .subdisc ul li {
+    margin: 5px 0;
     padding: 0;
     color: rgba(255, 102, 0, 1)
 }
 
 .sitepage #con3 .sec1, .sitepage #con3 .sec2 {
     margin-bottom: 50px;
-    padding-right: 5px
+    padding-right: 30px
 }
 
 .sitepage #con3 .dousen {
     width: 100%;
-    margin: 0 0 5px;
-    padding: 5px;
+    padding: 10px 15px;
+    margin: 10px 0 20px;
     background: rgba(254, 238, 224, 1)
 }
 
 .sitepage #con3 .dousenin {
-    width: 100%;
-    padding: 5px 0;
-    margin: 0 0 20px
+    width: 430px;
+    padding: 10px 15px 0 15px;
+    margin: 10px auto 0 auto
 }
 
 .sitepage #con3 .sphmban {
-    margin: 5px 0
+    margin: 5px auto;
+    float: right
 }
 
 .sitepage #con3 .dousendisc {
-    width: 160px;
-    margin: 5px 0 5px 5px;
-    font-size: 13px;
-    float: left
-}
-
-.sitepage .sitepageafter {
-    font-size: 16px
-}
-
-.sitepage #con3 .wkwk .maindisc {
-    font-size: 20px;
-    font-weight: 800;
-    margin: 0 0 0 10px;
-    padding-top: 0
-}
-
-.sitepage #con3 .wkwk .subdisc {
-    width: 330px;
+    width: 300px;
+    height: 60px;
+    margin: 15px auto 0 auto;
+    float: left;
+    color: rgba(102, 102, 102, 1);
     font-size: 15px;
-    margin-left: 15px
+    font-weight: 700
 }
 
-.sitepage #con3 .wkwk .dousen {
-    width: 100%;
-    margin: 0 0 5px;
-    padding: 5px
+.sitepage #con3 .dousen .dousendisc p {
+    padding: 0;
+    margin: 0
+}
+
+.sitepage #con3 .iku .dousenin {
+    width: 550px;
+    padding: 10px 15px 0 15px;
+    margin: 10px auto 10px
+}
+
+.sitepage #con3 .iku .dousendisc {
+    width: 230px;
+    margin: 10px auto 5px;
+    float: left;
+    color: rgba(102, 102, 102, 1);
+    font-size: 15px;
+    font-weight: 700
 }
 
 .sitepage #con3 .wkwk .dousenin {
-    width: 100%;
-    padding: 0;
-    margin: 10px 0;
-    text-align: center
+    width: 480px;
+    padding: 10px 15px 0 15px;
+    margin: 10px auto 10px
 }
 
 .sitepage #con3 .wkwk .dousendisc {
-    width: 90%;
-    height: auto;
-    margin: 15px auto 0;
-    float: none;
+    width: 230px;
+    margin: 10px auto 5px;
+    float: left;
+    color: rgba(102, 102, 102, 1);
     font-size: 15px;
-    font-weight: 700;
-    text-align: left
+    font-weight: 700
 }
 
 .sitepage #con3 .wkwk .sphmban {
-    margin: 5px auto
+    margin: 5px auto;
+    float: right
+}
+
+.sitepage #con3 .wkwk .dousendiscls {
+    width: 320px;
+    margin: 0 auto 5px;
+    color: rgba(102, 102, 102, 1);
+    font-size: 15px;
+    font-weight: 700
+}
+
+.sitepage #con3 .spbk {
+    width: 320px;
+    margin: 0 auto;
+    color: rgba(102, 102, 102, 1);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center
+}
+
+.sitepage #con3 .wkwk .sphmbanls {
+    margin: 5px auto;
+    text-align: center
 }
 
 .sitepage #con3 .wkwk .dousendisc .larg {
-    font-size: 15px;
-    margin: 0 0 0 30px
+    font-size: 18px;
+    margin: 0 auto
 }
 
-.sitepage #sited {
-    display: none
-}
-
-.sitepage #fnav {
-    display: none
-}
-
-.sitepage #nav-open {
-    display: none
-}
-
-.spbk {
+.sitepage .sitepageafter {
     width: 100%;
-    text-align: center;
-    font-size: 75%
+    font-size: 20px;
+    padding-top: 20px
+}
+
+.sitepage #con3 .sitepageafter p {
+    margin: 5px 0 0 30px;
+    padding-left: 1em
+}
+
+.sitepage #con3 .sitepageafter p span {
+    font-size: 13px;
+    color: #666;
+    margin: 0 1em;
+    line-height: 15px
 }
 
 .sitepage #con3 .sitepageafter .step {
     width: 5em;
     font-size: 13px;
     color: #fff;
-    margin: 20px 15px 15px 5px;
+    margin: 30px 15px 15px 35px;
     padding: 3px;
     background: rgba(0, 0, 255, 1);
     text-align: center
 }
 
 .sitepage #con3 .sitepageafter .tokucho {
-    font-size: 110%;
-    margin: 30px 15px 5px 5px
+    width: 18em;
+    font-size: 18px;
+    color: #fff;
+    margin: 30px 15px 15px 35px;
+    padding: 5px 10px;
+    background: rgba(51, 51, 51, 1);
+    text-align: center
 }
 
-.sitepage #con3 .sitepageafter p {
-    margin: 5px 0 0 20px;
-    padding-left: 0
+.sitepage #con3 .mailtb {
+    margin: 30px auto 20px
+}
+
+.sitepage #con3 .caution {
+    font-size: 18px;
+    color: red;
+    font-weight: 800
 }
 
 .kanren {
-    width: 90%;
+    width: 75%;
     border-radius: 8px;
     -webkit-border-radius: 8px;
-    padding: 10px;
-    border: 1px solid #CCCCCC;
-    margin: 50px auto 20px;
-}
-
-.kanren ul {
-    margin-left: 1.5em
+    padding: 20px 3% 30px;
+    margin: 50px auto 50px;
+    border: 1px solid #cccccc
 }
 
 .kanren h2 {
@@ -852,12 +1085,17 @@ a:visited {
     background-color: #ffffff
 }
 
-.page-top {
-    margin: 0;
-    padding: 0;
+.kanren li {
+    margin-left: 2.5em;
+    width: 90%;
+    margin-bottom: 1em
 }
 
-.page-top p {
+.btnli li {
+    margin-left: 5em
+}
+
+.page-top {
     margin: 0;
     padding: 0;
     position: fixed;
@@ -879,7 +1117,8 @@ a:visited {
     transition: all 0.3s;
     opacity: 0;
 }
-.move-page-top.show{
+
+.move-page-top.show {
     opacity: 1;
 }
 
@@ -888,24 +1127,24 @@ a:visited {
 }
 
 .arlist {
-    margin-left: 10%;
-    width: 85%
+    margin: 50px 0 50px 15%;
+    width: 80%
 }
 
 .arlist li {
-    margin: 1.5em 0
+    margin: 1em 0
 }
 
 #kijip, #kijim {
     border: 1px #DCDCDC solid;
     padding: 15px 3%;
-    width: 90%;
+    width: 85%;
     margin: 5px auto 50px
 }
 
 .kijoph {
     color: #1CD9C3;
-    margin-left: 1em
+    margin-left: 3em
 }
 
 #con3 .kijoph p {
@@ -925,7 +1164,7 @@ a:visited {
 }
 
 .site_show {
-    width: 90%;
+    width: 70%;
     margin: 10px auto
 }
 
@@ -997,11 +1236,11 @@ a:visited {
 }
 
 .sd_outer1 ul {
-    margin-left: 2em
+    margin-left: 80px
 }
 
 .sd_outer1 p {
-    margin-left: 5px
+    margin-left: 120px
 }
 
 .sd_outer1 h4 {
@@ -1044,7 +1283,7 @@ a:visited {
 }
 
 .data_i ul {
-    margin-left: 2em
+    margin-left: 7em
 }
 
 .bbs-title {
@@ -1053,14 +1292,15 @@ a:visited {
 
 .site_int {
     font-size: 105%;
-    font-weight: bold
+    font-weight: bold;
+    margin-left: 1em
 }
 
 /* ページのポイント */
 .point {
     background-color: beige;
-    padding: 15px 2%;
-    margin: 10px 2%;
+    padding: 15px 3%;
+    margin: 10px 3% 50px;
     border-radius: 10px
 }
 
@@ -1084,6 +1324,7 @@ a:visited {
     width: 80%;
     margin-left: 10%;
     margin-bottom: 5px;
+    height: auto;
 }
 
 a.btn-pop {
@@ -1099,24 +1340,11 @@ a.btn-pop {
     margin-bottom: 15px
 }
 
-.ap_int {
-    text-align: center;
-    margin: 40px 0;
-}
-
-.app_bn1 {
-    max-width: 80%;
-}
-
-.mobnone, .sitepage #bread, .sitepage nav #gnav {
-    display: none
-}
-
 .lm_b {
-    width: 64px;
-    height: 77px;
+    width: 96px;
+    height: 115px;
     background-repeat: no-repeat;
-    background-image: url(../images/common/icon_ml_m.png)
+    background-image: url(../images/common/icon_ml.png)
 }
 
 .lm_1 {
@@ -1124,38 +1352,84 @@ a.btn-pop {
 }
 
 .lm_2 {
-    background-position: -64px 0;
+    background-position: -96px 0;
 }
 
 .lm_3 {
-    background-position: -128px 0;
+    background-position: -192px 0;
 }
 
 .lm_4 {
-    background-position: 0 -77px;
+    background-position: 0 -115px;
 }
 
 .lm_5 {
-    background-position: -64px -77px;
+    background-position: -96px -115px;
 }
 
 .lm_6 {
-    background-position: -128px -77px;
+    background-position: -192px -115px;
+}
+
+.rm_b {
+    width: 96px;
+    height: 115px;
+    background-position: -192px -115px;
+    background-repeat: no-repeat;
+    background-image: url(../images/common/icon_mr.png)
+}
+
+.rm_1 {
+    background-position: 0 0;
+}
+
+.rm_2 {
+    background-position: -96px 0;
+}
+
+.rm_3 {
+    background-position: -192px 0;
+}
+
+.rm_4 {
+    background-position: 0 -115px;
+}
+
+.rm_5 {
+    background-position: -96px -115px;
+}
+
+.rm_6 {
+    background-position: -192px -115px;
+}
+
+.rw_b {
+    width: 96px;
+    height: 96px;
+    background-repeat: no-repeat
+}
+
+.rw_1 {
+    background-image: url(../images/common/icon_wr_1.png)
+}
+
+.rw_2 {
+    background-image: url(../images/common/icon_wr_2.png)
 }
 
 .fl1 {
-    width: 75%;
+    width: 69%;
     position: relative;
-    padding: 7px 2%;
-    border-radius: 10px;
+    padding: 5px 3%;
+    border-radius: 8px;
     background-color: #dcdcdc;
-    margin: 40px 0 40px 70px;
+    margin: 40px 10% 40px 20%;
 }
 
 /* 画像 - 絶対配置で左上に配置 */
 .fl1 .icon {
     position: absolute;
-    left: -70px;
+    left: -110px;
     top: 0;
 }
 
@@ -1167,67 +1441,28 @@ a.btn-pop {
     width: 0;
     height: 0;
     left: -15px;
-    top: 20px;
+    top: 30px;
     border-right: 15px solid #dcdcdc;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
 }
 
-.rm_b {
-    width: 64px;
-    height: 77px;
-    background-repeat: no-repeat;
-    background-image: url(../images/common/icon_mr_m.png)
-}
-
-.rm_1 {
-    background-position: 0 0;
-}
-
-.rm_2 {
-    background-position: -64px 0;
-}
-
-.rm_3 {
-    background-position: -128px 0;
-}
-
-.rm_4 {
-    background-position: 0 -77px;
-}
-
-.rm_5 {
-    background-position: -64px -77px;
-}
-
-.rm_6 {
-    background-position: -128px -77px;
-}
-.rw_b {
-    width: 64px;
-    height: 64px;
-    background-repeat: no-repeat
-}
-.rw_1{
-    background-image: url(../images/common/icon_wr_1_m.png)
-}
-.rw_2{
-    background-image: url(../images/common/icon_wr_2_m.png)
-}
+/* 吹き出し本体 */
 .fr2 {
-    width: 75%;
+    width: 69%;
     position: relative;
-    padding: 7px 2%;
-    border-radius: 10px;
+    padding: 5px 3%;
+    border-radius: 8px;
     background-color: #7fffd4;
-    margin: 40px 70px 40px 3%;
+    margin: 40px 20% 40px 10%;
 }
 
-/* 画像 - 絶対配置で左上に配置 */
+/* 画像 - 絶対配置で右上に配置 */
 .fr2 .icon {
     position: absolute;
-    right: -70px;
+    right: -110px;
     top: 0;
+    op: 0;
 }
 
 /* 三角アイコン */
@@ -1238,17 +1473,22 @@ a.btn-pop {
     width: 0;
     height: 0;
     right: -15px;
-    top: 20px;
+    top: 30px;
     border-left: 15px solid #7fffd4;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+#con3 .fr2 p, #con3 .fl1 p {
+    margin: 0;
+    padding: 15px 0;
 }
 
 .tb_n {
     border-collapse: collapse;
     margin: 40px auto;
     padding: 0;
-    width: 95%;
+    width: 650px;
     table-layout: fixed;
 }
 
@@ -1356,14 +1596,14 @@ a.btn-pop {
     right: 70%
 }
 
-.lb_c_w {
-    background-color: #ffffff
-}
-
 .lb_c_b {
     background-color: #00A2a8;
     color: #ffffff;
     font-size: 120%;
+}
+
+.lb_c_w {
+    background-color: #ffffff
 }
 
 .w50 {
@@ -1375,9 +1615,13 @@ a.btn-pop {
 }
 
 .w_500 {
-    width: 90%;
-    height: auto;
+    width: 500px;
+    height: 375px;
     margin: 20px auto;
+}
+
+.upper_anchor {
+    font-size: 120%;
 }
 
 #modt img {
@@ -1387,7 +1631,7 @@ a.btn-pop {
 }
 
 .ar_card {
-    width: 95%;
+    width: 90%;
     margin: 10px auto;
     background-color: #f0f0f0;
 }
@@ -1442,44 +1686,51 @@ a.btn-pop {
 
 .slu li {
     width: 100%;
-    height: 70px;
-    margin-top: 5px
+    height: 65px;
+    margin-top: 5px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .sli {
-    width: 95%;
-    height: 70px
+    width: 235px;
+    height: 60px
 }
-
+.sl_num{
+    display: block;
+    width: auto;
+    height: 17px;
+    float: left;
+    padding: 2px 6px;
+    background-color: #ff4500;
+    color: #ffffff;
+    font-size: 17px;
+    line-height: 1;
+    margin-top: 17px;
+    margin-right: 5px;
+}
 .sli img {
-    width: 20%;
-    max-width: 80px;
-    height: auto;
+    width: 60px;
+    height: 60px;
     float: left;
 }
 
 .slr {
-    width: 70%;
+    width: 140px;
     float: left;
-    margin: 7px 0 0 5%
+    margin: 7px 0 0 5px
 }
 
 .slsn {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold;
     display: inline-block;
 }
 
 .slsd {
-    font-size: 15px;
+    font-size: 12px;
     display: inline-block;
-    margin: 5px 0 0 10px;
-    width: 95%
-}
-
-.mailtb {
-    width: 90%;
-    margin-left: 5%
+    margin-left: 5px;
 }
 
 #review_t label {
@@ -1500,24 +1751,30 @@ a.btn-pop {
     margin-top: 0;
     line-height: 1;
 }
-.radio_o{
+
+.radio_o {
     display: block;
 }
+
 .input_o {
     display: block;
     margin-bottom: 15px;
     width: 20%;
     float: left;
 }
-#review_t textarea{
+
+#review_t textarea {
     width: 90%;
 }
-.rank_o{
+
+.rank_o {
+    margin-left: 10px;
     padding: 4px;
     color: #D4571B;
     font-size: 14px;
 }
-.rank_num{
+
+.rank_num {
     display: inline-block;
     background-color: #D4571B;
     color: #ffffff;
@@ -1528,9 +1785,13 @@ a.btn-pop {
     margin-left: 4px;
 }
 
-#fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .btnli li:after, .dousen:after, .sitepagetop:after,
-.eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, .ar_card:after, .sli:after, .logi_box_i:after,
-.logi_box_o:after, .ana_i:after, .k_ana_i:after, .sb_outer:after, .radio_o:after {
+.hd_m, .only_mob, #slide_menu{
+    display: none;
+}
+#fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after, .sitepagetop:after,
+.eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, #f_wrap:after, .logi_box_i:after, .logi_box_o:after,
+.top_t_outer:after, .top_t_outer:before, .t_nav:after, .ar_card:after, .sli:after, .ana_i:after, .k_ana_i:after,
+.sb_outer:after, .radio_o:after {
     content: "";
     display: block;
     clear: both

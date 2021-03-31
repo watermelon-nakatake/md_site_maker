@@ -142,6 +142,12 @@ def amp_maker(pc_path_list):
                             tmp_str = tmp_str.replace(
                                 '"url": "https://www.demr.jp/pc/images/eyec.jpg","height": 464,"width": 700',
                                 '"url": "' + str(img_path[0]) + '","height": 506,"width": 759')"""
+                k_str = re.findall(r'<section><div class="kanren">.+$', content)
+                if k_str:
+                    content = content.replace(k_str[0], '')
+                    kr_str = k_str[0].replace('<section>', '').replace('</section>', '')
+                else:
+                    kr_str = ''
                 content = a_tag_filter(content)
                 content = content.replace(' target="_blank"', '')
                 content = re.sub(r'<img(.+?)>', r'<amp-img\1></amp-img>', content)
@@ -161,6 +167,7 @@ def amp_maker(pc_path_list):
                 amp_data = amp_data.replace('<!--pub-date-->', str(pub_date))
                 amp_data = amp_data.replace('<!--mod-date-->', str(mod_date))
                 amp_data = amp_data.replace('<!--description-->', description)
+                amp_data = amp_data.replace('<!--i-kanren-->', kr_str)
                 if pc_path == 'reibun/index.html':
                     amp_path = 'reibun/amp/index.html'
                 else:

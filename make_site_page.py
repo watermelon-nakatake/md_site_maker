@@ -23,6 +23,8 @@ def main():
     star_count = make_ranking(star_count)
     insert_data(star_count, site_dict)
     insert_to_ranking(star_count)
+    insert_data_to_amp_site_page()
+    make_amp_ranking()
     pc_and_amp_site_page_upload()
 
 
@@ -46,27 +48,7 @@ def insert_mod_log_to_top_page(date_str):
     reibun_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'])
 
 
-def insert_ranking_to_amp():
-    path_list = ['wakuwakumail.html', 'pcmax.html', 'mintj.html', '194964.html', 'happymail.html']
-    for pc_path in path_list:
-        with open('reibun/pc/sitepage/' + pc_path, 'r', encoding='utf-8') as f:
-            pc_str = f.read()
-        pc_str = reibun_upload.tab_and_line_feed_remove_from_str(pc_str)
-        data_str = re.findall(r'(<div id="site_main_data">.+?)<div class="subdisc">', pc_str)
-        base_str = data_str[0]
-        base_str = base_str.replace('<img', '<amp-img')
-        base_str = re.sub(r'id="star_i([\dt])"></span>',
-                          r'id="star_i\1" width="672" height="110" layout="responsive"></amp-img></span>', base_str)
-        print(base_str)
-        with open('reibun/amp/sitepage/' + pc_path, 'r', encoding='utf-8') as g:
-            amp_str = g.read()
-        new_str = re.sub(r'<div id="site_main_data">.+?<div class="subdisc">', base_str + '<div class="subdisc">',
-                         amp_str)
-        with open('reibun/amp/sitepage/test_' + pc_path, 'w', encoding='utf-8') as h:
-            h.write(new_str)
-
-
-def insert_site_data_to_amp():
+def insert_data_to_amp_site_page():
     path_list = ['wakuwakumail.html', 'pcmax.html', 'mintj.html', '194964.html', 'happymail.html']
     for pc_path in path_list:
         with open('reibun/pc/sitepage/' + pc_path, 'r', encoding='utf-8') as f:
@@ -86,13 +68,40 @@ def insert_site_data_to_amp():
             h.write(new_str)
 
 
+def make_amp_ranking():
+    with open('reibun/pc/sitepage/ranking.html', 'r', encoding='utf-8') as f:
+        pc_str = f.read()
+    with open('reibun/amp/sitepage/ranking.html', 'r', encoding='utf-8') as g:
+        amp_str = g.read()
+    pc_str = reibun_upload.tab_and_line_feed_remove_from_str(pc_str)
+    amp_str = reibun_upload.tab_and_line_feed_remove_from_str(amp_str)
+    for site_code in ['wk', 'hm', 'mt', 'max', 'iq']:
+        print(site_code)
+        pd_str = re.findall(r'<div class="sm_data ' + site_code + r'">.+?<div class="subdisc">', pc_str)[0]
+        amp_str = re.sub(r'<div class="sm_data ' + site_code + r'">.+?<div class="subdisc">', pd_str, amp_str)
+    for cat in category_code:
+        pr_str = re.findall(r'<ul class="dr_ul" id="rd_' + cat + '">.+?</ul>', pc_str)[0]
+        amp_str = re.sub(r'<ul class="dr_ul" id="rd_' + cat + '">.+?</ul>', pr_str, amp_str)
+    amp_str = amp_str.replace('<img', '<amp-img')
+    amp_str = amp_str.replace('つ">', 'つ" width="672" height="110" layout="responsive"></amp-img>')
+    amp_str = amp_str.replace('class="dr_img">',
+                              'class="dr_img" width="672" height="110" layout="responsive"></amp-img>')
+    mod_date = re.findall(r'itemprop="dateModified" datetime=".+?">(.+?)</time>', pc_str)[0]
+    print(mod_date)
+    amp_str = re.sub(r'<div id="modt">(.+?)</amp-img>(.+?)</div>',
+                     r'<div id="modt">\1</amp-img>' + mod_date + '</div>', amp_str)
+    print(amp_str)
+    with open('reibun/amp/sitepage/ranking.html', 'w', encoding='utf-8') as h:
+        h.write(amp_str)
+
+
 def pc_and_amp_site_page_upload():
     pc_list = ['reibun/pc/sitepage/' + x for x in os.listdir('reibun/pc/sitepage') if '.html' in x and '_test'
                not in x and '_copy' not in x]
     amp_list = ['reibun/amp/sitepage/' + x for x in os.listdir('reibun/amp/sitepage') if '.html' in x and '_test'
                 not in x and '_copy' not in x]
     up_list = pc_list + amp_list
-    reibun_upload.ftp_upload(up_list)
+    reibun_upload.scp_upload(up_list)
 
 
 def site_page_pc_to_amp_changer(amp_path):
@@ -289,9 +298,6 @@ def insert_to_ranking(site_data):
                                        '</span>'.format(main_star, main_star, this_data[i]), new_str)
             i += 1
         long_str = long_str.replace(this_str[0], new_str)
-        long_str = re.sub(r'<time itemprop="dateModified" datetime=".+?</time>',
-                          '<time itemprop="dateModified" datetime="{}">{}</time>'.format(today_str2, today_str),
-                          long_str)
     rank_data = [site_data[x] + [x] for x in site_data]
     print(rank_data)
     for j in range(5):
@@ -311,6 +317,8 @@ def insert_to_ranking(site_data):
         print(li_str)
         long_str = re.sub(r'<ul class="dr_ul" id="rd_' + category_code[j] + r'">.+?</ul>',
                           '<ul class="dr_ul" id="rd_{}">{}</ul>'.format(category_code[j], li_str), long_str)
+    long_str = re.sub(r'<time itemprop="dateModified" datetime=".+?</time>',
+                      '<time itemprop="dateModified" datetime="{}">{}</time>'.format(today_str2, today_str), long_str)
     print(long_str)
     with open('reibun/pc/sitepage/ranking.html', 'w', encoding='utf-8') as g:
         g.write(long_str)
@@ -414,8 +422,9 @@ if __name__ == '__main__':
 
     # reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
 
-    # main()
-    insert_ranking_to_amp()
+    main()
+    # insert_data_to_amp_site_page()
+    # make_amp_ranking()
 
     # manual_add_modify_log(['reibun/pc/sitepage/{}.html'.format(x[1]) for x in site_str])
     # print(make_article_list.read_pickle_pot('modify_log'))

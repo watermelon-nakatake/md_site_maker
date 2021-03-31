@@ -10,7 +10,7 @@ def main(replace_str_list, if_replace_str_list):
     :param if_replace_str_list: 条件付きの置換文字列のリスト（これがなければ置換する）
     :return: none
     """
-    files_dict = pick_up_all_html('reibun/amp')
+    files_dict = pick_up_all_html('reibun/pc')
     change_list = []
     for files_name in files_dict:
         if files_name == 't2':
@@ -60,7 +60,7 @@ def main(replace_str_list, if_replace_str_list):
     up_list = [y for y in change_list if '/delete/' not in y and '_test' not in y and '_copy' not in y
                and '/template/' not in y]
     print(up_list)
-    reibun_upload.scp_upload(up_list)
+    # reibun_upload.scp_upload(up_list)
 
 
 def pick_up_all_html(dir_path):
@@ -77,8 +77,7 @@ def pick_up_all_html(dir_path):
 
 
 if __name__ == '__main__':
-    re_list = [['Allrightsreserved',
-                'All rights reserved'
-                ]]
+    re_list = [['<div class="center">[<img class="app_bn1" src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">](../../../reibun/app/)',
+                '<div class="center">[<img class="app_bn1" src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">](../../../reibun/app/)']]
     if_re_list = []
     main(re_list, if_re_list)

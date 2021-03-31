@@ -961,11 +961,6 @@ a:hover {
 .page-top {
     margin: 0;
     padding: 0;
-}
-
-.page-top p {
-    margin: 0;
-    padding: 0;
     position: fixed;
     right: 16px;
     bottom: 16px;
@@ -1597,7 +1592,19 @@ a.btn-pop {
     width: 100%;
     height: 70px
 }
-
+.sl_num{
+    display: block;
+    width: auto;
+    height: 17px;
+    float: left;
+    padding: 2px 6px;
+    background-color: #ff4500;
+    color: #ffffff;
+    font-size: 17px;
+    line-height: 1;
+    margin-top: 17px;
+    margin-right: 5px;
+}
 .sli img {
     width: 60px;
     height: 60px;
@@ -1667,6 +1674,9 @@ a.btn-pop {
     font-size: 20px;
     padding: 4px 6px;
     margin-left: 4px;
+}
+.hd_m, .only_mob, #slide_menu{
+    display: none;
 }
 
 #fnav:after, #gnav:after, #pnav:after, #redline:after, #tibl:after, .dousen:after, .dousenin:after, .sitepagetop:after, .eft3:after, #bread:after, .sd_outer2:after, .sd_outer1:after, #f_wrap:after, .ar_card:after, .sli:after, .ana_i:after, .k_ana_i:after, .sb_outer:after, .radio_o:after {

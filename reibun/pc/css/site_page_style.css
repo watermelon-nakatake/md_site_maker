@@ -664,12 +664,12 @@ main .dousendisc p {
 .ranking h2 {
     width: 90%;
     color: #767676;
-    margin-left: 40px;
+    margin-left: 30px;
     display: inline-block;
     line-height: 1;
     position: relative;
     background-color: #ffffff;
-    font-size: 26px;
+    font-size: 20px;
     padding-left: 0;
 }
 
@@ -678,16 +678,16 @@ main .dousendisc p {
     display: inline-block;
     width: 0;
     height: 0;
-    border-top: 13px solid #ffffff;
-    border-left: 20px solid #767676;
-    border-bottom: 13px solid #ffffff;
+    border-top: 9px solid #ffffff;
+    border-left: 15px solid #767676;
+    border-bottom: 9px solid #ffffff;
     position: absolute;
-    top: 7px;
-    left: -35px;
+    top: 6px;
+    left: -25px;
 }
 
 .order {
-    background-color: #D4571B;
+    background-color: #f60;
     color: #ffffff;
     font-size: 18px;
     line-height: 1;

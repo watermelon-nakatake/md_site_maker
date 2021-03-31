@@ -385,7 +385,7 @@ def insert_index_list(path):
 def relational_file_pick_up(target_file):
     with open(target_file, 'r', encoding='utf-8') as f:
         long_str = f.read()
-        relational_list = ['reibun/pc/css/base11.css', 'reibun/pc/css/pc11.css', 'reibun/pc/css/phone11.css',
+        relational_list = ['reibun/pc/css/base13.css', 'reibun/pc/css/pc13.css', 'reibun/pc/css/phone13.css',
                            'reibun/p_sitemap.xml', target_file]  # 'reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml',
         p_time = 60 * 60 * 24 * 1
         now = time.time()
@@ -460,7 +460,6 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/pc/sitepage/ranking.html', 'reibun/amp/sitepage/ranking.html',
-                'reibun/pc/css/site_page_style.css']
+    up_files = ['reibun/amp/sitepage/ranking.html', 'reibun/pc/css/site_page_style.css', 'reibun/amp/index.html']
     # ftp_upload(up_files)
     scp_upload(up_files)
