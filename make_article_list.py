@@ -76,7 +76,7 @@ def read_pickle_pot(pkl_name):
 
 def change_pickle(file_name, num_str, new_data):
     pk_data = read_pickle_pot(file_name)
-    print(pk_data)
+    # print(pk_data)
     print(pk_data[num_str])
     if new_data == 'delete':
         del pk_data[num_str]
@@ -106,6 +106,6 @@ def add_to_pk_list():
 if __name__ == '__main__':
     # make_current_file_list()
     # add_to_pk_list()
-    # change_pickle('title_img_list', 140, 'delete')
+    # change_pickle('title_img_list', 144, 'delete')
     print(read_pickle_pot('title_img_list'))
-    print(read_pickle_pot('modify_log'))
+    # print(read_pickle_pot('modify_log'))

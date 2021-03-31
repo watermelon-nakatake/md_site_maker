@@ -314,12 +314,13 @@ def xml_site_map_maker(pk_dec):
               '<url><loc>https://www.demr.jp</loc><lastmod>' + str(now.date()) \
               + '</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>'
     for page in pk_list:
-        if 'index.html' in page[0]:
-            page_url = page[0].replace('/index.html', '/')
-        else:
-            page_url = page[0]
-        xml_str += '<url><loc>https://www.demr.jp/pc/' + page_url + '</loc><lastmod>' + page[1] \
-                   + '</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>'
+        if '_test' not in page[0] and '_copy' not in page[0]:
+            if 'index.html' in page[0]:
+                page_url = page[0].replace('/index.html', '/')
+            else:
+                page_url = page[0]
+            xml_str += '<url><loc>https://www.demr.jp/pc/' + page_url + '</loc><lastmod>' + page[1] \
+                       + '</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>'
     xml_str += '</urlset>'
     with open('reibun/p_sitemap.xml', 'w', encoding='utf-8') as f:
         f.write(xml_str)
@@ -834,7 +835,8 @@ def import_from_markdown(md_file_list, site_shift):
                 else:
                     print('エラー発生 : ' + str_len)
                     new_data = [file_name, title, '', str(now.date()), category, description, 'error']
-                pk_dec = add_pickle_dec(pk_dec, new_data)
+                if '_test' not in file_name and '_copy' not in file_name:
+                    pk_dec = add_pickle_dec(pk_dec, new_data)
             add_modify_log('reibun/pc/' + file_name, now.date(), category, title, pub_or_mod)
     return upload_list, pk_dec, new_file_data
 
