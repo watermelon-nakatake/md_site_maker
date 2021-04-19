@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-import reibun_upload
+import file_upload
 import pickle
 import datetime
 import copy
@@ -54,7 +54,7 @@ def breadcrumb_maker(category, directory, file_name):
 
 
 def remake_html():
-    with open('pickle_pot/title_img_list.pkl', 'rb') as p:
+    with open('pickle_pot/main_data.pkl', 'rb') as p:
         pk_dec = pickle.load(p)
     side_bar_str = make_side_bar(pk_dec, side_bar_list)
     current_files = make_file_list()
@@ -88,9 +88,9 @@ def file_update():
                    'reibun/pc/sitepage/wakuwakumail.html', 'reibun/pc/sitepage/loveseach.html',
                    'reibun/pc/sitepage/pcmax.html', 'reibun/pc/sitepage/mintj.html', 'reibun/pc/sitepage/194964.html',
                    'reibun/pc/sitepage/happymail.html']
-    with open('reibun/pc/template/pc_tmp.html', 'r', encoding='utf-8') as t:
+    with open('reibun/pc/template/main_tmp.html', 'r', encoding='utf-8') as t:
         tmp_str = t.read()
-    with open('pickle_pot/title_img_list.pkl', 'rb') as p:
+    with open('pickle_pot/main_data.pkl', 'rb') as p:
         pk_dec = pickle.load(p)
     side_bar_str = make_side_bar(pk_dec, side_bar_list)
     current_files = make_file_list()
@@ -100,7 +100,7 @@ def file_update():
         print(file_name)
         with open(file_name, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
-            plain_txt = reibun_upload.tab_and_line_feed_remove_from_str(plain_txt)
+            plain_txt = file_upload.tab_and_line_feed_remove_from_str(plain_txt)
             title_l = re.findall(r'<title>(.+?)\|出会い系メール例文集</title>', plain_txt)
             if title_l:
                 title = title_l[0]
@@ -261,7 +261,7 @@ def new_article_finish():
 
 def search_id(str_o):
     result = []
-    with open('pickle_pot/title_img_list.pkl', 'rb') as p:
+    with open('pickle_pot/main_data.pkl', 'rb') as p:
         pk_dec = pickle.load(p)
     url_list = re.findall('href="(.+?)"', str_o)
     for p_id in pk_dec:

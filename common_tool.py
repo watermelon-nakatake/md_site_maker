@@ -90,45 +90,7 @@ def section_insert(long_str):
     return long_str
 
 
-def directory_and_category_select(file_path):
-    # file_pathはpc/やamp/以降のpath
-    # print(file_path)
-    directory_l = re.findall(r'^reibun/pc/(.+?)/.+$', file_path)
-    if directory_l:
-        directory = directory_l[0]
-        directory = directory.replace('reibun/pc/', '')
-        file_name = file_path.replace('reibun/pc/', '')
-        file_name = re.sub(r'^.*?/', '', file_name)
-        # print('directory: ' + directory)
-        # print('file_name: ' + file_name)
-        category = search_category(directory, file_name)
-    else:
-        directory = 'top'
-        category = 'top'
-    return directory, category
 
-
-def search_category(directory, file_name):
-    if directory != 'majime':
-        category = directory
-    else:
-        if 'm0' in file_name:
-            category = 'post'
-        elif 'mp_' in file_name:
-            category = 'profile'
-        elif 'm1' in file_name:
-            category = 'f_mail'
-        elif 'm2' in file_name:
-            category = 's_mail'
-        elif 'm3' in file_name:
-            category = 'date'
-        elif 'm4' in file_name:
-            category = 'how_to'
-        elif 't0_' in file_name:
-            category = 'post'
-        else:
-            category = 'majime'
-    return category
 
 
 def remove_no_use_images(dir_path):

@@ -1,10 +1,10 @@
 import re
 import csv
-import new_from_md
 import make_article_list
+import reibun.main_info
 
 
-def title_counter(md_path, kw_list, site_shift):
+def title_counter(md_path, kw_list, site_shift, pd):
     print(md_path)
     with open(md_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
@@ -22,7 +22,7 @@ def title_counter(md_path, kw_list, site_shift):
         if main_l:
             main = main_l[0]
             if '%ss' in main:
-                ss_list = new_from_md.site_shift_list
+                ss_list = pd['site_shift_list']
                 for ss_num in ss_list:
                     if main.count('%ss' + str(ss_num) + '%') != main.count('%ss' + str(ss_num) + '%'):
                         raise Exception('%ss の数が合っていません！！')
@@ -80,17 +80,20 @@ def check_number_of_days_q():
     return result
 
 
-def read_this_title_log(md_path):
-    target_html = md_path.replace('md_files/pc/', '').replace('.md', '.html')
-    pk = make_article_list.read_pickle_pot('title_log')
+def read_this_title_log(md_path, pd):
+    target_html = md_path.replace(pd['project_dir'] + '/md_files/' + pd['main_dir'], '').replace('.md', '.html')
+    pk = make_article_list.read_pickle_pot('title_log', pd)
+    # print(pk)
     for data in pk[target_html]:
         print(data + ' : ' + pk[target_html][data][0])
 
 # todo: ハッピーメール 出会えない セフレ の新記事
+# todo: 新記事キーワード : フィーチャーフォン、PC ブラウザ、
 
 
 if __name__ == '__main__':
-    target_md = 'md_files/pc/majime/mp_sexy-profile.md'
-    key_list = ['ミント', 'ハッピーメール', 'ハピメ', 'ワクワク', 'Jメール', 'PCMAX', 'Ｊメール', 'スケベ', 'エロい', '自己評価']
-    title_counter(target_md, key_list, 1)
-    read_this_title_log(target_md)
+    target_md = 'reibun/md_files/pc/site/point.md'
+    key_list = ['ミント', 'ハッピーメール', 'ハピメ', 'ワクワク', 'Jメール', 'PCMAX', 'お試し', 'お得', '登録',
+                'ポイント', 'キャンペーン']
+    title_counter(target_md, key_list, 1, reibun.main_info.info_dict)
+    read_this_title_log(target_md, reibun.main_info.info_dict)

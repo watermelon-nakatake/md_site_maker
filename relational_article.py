@@ -2,6 +2,7 @@ import re
 import os
 import make_article_list
 import random
+import reibun.main_info
 
 up_dir = ['caption/', 'majime/', 'policy/', 'qa/', 'site/']
 
@@ -51,38 +52,24 @@ def change_html_relational_list():
             g.write(long_str)
 
 
-def collect_md_relation_title(md_path, pk_data_b):
-    pk_data = {pk_data_b[x][0]: pk_data_b[x][1] for x in pk_data_b}
-    with open(md_path, 'r', encoding='utf-8') as h:
-        md_str = h.read()
+def collect_md_relation_title_in_str(md_str, pk_data_b, file_path):
+    pk_data = {pk_data_b[x]['file_path']: pk_data_b[x]['title'] for x in pk_data_b}
     k_txt = re.findall(r'%kanren%\n([\s\S]*?)$', md_str)
     if k_txt:
         k_txt_e = k_txt[0].replace('-[', '- [')
         k_str_l = re.findall(r'- \[(.+?)]\((.+?)\)', k_txt_e)
         if k_str_l:
-            if 'coronavirus' not in k_txt[0]:
-                k_str_l = insert_new_article_to_relational_list_md(md_str, k_str_l)
             result = ''
             for k_str in k_str_l:
                 # print(k_str)
-                t_url = k_str[1].replace('../../../reibun/pc/', '')
+                slash_num = file_path.count('/')
+                before_str = '../' * (slash_num - 1) + 'html_files/' + reibun.main_info.main_dir
+                t_url = k_str[1].replace(before_str, '')
                 # print(pk_data[t_url])
                 result += '- [{}]({})\n'.format(pk_data[t_url], k_str[1])
             md_str = md_str.replace(k_txt[0], result + '\n')
     # print(md_str)
-    with open(md_path, 'w', encoding='utf-8') as f:
-        f.write(md_str)
-
-
-def change_md_relational_art_list():
-    p = pick_up_md_files()
-    # print(p)
-    k = make_article_list.read_pickle_pot('title_img_list')
-    e_k = {k[x][0]: k[x][1] for x in k}
-    # print(e_k)
-    for m in p:
-        # print(m)
-        collect_md_relation_title(m, e_k)
+    return md_str
 
 
 def insert_new_article_to_relational_list(file_path):

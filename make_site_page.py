@@ -2,7 +2,7 @@ import csv
 import re
 import datetime
 import os
-import reibun_upload
+import file_upload
 from PIL import Image
 import make_article_list
 import check_mod_date
@@ -45,7 +45,7 @@ def insert_mod_log_to_top_page(date_str):
                         long_str_a)
     with open('reibun/amp/index.html', 'w', encoding='utf-8') as g:
         g.write(long_str_a)
-    reibun_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'])
+    file_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'])
 
 
 def insert_data_to_amp_site_page():
@@ -53,7 +53,7 @@ def insert_data_to_amp_site_page():
     for pc_path in path_list:
         with open('reibun/pc/sitepage/' + pc_path, 'r', encoding='utf-8') as f:
             pc_str = f.read()
-        pc_str = reibun_upload.tab_and_line_feed_remove_from_str(pc_str)
+        pc_str = file_upload.tab_and_line_feed_remove_from_str(pc_str)
         data_str = re.findall(r'(<div id="site_main_data">.+?)<div class="subdisc">', pc_str)
         base_str = data_str[0]
         base_str = base_str.replace('<img', '<amp-img')
@@ -73,8 +73,8 @@ def make_amp_ranking():
         pc_str = f.read()
     with open('reibun/amp/sitepage/ranking.html', 'r', encoding='utf-8') as g:
         amp_str = g.read()
-    pc_str = reibun_upload.tab_and_line_feed_remove_from_str(pc_str)
-    amp_str = reibun_upload.tab_and_line_feed_remove_from_str(amp_str)
+    pc_str = file_upload.tab_and_line_feed_remove_from_str(pc_str)
+    amp_str = file_upload.tab_and_line_feed_remove_from_str(amp_str)
     for site_code in ['wk', 'hm', 'mt', 'max', 'iq']:
         print(site_code)
         pd_str = re.findall(r'<div class="sm_data ' + site_code + r'">.+?<div class="subdisc">', pc_str)[0]
@@ -101,7 +101,7 @@ def pc_and_amp_site_page_upload():
     amp_list = ['reibun/amp/sitepage/' + x for x in os.listdir('reibun/amp/sitepage') if '.html' in x and '_test'
                 not in x and '_copy' not in x]
     up_list = pc_list + amp_list
-    reibun_upload.scp_upload(up_list)
+    file_upload.scp_upload(up_list)
 
 
 def site_page_pc_to_amp_changer(amp_path):
@@ -123,7 +123,7 @@ def pc_to_amp_changer(long_str):
     :param long_str: ampに対応していない文字列
     :return: ampに対応させた文字列
     """
-    long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+    long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
     long_str = long_str.replace('<img src="../images/common/site_name_250.png" alt="出会い系メール例文集">',
                                 '<amp-img src="../images/common/site_name_400.png" alt="出会い系メール例文集"' +
                                 ' width="400" height="59" layout="responsive"></amp-img>')
@@ -222,7 +222,7 @@ def insert_data(site_data, site_user_data):
             print(site_page_path)
             with open(site_page_path, 'r', encoding='utf-8') as f:
                 long_str = f.read()
-            long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+            long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             this_data = site_data[site_code]
             for i in range(len(star_category) + 1):
                 # main_i = i + 3
@@ -275,7 +275,7 @@ def insert_to_ranking(site_data):
     today_str2 = today.strftime('%F')
     with open('reibun/pc/sitepage/ranking.html', 'r', encoding='utf-8') as f:
         long_str = f.read()
-    long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+    long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
     for site_code in site_page_dict:
         print(site_code)
         print(site_data[site_code])

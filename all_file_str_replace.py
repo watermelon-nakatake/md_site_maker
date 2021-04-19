@@ -1,6 +1,6 @@
 import re
 import glob
-import reibun_upload
+import file_upload
 
 
 def main(replace_str_list, if_replace_str_list):
@@ -47,7 +47,7 @@ def main(replace_str_list, if_replace_str_list):
             with open(file_path, 'r', encoding='utf-8') as f:
                 base_str = f.read()
                 long_str = base_str
-                long_str = reibun_upload.tab_and_line_feed_remove_from_str(long_str)
+                long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
                 for re_str in replace_list:
                     long_str = re.sub(re_str[0], re_str[1], long_str)
                 for if_re_str in if_replace_list:

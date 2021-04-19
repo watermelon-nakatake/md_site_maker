@@ -2,7 +2,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 import re
-import reibun_upload
+import file_upload
 import amp_file_maker
 import datetime
 
@@ -21,7 +21,7 @@ def insert_img_tag(image_name_list, article_path_long):
                                             '<span itemprop="name">ゴーヤン</span></span></a></div>' +
                                             '<div class="alt_img_t"><img src="../images/art_images/'
                                             + image_name_list[0] + '" alt="' + alt_str + 'の画像"></div>')
-            file_str = reibun_upload.insert_mod_timestamp(file_str)
+            file_str = file_upload.insert_mod_timestamp(file_str)
             with open(article_path_long, 'w', encoding='utf-8') as g:
                 g.write(file_str)
         else:
@@ -64,18 +64,18 @@ def image_insert(article_path_long, color_str):
         img.save('reibun/amp/images/art_images/' + new_name)
         image_name_list.append(new_name)
         os.remove('insert_image/' + img_name)
-        reibun_upload.ftp_upload(['reibun/pc/images/art_images/' + new_name])
-        reibun_upload.ftp_upload(['reibun/amp/images/art_images/' + new_name])
+        file_upload.ftp_upload(['reibun/pc/images/art_images/' + new_name])
+        file_upload.ftp_upload(['reibun/amp/images/art_images/' + new_name])
     insert_img_tag(image_name_list, article_path_long)
-    reibun_upload.ftp_upload([article_path_long])
+    file_upload.ftp_upload([article_path_long])
 
 
 def images_add_to_rb(target_file, color):
     image_insert(target_file, color)
     amp_file_maker.add_amp_file(target_file)
     today = datetime.date.today()
-    reibun_upload.xml_sitemap_update({target_file.replace('reibun/pc/', ''): today})
-    reibun_upload.ftp_upload(['reibun/p_sitemap.xml'])
+    file_upload.xml_sitemap_update({target_file.replace('reibun/pc/', ''): today})
+    file_upload.ftp_upload(['reibun/p_sitemap.xml'])
 
 
 def wrong_img_delete(file_name):

@@ -1,4 +1,0 @@
-RewriteEngine On
-RewriteRule ^(.*)$ https://pc.194964.com/AF1039235 [R,L]
-Order allow,deny
-Allow from all

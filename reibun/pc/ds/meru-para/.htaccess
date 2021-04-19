@@ -1,4 +1,0 @@
-RewriteEngine On
-RewriteRule ^(.*)$ https://meru-para.com/?mdc=991&afguid=3bfndlcq1cn0a2jo10kl7ccbu8 [R,L]
-Order allow,deny
-Allow from all
