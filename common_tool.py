@@ -65,28 +65,29 @@ def make_list(input_file):
 
 def section_insert(long_str):
     h_tag_outer = re.findall(r'<h[2|3]>.*?</h[2|3]>', long_str)
-    h_tag_outer.reverse()
-    insert_list = []
-    for i in range(len(h_tag_outer) - 1):
-        if '<h2>' in h_tag_outer[i]:
-            if '<h2>' in h_tag_outer[i + 1]:
-                insert_list.append('</section><section>' + h_tag_outer[i])
-            elif '<h3>' in h_tag_outer[i + 1]:
-                insert_list.append('</section></section><section>' + h_tag_outer[i])
-        elif '<h3>' in h_tag_outer[i]:
-            if '<h2>' in h_tag_outer[i + 1]:
-                insert_list.append('<section>' + h_tag_outer[i])
-            elif '<h3>' in h_tag_outer[i + 1]:
-                insert_list.append('</section><section>' + h_tag_outer[i])
-    insert_list.append('<section>' + h_tag_outer[-1])
-    insert_list.reverse()
-    h_tag_outer.reverse()
-    for j in range(len(h_tag_outer)):
-        long_str = long_str.replace(h_tag_outer[j], insert_list[j])
-    if '<h2>' in h_tag_outer[-1]:
-        long_str = long_str.replace('<!--last-section-->', '</section>')
-    elif '<h3>' in h_tag_outer[-1]:
-        long_str = long_str.replace('<!--last-section-->', '</section></section>')
+    if h_tag_outer:
+        h_tag_outer.reverse()
+        insert_list = []
+        for i in range(len(h_tag_outer) - 1):
+            if '<h2>' in h_tag_outer[i]:
+                if '<h2>' in h_tag_outer[i + 1]:
+                    insert_list.append('</section><section>' + h_tag_outer[i])
+                elif '<h3>' in h_tag_outer[i + 1]:
+                    insert_list.append('</section></section><section>' + h_tag_outer[i])
+            elif '<h3>' in h_tag_outer[i]:
+                if '<h2>' in h_tag_outer[i + 1]:
+                    insert_list.append('<section>' + h_tag_outer[i])
+                elif '<h3>' in h_tag_outer[i + 1]:
+                    insert_list.append('</section><section>' + h_tag_outer[i])
+        insert_list.append('<section>' + h_tag_outer[-1])
+        insert_list.reverse()
+        h_tag_outer.reverse()
+        for j in range(len(h_tag_outer)):
+            long_str = long_str.replace(h_tag_outer[j], insert_list[j])
+        if '<h2>' in h_tag_outer[-1]:
+            long_str = long_str.replace('<!--last-section-->', '</section>')
+        elif '<h3>' in h_tag_outer[-1]:
+            long_str = long_str.replace('<!--last-section-->', '</section></section>')
     return long_str
 
 

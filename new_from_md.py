@@ -17,20 +17,27 @@ import file_upload
 import check_mod_date
 import relational_article
 import reibun.main_info
-import rei_site.main_info
+# import rei_site.main_info
 
 
-def main(site_shift, pd, mod_date_flag, last_mod_flag):
+def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_flag):
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param site_shift: サイトの表示に関するフラグ
     :param pd: projectのデータ
     :param mod_date_flag: mod_dateを更新するかのフラグ
     :param last_mod_flag: last_modを更新するか否か
+    :param upload_flag: アップロードするか否か
+    :param first_time_flag: 初回作成か否か
     :return: none
     """
     now = datetime.datetime.now()
-    mod_list, last_mod_time = pick_up_mod_md_files(pd)
+    if first_time_flag:
+        last_mod_time = now
+        mod_list = [x for x in glob.glob(pd['project_dir'] + '/md_files/**/**.md', recursive=True) if
+                    '_copy' not in x and '_test' not in x and '_ud' not in x]
+    else:
+        mod_list, last_mod_time = pick_up_mod_md_files(pd)
     print('modify list :')
     print(mod_list)
     upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag)
@@ -57,12 +64,13 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag):
         change_files = list(set(change_files))
         amp_upload = amp_file_maker.amp_maker([x for x in change_files if '/amp/' not in x], pd)
         upload_list.extend(amp_upload)
-    upload_list.extend(pd['add_files'])
-    upload_list = list(set(upload_list))
-    upload_list.sort()
-    upload_list = modify_file_check(upload_list, last_mod_time)
-    print(upload_list)
-    file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
+    if upload_flag:
+        upload_list.extend(pd['add_files'])
+        upload_list = list(set(upload_list))
+        upload_list.sort()
+        upload_list = modify_file_check(upload_list, last_mod_time)
+        print(upload_list)
+        file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
     if last_mod_flag:
         check_mod_date.make_mod_date_list(pd)
         save_last_mod(pd)
@@ -379,9 +387,10 @@ def insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd):
                               '"sbh">重要記事</div><ul>' + side_bar_dic['important'] + '</ul></div>', long_str)
             long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
                               '"sbh">最近の更新記事</div><ul>' + side_bar_dic['new'] + '</ul></div>', long_str)
-            long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
-                              '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][0]
-                              + '</div><ul>' + side_bar_dic[category] + '</ul></div>', long_str)
+            if category in pd['category_name']:
+                long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
+                                  '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][0]
+                                  + '</div><ul>' + side_bar_dic[category] + '</ul></div>', long_str)
             with open(r_file, 'w', encoding='utf-8') as g:
                 g.write(long_str)
 
@@ -389,6 +398,7 @@ def insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd):
 def make_all_side_bar(pk_dic, pd):
     cat_dic = {x: [] for x in pd['category_data']}
     pk_list = [pk_dic[i] for i in pk_dic]
+    # print(pk_dic)
     sorted_list = sorted(pk_list,
                          key=lambda x: datetime.date(datetime.datetime.strptime(x['mod_date'], '%Y-%m-%d').year,
                                                      datetime.datetime.strptime(x['mod_date'], '%Y-%m-%d').month,
@@ -398,8 +408,9 @@ def make_all_side_bar(pk_dic, pd):
     new_str = ''.join(['<li><a href="../{}">{}</a></li>'.format(y['file_path'], re.sub(r'【.+?】', '', y['title']))
                        for y in new_art])
     for id_pk in pk_dic:
-        cat_dic[pk_dic[id_pk]['category']].append('<li><a href="../{}">{}</a></li>'.format(
-            pk_dic[id_pk]['file_path'], re.sub(r'【.+?】', '', pk_dic[id_pk]['title'])))
+        if pk_dic[id_pk]['category'] in pd['category_data']:
+            cat_dic[pk_dic[id_pk]['category']].append('<li><a href="../{}">{}</a></li>'.format(
+                pk_dic[id_pk]['file_path'], re.sub(r'【.+?】', '', pk_dic[id_pk]['title'])))
     result_dic = {x: ''.join(cat_dic[x]) for x in cat_dic}
     result_dic['new'] = new_str
     for z in pd['side_bar_list']:
@@ -561,7 +572,10 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
     with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
             as t:
         tmp_str = t.read()
-    pk_dic = make_article_list.read_pickle_pot('main_data', pd)
+    if os.path.exists(pd['project_dir'] + '/pickle_pot/main_data.pkl'):
+        pk_dic = make_article_list.read_pickle_pot('main_data', pd)
+    else:
+        pk_dic = {}
     # todo: 事前作成
     for md_file_path in md_file_list:
         print('start : ' + md_file_path)
@@ -621,8 +635,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
             md_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', md_txt)
             md_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-b-->\n\n\n\1\n\n<!--e/arlist_b-->', md_txt)
         md_txt = insert_site_banner(md_txt, pd)
-        md_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n', r'<!--last-section--><!--kanren-->\n\n\n\1\n\n<!--e/kanren-->',
-                        md_txt)
+        if '%kanren%' in md_txt:
+            md_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n', r'<!--last-section--><!--kanren-->\n\n\n\1\n\n<!--e/kanren-->',
+                            md_txt)
+        else:
+            md_txt = md_txt + '<!--last-section-->'
         md_txt = re.sub(r'%btnli%\n([\s\S]*?)\n\n', r'<!--btnli-->\n\n\n\1\n\n<!--e/btnli-->', md_txt)
         md_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', md_txt)
         md_txt = re.sub(r'%matome%\n([\s\S]*?)\n\n', r'<!--matome-->\n\n\n\1\n\n<!--e/matome-->', md_txt)
@@ -775,7 +792,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         #     ar_str = ar_str_l[0]
         #     ar_str_c = ar_str.replace('<ul>', '<ul class="libut">')
         #     new_str = new_str.replace(ar_str, ar_str_c)
-        new_str = json_img_data_insert(new_str)
+        new_str = json_img_data_insert(new_str, pd)
         card_br_l = re.findall(r'<span class="ar_dis">.+?</span>', new_str)
         if card_br_l:
             for card_br in card_br_l:
@@ -794,22 +811,23 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         str_len = count_main_str_length(new_str, file_name)
         layout_flag = check_page_layout(new_str)
         # print(new_str)
-        if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name):
-            pub_or_mod = 'mod'
-            if pk_dic[this_id]['title'] != title_str:
-                update_title_log(file_name, title_str, str(now.date()), str_len, pd)
-                title_change_id.append(this_id)
-                print('title change: ' + file_name)
-            elif str_len > pk_dic[this_id]['str_len'] + 300:
-                update_title_log(file_name, title_str, str(now.date()), str_len, pd)
-        else:
-            update_title_log(file_name, title_str, str(now.date()), str_len, pd)
-            pub_or_mod = 'pub'
-            title_change_id.append(this_id)
-            print('title change: ' + file_name)
         if mod_flag:
             new_mod_date = str(now.date())
+            pub_or_mod = 'pub'
         else:
+            if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name):
+                pub_or_mod = 'mod'
+                if pk_dic[this_id]['title'] != title_str:
+                    update_title_log(file_name, title_str, str(now.date()), str_len, pd)
+                    title_change_id.append(this_id)
+                    print('title change: ' + file_name)
+                elif str_len > pk_dic[this_id]['str_len'] + 300:
+                    update_title_log(file_name, title_str, str(now.date()), str_len, pd)
+            else:
+                update_title_log(file_name, title_str, str(now.date()), str_len, pd)
+                pub_or_mod = 'pub'
+                title_change_id.append(this_id)
+                print('title change: ' + file_name)
             new_mod_date = pk_dic[this_id]['mod_date']
         if type(str_len) == int:
             new_data = {'file_path': file_name, 'title': title, 'pub_date': pub_date, 'mod_date': new_mod_date,
@@ -869,7 +887,7 @@ def additional_replace_in_md(md_txt, pd):
 
 def breadcrumb_maker(directory, file_name, pd):
     result = ''
-    if 'index.html' in file_name:
+    if 'index.html' in file_name or directory not in pd['category_data']:
         return result
     else:
         result += '<div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="b2">' \
@@ -878,10 +896,10 @@ def breadcrumb_maker(directory, file_name, pd):
         return result
 
 
-def json_img_data_insert(long_str):
-    img_path = 'eyec.jpg'
-    height = '464'
-    width = '700'
+def json_img_data_insert(long_str, pd):
+    img_path = pd['eyec_img']['img_path']
+    height = pd['eyec_img']['height']
+    width = pd['eyec_img']['width']
     if '<div class="alt_img_t">' in long_str:
         img_l = re.findall(r'<div class="alt_img_t"><img src="\.\./images/(.+?)" alt="', long_str)
         if img_l:
@@ -908,15 +926,18 @@ def logical_box_filter(long_str):
 
 def add_modify_log(mod_file_path, now, category, title, pub_or_mod, pd):
     # mod_log = [[mod_file_path, str(now), category, title, pub_or_mod]]
-    mod_log = make_article_list.read_pickle_pot('modify_log', pd)
-    today_mod = [x[0] for x in mod_log if x[1] == str(now)]
-    if mod_file_path not in today_mod:
-        mod_log.append([mod_file_path, str(now), category, title, pub_or_mod])
+    if os.path.exists(pd['project_dir'] + '/pickle_pot/modify_log.pkl'):
+        mod_log = make_article_list.read_pickle_pot('modify_log', pd)
+        today_mod = [x[0] for x in mod_log if x[1] == str(now)]
+        if mod_file_path not in today_mod:
+            mod_log.append([mod_file_path, str(now), category, title, pub_or_mod])
+        else:
+            for data in mod_log:
+                if data[0] == mod_file_path and data[1] == str(now):
+                    mod_log.remove(data)
+                    mod_log.append([mod_file_path, str(now), category, title, pub_or_mod])
     else:
-        for data in mod_log:
-            if data[0] == mod_file_path and data[1] == str(now):
-                mod_log.remove(data)
-                mod_log.append([mod_file_path, str(now), category, title, pub_or_mod])
+        mod_log = [[mod_file_path, str(now), category, title, pub_or_mod]]
     make_article_list.save_data_to_pickle(mod_log, 'modify_log', pd)
 
 
@@ -1029,7 +1050,7 @@ def mail_sample_replace(long_str):
             f_str = '<div class="sample"><div class="wmail"><p>' + f_mail.replace('\n', '<br />') + '</p></div></div>'
             long_str = long_str.replace('%w%' + f_mail + '\n\n', f_str)
     long_str = long_str.replace('%arr' + '\n\n',
-                                '<div class="arr"><img width="17" height="17" src="../images/arr.png" alt="↓"></div>')
+                                '<div class="arr"><img width="17" height="17" src="../images/common/arr.png" alt="↓"></div>')
     cm_mail_l = re.findall(r'%cm%([\s\S]+?)\n\n', long_str)
     if cm_mail_l:
         for cm_mail in cm_mail_l:
@@ -1278,16 +1299,37 @@ def make_html_dir(pd):
 
 def copy_template_files(pd):
     copy_list = ['template_files/template', 'template_files/images', 'template_files/css']
-    for base in copy_list:
-        shutil.copytree(base, pd['project_dir'] + '/html_files/' + pd['main_dir'] + base.replace('template_files/', ''))
+    if not os.path.exists(pd['project_dir'] + '/html_files/pc/template'):
+        for base in copy_list:
+            shutil.copytree(base, pd['project_dir'] + '/html_files/' + pd['main_dir'] +
+                            base.replace('template_files/', ''))
+
+
+def insert_to_temp(pd):
+    with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'r',
+              encoding='utf-8') as f:
+        long_str = f.read()
+        long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
+        long_str = long_str.replace('<!--site-name-->', pd['site_name'])
+        long_str = long_str.replace('<!--main-domain-->', 'https://www.' + pd['domain_str'] + '/')
+        long_str = long_str.replace('<!--main-dir-->', pd['main_dir'])
+        cat_str = ''.join(['<li><a href="../{}/{}">{}</a></li>'
+                          .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
+                           pd['category_data']])
+        long_str = long_str.replace('<!--temp_category_list-->', cat_str)
+        with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'w',
+                  encoding='utf-8') as g:
+            g.write(long_str)
 
 
 def first_make_html(pd):
-    make_html_dir(pd)
-    copy_template_files(pd)
+    # make_html_dir(pd)
+    # copy_template_files(pd)
+    # insert_to_temp(pd)
+    main(0, pd, True, True, True, True)
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # pd_dict = reibun.main_info.info_dict
     #     main(1, pd_dict)
     # site_shift_flag ( 0: normal, 1:no jmail )
@@ -1311,9 +1353,9 @@ if __name__ == '__main__':
 
     # make_rss([])
     # reibun_upload.files_upload(['reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml'])
-    rpd = rei_site.main_info.info_dict
+    # rpd = rei_site.main_info.info_dict
     # make_html_dir(rpd)
     # all_html_insert()
-    first_make_html(rpd)
-
+    # first_make_html(rpd)
+    # insert_to_temp(rpd)
 # todo: 関連記事改善
