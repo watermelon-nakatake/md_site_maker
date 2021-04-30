@@ -36,20 +36,72 @@ def sc_data_match_page(csv_list):
 
 def make_target_data_for_today(today, period):
     start_d = today - timedelta(days=period)
-    end_d = today - timedelta(days=2)
+    end_d = today - timedelta(days=3)
     start_str = start_d.strftime('%Y-%m-%d')
     end_str = end_d.strftime('%Y-%m-%d')
-    # print(start_str)
-    # print(end_str)
     if not os.path.exists('gsc_data/reibun/p_month' + end_str + '.csv'):
-        search_console_data.make_csv_from_gsc('https://www.demr.jp', start_str, end_str, 'sfd',
+        search_console_data.make_csv_from_gsc('https://www.demr.jp', start_str, end_str, 'reibun',
                                               'qp_month', ['query', 'page'])
-        search_console_data.make_csv_from_gsc('https://www.demr.jp', start_str, end_str, 'sfd',
+        search_console_data.make_csv_from_gsc('https://www.demr.jp', start_str, end_str, 'reibun',
                                               'p_month', ['page'])
     return end_str
 
 
-def next_update_target_search(aim_date, period):
+def project_select(file_path):
+    project_str = re.sub(r'^(.+?)/.*$', r'\1', file_path)
+    pj_dir, domain, main_dir = '', '', ''
+    print(project_str)
+    if project_str == 'reibun':
+        pj_dir = 'reibun'
+        domain = 'https://www.demr.jp'
+        main_dir = 'reibun/html_files/pc/'
+    return pj_dir, domain, main_dir
+
+
+def check_single_page_seo(period, html_path):
+    main_str_limit = 5000
+    limit_d = 100
+    today = datetime.today()
+    end_date = make_target_data_for_today(today, period)
+    if '.md' in html_path:
+        html_path = html_path.replace('.md', '.html').replace('/md_files/', '/html_files/')
+    pj_dir, domain, main_dir = project_select(html_path)
+    with open('gsc_data/' + pj_dir + '/p_month' + end_date + '.csv') as f:
+        reader = csv.reader(f)
+        csv_list = [row for row in reader]
+    c_list = sc_data_match_page(csv_list)
+    with open('gsc_data/' + pj_dir + '/qp_month' + end_date + '.csv') as f:
+        q_reader = csv.reader(f)
+        q_list = [row for row in q_reader]
+    q_list = q_list[1:]
+    with open(pj_dir + '/pickle_pot/main_data.pkl', 'rb') as f:
+        pk_dic = pickle.load(f)
+    url = html_path.replace(pj_dir + '/html_files/', domain + '/')
+    page_name = html_path.replace(main_dir, '')
+    this_pk_data = {}
+    for id_num in pk_dic:
+        if pk_dic[id_num]['file_path'] == page_name:
+            this_pk_data = pk_dic[id_num]
+            continue
+    page = [x for x in c_list if x[0] == url]
+    click_num, view_num, order_num = page[0][1], page[0][2], page[0][4]
+    this_query = [x for x in q_list if url == x[5]]
+    q_dic = make_simple_keyword_dic(this_query)
+    error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
+    print(page_name + ' : ' + this_pk_data['title'] + '  (' + str(len(this_pk_data['title'])) + ')')
+    print('   {}        {}      {}'.format(click_num, view_num, order_num))
+    if error_list:
+        print(error_list)
+    query_str_list, top_words = seo_checker_by_query(this_pk_data, q_dic)
+    if top_words:
+        for tw in top_words:
+            print(tw)
+    for qs in query_str_list:
+        print(qs)
+    get_gsc_query(page_name, q_list)
+
+
+def next_update_target_search(limit_d, period, main_str_limit):
     today = datetime.today()
     end_date = make_target_data_for_today(today, period)
     with open('gsc_data/reibun/p_month' + end_date + '.csv') as f:
@@ -63,19 +115,20 @@ def next_update_target_search(aim_date, period):
     # print(c_list)
     with open('reibun/pickle_pot/main_data.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
-    limit_d = today - timedelta(days=aim_date)
+    # print(pk_dic)
+    # print(q_list)
     print('日数 : ' + str(period) + '日間')
     print('クリック数順')
-    pk_dic, target_list = check_list_and_bs(c_list, pk_dic, limit_d, q_list)
+    target_list = check_list_and_bs(c_list, pk_dic, limit_d, q_list, main_str_limit, today)
 
     # click_list = check_no_mod_page(mod_list_n, c_list)
     # c_list.sort(key=lambda x: int(x[2]), reverse=True)
     # print('表示回数順')
     # display_list = check_no_mod_page(mod_list_n, c_list)
     # c_list.sort(key=lambda x: int(x[1]), reverse=True)
-    with open('sfd/pickle_pot/date_img.pkl', 'wb') as p:
-        pickle.dump(pk_dic, p)
-    with open('sfd/pickle_pot/target_files.pkl', 'wb') as q:
+    # with open('reibun/pickle_pot/main_data.pkl', 'wb') as p:
+    #     pickle.dump(pk_dic, p)
+    with open('reibun/pickle_pot/target_files.pkl', 'wb') as q:
         pickle.dump(target_list, q)
     return pk_dic
 
@@ -86,7 +139,7 @@ def display_mod_target_data():
     limit_date = today - timedelta(days=100)
     end_date = end_d.strftime('%Y-%m-%d')
     if os.path.exists('gsc_data/reibun/p_month' + end_date + '.csv'):
-        with open('sfd/pickle_pot/target_files.pkl', 'rb') as t:
+        with open('reibun/pickle_pot/target_files.pkl', 'rb') as t:
             target_pages = pickle.load(t)
         # print(target_pages)
         with open('gsc_data/reibun/p_month' + end_date + '.csv') as f:
@@ -99,7 +152,7 @@ def display_mod_target_data():
             q_reader = csv.reader(f)
             q_list = [row for row in q_reader]
         q_list = q_list[1:]
-        with open('sfd/pickle_pot/date_img.pkl', 'rb') as p:
+        with open('reibun/pickle_pot/date_img.pkl', 'rb') as p:
             pk_dic = pickle.load(p)
 
         for tp in target_pages:
@@ -112,7 +165,7 @@ def display_mod_target_data():
             print('\n')
     else:
         print('make data for today')
-        next_update_target_search(100, 28)
+        next_update_target_search(100, 28, 4000)
 
 
 def check_target_data(target_data, limit_date):
@@ -140,84 +193,160 @@ def get_gsc_query(target_page, q_list):
               ' ' * (10 - len(position)) + position + ' ' * 6 + d_r[4])
 
 
-def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
+def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
+    error_list = []
+    if 'layout_flag' in pk_data:
+        if not pk_data['layout_flag']:
+            error_list.append('collect layout !')
+    # if 'shift_flag' in pk_data:
+    #     if not pk_data['shift_flag']:
+    #         error_list.append('delete mt !')
+    if len(pk_data['title']) > 33:
+        error_list.append('too long title str !')
+    elif len(pk_data['title']) < 29:
+        error_list.append('too short title !')
+    if pk_data['str_len'] < main_str_limit:
+        error_list.append('too short main contents')
+    this_date = datetime.strptime(pk_data['mod_date'], '%Y-%m-%d')
+    if this_date < today - timedelta(days=limit_d):
+        error_list.append('too old !!')
+    return error_list
+
+
+def seo_checker_by_query(pk_data, q_dic):
+    result_list = []
+    top_words_data = []
+    with open('reibun/md_files/pc/' + pk_data['file_path'].replace('.html', '.md'), 'r', encoding='utf-8') as f:
+        long_str = f.read()
+    main_text = re.sub(r'^[\S\s]*\n# .+?\n', '', long_str)
+    main_text = re.sub(r'%kanren%[\S\s]*$', '', main_text)
+    main_text = re.sub(r']\(.+?\)', ']', main_text)
+    main_text = main_text.replace('\n', '')
+    main_text = main_text.lower()
+    title = re.findall(r't::(.+?)\n', long_str)[0]
+    h2_list = re.findall(r'\n## (.+?)\n', long_str)
+    h3_list = re.findall(r'\n### (.+?)\n', long_str)
+    h4_list = re.findall(r'\n#### (.+?)\n', long_str)
+    if h4_list:
+        result_list.append('クリック   表示回数      main    title   h2   h3   h4   キーワード')
+    elif not h3_list:
+        result_list.append('クリック   表示回数      main    title   h2   キーワード')
+    else:
+        result_list.append('クリック   表示回数      main    title   h2   h3   キーワード')
+    i = 0
+    for word in q_dic:
+        l_word = word[0].lower()
+        count_w = main_text.count(l_word)
+        title_str = title + '|出会い系メール例文集'
+        t_count = title_str.lower().count(l_word)
+        h2_count = 0
+        h3_count = 0
+        h4_count = 0
+        if h2_list:
+            for h2 in h2_list:
+                h2_count += h2.lower().count(l_word)
+        else:
+            h2_count = 'n'
+        if h3_list:
+            for h3 in h3_list:
+                h3_count += h3.lower().count(l_word)
+        else:
+            h3_count = 'n'
+        if h4_list:
+            for h4 in h4_list:
+                h4_count += h4.lower().count(l_word)
+        else:
+            h4_count = 'n'
+        if h4_list:
+            result_list.append(
+                ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
+                ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * (5 - len(str(h3_count))) + str(h3_count) +
+                ' ' * (5 - len(str(h4_count))) + str(h4_count) + ' ' * 5 + word[0])
+        elif not h3_list:
+            result_list.append(
+                ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
+                ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * 5 + word[0])
+        else:
+            result_list.append(
+                ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
+                ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * (5 - len(str(h3_count))) + str(h3_count) +
+                ' ' * 5 + word[0])
+        if i < 8 and t_count < 1:
+            top_words_data.append(
+                ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
+                ' ' * 5 + word[0])
+        i += 1
+    return result_list, top_words_data
+
+
+def make_simple_keyword_dic(this_q_list):
+    result = {}
+    # print(this_q_list)
+    for row in this_q_list:
+        phrase_data = [int(row[0]), int(row[1]), float(row[2]), float(row[3])]
+        if ' ' in row[4]:
+            words = row[4].split(' ')
+            for word in words:
+                if word not in result:
+                    result[word] = phrase_data
+                else:
+                    result[word] = [result[word][0] + phrase_data[0], result[word][1] + phrase_data[1],
+                                    result[word][2] + phrase_data[2], result[word][3] + phrase_data[3]]
+        else:
+            word = row[4]
+            if word not in result:
+                result[word] = phrase_data
+            else:
+                result[word] = [result[word][0] + phrase_data[0], result[word][1] + phrase_data[1],
+                                result[word][2] + phrase_data[2], result[word][3] + phrase_data[3]]
+    # print(result)
+    result = {x: [result[x][0], result[x][1], round(result[x][2], 2), round(result[x][3], 2)] for x in result}
+    result_list = [[x] + result[x] for x in result if len(x) < 15 and (result[x][1] > 10 or result[x][0] > 0)]
+    result_list.sort(key=lambda x: (x[1], x[2]), reverse=True)
+    # print(result_list)
+    return result_list
+
+
+def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
     i = 0
     target_list = []
+    id_to_url = {pk_dic[x]['file_path']: x for x in pk_dic}
     for page in sc_list:
-        if page[0] != 'https://www.demr.jp/friend-with-benefits/area-bbs/' and\
-                page[0] != 'https://www.demr.jp/friend-with-benefits/' and\
-                page[0] != 'https://www.demr.jp/':
-            page_name = page[0].replace('https://www.demr.jp/', '')
+        page_name = page[0].replace('https://www.demr.jp/pc/', '')
+        if page_name in id_to_url:
             click_num, view_num, order_num = page[1], page[2], page[4]
-            if page_name in pk_dic:
-                if not pk_dic[page_name]['update_flag']:
-                    page_data = read_md_page(page[0])
-                    if not page_data['update_flag']:
-                        print(page_data['path'] + '  ' + page_data['title'])
-                        if page_data['title_len'] > 33 or page_data['title_len'] < 29:
-                            print('change title !')
-                        if not page_data['main_img_flag']:
-                            print('there is no images !')
-                        if not page_data['k2_flag']:
-                            print('make k2 comment')
-                        if not page_data['mt_flag'] and 'area-bbs/' not in page_name:
-                            print('delete mt !')
-                        print('   {}        {}      {}'.format(click_num, view_num, order_num))
-                        get_gsc_query(page_name, q_list)
-                        i += 1
-                        target_list.append(page_name)
-                    pk_dic[page_name] = page_data
-                else:
-                    this_date = datetime.strptime(pk_dic[page_name]['mod_time'].replace('T', ' ').replace('+0900', ''),
-                                                  '%Y-%m-%d %H:%M:%S')
-                    if this_date < limit_d:
-                        page_data = read_md_page(page[0])
-                        new_date = datetime.strptime(page_data['mod_time'].replace('T', ' ').replace('+0900', ''),
-                                                     '%Y-%m-%d %H:%M:%S')
-                        if new_date < limit_d:
-                            print(page_data['path'] + '  ' + page_data['title'])
-                            print('too old !!')
-                            print('   {}        {}      {}'.format(click_num, view_num, order_num))
-                            get_gsc_query(page_name, q_list)
-                            i += 1
-                            target_list.append(page_name)
-                        pk_dic[page_name] = page_data
-            else:
-                page_data = read_md_page(page[0])
-                if not page_data['update_flag']:
-                    if not page_data['update_flag']:
-                        print(page_data['path'] + '  ' + page_data['title'])
-                        if page_data['title_len'] > 33 or page_data['title_len'] < 29:
-                            print('change title !')
-                        if not page_data['main_img_flag']:
-                            print('there is no images !')
-                        if not page_data['k2_flag']:
-                            print('make k2 comment')
-                        if not page_data['mt_flag'] and 'area-bbs/' not in page_name:
-                            print('delete mt !')
-                    print('   {}        {}      {}'.format(click_num, view_num, order_num))
-                    get_gsc_query(page_name, q_list)
-                    i += 1
-                    target_list.append(page_name)
-                else:
-                    new_date = datetime.strptime(page_data['mod_time'].replace('T', ' ').replace('+0900', ''),
-                                                 '%Y-%m-%d %H:%M:%S')
-                    if new_date < limit_d:
-                        print(page_data['path'] + '  ' + page_data['title'])
-                        print('too old !!')
-                        print('   {}        {}      {}'.format(click_num, view_num, order_num))
-                        get_gsc_query(page_name, q_list)
-                        i += 1
-                        target_list.append(page_name)
-                pk_dic[page_name] = page_data
-        # if 'mod_time' not in pk_dic[page_name]:
-        #     pk_dic[page_name] = read_sd_page(page[0])
-
-        # print('{} : {} : {} : {}'.format(click_num, pk_dic[page_name]['title'], pk_dic[page_name]['path'],
-        #       re.sub(r'T.*$', '', pk_dic[page_name]['mod_time'])))
+            this_query = [x for x in q_list if page[0] == x[5]]
+            q_dic = make_simple_keyword_dic(this_query)
+            this_pk_data = pk_dic[id_to_url[page_name]]
+            error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
+            query_str_list, top_words = seo_checker_by_query(this_pk_data, q_dic)
+            if error_list:
+                print(page_name + ' : ' + this_pk_data['title'] + '  (' + str(len(this_pk_data['title'])) + ')')
+                print(error_list)
+                print('   {}        {}      {}'.format(click_num, view_num, order_num))
+                for qs in query_str_list:
+                    print(qs)
+                get_gsc_query(page_name, q_list)
+                i += 1
+                target_list.append(page_name)
+            elif top_words:
+                print(page_name + ' : ' + this_pk_data['title'] + '  (' + str(len(this_pk_data['title'])) + ')')
+                print('   {}        {}      {}'.format(click_num, view_num, order_num))
+                for tw in top_words:
+                    print(tw)
+                for qs in query_str_list:
+                    print(qs)
+                get_gsc_query(page_name, q_list)
+                i += 1
+        else:
+            print('url not in : ' + page_name)
         if i >= 10:
             break
-    return pk_dic, target_list
+    return target_list
 
 
 def read_md_page(page_url):
@@ -469,7 +598,9 @@ if __name__ == '__main__':
     # make_side_bar_article_list(10, p_d)
     # print('\n')
 
-    c_l = next_update_target_search(100, 28)
+    check_single_page_seo(28, 'reibun/html_files/pc/caption/fwari.html')
+
+    # next_update_target_search(100, 28, 3000)
     # display_mod_target_data()
 
     # get_gsc_query('gsc_data/sd/month2021-04-23.csv', 'chinese')

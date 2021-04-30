@@ -42,6 +42,8 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     print(mod_list)
     upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag)
     side_bar_dic = make_all_side_bar(pk_dic, pd)
+    print(upload_list)
+    print(title_change_id)
 
     if title_change_id:
         print('change other page')
@@ -636,7 +638,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
             md_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-b-->\n\n\n\1\n\n<!--e/arlist_b-->', md_txt)
         md_txt = insert_site_banner(md_txt, pd)
         if '%kanren%' in md_txt:
-            md_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n', r'<!--last-section--><!--kanren-->\n\n\n\1\n\n<!--e/kanren-->',
+            md_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n', r'<!--last-section-->\n<!--kanren-->\n\n\n\1\n\n<!--e/kanren-->',
                             md_txt)
         else:
             md_txt = md_txt + '<!--last-section-->'
@@ -655,6 +657,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         md_txt = re.sub(r'\(\)\[.*?]\n', '', md_txt)
         md_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', md_txt)
         md_txt = re.sub(r'>[\s]+?<', '><', md_txt)
+        md_txt = md_txt.replace('--><!--', '-->\n<!--')
         # print(md_txt)
 
         print('markdown start!')
@@ -749,6 +752,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         new_str = new_str.replace('。<br /></p>', '。</p>')
         new_str = re.sub(r'(件名: .+?)<br />', r'<span class="m_title">\1</span>', new_str)
         new_str = new_str.replace('<table>', '<table class="tb_n">')
+        new_str = new_str.replace('<td align="center">', '<td class="al_c">')
 
         new_str = re.sub(r'<!--lm_(\d)-->',
                          r'<div class="fl1"><div class="icon"><div class="lm_b lm_\1"></div></div>', new_str)
@@ -812,9 +816,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         layout_flag = check_page_layout(new_str)
         # print(new_str)
         if mod_flag:
-            new_mod_date = str(now.date())
-            pub_or_mod = 'pub'
-        else:
             if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name):
                 pub_or_mod = 'mod'
                 if pk_dic[this_id]['title'] != title_str:
@@ -823,11 +824,15 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                     print('title change: ' + file_name)
                 elif str_len > pk_dic[this_id]['str_len'] + 300:
                     update_title_log(file_name, title_str, str(now.date()), str_len, pd)
+                new_mod_date = str(now.date())
             else:
                 update_title_log(file_name, title_str, str(now.date()), str_len, pd)
+                new_mod_date = str(now.date())
                 pub_or_mod = 'pub'
                 title_change_id.append(this_id)
                 print('title change: ' + file_name)
+        else:
+            pub_or_mod = 'mod'
             new_mod_date = pk_dic[this_id]['mod_date']
         if type(str_len) == int:
             new_data = {'file_path': file_name, 'title': title, 'pub_date': pub_date, 'mod_date': new_mod_date,
