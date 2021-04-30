@@ -22,11 +22,11 @@ def make_mod_date_list(pd):
     make_article_list.save_data_to_pickle(mod_list, 'mod_date_list', pd)
 
 
-def sc_data_match_page(csv_list):
+def sc_data_match_page(csv_list, domain):
     result = {}
     # print(csv_list)
     for page in csv_list[1:]:
-        f_page = page[4].replace('https://www.demr.jp/', '')
+        f_page = page[4].replace(domain + '/', '')
         f_page = re.sub(r'^(.+)#.+', r'\1', f_page)
         result[f_page] = page
     result_list = [[x[4], x[0], x[1], str(round(float(x[2]), 2)),
@@ -34,15 +34,15 @@ def sc_data_match_page(csv_list):
     return result_list
 
 
-def make_target_data_for_today(today, period):
+def make_target_data_for_today(today, period, pj_dir, domain):
     start_d = today - timedelta(days=period)
     end_d = today - timedelta(days=3)
     start_str = start_d.strftime('%Y-%m-%d')
     end_str = end_d.strftime('%Y-%m-%d')
-    if not os.path.exists('gsc_data/reibun/p_month' + end_str + '.csv'):
-        search_console_data.make_csv_from_gsc('https://www.demr.jp', start_str, end_str, 'reibun',
+    if not os.path.exists('gsc_data/' + pj_dir + '/p_month' + end_str + '.csv'):
+        search_console_data.make_csv_from_gsc(domain, start_str, end_str, pj_dir,
                                               'qp_month', ['query', 'page'])
-        search_console_data.make_csv_from_gsc('https://www.demr.jp', start_str, end_str, 'reibun',
+        search_console_data.make_csv_from_gsc(domain, start_str, end_str, pj_dir,
                                               'p_month', ['page'])
     return end_str
 
@@ -62,14 +62,14 @@ def check_single_page_seo(period, html_path):
     main_str_limit = 5000
     limit_d = 100
     today = datetime.today()
-    end_date = make_target_data_for_today(today, period)
     if '.md' in html_path:
         html_path = html_path.replace('.md', '.html').replace('/md_files/', '/html_files/')
     pj_dir, domain, main_dir = project_select(html_path)
+    end_date = make_target_data_for_today(today, period, pj_dir, domain)
     with open('gsc_data/' + pj_dir + '/p_month' + end_date + '.csv') as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
-    c_list = sc_data_match_page(csv_list)
+    c_list = sc_data_match_page(csv_list, domain)
     with open('gsc_data/' + pj_dir + '/qp_month' + end_date + '.csv') as f:
         q_reader = csv.reader(f)
         q_list = [row for row in q_reader]
@@ -101,19 +101,20 @@ def check_single_page_seo(period, html_path):
     get_gsc_query(page_name, q_list)
 
 
-def next_update_target_search(limit_d, period, main_str_limit):
+def next_update_target_search(limit_d, period, main_str_limit, target_project):
     today = datetime.today()
-    end_date = make_target_data_for_today(today, period)
-    with open('gsc_data/reibun/p_month' + end_date + '.csv') as f:
+    pj_dir, domain, main_dir = project_select(target_project + '/')
+    end_date = make_target_data_for_today(today, period, pj_dir, domain)
+    with open('gsc_data/' + pj_dir + '/p_month' + end_date + '.csv') as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
-    c_list = sc_data_match_page(csv_list)
-    with open('gsc_data/reibun/qp_month' + end_date + '.csv') as f:
+    c_list = sc_data_match_page(csv_list, domain)
+    with open('gsc_data/' + pj_dir + '/qp_month' + end_date + '.csv') as f:
         q_reader = csv.reader(f)
         q_list = [row for row in q_reader]
     q_list = q_list[1:]
     # print(c_list)
-    with open('reibun/pickle_pot/main_data.pkl', 'rb') as f:
+    with open(pj_dir + '/pickle_pot/main_data.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
     # print(pk_dic)
     # print(q_list)
@@ -128,7 +129,7 @@ def next_update_target_search(limit_d, period, main_str_limit):
     # c_list.sort(key=lambda x: int(x[1]), reverse=True)
     # with open('reibun/pickle_pot/main_data.pkl', 'wb') as p:
     #     pickle.dump(pk_dic, p)
-    with open('reibun/pickle_pot/target_files.pkl', 'wb') as q:
+    with open(pj_dir + '/pickle_pot/target_files.pkl', 'wb') as q:
         pickle.dump(target_list, q)
     return pk_dic
 
@@ -165,7 +166,7 @@ def display_mod_target_data():
             print('\n')
     else:
         print('make data for today')
-        next_update_target_search(100, 28, 4000)
+        next_update_target_search(100, 28, 4000, 'reibun')
 
 
 def check_target_data(target_data, limit_date):
@@ -216,6 +217,10 @@ def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
 def seo_checker_by_query(pk_data, q_dic):
     result_list = []
     top_words_data = []
+    c_list = []
+    ignore_list = ['出会系']
+    if 'ign_words' in pk_data:
+        ignore_list.extend(pk_data['ign_words'])
     with open('reibun/md_files/pc/' + pk_data['file_path'].replace('.html', '.md'), 'r', encoding='utf-8') as f:
         long_str = f.read()
     main_text = re.sub(r'^[\S\s]*\n# .+?\n', '', long_str)
@@ -234,6 +239,7 @@ def seo_checker_by_query(pk_data, q_dic):
     else:
         result_list.append('クリック   表示回数      main    title   h2   h3   キーワード')
     i = 0
+    words_list = [x[0] for x in q_dic]
     for word in q_dic:
         l_word = word[0].lower()
         count_w = main_text.count(l_word)
@@ -274,13 +280,37 @@ def seo_checker_by_query(pk_data, q_dic):
                 ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
                 ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * (5 - len(str(h3_count))) + str(h3_count) +
                 ' ' * 5 + word[0])
-        if i < 8 and t_count < 1:
-            top_words_data.append(
-                ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
-                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
-                ' ' * 5 + word[0])
+        if i < 10 and t_count < 1 and l_word not in ignore_list:
+            c_str = combined_keyword_checker(l_word, words_list, title_str)
+            if not c_str:
+                top_words_data.append(
+                    ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
+                    ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
+                    ' ' * 5 + word[0] + ' (' + str(i) + ')')
+            else:
+                c_list.append(c_str + str(i) + ')')
         i += 1
+    if top_words_data:
+        top_words_data.extend(c_list)
     return result_list, top_words_data
+
+# todo: 調査済みデータのhtmlページ作成 リンク アップロード中にも見られるように tempから作成 アコーディオンで見やすいように
+# todo: descriptionの検索
+
+
+def combined_keyword_checker(c_word, words_list, title_str):
+    if len(c_word) >= 3:
+        for i in range(len(c_word) - 1):
+            a_word = c_word[:i + 1]
+            b_word = c_word[i + 1:]
+            # print(a_word + ' : ' + b_word)
+            if a_word in words_list and b_word in words_list:
+                a_count = title_str.count(a_word)
+                if a_count:
+                    b_count = title_str.count(b_word)
+                    if b_count:
+                        return 'combined_key : {} + {} ('.format(a_word, b_word)
+    return ''
 
 
 def make_simple_keyword_dic(this_q_list):
@@ -318,6 +348,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
     for page in sc_list:
         page_name = page[0].replace('https://www.demr.jp/pc/', '')
         if page_name in id_to_url:
+            # print('start : ' + page_name)
             click_num, view_num, order_num = page[1], page[2], page[4]
             this_query = [x for x in q_list if page[0] == x[5]]
             q_dic = make_simple_keyword_dic(this_query)
@@ -325,22 +356,22 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
             error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
             query_str_list, top_words = seo_checker_by_query(this_pk_data, q_dic)
             if error_list:
-                print(page_name + ' : ' + this_pk_data['title'] + '  (' + str(len(this_pk_data['title'])) + ')')
+                print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print(error_list)
                 print('   {}        {}      {}'.format(click_num, view_num, order_num))
-                for qs in query_str_list:
-                    print(qs)
-                get_gsc_query(page_name, q_list)
+                # for qs in query_str_list:
+                #     print(qs)
+                # get_gsc_query(page_name, q_list)
                 i += 1
                 target_list.append(page_name)
             elif top_words:
-                print(page_name + ' : ' + this_pk_data['title'] + '  (' + str(len(this_pk_data['title'])) + ')')
+                print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print('   {}        {}      {}'.format(click_num, view_num, order_num))
                 for tw in top_words:
                     print(tw)
-                for qs in query_str_list:
-                    print(qs)
-                get_gsc_query(page_name, q_list)
+                # for qs in query_str_list:
+                #     print(qs)
+                # get_gsc_query(page_name, q_list)
                 i += 1
         else:
             print('url not in : ' + page_name)
@@ -413,10 +444,6 @@ def read_md_page(page_url):
     return result
 
 
-def check_old_page(c_list):
-    print(c_list)
-
-
 def check_no_mod_page(mod_list, csv_list, len_dec, pd):
     result = []
     url_list = [x[0].replace('/' + pd['main_dir'], '') for x in mod_list]
@@ -442,14 +469,6 @@ def check_no_mod_page(mod_list, csv_list, len_dec, pd):
         if len(result) == 10:
             break
         i += 1
-    return result
-
-
-def check_number_of_days():
-    with open('/Users/nakataketetsuhiko/Downloads/https___www/日付.csv') as f:
-        reader = csv.reader(f)
-        csv_list = [row for row in reader]
-    result = len(csv_list) - 1
     return result
 
 
@@ -511,126 +530,5 @@ def make_ga_csv_list():
     return result
 
 
-def count_title_str_num(len_dec, pd):
-    result = []
-    print('タイトル文字数チェック')
-    p_data = make_article_list.read_pickle_pot('main_data', pd)
-    # print(p_data)
-    short_title_l = [[len(p_data[x]['title']), p_data[x]['file_path'], p_data[x]['title']] for x in p_data
-                     if len(p_data[x]['title']) < 20]
-    for y in sorted(short_title_l):
-        if 'policy' not in y[1]:
-            print(str(y[0]) + ' : {}  {}  {}'.format(y[1], y[2], len_dec['/pc/' + y[1]]))
-            result.append(y[1])
-    return result
-
-
-def make_to_do_list(click_list, display_list, title_list):
-    print('クリック順')
-    for x in click_list:
-        if x.replace('/pc/', '') in title_list:
-            print(x)
-    print('表示順')
-    for y in display_list:
-        if y.replace('/pc/', '') in title_list:
-            print(y)
-    print('共通')
-    for z in click_list:
-        if z in display_list:
-            print(z)
-
-
-def check_layout_flag(click_list, pk_dec, p_dic):
-    print('レイアウト変更未実施')
-    s_pk = {'str_len': 'n_a'}
-    new_cl = [x[0] for x in click_list]
-    i = 1
-    j = 1
-    for page in new_cl:
-        page = page.replace('https://www.demr.jp', '')
-        if page != '/' and '/sitepage/' not in page:
-            if page in pk_dec:
-                if not pk_dec[page]:
-                    c_num = ''
-                    for cl in click_list:
-                        if page in cl[0]:
-                            c_num = cl[1]
-                            break
-                    for pk in p_dic:
-                        if page.replace('/pc/', '') in p_dic[pk]['file_path']:
-                            s_pk = p_dic[pk]
-                            break
-                    print(str(i) + ' : ' + page + ' ' + c_num + ' ' + str(s_pk['str_len']))
-                    j += 1
-                if j > 9:
-                    break
-        i += 1
-
-
-def check_shift_flag(click_list, pk_dec, pd):
-    print('shift対応未実施')
-    new_cl = [x[0] for x in click_list]
-    i = 1
-    j = 1
-    for page in new_cl:
-        page = page.replace('https://www.' + pd['domain_str'], '')
-        if '/sitepage/' not in page and page in pk_dec:
-            if page != '/' and not pk_dec[page]:
-                if os.path.exists(pd['project_dir'] + '/md_files/' + page.replace('.html', '.md')):
-                    with open(pd['project_dir'] + '/md_files/' + page.replace('.html', '.md'), 'r', encoding='utf-8') \
-                            as f:
-                        long_str = f.read()
-                    if 'sitepage/mintj.html' in long_str:
-                        c_num = ''
-                        for cl in click_list:
-                            if page in cl[0]:
-                                c_num = cl[1]
-                                break
-                        print(str(i) + ' : ' + page + ' ' + c_num)
-                        j += 1
-            if j > 9:
-                break
-        i += 1
-
-
 if __name__ == '__main__':
-    # print(str_len_dec)
-    # make_side_bar_article_list(10, p_d)
-    # print('\n')
-
-    check_single_page_seo(28, 'reibun/html_files/pc/caption/fwari.html')
-
-    # next_update_target_search(100, 28, 3000)
-    # display_mod_target_data()
-
-    # get_gsc_query('gsc_data/sd/month2021-04-23.csv', 'chinese')
-
-    # make_target_data_for_today('sd')
-
-    # read_sd_page('https://www.demr.jp/friend-with-benefits/abnormal/')
-    # read_sd_page('https://www.demr.jp/friend-with-benefits/physical-labor/')
-
-    # # print('\n')
-    # # t_l = count_title_str_num(str_len_dec, p_d)
-    # print('\n')
-    # make_to_do_list(c_l, d_l, t_l)
-    # print('\n')
-    # # print(c_l2)
-    # check_layout_flag(c_l2, layout_dec, pickle_dec)
-    # check_shift_flag(c_l2, shift_dec, p_d)
-
-    # print(make_article_list.read_pickle_pot('mod_date_list', p_d))
-    # print(make_article_list.read_pickle_pot('modify_log', p_d))
-    #
-    # print(make_article_list.read_pickle_pot('main_data', p_d))
-    # np = make_article_list.read_pickle_pot('main_data', p_d)
-    # op = make_article_list.read_pickle_pot('title_img_list2', p_d)
-    # for s in np:
-    #     if s == 144:
-    #         np[s]['mod_date'] = op[146][3]
-    #     else:
-    #         np[s]['mod_date'] = op[s][3]
-    # print(np)
-    # make_article_list.save_data_to_pickle(np, 'main_data', p_d)
-    # make_mod_date_list()
-    # print(make_ga_csv_list())
+    next_update_target_search(100, 28, 3000, 'reibun')

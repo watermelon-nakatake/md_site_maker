@@ -94,7 +94,7 @@ def read_this_title_log(md_path, pd):
 
 if __name__ == '__main__':
     target_md = 'reibun/md_files/pc/caption/fwari.md'
-    key_list = ['ミント', 'ハッピーメール', 'ハピメ', 'ワクワク', 'Jメール', 'PCMAX']
-    title_counter(target_md, key_list, 1, reibun.main_info.info_dict)
     reibun_check_mod_date.check_single_page_seo(28, target_md)
     read_this_title_log(target_md, reibun.main_info.info_dict)
+    key_list = ['ミント', 'Jメール']
+    title_counter(target_md, key_list, 1, reibun.main_info.info_dict)
