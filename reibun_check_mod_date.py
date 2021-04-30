@@ -1,25 +1,10 @@
 import csv
 import datetime
-import make_article_list
 import os
 import re
-from bs4 import BeautifulSoup
-import requests
 import pickle
 from datetime import datetime, timedelta
 import search_console_data
-
-
-def make_mod_date_list(pd):
-    seen = []
-    mod_list = []
-    mod_log = make_article_list.read_pickle_pot('modify_log', pd)
-    mod_log.reverse()
-    for log in mod_log:
-        if log[0] not in seen:
-            mod_list.append([log[0].replace('reibun', ''), log[1]])
-            seen.append(log[0])
-    make_article_list.save_data_to_pickle(mod_list, 'mod_date_list', pd)
 
 
 def sc_data_match_page(csv_list, domain):
@@ -92,7 +77,7 @@ def check_single_page_seo(period, html_path):
     print('   {}        {}      {}'.format(click_num, view_num, order_num))
     if error_list:
         print(error_list)
-    query_str_list, top_words = seo_checker_by_query(this_pk_data, q_dic)
+    query_str_list, top_words, h_result, t_result = seo_checker_by_query(this_pk_data, q_dic)
     if top_words:
         for tw in top_words:
             print(tw)
@@ -134,56 +119,6 @@ def next_update_target_search(limit_d, period, main_str_limit, target_project):
     return pk_dic
 
 
-def display_mod_target_data():
-    today = datetime.today()
-    end_d = today - timedelta(days=2)
-    limit_date = today - timedelta(days=100)
-    end_date = end_d.strftime('%Y-%m-%d')
-    if os.path.exists('gsc_data/reibun/p_month' + end_date + '.csv'):
-        with open('reibun/pickle_pot/target_files.pkl', 'rb') as t:
-            target_pages = pickle.load(t)
-        # print(target_pages)
-        with open('gsc_data/reibun/p_month' + end_date + '.csv') as f:
-            reader = csv.reader(f)
-            csv_list = [row for row in reader]
-        c_dic = {x[4]: [x[0], x[1], x[3]] for x in csv_list if x[4].replace('https://www.demr.jp/', '')
-                 in target_pages}
-        # print(c_dic)
-        with open('gsc_data/reibun/qp_month' + end_date + '.csv') as f:
-            q_reader = csv.reader(f)
-            q_list = [row for row in q_reader]
-        q_list = q_list[1:]
-        with open('reibun/pickle_pot/date_img.pkl', 'rb') as p:
-            pk_dic = pickle.load(p)
-
-        for tp in target_pages:
-            # print(tp)
-            # print(pk_dic[tp])
-            check_target_data(pk_dic[tp], limit_date)
-            tp = 'https://www.demr.jp/' + tp
-            print('   {}        {}      {}'.format(c_dic[tp][0], c_dic[tp][1], round(float(c_dic[tp][2]), 2)))
-            get_gsc_query(tp, q_list)
-            print('\n')
-    else:
-        print('make data for today')
-        next_update_target_search(100, 28, 4000, 'reibun')
-
-
-def check_target_data(target_data, limit_date):
-    print(target_data['path'] + '  ' + target_data['title'])
-    if target_data['title_len'] > 33 or target_data['title_len'] < 29:
-        print('change title !')
-    if not target_data['main_img_flag']:
-        print('there is no images !')
-    if not target_data['k2_flag']:
-        print('make k2 comment')
-    if not target_data['mt_flag']:
-        print('delete mt !')
-    new_date = datetime.strptime(target_data['mod_time'].replace('T', ' ').replace('+0900', ''), '%Y-%m-%d %H:%M:%S')
-    if new_date < limit_date:
-        print('too old !!')
-
-
 def get_gsc_query(target_page, q_list):
     filtered_data = [x for x in q_list if target_page in x[5]]
     filtered_data.sort(key=lambda x: (int(x[0]), int(x[1]), float(x[3])), reverse=True)
@@ -216,6 +151,8 @@ def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
 
 def seo_checker_by_query(pk_data, q_dic):
     result_list = []
+    h_result = []
+    t_result = []
     top_words_data = []
     c_list = []
     ignore_list = ['出会系']
@@ -229,15 +166,16 @@ def seo_checker_by_query(pk_data, q_dic):
     main_text = main_text.replace('\n', '')
     main_text = main_text.lower()
     title = re.findall(r't::(.+?)\n', long_str)[0]
+    description = re.findall(r'd::(.+?)\n', long_str)[0]
     h2_list = re.findall(r'\n## (.+?)\n', long_str)
     h3_list = re.findall(r'\n### (.+?)\n', long_str)
     h4_list = re.findall(r'\n#### (.+?)\n', long_str)
     if h4_list:
-        result_list.append('クリック   表示回数      main    title   h2   h3   h4   キーワード')
+        result_list.append('クリック   表示回数      main   title  des   h2   h3   h4   キーワード')
     elif not h3_list:
-        result_list.append('クリック   表示回数      main    title   h2   キーワード')
+        result_list.append('クリック   表示回数      main   title  des   h2   キーワード')
     else:
-        result_list.append('クリック   表示回数      main    title   h2   h3   キーワード')
+        result_list.append('クリック   表示回数      main   title  des   h2   h3   キーワード')
     i = 0
     words_list = [x[0] for x in q_dic]
     for word in q_dic:
@@ -245,6 +183,7 @@ def seo_checker_by_query(pk_data, q_dic):
         count_w = main_text.count(l_word)
         title_str = title + '|出会い系メール例文集'
         t_count = title_str.lower().count(l_word)
+        d_count = description.lower().count(l_word)
         h2_count = 0
         h3_count = 0
         h4_count = 0
@@ -266,20 +205,25 @@ def seo_checker_by_query(pk_data, q_dic):
         if h4_list:
             result_list.append(
                 ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
-                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
-                ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * (5 - len(str(h3_count))) + str(h3_count) +
-                ' ' * (5 - len(str(h4_count))) + str(h4_count) + ' ' * 5 + word[0])
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (8 - len(str(t_count))) + str(t_count) +
+                ' ' * (5 - len(str(d_count))) + str(d_count) + ' ' * (5 - len(str(h2_count))) + str(h2_count) +
+                ' ' * (5 - len(str(h3_count))) + str(h3_count) + ' ' * (5 - len(str(h4_count))) + str(h4_count) +
+                ' ' * 5 + word[0])
+            h_result.append([word[0], word[1], word[2], count_w, t_count, d_count, h2_count, h3_count, h4_count])
         elif not h3_list:
             result_list.append(
                 ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
-                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
-                ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * 5 + word[0])
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (8 - len(str(t_count))) + str(t_count) +
+                ' ' * (5 - len(str(d_count))) + str(d_count) + ' ' * (5 - len(str(h2_count))) + str(h2_count) +
+                ' ' * 5 + word[0])
+            h_result.append([word[0], word[1], word[2], count_w, t_count, d_count, h2_count])
         else:
             result_list.append(
                 ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
-                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
-                ' ' * (5 - len(str(h2_count))) + str(h2_count) + ' ' * (5 - len(str(h3_count))) + str(h3_count) +
-                ' ' * 5 + word[0])
+                ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (8 - len(str(t_count))) + str(t_count) +
+                ' ' * (5 - len(str(d_count))) + str(d_count) + ' ' * (5 - len(str(h2_count))) + str(h2_count) +
+                ' ' * (5 - len(str(h3_count))) + str(h3_count) + ' ' * 5 + word[0])
+            h_result.append([word[0], word[1], word[2], count_w, t_count, d_count, h2_count, h3_count])
         if i < 10 and t_count < 1 and l_word not in ignore_list:
             c_str = combined_keyword_checker(l_word, words_list, title_str)
             if not c_str:
@@ -287,15 +231,27 @@ def seo_checker_by_query(pk_data, q_dic):
                     ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
                     ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
                     ' ' * 5 + word[0] + ' (' + str(i) + ')')
+                t_result.append([word[0], word[1], word[2], count_w, t_count, d_count, h2_count])
             else:
                 c_list.append(c_str + str(i) + ')')
         i += 1
     if top_words_data:
         top_words_data.extend(c_list)
-    return result_list, top_words_data
+        t_result.extend(c_list)
+    return result_list, top_words_data, h_result, t_result
 
 # todo: 調査済みデータのhtmlページ作成 リンク アップロード中にも見られるように tempから作成 アコーディオンで見やすいように
-# todo: descriptionの検索
+
+
+def make_seo_html_file(html_dic, q_list):
+    content_t = ''
+    if t_result:
+        for t_row in t_result:
+            content_t += '<tr>'
+            for t_d in t_row:
+                content_t += '<td>' + str(t_d) + '</td>'
+            content_t += '</tr>'
+
 
 
 def combined_keyword_checker(c_word, words_list, title_str):
@@ -309,7 +265,7 @@ def combined_keyword_checker(c_word, words_list, title_str):
                 if a_count:
                     b_count = title_str.count(b_word)
                     if b_count:
-                        return 'combined_key : {} + {} ('.format(a_word, b_word)
+                        return 'clear_by_combined_key : {} + {} ('.format(a_word, b_word)
     return ''
 
 
@@ -344,6 +300,7 @@ def make_simple_keyword_dic(this_q_list):
 def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
     i = 0
     target_list = []
+    html_dic = {}
     id_to_url = {pk_dic[x]['file_path']: x for x in pk_dic}
     for page in sc_list:
         page_name = page[0].replace('https://www.demr.jp/pc/', '')
@@ -354,7 +311,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
             q_dic = make_simple_keyword_dic(this_query)
             this_pk_data = pk_dic[id_to_url[page_name]]
             error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
-            query_str_list, top_words = seo_checker_by_query(this_pk_data, q_dic)
+            query_str_list, top_words, h_result, t_result = seo_checker_by_query(this_pk_data, q_dic)
             if error_list:
                 print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print(error_list)
@@ -363,7 +320,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
                 #     print(qs)
                 # get_gsc_query(page_name, q_list)
                 i += 1
-                target_list.append(page_name)
+                html_dic[page_name] = {'h_result': h_result, 't_result': t_result}
             elif top_words:
                 print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print('   {}        {}      {}'.format(click_num, view_num, order_num))
@@ -373,161 +330,14 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today):
                 #     print(qs)
                 # get_gsc_query(page_name, q_list)
                 i += 1
+                html_dic[page_name] = {'h_result': h_result, 't_result': t_result}
         else:
             print('url not in : ' + page_name)
         if i >= 10:
             break
+    if html_dic:
+        make_seo_html_file(html_dic, q_list)
     return target_list
-
-
-def read_md_page(page_url):
-    # スクレイピング対象の URL にリクエストを送り HTML を取得する
-    # print(page_url)
-    # print('scrape: ' + page_url)
-    res = requests.get(page_url)
-    # レスポンスの HTML から BeautifulSoup オブジェクトを作る
-    soup = BeautifulSoup(res.text, 'html.parser')
-    title_text = soup.find('title').get_text().replace(' - セフレ道', '')
-    title_len = len(title_text)
-    if 29 <= title_len <= 33:
-        tl_flag = True
-    else:
-        tl_flag = False
-    main_img = soup.find_all('img', {'class': 'size-large'})
-    full_img = soup.find_all('img', {'class': 'size-full'})
-    # print(main_img)
-    if not main_img and not full_img:
-        # print('There in no main image!')
-        main_img_flag = False
-    else:
-        main_img_flag = True
-    md = soup.find('time', {'class': 'updated'})
-    if md:
-        mod_time = md.get('datetime')
-    else:
-        mod_time = ''
-    k2_box = soup.find_all('div', {'class': 'kaiwaicon2'})
-    k3_box = soup.find_all('div', {'class': 'kaiwaicon3'})
-    # print(k_box)
-    if not k2_box and not k3_box:
-        # print('There in no kaiwaicon2!')
-        k2_flag = False
-    else:
-        k2_flag = True
-    main_txt = soup.find_all('div', {'class': 'mainbox'})[0]
-
-    # print(main_txt)
-    for script in main_txt(["script", "style"]):
-        script.decompose()
-    text = main_txt.get_text()
-    id_str = '0'
-    for c_str in soup.body.get('class'):
-        if 'postid' in c_str:
-            id_str = re.sub(r'postid-(\d*)', r'\1', c_str)
-            break
-    post_id = int(id_str)
-    if 'ミント' in text or 'Jメール' in text:
-        if '/area-bbs/' not in page_url:
-            # print('Jmail in this page')
-            mt_flag = False
-        else:
-            mt_flag = True
-    else:
-        mt_flag = True
-    if main_img_flag and k2_flag and mt_flag and tl_flag:
-        update_flag = True
-    else:
-        update_flag = False
-    result = {'path': page_url, 'title': title_text, 'title_len': title_len, 'main_img_flag': main_img_flag,
-              'k2_flag': k2_flag, 'mt_flag': mt_flag, 'update_flag': update_flag, 'post_id': post_id,
-              'mod_time': str(mod_time)}
-    return result
-
-
-def check_no_mod_page(mod_list, csv_list, len_dec, pd):
-    result = []
-    url_list = [x[0].replace('/' + pd['main_dir'], '') for x in mod_list]
-    # print(url_list)
-    i = 1
-    for g_data in csv_list:
-        url_str = g_data[0].replace('https://www.demr.jp', '').replace('/' + pd['main_dir'], '')
-        # print(url_str)
-        if url_str not in url_list and g_data[0] != 'https://www.demr.jp/':
-            result.append(url_str)
-            if re.findall(r'/$', url_str):
-                url_str_n = url_str + 'index.html'
-            else:
-                url_str_n = url_str
-            len_dec = {y.replace('/' + pd['main_dir'], ''): len_dec[y] for y in len_dec}
-            if url_str_n in len_dec:
-                if '/sitepage/' not in url_str:
-                    print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}, 文字数 {}'
-                          .format(str(i), url_str, g_data[1], g_data[2], g_data[4], len_dec[url_str_n]))
-                else:
-                    print('{} : {}, {}クリック, 表示{}回, 掲載順位平均{}'
-                          .format(str(i), url_str, g_data[1], g_data[2], g_data[4]))
-        if len(result) == 10:
-            break
-        i += 1
-    return result
-
-
-def make_side_bar_article_list(list_length, pd):
-    click_list = []
-    time_list = []
-    pk_dec = make_article_list.read_pickle_pot('main_data', pd)
-    with open('/Users/nakataketetsuhiko/Downloads/https___www/ページ.csv') as f:
-        reader = csv.reader(f)
-        csv_list = [row for row in reader]
-    c_list = [y for y in csv_list[1:] if '#' not in y[0] and '/amp/' not in y[0]]
-    print('pop by click')
-    for click_a in c_list:
-        if '/pc/' in click_a[0]:
-            path = click_a[0].replace('https://www.demr.jp/pc/', '')
-            for pk_id in pk_dec:
-                if pk_dec[pk_id]['file_path'] == path:
-                    click_list.append(pk_id)
-                    print('{} : {}, {}'.format(path, str(pk_id), pk_dec[pk_id]['title']))
-        if len(click_list) == list_length:
-            break
-    ga_list = make_ga_csv_list()
-    t_list = [x for x in ga_list if '#' not in x[0] and '/pc/' not in x[0] and int(x[1].replace(',', '')) >= 100]
-    t_list.sort(key=lambda x: datetime.datetime.strptime(x[3], '%H:%M:%S'), reverse=True)
-    print('\nimportant by reading time')
-    for t_art in t_list:
-        t_path = t_art[0].replace('/amp/', '')
-        for pk_i in pk_dec:
-            if pk_dec[pk_i]['file_path'] == t_path and pk_i not in click_list:
-                time_list.append(pk_i)
-                print('{} : {}, {}, {}'.format(t_path, str(pk_i), pk_dec[pk_i]['title'], t_art[3]))
-                break
-        if len(time_list) == list_length:
-            break
-    print('\n')
-    print(time_list)
-    print(click_list)
-
-
-def make_ga_csv_list():
-    down_path_l = os.listdir('/Users/nakataketetsuhiko/Downloads')
-    result = []
-    for path in down_path_l:
-        if 'Analytics' in path:
-            with open('/Users/nakataketetsuhiko/Downloads/' + path) as f:
-                reader = csv.reader(f)
-                csv_list = [row for row in reader]
-            start_row = 0
-            end_row = 0
-            for i in range(len(csv_list)):
-                if len(csv_list[i]) > 2:
-                    if 'ページ別訪問数' in csv_list[i][2]:
-                        start_row = i
-                if len(csv_list[i]) >= 1:
-                    if '日の指標' in csv_list[i][0]:
-                        end_row = i
-                        break
-            result = [x for x in csv_list[start_row + 1:end_row - 2] if '/pc/' not in x[0]]
-    return result
 
 
 if __name__ == '__main__':
