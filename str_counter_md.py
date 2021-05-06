@@ -2,7 +2,7 @@ import re
 import csv
 import make_article_list
 import reibun.main_info
-import reibun_check_mod_date
+import query_check_and_make_html
 
 
 def title_counter(md_path, kw_list, site_shift, pd):
@@ -93,8 +93,8 @@ def read_this_title_log(md_path, pd):
 
 
 if __name__ == '__main__':
-    target_md = 'reibun/md_files/pc/caption/fwari.md'
-    reibun_check_mod_date.check_single_page_seo(28, target_md)
+    target_md = 'reibun/md_files/pc/majime/m1sexfriendmail.md'
+    query_check_and_make_html.check_single_page_seo(28, target_md)
     read_this_title_log(target_md, reibun.main_info.info_dict)
     key_list = ['ミント', 'Jメール']
     title_counter(target_md, key_list, 1, reibun.main_info.info_dict)
