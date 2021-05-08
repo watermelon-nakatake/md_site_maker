@@ -515,6 +515,7 @@ def insert_markdown_anchor(long_str):
         index_str_l = re.findall(r'<nav id="mokuji">.+?</nav>', long_str)
         index_list = [[str_i[1], str_i[0]] for str_i in re.findall(r'<a href="(.+?)">(.+?)</a>', index_str_l[0])]
         for a_str in a_str_l:
+            print(a_str)
             if a_str != 'href="#header"':
                 a_text = re.sub(r'href="#(.+?)"', r'\1', a_str)
                 r_str = re.sub(r'href="#(.+?)"', 'href="' + [x[1] for x in index_list if x[0] == a_text][0] + '"',

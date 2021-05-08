@@ -5,6 +5,38 @@ import re
 import pickle
 from datetime import datetime, timedelta
 import search_console_data
+import get_gsc_every_day_data
+
+
+def make_data_for_graph(pj_dir, start_period, end_period):
+    main_dict = {}
+    start = datetime.strptime(start_period, '%Y-%m-%d').date()
+    end = datetime.strptime(end_period, '%Y-%m-%d').date()
+    days_list = [(start + timedelta(n)).strftime('%Y-%m-%d') for n in range((end - start).days + 1)]
+    # print(days_list)
+    for day_str in days_list:
+        if os.path.exists('gsc_data/' + pj_dir + '/ed_data/od' + day_str + '.csv'):
+            with open('gsc_data/' + pj_dir + '/ed_data/od' + day_str + '.csv') as f:
+                reader = csv.reader(f)
+                csv_list = [row for row in reader]
+            for page_data in csv_list[1:]:
+                if page_data[4] == 'https://www.demr.jp/':
+                    page_name = 'top'
+                else:
+                    page_name = page_data[4].replace('https://www.demr.jp/', '')
+                if page_name in main_dict:
+                    main_dict[page_name][day_str] = [int(page_data[0]), int(page_data[1]),
+                                                     round(float(page_data[3]), 2)]
+                else:
+                    main_dict[page_name] = {day_str: [int(page_data[0]), int(page_data[1]),
+                                                      round(float(page_data[3]), 2)]}
+        if 'day_key' not in main_dict:
+            main_dict['day_key'] = [day_str]
+        else:
+            main_dict['day_key'].append(day_str)
+    # print(main_dict)
+    with open(pj_dir + '/pickle_pot/gsc_page_data.pkl', 'wb') as p:
+        pickle.dump(main_dict, p)
 
 
 def sc_data_match_page(csv_list, domain):
@@ -20,16 +52,29 @@ def sc_data_match_page(csv_list, domain):
 
 
 def make_target_data_for_today(today, period, pj_dir, domain):
-    start_d = today - timedelta(days=period)
-    end_d = today - timedelta(days=3)
+    i = 0
+    end_str = (today - timedelta(days=3)).strftime('%Y-%m-%d')
+    while i < 3:
+        if os.path.exists('gsc_data/' + pj_dir + '/ed_data/ed' + (today - timedelta(days=i)).strftime('%Y-%m-%d')
+                          + '.csv'):
+            end_str = (today - timedelta(days=i)).strftime('%Y-%m-%d')
+            print(i)
+            print('gsc_data/' + pj_dir + '/ed_data/ed' + (today - timedelta(days=i)).strftime('%Y-%m-%d') + '.csv')
+            break
+        i += 1
+    print(end_str)
+    start_d = today - timedelta(days=(period + i))
     start_str = start_d.strftime('%Y-%m-%d')
-    end_str = end_d.strftime('%Y-%m-%d')
-    if not os.path.exists('gsc_data/' + pj_dir + '/p_month' + end_str + '.csv'):
+    if period == 28:
+        period_name = 'month'
+    else:
+        period_name = str(period) + '_'
+    if not os.path.exists('gsc_data/' + pj_dir + '/p_' + period_name + end_str + '.csv'):
         print('connect to search console')
         search_console_data.make_csv_from_gsc(domain, start_str, end_str, pj_dir,
-                                              'qp_month', ['query', 'page'])
+                                              'qp_' + period_name, ['query', 'page'])
         search_console_data.make_csv_from_gsc(domain, start_str, end_str, pj_dir,
-                                              'p_month', ['page'])
+                                              'p_' + period_name, ['page'])
     return end_str
 
 
@@ -53,16 +98,21 @@ def check_single_page_seo(period, html_path):
     pj_dir, domain, main_dir = project_select(html_path)
     pj_domain_main = domain + re.sub(r'^.*/html_files', '', main_dir)
     end_date = make_target_data_for_today(today, period, pj_dir, domain)
-    with open('gsc_data/' + pj_dir + '/p_month' + end_date + '.csv') as f:
+    if period == 28:
+        period_name = 'month'
+    else:
+        period_name = str(period) + '_'
+    with open('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv') as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
     c_list = sc_data_match_page(csv_list, domain)
-    with open('gsc_data/' + pj_dir + '/qp_month' + end_date + '.csv') as f:
+    with open('gsc_data/' + pj_dir + '/qp_' + period_name + end_date + '.csv') as f:
         q_reader = csv.reader(f)
         q_list = [row for row in q_reader]
     q_list = q_list[1:]
     with open(pj_dir + '/pickle_pot/main_data.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
+    e_pk_dic = {pk_dic[x]['file_path']: pk_dic[x] for x in pk_dic}
     url = html_path.replace(pj_dir + '/html_files/', domain + '/')
     page_name = html_path.replace(main_dir, '')
     this_pk_data = {}
@@ -80,7 +130,7 @@ def check_single_page_seo(period, html_path):
     if error_list:
         print(error_list)
     query_str_list, top_words, h_result, t_result, e_q_list = seo_checker_by_query(this_pk_data, q_dic, pj_dir,
-                                                                                   q_list, pj_domain_main)
+                                                                                   q_list, pj_domain_main, e_pk_dic)
     if top_words:
         for tw in top_words:
             print(tw)
@@ -89,31 +139,33 @@ def check_single_page_seo(period, html_path):
     get_gsc_query(page_name, q_list)
 
 
-def next_update_target_search(limit_d, period, main_str_limit, target_project, print_flag):
+def next_update_target_search(limit_d, period, main_str_limit, target_project, print_flag, ma_flag):
     today = datetime.today()
     pj_dir, domain, main_dir = project_select(target_project + '/')
     end_date = make_target_data_for_today(today, period, pj_dir, domain)
-    with open('gsc_data/' + pj_dir + '/p_month' + end_date + '.csv') as f:
+    if period == 28:
+        period_name = 'month'
+    else:
+        period_name = str(period) + '_'
+    with open('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv') as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
     c_list = sc_data_match_page(csv_list, domain)
-    with open('gsc_data/' + pj_dir + '/qp_month' + end_date + '.csv') as f:
+    with open('gsc_data/' + pj_dir + '/qp_' + period_name + end_date + '.csv') as f:
         q_reader = csv.reader(f)
         q_list = [row for row in q_reader]
     q_list = q_list[1:]
     # print(c_list)
     with open(pj_dir + '/pickle_pot/main_data.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
-    print(pk_dic)
-    n_pk_dic = {pk_dic[x]['file_path']: pk_dic[x] for x in pk_dic}
-    print(n_pk_dic)
-    return
     # print(pk_dic)
+    e_pk_dic = {pk_dic[x]['file_path']: pk_dic[x] for x in pk_dic}
     # print(q_list)
     print('日数 : ' + str(period) + '日間')
     # print('クリック数順')
     pj_domain_main = domain + re.sub(r'^.*/html_files', '', main_dir)
-    check_list_and_bs(c_list, n_pk_dic, limit_d, q_list, main_str_limit, today, print_flag, pj_domain_main, pj_dir)
+    check_list_and_bs(c_list, e_pk_dic, limit_d, q_list, main_str_limit, today, print_flag, pj_domain_main, pj_dir,
+                      ma_flag, end_date)
 
     # click_list = check_no_mod_page(mod_list_n, c_list)
     # c_list.sort(key=lambda x: int(x[2]), reverse=True)
@@ -159,7 +211,7 @@ def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
     return error_list
 
 
-def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main):
+def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic):
     result_list = []
     h_result = []
     t_result = []
@@ -239,20 +291,21 @@ def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main):
                 ' ' * (5 - len(str(d_count))) + str(d_count) + ' ' * (5 - len(str(h2_count))) + str(h2_count) +
                 ' ' * (5 - len(str(h3_count))) + str(h3_count) + ' ' * 5 + word[0])
             h_result.append([word[0], word[1], word[2], count_w, t_count, d_count, h2_count, h3_count])
-        if i < 10 and t_count < 1 and l_word not in ignore_list:
+        if i < 10 and t_count < 1 < word[1] and l_word not in ignore_list:
             c_str = combined_keyword_checker(l_word, words_list, title_str)
             if not c_str:
                 top_words_data.append(
                     ' ' * (4 - len(str(word[1]))) + str(word[1]) + ' ' * (11 - len(str(word[2]))) + str(word[2]) +
                     ' ' * (10 - len(str(count_w))) + str(count_w) + ' ' * (10 - len(str(t_count))) + str(t_count) +
                     ' ' * 5 + word[0] + ' (' + str(i) + ')')
-                t_result.append([i, word[0], word[1], word[2], count_w, t_count, d_count, h2_count])
-                another_page_data = check_keyword_in_another_page(l_word, q_list, pk_data['file_path'], pj_domain_main)
+                t_result.append([i + 1, word[0], word[1], word[2], count_w, t_count, d_count, h2_count])
+                another_page_data = check_keyword_in_another_page(l_word, q_list, pk_data['file_path'], pj_domain_main,
+                                                                  e_pk_dic)
                 if another_page_data:
                     t_result.extend(another_page_data)
             else:
                 c_list.append('clear_by_combined_key : ' + c_str + '(' + str(i) + ')')
-                t_result.append([i, c_str, word[1], word[2], count_w, t_count, d_count, h2_count])
+                t_result.append([i + 1, c_str, word[1], word[2], count_w, t_count, d_count, h2_count])
         i += 1
     if top_words_data:
         top_words_data.extend(c_list)
@@ -278,7 +331,7 @@ def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main):
     return result_list, top_words_data, h_result, t_result, e_q_list
 
 
-def check_keyword_in_another_page(keyword, q_list, this_path, pj_domain_main):
+def check_keyword_in_another_page(keyword, q_list, this_path, pj_domain_main, e_pk_dic):
     result = []
     i = 0
     for row in q_list:
@@ -286,7 +339,9 @@ def check_keyword_in_another_page(keyword, q_list, this_path, pj_domain_main):
             if this_path in row[5]:
                 break
             elif i < 5:
-                result.append([row[5].replace(pj_domain_main, ''), row[4], row[0], row[1], '', '', '', ''])
+                this_page = row[5].replace(pj_domain_main, '')
+                result.append([this_page, row[4], row[0], row[1], '', e_pk_dic[this_page]['title'].count(keyword),
+                               '', ''])
                 i += 1
             else:
                 result.append(['', 'and more', '', '', '', '', '', ''])
@@ -294,7 +349,16 @@ def check_keyword_in_another_page(keyword, q_list, this_path, pj_domain_main):
     return result
 
 
-def make_seo_html_file(html_dic, pj_dir, pj_main_domain):
+def make_seo_html_file(html_dic, pj_dir, pj_main_domain, ma_flag, end_day_str):
+    with open(pj_dir + '/pickle_pot/gsc_page_data.pkl', 'rb') as h:
+        gsc_dic = pickle.load(h)
+    if end_day_str not in gsc_dic['day_key']:
+        print('no ' + end_day_str)
+        get_gsc_every_day_data.get_one_day_data_in_period(pj_main_domain.replace('/pc', '/'), '2020-04-01',
+                                                          end_day_str, pj_dir)
+        make_data_for_graph(pj_dir, '2020-04-01', end_day_str)
+        with open(pj_dir + '/pickle_pot/gsc_page_data.pkl', 'rb') as i:
+            gsc_dic = pickle.load(i)
     with open(pj_dir + '/sc_data_temp.html', 'r', encoding='utf-8') as f:
         base_str = f.read()
     index_str = '<table class="i_data"><thead><tr><th>rank</th><th class="w40">title</th><th>url</th><th>未使用</th>' \
@@ -303,6 +367,7 @@ def make_seo_html_file(html_dic, pj_dir, pj_main_domain):
     js_str = ''
     id_num = 0
     last_id = len(html_dic)
+    label_data = gsc_dic['day_key'][-90:]
     for p_name in html_dic:
         id_num += 1
         page = html_dic[p_name]
@@ -312,13 +377,67 @@ def make_seo_html_file(html_dic, pj_dir, pj_main_domain):
         if id_num != last_id:
             content_t += '<div class="next"><a href="#d' + str(id_num + 1) + '_0">NEXT PAGE</a></div>'
         content_t += '<table class="m_data"><thead><tr><th>rank</th><th>click</th><th>表示</th><th>平均順位</th>' + \
-                     '<th>更新</th></tr></thead><tbody><tr><td>' + str(page['rank']) + '</td><td>' +\
-                     str(page['page_data'][0]) + '</td><td>' + str(page['page_data'][1]) + '</td><td>' +\
-                     str(page['page_data'][2]) + '</td><td>' + str(page['mod_date']) + '</td></tr></tbody></table>'
+                     '<th>更新</th><th>len</th></tr></thead><tbody><tr><td>' + str(page['rank']) + '</td><td>' + \
+                     str(page['page_data'][0]) + '</td><td>' + str(page['page_data'][1]) + '</td><td>' + \
+                     str(page['page_data'][2]) + '</td><td>' + str(page['mod_date']) + '</td><td>' + \
+                     str(page['title_len']) + '</td></tr></tbody></table>'
         index_str += '<tr><td>' + str(page['rank']) + '</td><td>' + page['title'] + '</td><td><a href="#d' + \
                      str(id_num) + '_0">' + page['path'] + '</a></td><td><a href="#d' + str(id_num) + \
                      '_1">未使用</a></td><td><a href="#d' + str(id_num) + '_2">キーワード</a></td><td><a href="#d' \
                      + str(id_num) + '_3">フレーズ</a></td></tr>'
+        long_name = 'pc/' + p_name
+        label_data_e = [re.sub(r'^.\d*?-', '', x).replace('-', '/') for x in label_data]
+        if long_name in gsc_dic:
+            click_data = []
+            imp_data = []
+            pos_data = []
+            if ma_flag:
+                p_click_data = []
+                p_imp_data = []
+                p_pos_data = []
+                for day_str in label_data:
+                    if day_str in gsc_dic[long_name]:
+                        p_click_data.append(gsc_dic[long_name][day_str][0])
+                        p_imp_data.append(gsc_dic[long_name][day_str][1])
+                        p_pos_data.append(gsc_dic[long_name][day_str][2])
+                    else:
+                        p_click_data.append(0)
+                        p_imp_data.append(0)
+                        p_pos_data.append(0)
+                click_data = [str(round(sum(x) / 7, 2)) for x in
+                              zip(p_click_data[:-6], p_click_data[1:-5], p_click_data[2:-4],
+                                  p_click_data[3:-3], p_click_data[4:-2], p_click_data[5:-1],
+                                  p_click_data[6:])]
+                imp_data = [str(round(sum(x) / 7)) for x in zip(p_imp_data[:-6], p_imp_data[1:-5], p_imp_data[2:-4],
+                                                                p_imp_data[3:-3], p_imp_data[4:-2], p_imp_data[5:-1],
+                                                                p_imp_data[6:])]
+                pos_data = [str(round(sum(x) / 7, 2)) for x in zip(p_pos_data[:-6], p_pos_data[1:-5], p_pos_data[2:-4],
+                                                                   p_pos_data[3:-3], p_pos_data[4:-2], p_pos_data[5:-1],
+                                                                   p_pos_data[6:])]
+                label_data_e = label_data_e[6:]
+            else:
+                for day_str in label_data:
+                    if day_str in gsc_dic[long_name]:
+                        click_data.append(str(gsc_dic[long_name][day_str][0]))
+                        imp_data.append(str(gsc_dic[long_name][day_str][1]))
+                        pos_data.append(str(gsc_dic[long_name][day_str][2]))
+                    else:
+                        click_data.append('0')
+                        imp_data.append('0')
+                        pos_data.append('0')
+            content_t += '<canvas id="chart' + str(id_num) + '"></canvas>' + \
+                         '<script>let ctx' + str(id_num) + '=document.getElementById("chart' + str(id_num) + '");' + \
+                         "let chart" + str(id_num) + "=new Chart(ctx" + str(id_num) + ",{type:'line',data:{labels:['" + \
+                         "','".join(label_data_e) + "'],datasets:[{label:'click',data:[" + ','.join(click_data) + \
+                         '],borderColor:"rgba(255,0,0,1)",backgroundColor:"rgba(0,0,0,0)",yAxisID:"y-axis-1"},' + \
+                         "{label:'impressions',data:[" + ','.join(imp_data) + \
+                         '],borderColor:"rgba(0,0,255,1)",backgroundColor:"rgba(0,0,0,0)",' + \
+                         "yAxisID:'y-axis-2'}," + "{label:'positions',data:[" + ','.join(pos_data) + \
+                         '],borderColor:"rgba(0,255,0,1)",backgroundColor:"rgba(0,0,0,0)",' + \
+                         "yAxisID:'y-axis-1'}],}" + ",options:{scales:{yAxes:[{id:'y-axis-1',type:'linear'," + \
+                         "position:'left', ticks: {stepSize: 10,suggestedMin: 0}}," + \
+                         "{id: 'y-axis-2', type: 'linear', position: 'right', ticks: {stepSize: 100," + \
+                         "suggestedMin: 0}}]},}});</script>"
         if 't_result' in page:
             content_t += '<div class="table_name" id="d' + str(id_num) + '_1">未使用重要ワード</div>' + \
                          '<div class="next"><a href="#d' + str(id_num) + '_2">NEXT</a></div>' + \
@@ -327,7 +446,10 @@ def make_seo_html_file(html_dic, pj_dir, pj_main_domain):
             for t_row in page['t_result']:
                 content_t += '<tr>'
                 for t_i, t_d in enumerate(t_row):
-                    if (t_i == 0 and type(t_d) != int) or (t_i == 1 and ' + ' in t_d):
+                    if t_i == 0 and type(t_d) != int:
+                        content_t += '<td><a href="' + pj_main_domain + t_d + '" target="_blank">' + \
+                                     '<span class="blue">' + t_d + '</span></a></td>'
+                    elif t_i == 1 and ' + ' in t_d:
                         content_t += '<td><span class="blue">' + str(t_d) + '</span></td>'
                     else:
                         content_t += '<td>' + str(t_d) + '</td>'
@@ -363,9 +485,9 @@ def make_seo_html_file(html_dic, pj_dir, pj_main_domain):
                 else:
                     content_t += '<tr><td>' + str(hi) + '</td>'
                 for hdi, h_d in enumerate(h_row):
-                    if hdi == 4 and hi <= 10 and h_d == 0:
+                    if hdi in [4, 5] and hi <= 10 and h_d == 0:
                         content_t += '<td><span class="red">' + str(h_d) + '</span></td>'
-                    elif hdi in [5, 6] and hi <= 20 and h_d == 0:
+                    elif hdi in [6] and hi <= 20 and h_d == 0:
                         content_t += '<td><span class="red">' + str(h_d) + '</span></td>'
                     elif hdi == 3 and hi <= 30 and h_d == 0:
                         content_t += '<td><span class="red">' + str(h_d) + '</span></td>'
@@ -461,13 +583,10 @@ def make_simple_keyword_dic(this_q_list):
                                 result[word][2] + phrase_data[2], result[word][3] + phrase_data[3]]
     # print(result)
     result = {x: [result[x][0], result[x][1], round(result[x][2], 2), round(result[x][3], 2)] for x in result}
-    result_list = [[x] + result[x] for x in result if len(x) < 15 and (result[x][1] > 10 or result[x][0] > 0)]
+    result_list = [[x] + result[x] for x in result if len(x) < 15]
     result_list.sort(key=lambda x: (x[1], x[2]), reverse=True)
     # print(result_list)
     return result_list
-
-
-# todo: ページ毎の推移の取得とグラフ表示、不要なデータを畳む
 
 
 def insert_ignore_key_to_pk_dic(target_project, path, keyword_list):
@@ -485,22 +604,22 @@ def insert_ignore_key_to_pk_dic(target_project, path, keyword_list):
         pickle.dump(pk_dic, p)
 
 
-def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, print_flag, pj_domain_main, pj_dir):
+def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, print_flag, pj_domain_main, pj_dir,
+                      ma_flag, end_date):
     i = 0
     target_list = []
     html_dic = {}
-    id_to_url = {pk_dic[x]['file_path']: x for x in pk_dic}
     for rank, page in enumerate(sc_list, 1):
         page_name = page[0].replace(pj_domain_main, '')
-        if page_name in id_to_url:
+        if page_name in pk_dic:
             # print('start : ' + page_name)
             click_num, view_num, order_num = page[1], page[2], page[4]
             this_query = [x for x in q_list if page[0] == x[5]]
             q_dic = make_simple_keyword_dic(this_query)
-            this_pk_data = pk_dic[id_to_url[page_name]]
+            this_pk_data = pk_dic[page_name]
             error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
-            query_str_list, top_words, h_result, t_result, e_q_list = seo_checker_by_query(this_pk_data, q_dic, pj_dir,
-                                                                                           q_list, pj_domain_main)
+            query_str_list, top_words, h_result, t_result, e_q_list\
+                = seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, pk_dic)
             if error_list:
                 print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print(error_list)
@@ -512,7 +631,8 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
                 i += 1
                 html_dic[page_name] = {'h_result': h_result, 't_result': t_result, 'title': this_pk_data['title'],
                                        'path': page_name, 'query': get_gsc_query_for_html(page_name, e_q_list),
-                                       'rank': rank, 'page_data': [click_num, view_num, order_num]}
+                                       'rank': rank, 'page_data': [click_num, view_num, order_num],
+                                       'mod_date': this_pk_data['mod_date'], 'title_len': len(this_pk_data['title'])}
             elif top_words:
                 print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print('{}   {}        {}      {}'.format(str(rank), click_num, view_num, order_num))
@@ -526,17 +646,18 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
                 html_dic[page_name] = {'h_result': h_result, 't_result': t_result, 'title': this_pk_data['title'],
                                        'path': page_name, 'query': get_gsc_query_for_html(page_name, e_q_list),
                                        'rank': rank, 'page_data': [click_num, view_num, order_num],
-                                       'mod_date': this_pk_data['mod_date']}
+                                       'mod_date': this_pk_data['mod_date'], 'title_len': len(this_pk_data['title'])}
         else:
             print('url not in : ' + page_name)
         if i >= 5:
             break
     if html_dic:
-        make_seo_html_file(html_dic, pj_dir, pj_domain_main)
+        make_seo_html_file(html_dic, pj_dir, pj_domain_main, ma_flag, end_date)
     return target_list
 
 
 if __name__ == '__main__':
     target_prj = 'reibun'
-    # insert_ignore_key_to_pk_dic(target_prj, 'majime/m1sexfriendmail.html', ['ハッピーメール', '出会い系アプリ'])
-    next_update_target_search(100, 28, 3000, target_prj, False)
+    # insert_ignore_key_to_pk_dic(target_prj, 'qa/q3.html', ['メッセージ'])
+    next_update_target_search(100, 28, 3000, target_prj, False, True)
+    # make_data_for_graph('reibun', '2020-04-01', '2021-05-04')
