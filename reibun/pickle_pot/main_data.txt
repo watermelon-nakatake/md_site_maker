@@ -115,7 +115,7 @@
 114  file_path title pub_date mod_date category description str_len layout_flag shift_flag
 115  file_path title pub_date mod_date category description str_len layout_flag shift_flag
 116  file_path title pub_date mod_date category description str_len layout_flag shift_flag
-117  file_path title pub_date mod_date category description str_len layout_flag shift_flag
+117  file_path title pub_date mod_date category description str_len layout_flag shift_flag ign_words
 118  file_path title pub_date mod_date category description str_len layout_flag shift_flag
 119  file_path title pub_date mod_date category description str_len layout_flag shift_flag
 120  file_path title pub_date mod_date category description str_len layout_flag shift_flag
