@@ -572,6 +572,15 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
     upload_list = []
     title_change_id = []
     pd['site_shift_list'].remove(site_shift)
+    if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html'):
+        if not os.path.exists(pd['project_dir'] + '/html_files'):
+            os.mkdir(pd['project_dir'] + '/html_files')
+        if pd['main_dir']:
+            if not os.path.exists(pd['project_dir'] + '/html_files' + pd['main_dir']):
+                os.mkdir(pd['project_dir'] + '/html_files' + pd['main_dir'])
+        if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template'):
+            os.mkdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template')
+        shutil.copy('template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html')
     with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
             as t:
         tmp_str = t.read()
@@ -1329,10 +1338,10 @@ def insert_to_temp(pd):
 
 
 def first_make_html(pd):
-    # make_html_dir(pd)
-    # copy_template_files(pd)
-    # insert_to_temp(pd)
-    main(0, pd, True, True, True, True)
+    make_html_dir(pd)
+    copy_template_files(pd)
+    insert_to_temp(pd)
+    main(0, pd, True, True, False, True)
 
 
 # if __name__ == '__main__':
