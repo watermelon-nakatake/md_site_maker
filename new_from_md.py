@@ -4,6 +4,7 @@ import pickle
 import re
 import os
 import shutil
+import numpy
 
 import markdown
 from PIL import Image
@@ -17,6 +18,7 @@ import file_upload
 import check_mod_date
 import relational_article
 import reibun.main_info
+import joshideai
 # import rei_site.main_info
 
 
@@ -337,6 +339,7 @@ def cat_index_str_maker(cat_dic, directory):
 
 def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd):
     change_files = []
+    print(pk_dic)
     insert_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     for sb_cat in pd['side_bar_list']:
         for change_id in title_change_id:
@@ -416,10 +419,17 @@ def make_all_side_bar(pk_dic, pd):
     result_dic = {x: ''.join(cat_dic[x]) for x in cat_dic}
     result_dic['new'] = new_str
     for z in pd['side_bar_list']:
+        if pd['side_bar_list'][z]:
+            id_list = pd['side_bar_list'][z]
+        else:
+            keys = list(pk_dic.keys())[:]
+            numpy.random.shuffle(keys)
+            id_list = keys[:10]
+            print(pk_dic)
         result_dic[z] = ''.join(
             ['<li><a href="../{}">{}</a></li>'.format(pk_dic[use_id]['file_path'],
                                                       re.sub(r'【.+?】', '', pk_dic[use_id]['title'])) for use_id in
-             pd['side_bar_list'][z]])
+             id_list])
     return result_dic
 
 
@@ -580,7 +590,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                 os.mkdir(pd['project_dir'] + '/html_files' + pd['main_dir'])
         if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template'):
             os.mkdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template')
-        shutil.copy('template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html')
+        shutil.copy('template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir']
+                    + 'template/main_tmp.html')
     with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
             as t:
         tmp_str = t.read()
@@ -618,6 +629,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         if 'n::' in plain_txt:
             this_id = int(re.findall(r'n::(\d+?)\n', plain_txt)[0])
         else:
+            print('no id : ' + md_file_path)
             this_id = len(pk_dic)
             plain_txt = re.sub(r'(d::.*?\n)', r'\1n::' + str(this_id) + r'\n', plain_txt)
         title_str = re.findall(r't::(.+?)\n', md_txt)[0]
@@ -668,6 +680,12 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         md_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', md_txt)
         md_txt = re.sub(r'>[\s]+?<', '><', md_txt)
         md_txt = md_txt.replace('--><!--', '-->\n<!--')
+        if '\n# ' not in md_txt:
+            md_txt = re.sub(r'\n[a-zA-Z]::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'^[a-zA-Z]::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r't::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'n::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)
 
         print('markdown start!')
@@ -701,6 +719,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                 new_str = new_str.replace('<!--pub-date-j-->', pub_date.replace('-', '/').replace('/0', '/'))
             else:
                 new_str = new_str.replace('<!--pub-date-->', str(now.date()))
+                pub_date = str(now.date())
                 new_str = new_str.replace('<!--pub-date-j-->', str(now.year) + '/' + str(now.month) + '/'
                                           + str(now.day))
         else:
@@ -852,7 +871,9 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
             print('エラー発生 : ' + str_len)
             raise Exception('md置換ミスがあります')
         if '_test' not in file_name and '_copy' not in file_name:
-            pk_dic = add_pickle_dec(pk_dic, new_data, pd)
+            pk_dic = add_pickle_dec(pk_dic, new_data, pd, this_id)
+        if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/' + directory):
+            os.mkdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/' + directory)
         with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name, 'w', encoding='utf-8') as g:
             g.write(new_str)
             upload_list.append(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name)
@@ -862,6 +883,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         with open(md_file_path, 'w', encoding='utf-8') as j:
             j.write(plain_txt)
     return upload_list, pk_dic, title_change_id
+# todo: main_data.txt 作成の修正
 
 
 def img_filter(new_str, pd):
@@ -885,6 +907,8 @@ def change_category_class(new_str, category, pd):
 def icon_filter(md_txt, pd):
     if pd['project_dir'] == 'reibun':
         md_txt = reibun.main_info.reibun_icon_filter(md_txt)
+    elif pd['project_dir'] == 'joshideai':
+        md_txt = joshideai.main_info.joshideai_icon_filter(md_txt)
     return md_txt
 
 
@@ -1092,14 +1116,17 @@ def strong_insert_filter(long_str):
     return long_str
 
 
-def add_pickle_dec(pk_dic, new_data, pd):
+def add_pickle_dec(pk_dic, new_data, pd, new_data_id):
     path_list = [pk_dic[x]['file_path'] for x in pk_dic]
-    if new_data['file_path'] not in path_list:
-        pk_dic[len(pk_dic)] = new_data
+    if new_data_id:
+        pk_dic[new_data_id] = new_data
     else:
-        for i in range(len(path_list)):
-            if path_list[i] == new_data['file_path']:
-                pk_dic[i] = new_data
+        if new_data['file_path'] not in path_list:
+            pk_dic[len(pk_dic)] = new_data
+        else:
+            for i in range(len(path_list)):
+                if path_list[i] == new_data['file_path']:
+                    pk_dic[i] = new_data
     make_article_list.save_data_to_pickle(pk_dic, 'main_data', pd)
     # print(pk_dic)
     make_article_list.save_text_file(pk_dic, pd)
@@ -1251,7 +1278,10 @@ def check_site_shift(long_str):
 
 
 def update_title_log(file_path, title_str, now, str_len, pd):
-    pk_dic = make_article_list.read_pickle_pot('title_log', pd)
+    if os.path.exists(pd['project_dir'] + '/pickle_pot/title_log.pkl'):
+        pk_dic = make_article_list.read_pickle_pot('title_log', pd)
+    else:
+        pk_dic = {}
     if file_path in pk_dic:
         pk_dic[file_path][now] = [title_str, str_len]
     else:
@@ -1301,6 +1331,8 @@ def all_html_insert():
 
 
 def make_html_dir(pd):
+    print(pd)
+    print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
     all_md_dir = [x.replace('/md_files/', '/html_files/') for x in glob.glob(pd['project_dir'] + '/md_files/**/',
                                                                              recursive=True)]
     # all_md_dir.extend([pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'css',
