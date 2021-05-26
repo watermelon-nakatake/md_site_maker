@@ -72,7 +72,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         upload_list.extend(pd['add_files'])
         upload_list = list(set(upload_list))
         upload_list.sort()
-        upload_list = modify_file_check(upload_list, last_mod_time)
+        # upload_list = modify_file_check(upload_list, last_mod_time)
         print(upload_list)
         file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
     if last_mod_flag:
@@ -84,7 +84,7 @@ def pick_up_mod_md_files(pd):
     now = time.time()
     if os.path.exists(pd['project_dir'] + '/pickle_pot/last_md_mod.pkl'):
         last_md_mod = make_article_list.read_pickle_pot('last_md_mod', pd)
-        # print(last_md_mod)
+        print(last_md_mod)
     else:
         last_md_mod = now
     all_md_files = [x for x in glob.glob(pd['project_dir'] + '/md_files/**/**.md', recursive=True) if
@@ -118,10 +118,12 @@ def update_filter(up_str):
     use_list = []
     display_list = []
     for u_str in up_data_l:
-        u_path = re.findall(r'href="(.+?)"', u_str)[0]
-        if u_path not in use_list:
-            display_list.append(u_str)
-            use_list.append(u_path)
+        u_path_l = re.findall(r'href="(.+?)"', u_str)
+        if u_path_l:
+            u_path = u_path_l[0]
+            if u_path not in use_list:
+                display_list.append(u_str)
+                use_list.append(u_path)
     return ''.join(display_list)
 
 
@@ -194,15 +196,17 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
     # category page
     ct_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     for cat in ct_cat:
-        index_path = '{}/html_files/{}{}/'.format(pd['project_dir'], pd['main_dir'], cat, pd['category_data'][cat][1])
-        with open(index_path, 'r', encoding='utf-8') as h:
-            long_str = h.read()
-            long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
-            cat_str = cat_index_str_maker(h_dec[cat], cat)
-            long_str = re.sub(r'<!--index/s-->.*?<!--index/e-->', '<!--index/s-->' + cat_str + '<!--index/e-->',
-                              long_str)
-            with open(index_path, 'w', encoding='utf-8') as k:
-                k.write(long_str)
+        print(cat)
+        if cat != 'top':
+            index_path = '{}/html_files/{}{}/{}'.format(pd['project_dir'], pd['main_dir'], cat, pd['category_data'][cat][1])
+            with open(index_path, 'r', encoding='utf-8') as h:
+                long_str = h.read()
+                long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
+                cat_str = cat_index_str_maker(h_dec[cat], cat)
+                long_str = re.sub(r'<!--index/s-->.*?<!--index/e-->', '<!--index/s-->' + cat_str + '<!--index/e-->',
+                                  long_str)
+                with open(index_path, 'w', encoding='utf-8') as k:
+                    k.write(long_str)
 
 
 def reibun_index_insert(pk_dic, title_change_id, pd):
@@ -339,7 +343,7 @@ def cat_index_str_maker(cat_dic, directory):
 
 def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd):
     change_files = []
-    print(pk_dic)
+    # print(pk_dic)
     insert_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     for sb_cat in pd['side_bar_list']:
         for change_id in title_change_id:
@@ -1118,7 +1122,7 @@ def strong_insert_filter(long_str):
 
 def add_pickle_dec(pk_dic, new_data, pd, new_data_id):
     path_list = [pk_dic[x]['file_path'] for x in pk_dic]
-    if new_data_id:
+    if new_data_id or new_data_id == 0:
         pk_dic[new_data_id] = new_data
     else:
         if new_data['file_path'] not in path_list:
@@ -1302,7 +1306,7 @@ def make_1st_title_log(pd):
 def directory_and_category_select(file_path, pd):
     # print(file_path)
     directory_l = re.findall(r'^(.+?)/.+$', file_path)
-    if directory_l:
+    if directory_l and '/index.html' not in file_path:
         directory = directory_l[0]
         file_name = re.sub(r'^.*/', '', file_path)
         # print('directory: ' + directory)
