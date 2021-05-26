@@ -340,8 +340,12 @@ def check_keyword_in_another_page(keyword, q_list, this_path, pj_domain_main, e_
                 break
             elif i < 5:
                 this_page = row[5].replace(pj_domain_main, '')
-                result.append([this_page, row[4], row[0], row[1], '', e_pk_dic[this_page]['title'].count(keyword),
-                               '', ''])
+                if 'sitepage/' in this_page:
+                    if this_page == 'sitepage/mintj.html':
+                        result.append([this_page, row[4], row[0], row[1], '', 'Jメール', '', ''])
+                else:
+                    result.append([this_page, row[4], row[0], row[1], '', e_pk_dic[this_page]['title'].count(keyword),
+                                   '', ''])
                 i += 1
             else:
                 result.append(['', 'and more', '', '', '', '', '', ''])
@@ -666,6 +670,6 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
 
 if __name__ == '__main__':
     target_prj = 'reibun'
-    # insert_ignore_key_to_pk_dic(target_prj, 'qa/q3.html', ['メッセージ'])
+    # insert_ignore_key_to_pk_dic(target_prj, 'majime/kakikata_f.html', ['ファーストメッセージ'])
     next_update_target_search(100, 28, 3000, target_prj, False, True)
     # make_data_for_graph('reibun', '2020-04-01', '2021-05-04')
