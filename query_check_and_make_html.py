@@ -93,7 +93,7 @@ def project_select(file_path):
     return pj_dir, domain, main_dir, site_name, pj_domain_main
 
 
-def check_single_page_seo(period, html_path):
+def check_single_page_seo(period, html_path, ignore_flag):
     main_str_limit = 5000
     limit_d = 100
     today = datetime.today()
@@ -135,7 +135,7 @@ def check_single_page_seo(period, html_path):
     if error_list:
         print(error_list)
     query_str_list, top_words, h_result, t_result, e_q_list = \
-        seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name)
+        seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name, ignore_flag)
     if top_words:
         for tw in top_words:
             print(tw)
@@ -144,7 +144,7 @@ def check_single_page_seo(period, html_path):
     get_gsc_query(page_name, q_list)
 
 
-def next_update_target_search(limit_d, period, main_str_limit, target_project, print_flag, ma_flag):
+def next_update_target_search(limit_d, period, main_str_limit, target_project, print_flag, ma_flag, ignore_flag):
     today = datetime.today()
     pj_dir, domain, main_dir, site_name, pj_domain_main = project_select(target_project + '/')
     end_date = make_target_data_for_today(today, period, pj_dir, domain)
@@ -171,7 +171,7 @@ def next_update_target_search(limit_d, period, main_str_limit, target_project, p
     print('日数 : ' + str(period) + '日間')
     # print('クリック数順')
     check_list_and_bs(c_list, e_pk_dic, limit_d, q_list, main_str_limit, today, print_flag, ma_flag, end_date, period,
-                      target_project)
+                      target_project, ignore_flag)
 
 
 def get_gsc_query(target_page, q_list):
@@ -211,7 +211,7 @@ def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
     return error_list
 
 
-def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name):
+def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name, ignore_flag):
     result_list = []
     h_result = []
     t_result = []
@@ -219,7 +219,7 @@ def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_di
     c_list = []
     ignore_list = []
     e_q_list = []
-    if 'ign_words' in pk_data:
+    if 'ign_words' in pk_data and ignore_flag:
         ignore_list.extend(pk_data['ign_words'])
     with open(pj_dir + '/md_files/pc/' + pk_data['file_path'].replace('.html', '.md'), 'r', encoding='utf-8') as f:
         long_str = f.read()
@@ -616,7 +616,7 @@ def insert_ignore_key_to_pk_dic(target_project, path, keyword_list):
 
 
 def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, print_flag, ma_flag, end_date, period,
-                      target_project):
+                      target_project, ignore_flag):
     i = 0
     target_list = []
     html_dic = {}
@@ -631,7 +631,8 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
             this_pk_data = pk_dic[page_name]
             error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
             query_str_list, top_words, h_result, t_result, e_q_list\
-                = seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, pk_dic, site_name)
+                = seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, pk_dic, site_name,
+                                       ignore_flag)
             if error_list:
                 print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print(error_list)
@@ -671,5 +672,5 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
 if __name__ == '__main__':
     target_prj = 'reibun'
     # insert_ignore_key_to_pk_dic(target_prj, 'majime/kakikata_f.html', ['ファーストメッセージ'])
-    next_update_target_search(100, 28, 3000, target_prj, False, True)
+    next_update_target_search(100, 28, 3000, target_prj, False, True, False)
     # make_data_for_graph('reibun', '2020-04-01', '2021-05-04')

@@ -603,6 +603,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         pk_dic = make_article_list.read_pickle_pot('main_data', pd)
     else:
         pk_dic = {}
+    # print(make_article_list.read_pickle_pot('main_data_c2', pd))
+    # return
     # todo: 事前作成
     for md_file_path in md_file_list:
         print('start : ' + md_file_path)
@@ -630,6 +632,17 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                 keyword.remove('')
         else:
             keyword = ''
+        if 'e::' in plain_txt:
+            edit_l = re.findall(r'\ne::(.*?)\n', plain_txt)
+            if edit_l:
+                if 'all' in edit_l:
+                    edit_flag = True
+                else:
+                    edit_flag = False
+            else:
+                edit_flag = False
+        else:
+            edit_flag = True
         if 'n::' in plain_txt:
             this_id = int(re.findall(r'n::(\d+?)\n', plain_txt)[0])
         else:
@@ -668,9 +681,10 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                             md_txt)
         else:
             md_txt = md_txt + '<!--last-section-->'
+        # print(md_txt)
         md_txt = re.sub(r'%btnli%\n([\s\S]*?)\n\n', r'<!--btnli-->\n\n\n\1\n\n<!--e/btnli-->', md_txt)
         md_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', md_txt)
-        md_txt = re.sub(r'%matome%\n([\s\S]*?)\n\n', r'<!--matome-->\n\n\n\1\n\n<!--e/matome-->', md_txt)
+        md_txt = re.sub(r'%matome%\n([\s\S]*?)\n\n', r'\n<!--matome-->\n\n\n\1\n\n<!--e/matome-->', md_txt)
         md_txt = re.sub(r'%p%\n([\s\S]*?)\n\n', r'<!--point_i-->\n\n\n\1\n\n<!--e/point_i-->', md_txt)
         md_txt = icon_filter(md_txt, pd)
 
@@ -682,7 +696,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         # md_txt = insert_page_card(md_txt, pk_dic) todo: 完成させる
         md_txt = re.sub(r'\(\)\[.*?]\n', '', md_txt)
         md_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', md_txt)
-        md_txt = re.sub(r'>[\s]+?<', '><', md_txt)
+        # md_txt = re.sub(r'>[\s]+?<', '><', md_txt)
         md_txt = md_txt.replace('--><!--', '-->\n<!--')
         if '\n# ' not in md_txt:
             md_txt = re.sub(r'\n[a-zA-Z]::.*?\n', '\n', md_txt)
@@ -870,7 +884,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         if type(str_len) == int:
             new_data = {'file_path': file_name, 'title': title, 'pub_date': pub_date, 'mod_date': new_mod_date,
                         'category': category, 'description': description, 'str_len': str_len,
-                        'layout_flag': layout_flag, 'shift_flag': ss_flag}
+                        'layout_flag': layout_flag, 'shift_flag': ss_flag, 'edit_flag': edit_flag}
         else:
             print('エラー発生 : ' + str_len)
             raise Exception('md置換ミスがあります')
@@ -1381,12 +1395,12 @@ def first_make_html(pd):
 
 
 # if __name__ == '__main__':
-    # pd_dict = reibun.main_info.info_dict
+#     pd_dict = reibun.main_info.info_dict
     #     main(1, pd_dict)
     # site_shift_flag ( 0: normal, 1:no jmail )
     # reibun_upload.files_upload(['reibun/index.html'])
     # print(make_article_list.read_pickle_pot('modify_log'))
-    # print(make_article_list.read_pickle_pot('main_data'))
+    # print(make_article_list.read_pickle_pot('main_data', pd_dict))
 
     # print(make_article_list.read_pickle_pot('title_log'))
 
