@@ -60,7 +60,8 @@ def make_current_file_list(pd):
 def save_text_file(data_dec, pd):
     result_str = ''
     for data_id in data_dec:
-        result_str += str(data_id) + '  ' + ' '.join(data_dec[data_id]) + '\n'
+        result_str += str(data_id) + ': {' + ''.join(['\n\t{}: {}'.format(x, data_dec[data_id][x]) for x in data_dec[data_id]])\
+                      + '}\n\n'
     with open(pd['project_dir'] + '/pickle_pot/main_data.txt', 'w', encoding='utf-8') as f:
         f.write(result_str)
 
