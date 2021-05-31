@@ -95,10 +95,9 @@ def make_target_data_for_today(today, period, pj_dir, domain):
 
 def project_select(file_path):
     project_str = re.sub(r'^(.+?)/.*$', r'\1', file_path)
-    print(project_str)
     if project_str in project_info:
         pj_dir = project_info[project_str]['pj_dir']
-        domain = project_info[project_str]['domain']
+        domain = project_info[project_str]['pj_domain']
         main_dir = project_info[project_str]['main_dir']
         site_name = project_info[project_str]['site_name']
         pj_domain_main = domain + re.sub(r'^.*/html_files', '', main_dir)
