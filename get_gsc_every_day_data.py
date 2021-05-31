@@ -13,8 +13,8 @@ def get_one_day_data_in_period(url, start_period, end_period, dir_path):
         if not os.path.exists('gsc_data/' + dir_path + '/ed_data/od' + day_str + '.csv'):
             print(day_str)
             search_console_data.make_csv_from_gsc(url, day_str, day_str, dir_path + '/ed_data', 'od', ['page'])
-            # time.sleep(1)
+            time.sleep(1)
 
 
 if __name__ == '__main__':
-    get_one_day_data_in_period('https://www.demr.jp', '2020-04-01', '2021-05-07', 'reibun')
+    get_one_day_data_in_period('http://www.reibunsite.com', '2020-04-23', '2021-05-25', 'rs_o')

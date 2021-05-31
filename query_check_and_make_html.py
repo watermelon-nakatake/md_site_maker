@@ -7,6 +7,15 @@ from datetime import datetime, timedelta
 import search_console_data
 import get_gsc_every_day_data
 
+project_info = {
+    'reibun': {'pj_dir': 'reibun', 'pj_domain': 'https://www.demr.jp',
+               'main_dir': 'reibun/html_files/pc/', 'site_name': '出会い系メール例文集'},
+    'rei_site': {'pj_dir': 'rei_site', 'pj_domain': 'https://www.reibunsite.com',
+                 'main_dir': 'rei_site/html_files/pc/', 'site_name': '出会い系メールの例文サイト'},
+    'joshideai': {'pj_dir': 'joshideai', 'pj_domain': 'https://www.joshideai.com',
+                  'main_dir': 'joshideai/html_files/', 'site_name': '出会い系メールの例文サイト'},
+    'sfd': {'pj_dir': 'sfd', 'pj_domain': 'https://www.sefure-do.com', 'main_dir': '', 'site_name': 'セフレ道'}}
+
 
 def make_data_for_graph(pj_dir, start_period, end_period, domain):
     main_dict = {}
@@ -54,6 +63,10 @@ def sc_data_match_page(csv_list, domain):
 def make_target_data_for_today(today, period, pj_dir, domain):
     i = 0
     end_str = (today - timedelta(days=3)).strftime('%Y-%m-%d')
+    if not os.path.exists('gsc_data/' + pj_dir):
+        os.mkdir('gsc_data/' + pj_dir)
+    if not os.path.exists('gsc_data/' + pj_dir + '/ed_data'):
+        os.mkdir('gsc_data/' + pj_dir + '/ed_data')
     while i < 3:
         if os.path.exists('gsc_data/' + pj_dir + '/ed_data/ed' + (today - timedelta(days=i)).strftime('%Y-%m-%d')
                           + '.csv'):
@@ -82,14 +95,15 @@ def make_target_data_for_today(today, period, pj_dir, domain):
 
 def project_select(file_path):
     project_str = re.sub(r'^(.+?)/.*$', r'\1', file_path)
-    pj_dir, domain, main_dir, site_name, pj_domain_main = '', '', '', '', ''
     print(project_str)
-    if project_str == 'reibun':
-        pj_dir = 'reibun'
-        domain = 'https://www.demr.jp'
-        main_dir = 'reibun/html_files/pc/'
-        site_name = '出会い系メール例文集'
+    if project_str in project_info:
+        pj_dir = project_info[project_str]['pj_dir']
+        domain = project_info[project_str]['domain']
+        main_dir = project_info[project_str]['main_dir']
+        site_name = project_info[project_str]['site_name']
         pj_domain_main = domain + re.sub(r'^.*/html_files', '', main_dir)
+    else:
+        pj_dir, domain, main_dir, site_name, pj_domain_main = '', '', '', '', ''
     return pj_dir, domain, main_dir, site_name, pj_domain_main
 
 
@@ -630,7 +644,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
             q_dic = make_simple_keyword_dic(this_query)
             this_pk_data = pk_dic[page_name]
             error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
-            query_str_list, top_words, h_result, t_result, e_q_list\
+            query_str_list, top_words, h_result, t_result, e_q_list \
                 = seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, pk_dic, site_name,
                                        ignore_flag)
             if error_list:
