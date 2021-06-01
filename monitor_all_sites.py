@@ -37,7 +37,7 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
             # print(c_list)
             with open(pj_dir + '/pickle_pot/main_data.pkl', 'rb') as f:
                 pk_dic = pickle.load(f)
-            # print(pk_dic)
+            print(pk_dic)
             e_pk_dic = {pk_dic[x]['file_path']: pk_dic[x] for x in pk_dic}
             all_site_p.update({pj_domain_main + e_pk_dic[y]['file_path']: e_pk_dic[y] for y in e_pk_dic})
             no_edit_click, no_edit_query = rewrite_page_check(c_list, e_pk_dic, q_list, pj_domain_main)

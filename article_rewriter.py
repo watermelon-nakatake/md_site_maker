@@ -6,10 +6,11 @@ import word_dict
 from numpy import random
 
 
-def md_rewrite(base_md_path, replace_words, target_words):
-    if os.path.getmtime('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py')\
-            > os.path.getmtime('word_dict.py'):
-        shutil.copy('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py', 'word_dict.py')
+def md_rewrite(base_md_path, replace_words, target_words, import_wl):
+    if import_wl:
+        if os.path.getmtime('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py')\
+                > os.path.getmtime('word_dict.py'):
+            shutil.copy('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py', 'word_dict.py')
     sorted_noun_list = []
     conj_dict = {}
     c_used = []
@@ -143,4 +144,4 @@ def mecab_list(text):
 
 
 if __name__ == '__main__':
-    md_rewrite('reibun/md_files/pc/majime/m0_4.md', [['PCMAX', 'ハッピーメール']], ['童貞'])
+    md_rewrite('reibun/md_files/pc/majime/m0_4.md', [['PCMAX', 'ハッピーメール']], ['童貞'], False)
