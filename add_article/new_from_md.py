@@ -11,11 +11,10 @@ from PIL import Image
 import time
 import glob
 from email import utils
-import common_tool
 import make_article_list
-import amp_file_maker
-import file_upload
-import check_mod_date
+from add_article import amp_file_maker, common_tool
+from upload import file_upload
+from analysis import check_mod_date
 import relational_article
 import reibun.main_info
 import joshideai.main_info
@@ -261,14 +260,14 @@ def reibun_index_insert(pk_dic, title_change_id, pd):
                     as k:
                 k.write(long_str)
         if cat == 'majime' or directory == 'majime':
-            with open('reibun/html_files/pc/majime/index.html', 'r', encoding='utf-8') as i:
+            with open('../reibun/html_files/pc/majime/index.html', 'r', encoding='utf-8') as i:
                 long_str = i.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             cat_str_m = cat_index_str_maker(h_dec[cat], directory)
             long_str = re.sub(r'<!--' + cat + '-i/s-->.*?<!--' + cat + '-i/e-->',
                               '<!--' + cat + '-i/s-->' + cat_str_m.replace(' id="cat_index"', '')
                               + '<!--' + cat + '-i/e-->', long_str)
-            with open('reibun/html_files/pc/majime/index.html', 'w', encoding='utf-8') as j:
+            with open('../reibun/html_files/pc/majime/index.html', 'w', encoding='utf-8') as j:
                 j.write(long_str)
 
 
@@ -298,11 +297,11 @@ def qa_index_list_insert(pk_dic):
     index_str = ''.join(
         ['<li><a href="{}">{}</a><span>{}</span></li>'.format(y[0].replace('qa/', ''), y[1], y[2]) for y in qa_list])
     index_str = '<ul class="libut">' + index_str + '</ul>'
-    with open('reibun/html_files/pc/qa/index.html', 'r', encoding='utf-8') as g:
+    with open('../reibun/html_files/pc/qa/index.html', 'r', encoding='utf-8') as g:
         target_str = g.read()
     target_str = re.sub(r'<!--qa-index/s-->.*?<!--qa-index/e-->',
                         '<!--qa-index/s-->' + index_str + '<!--qa-index/e-->', target_str)
-    with open('reibun/html_files/pc/qa/index.html', 'w', encoding='utf-8') as h:
+    with open('../reibun/html_files/pc/qa/index.html', 'w', encoding='utf-8') as h:
         h.write(target_str)
 
 
@@ -323,7 +322,7 @@ def xml_site_map_maker(pk_dic, pd):
                        + page[1] + '</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>'
     xml_str += '</urlset>'
     if pd['project_dir'] == 'reibun':
-        s_path = 'reibun/html_files/p_sitemap.xml'
+        s_path = '../reibun/html_files/p_sitemap.xml'
     else:
         s_path = pd['project_dir'] + '/html_files/sitemap.xml'
     with open(s_path, 'w', encoding='utf-8') as f:
@@ -596,7 +595,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                 os.mkdir(pd['project_dir'] + '/html_files' + pd['main_dir'])
         if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template'):
             os.mkdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template')
-        shutil.copy('template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir']
+        shutil.copy('../template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir']
                     + 'template/main_tmp.html')
     with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
             as t:

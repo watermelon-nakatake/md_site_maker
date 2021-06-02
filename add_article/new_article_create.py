@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 import re
-import file_upload
+from upload import file_upload
 import pickle
 import datetime
 import copy
 import random
-import common_tool
+from add_article import new_from_md
 
 side_bar_list = {'important': [0, 19, 55, 65, 77, 98, 124],
                  'new': [81, 90, 99, 112, 136], 'pop': [22, 24, 25, 30, 34, 38, 56, 100, 104]}
@@ -65,7 +65,7 @@ def remake_html():
             new_str = f.read()
             new_str = new_str.replace('<div class="leftnav"><div class="sbh cat-i">1</div><ul>2</ul></div>',
                                       '<!--sb-category-->')
-            directory, category = common_tool.directory_and_category_select(file_name)
+            directory, category = new_from_md.directory_and_category_select(file_name)
             new_str = re.sub(r'<body class=".*?" itemscope=', r'<body class="' + category + '" itemscope=', new_str)
             if category != 'sitepage':
                 no_sb_cat = ['majime', 'top']
@@ -153,7 +153,7 @@ def file_update():
             # new_str = article_maker_rb.index_maker(new_str)
             # new_str = article_maker_rb.section_insert(new_str)
 
-            directory, category = common_tool.directory_and_category_select(file_name)
+            directory, category = new_from_md.directory_and_category_select(file_name)
             print(directory)
             print(category)
             new_str = new_str.replace('<!--category-->', category)

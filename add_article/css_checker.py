@@ -334,4 +334,4 @@ def move_space_and_indention_from_css(css_str):
 if __name__ == '__main__':
     # duplicate_class_checker('new/css/style26.css', ['new/company/fryer.html'],
     #                         'new/test/test7.css')
-    duplicated_css_remove('template_files/css/main.css')
+    duplicated_css_remove('../template_files/css/main.css')

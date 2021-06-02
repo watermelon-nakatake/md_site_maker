@@ -2,7 +2,6 @@ import re
 import csv
 import make_article_list
 import reibun.main_info
-import query_check_and_make_html
 
 
 def title_counter(md_path, kw_list, site_shift, pd):

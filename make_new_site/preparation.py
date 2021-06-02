@@ -1,9 +1,8 @@
-import make_article_list
+from add_article import make_article_list
 import re
 import os
 import collections
 import glob
-import reibun.main_info
 
 
 def preparation_for_new_project(pd):
@@ -114,4 +113,4 @@ if __name__ == '__main__':
     # insert_id_and_category_to_html()
     # print(make_article_list.read_pickle_pot('main_data', reibun.main_info.info_dict))
     # insert_id_and_category_to_md(reibun.main_info.info_dict)
-    check_all_html('reibun/html_files/pc')
+    check_all_html('../reibun/html_files/pc')

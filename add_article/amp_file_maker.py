@@ -2,7 +2,7 @@
 import re
 import os
 import shutil
-import file_upload
+from upload import file_upload
 import new_from_md
 from PIL import Image
 
@@ -109,16 +109,16 @@ def css_insert(long_str):
 
 
 def make_amp_top_page():
-    with open('reibun/html_files/index.html', "r", encoding='utf-8') as f:
+    with open('../reibun/html_files/index.html', "r", encoding='utf-8') as f:
         pc_top = f.read()
-    with open('reibun/html_files/amp/index.html', "r", encoding='utf-8') as g:
+    with open('../reibun/html_files/amp/index.html', "r", encoding='utf-8') as g:
         amp_top = g.read()
     new_str = re.findall(r'<h2>主な更新履歴</h2>.+?</article>', pc_top)[0]
     new_str = new_str.replace('"pc/', '"')
     amp_top = re.sub(r'<h2>主な更新履歴</h2>.+?</article>', new_str, amp_top)
     mod_date = re.findall(r'<time itemprop="dateModified" datetime=".+?">(.+?)</time>', pc_top)[0]
     amp_top = re.sub(r'<!--mod-->.+?<!--e/mod-->', '<!--mod-->{}<!--e/mod-->'.format(mod_date), amp_top)
-    with open('reibun/html_files/amp/index.html', "w", encoding='utf-8') as h:
+    with open('../reibun/html_files/amp/index.html', "w", encoding='utf-8') as h:
         h.write(amp_top)
 
 
@@ -178,7 +178,7 @@ def amp_maker(pc_path_list, pd):
                 amp_data = amp_data.replace('<!--description-->', description)
                 amp_data = amp_data.replace('<!--i-kanren-->', kr_str)
                 if pc_path == 'reibun/html_files/index.html':
-                    amp_path = 'reibun/html_files/amp/index.html'
+                    amp_path = '../reibun/html_files/amp/index.html'
                 else:
                     amp_path = pc_path.replace('/pc/', '/amp/')
                 amp_data = amp_data.replace('<!--path-->', amp_path.replace('reibun/html_files/amp/', ''))

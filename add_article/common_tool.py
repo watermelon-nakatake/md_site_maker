@@ -91,9 +91,6 @@ def section_insert(long_str):
     return long_str
 
 
-
-
-
 def remove_no_use_images(dir_path):
     no_use_list = check_no_use_images(dir_path)
     for file_name in no_use_list:
@@ -167,7 +164,7 @@ def check_no_use_images(dir_path):
             print(html_file)
             with open(html_file, 'r', encoding='utf-8') as f:
                 long_str = f.read()
-                image_l = re.findall(r'(images/.+?)["|<|\)]', long_str)
+                image_l = re.findall(r'(images/.+?)["|<)]', long_str)
             for image in image_l:
                 print(image)
                 if dir_path + '/' + image in image_list:

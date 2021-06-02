@@ -1,6 +1,5 @@
-import new_from_md
 import joshideai.main_info
-import change_file_upload
+from upload import change_file_upload
 
 if __name__ == '__main__':
     # new_from_md.main(0, joshideai.main_info.info_dict, True, True, True, True)

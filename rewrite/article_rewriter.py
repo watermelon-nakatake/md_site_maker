@@ -144,4 +144,4 @@ def mecab_list(text):
 
 
 if __name__ == '__main__':
-    md_rewrite('reibun/md_files/pc/majime/m0_4.md', [['PCMAX', 'ハッピーメール']], ['童貞'], False)
+    md_rewrite('../reibun/md_files/pc/majime/m0_4.md', [['PCMAX', 'ハッピーメール']], ['童貞'], False)

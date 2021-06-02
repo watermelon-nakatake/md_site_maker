@@ -1614,10 +1614,10 @@
 	file_path: majime/m1sexfriend_hm.html
 	title: ハッピーメールでセフレができるメッセージとハピメのセフレの作り方
 	pub_date: 2021-05-28
-	mod_date: 2021-06-02
+	mod_date: 2021-06-03
 	category: f_mail
 	description: セフレが欲しいなら出会い系サイトを使って探しましょう。本稿ではハッピーメールを使ったセフレの作り方やセフレ作りのステップ。ハッピーメールでのセフレ探しのメールの書き方を例文を豊富に用意してお教えします。Hやセフレ作りの大切な３つの秘訣もお教えします。
-	str_len: 11854
+	str_len: 11959
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}

@@ -4,8 +4,7 @@ import os
 import time
 import re
 import datetime
-import amp_file_maker
-import common_tool
+from add_article import amp_file_maker, common_tool
 import random
 import paramiko
 import scp
@@ -399,7 +398,7 @@ def relational_file_pick_up(target_file):
                     if 'reibun/index.html' in target_file:
                         img_path = img_path.replace('pc/', 'reibun/pc/')
                     elif 'reibun/amp/index.html' == target_file:
-                        img_path = re.sub(r'^images/', 'reibun/html_files/amp/images/', img_path)
+                        img_path = re.sub(r'^images/', '../reibun/html_files/amp/images/', img_path)
                     elif 'reibun/amp/' in target_file:
                         img_path = img_path.replace('../images/', 'reibun/amp/images/')
                     else:

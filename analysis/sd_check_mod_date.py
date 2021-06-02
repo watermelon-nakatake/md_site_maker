@@ -1,6 +1,6 @@
 import csv
 import datetime
-import make_article_list
+from add_article import make_article_list
 import os
 import re
 from bs4 import BeautifulSoup
@@ -42,9 +42,9 @@ def make_target_data_for_today(today, period):
     # print(start_str)
     # print(end_str)
     if not os.path.exists('gsc_data/sfd/p_month' + end_str + '.csv'):
-        search_console_data.make_csv_from_gsc('https://www.sefure-do.com', start_str, end_str, 'sfd',
+        search_console_data.make_csv_from_gsc('https://www.sefure-do.com', start_str, end_str, '../sfd',
                                               'qp_month', ['query', 'page'])
-        search_console_data.make_csv_from_gsc('https://www.sefure-do.com', start_str, end_str, 'sfd',
+        search_console_data.make_csv_from_gsc('https://www.sefure-do.com', start_str, end_str, '../sfd',
                                               'p_month', ['page'])
     return end_str
 
@@ -61,7 +61,7 @@ def next_update_target_search(aim_date, period):
         q_list = [row for row in q_reader]
     q_list = q_list[1:]
     # print(c_list)
-    with open('sfd/pickle_pot/date_img.pkl', 'rb') as f:
+    with open('../sfd/pickle_pot/date_img.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
     limit_d = today - timedelta(days=aim_date)
     print('日数 : ' + str(period) + '日間')
@@ -73,9 +73,9 @@ def next_update_target_search(aim_date, period):
     # print('表示回数順')
     # display_list = check_no_mod_page(mod_list_n, c_list)
     # c_list.sort(key=lambda x: int(x[1]), reverse=True)
-    with open('sfd/pickle_pot/date_img.pkl', 'wb') as p:
+    with open('../sfd/pickle_pot/date_img.pkl', 'wb') as p:
         pickle.dump(pk_dic, p)
-    with open('sfd/pickle_pot/target_files.pkl', 'wb') as q:
+    with open('../sfd/pickle_pot/target_files.pkl', 'wb') as q:
         pickle.dump(target_list, q)
     return pk_dic
 
@@ -86,7 +86,7 @@ def display_mod_target_data():
     limit_date = today - timedelta(days=100)
     end_date = end_d.strftime('%Y-%m-%d')
     if os.path.exists('gsc_data/sfd/p_month' + end_date + '.csv'):
-        with open('sfd/pickle_pot/target_files.pkl', 'rb') as t:
+        with open('../sfd/pickle_pot/target_files.pkl', 'rb') as t:
             target_pages = pickle.load(t)
         # print(target_pages)
         with open('gsc_data/sfd/p_month' + end_date + '.csv') as f:
@@ -99,7 +99,7 @@ def display_mod_target_data():
             q_reader = csv.reader(f)
             q_list = [row for row in q_reader]
         q_list = q_list[1:]
-        with open('sfd/pickle_pot/date_img.pkl', 'rb') as p:
+        with open('../sfd/pickle_pot/date_img.pkl', 'rb') as p:
             pk_dic = pickle.load(p)
 
         for tp in target_pages:

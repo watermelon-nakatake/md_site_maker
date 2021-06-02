@@ -1,6 +1,6 @@
 import re
 import glob
-import file_upload
+from upload import file_upload
 
 
 def main(replace_str_list, if_replace_str_list):

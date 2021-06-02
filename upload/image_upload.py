@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 import re
 import file_upload
-import amp_file_maker
+from add_article import amp_file_maker
 import datetime
 
 

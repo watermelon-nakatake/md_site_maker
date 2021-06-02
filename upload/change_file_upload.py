@@ -1,8 +1,7 @@
 import os
 import glob
-import time
 import file_upload
-import make_article_list
+from add_article import make_article_list
 import reibun.main_info
 import rei_site.main_info
 import joshideai.main_info

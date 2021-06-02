@@ -1,8 +1,7 @@
 import csv
 import datetime
-import make_article_list
 import os
-import new_from_md
+from add_article import new_from_md, make_article_list
 import re
 import reibun.main_info
 

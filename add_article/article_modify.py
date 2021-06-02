@@ -3,7 +3,7 @@ import os
 import glob
 import datetime
 import shutil
-import file_upload
+from upload import file_upload
 import make_article_list
 
 
@@ -291,11 +291,11 @@ def make_category_data_str(project_dir, main_dir):
 
 if __name__ == '__main__':
     p_d = {'project_dir': 'rei_site', 'site_name': '出会い系メールの例文サイト', 'main_dir': 'pc/', 'aff_dir': 'http'}
-    all_file_to_markdown('rei_site/old_files/pc', 'rei_site/md_files/pc', p_d, 'pc/',
+    all_file_to_markdown('../rei_site/old_files/pc', 'rei_site/md_files/pc', p_d, 'pc/',
                          ['<div id="back"><a href="#top"><img src="../stylesheet/back.png" width="100" height="25"'
                           ' border="0" alt="ページTOPに戻る"></a></div></div>'])
     # del_note_dir('rei_site/old_files')
     # insert_canonical('rei_site/rep_rs/sp')
     # make_project_dir('rei_site')
     # print(relative_path_maker('../option/howtouse.html', 'rei_site/md_files/adult/a1.md'))
-    make_category_data_str('rei_site', 'pc/')
+    make_category_data_str('../rei_site', 'pc/')

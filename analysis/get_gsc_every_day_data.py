@@ -1,4 +1,4 @@
-import search_console_data
+from analysis import search_console_data
 from datetime import datetime, timedelta
 import os
 import time

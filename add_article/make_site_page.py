@@ -2,10 +2,10 @@ import csv
 import re
 import datetime
 import os
-import file_upload
+from upload import file_upload
 from PIL import Image
-import make_article_list
-import check_mod_date
+from add_article import make_article_list
+from analysis import check_mod_date
 
 site_name_list = ['wk', 'hm', 'mt', 'mp', 'max', 'iq']
 site_page_dict = {'hm': 'happymail', 'wk': 'wakuwakumail', 'mt': 'mintj', 'max': 'pcmax', 'iq': '194964'}
