@@ -707,13 +707,13 @@
 	file_path: majime/m1sexfriendmail.html
 	title: セフレの作り方と出会い系サイトでのセフレ探しのメッセージのコツ
 	pub_date: 2014-09-06
-	mod_date: 2021-05-06
+	mod_date: 2021-06-02
 	category: f_mail
 	description: セフレが欲しいなら出会い系サイトを使ったセフレ作りがベスト。この記事ではハッピーメールやPCMAXなどの出会い系アプリでのセフレの作り方やセフレ作りの手順、セフレ探しのメッセージの書き方を例文で紹介。セックスやセフレ作りの重要な３つのコツもお教えします。
-	str_len: 12613
+	str_len: 12687
 	layout_flag: True
 	shift_flag: True
-	ign_words: ['出会い系アプリ', 'ハッピーメール']}
+	edit_flag: True}
 
 65: {
 	file_path: majime/m2conversation.html
@@ -1614,13 +1614,13 @@
 	file_path: majime/m1sexfriend_hm.html
 	title: ハッピーメールでセフレができるメッセージとハピメのセフレの作り方
 	pub_date: 2021-05-28
-	mod_date: 2021-05-28
+	mod_date: 2021-06-02
 	category: f_mail
 	description: セフレが欲しいなら出会い系サイトを使って探しましょう。本稿ではハッピーメールを使ったセフレの作り方やセフレ作りのステップ。ハッピーメールでのセフレ探しのメールの書き方を例文を豊富に用意してお教えします。Hやセフレ作りの大切な３つの秘訣もお教えします。
-	str_len: 12359
-	layout_flag: False
+	str_len: 11854
+	layout_flag: True
 	shift_flag: False
-	edit_flag: False}
+	edit_flag: True}
 
 147: {
 	file_path: majime/m0_dt_hm.html
