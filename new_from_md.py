@@ -18,7 +18,8 @@ import file_upload
 import check_mod_date
 import relational_article
 import reibun.main_info
-import joshideai
+import joshideai.main_info
+import rei_site.main_info
 # import rei_site.main_info
 
 
@@ -171,7 +172,8 @@ def insert_to_amp_top(replace_str, pd):
 def insert_to_index_page(pk_dic, title_change_id, pd):
     h_dec = {x: [] for x in pd['category_data']}
     for id_num in pk_dic:
-        h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
+        if pk_dic[id_num]['category'] in pd['category_name']:
+            h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
     for category in h_dec:
         h_dec[category].sort(key=lambda x: x[0])
     # html site map
@@ -376,7 +378,7 @@ def insert_sidebar_to_str(long_str, side_bar_dic, category, insert_cat, pd):
                           '"sbh">重要記事</div><ul>' + side_bar_dic['important'] + '</ul></div>', long_str)
     long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
                       '"sbh">最近の更新記事</div><ul>' + side_bar_dic['new'] + '</ul></div>', long_str)
-    if category in insert_cat:
+    if category in insert_cat and category in pd['category_name']:
         long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
                           '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][0]
                           + '</div><ul>' + side_bar_dic[category] + '</ul></div>', long_str)
@@ -700,9 +702,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         md_txt = md_txt.replace('--><!--', '-->\n<!--')
         if '\n# ' not in md_txt:
             md_txt = re.sub(r'\n[a-zA-Z]::.*?\n', '\n', md_txt)
-            md_txt = re.sub(r'^[a-zA-Z]::.*?\n', '\n', md_txt)
             md_txt = re.sub(r't::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'n::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'k::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'e::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'^[a-zA-Z]::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)
 
@@ -927,6 +931,8 @@ def icon_filter(md_txt, pd):
         md_txt = reibun.main_info.reibun_icon_filter(md_txt)
     elif pd['project_dir'] == 'joshideai':
         md_txt = joshideai.main_info.joshideai_icon_filter(md_txt)
+    elif pd['project_dir'] == 'rei_site':
+        md_txt = rei_site.main_info.rei_site_icon_filter(md_txt)
     return md_txt
 
 

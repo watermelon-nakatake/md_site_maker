@@ -4,6 +4,14 @@ import time
 import file_upload
 import make_article_list
 import reibun.main_info
+import rei_site.main_info
+import joshideai.main_info
+
+
+def all_site_change_html_upload():
+    for info_dic in [reibun.main_info.info_dict, rei_site.main_info.info_dict, joshideai.main_info.info_dict]:
+        pd = info_dic
+        search_update_file(pd)
 
 
 def search_update_file(pd):
@@ -16,5 +24,4 @@ def search_update_file(pd):
 
 
 if __name__ == '__main__':
-    p_d = reibun.main_info.info_dict
-    search_update_file(p_d)
+    all_site_change_html_upload()

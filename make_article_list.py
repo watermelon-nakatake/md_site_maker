@@ -59,9 +59,10 @@ def make_current_file_list(pd):
 
 def save_text_file(data_dec, pd):
     result_str = ''
-    for data_id in data_dec:
-        result_str += str(data_id) + ': {' + ''.join(['\n\t{}: {}'.format(x, data_dec[data_id][x]) for x in data_dec[data_id]])\
-                      + '}\n\n'
+    data_list = [[y, data_dec[y]] for y in data_dec]
+    data_list.sort(key=lambda z: z[0])
+    for data in data_list:
+        result_str += str(data[0]) + ': {' + ''.join(['\n\t{}: {}'.format(x, data[1][x]) for x in data[1]]) + '}\n\n'
     with open(pd['project_dir'] + '/pickle_pot/main_data.txt', 'w', encoding='utf-8') as f:
         f.write(result_str)
 

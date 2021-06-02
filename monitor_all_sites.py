@@ -37,7 +37,7 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
             # print(c_list)
             with open(pj_dir + '/pickle_pot/main_data.pkl', 'rb') as f:
                 pk_dic = pickle.load(f)
-            print(pk_dic)
+            # print(pk_dic)
             e_pk_dic = {pk_dic[x]['file_path']: pk_dic[x] for x in pk_dic}
             all_site_p.update({pj_domain_main + e_pk_dic[y]['file_path']: e_pk_dic[y] for y in e_pk_dic})
             no_edit_click, no_edit_query = rewrite_page_check(c_list, e_pk_dic, q_list, pj_domain_main)
@@ -94,7 +94,7 @@ def add_http_and_https_csv(start_period, end_period):
 def rewrite_page_check(c_list, e_pk_dic, q_list, pj_domain_main):
     no_edit_list = [pj_domain_main + e_pk_dic[x]['file_path'] for x in e_pk_dic if 'edit_flag' in e_pk_dic[x] and
                     not e_pk_dic[x]['edit_flag']]
-    print(no_edit_list)
+    # print(no_edit_list)
     no_edit_click = [y for y in c_list if y[0] in no_edit_list]
     no_edit_query = [z for z in q_list if z[5] in no_edit_list]
     return no_edit_click, no_edit_query
