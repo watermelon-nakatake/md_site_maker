@@ -322,7 +322,7 @@ def xml_site_map_maker(pk_dic, pd):
                        + page[1] + '</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>'
     xml_str += '</urlset>'
     if pd['project_dir'] == 'reibun':
-        s_path = '../reibun/html_files/p_sitemap.xml'
+        s_path = 'reibun/html_files/p_sitemap.xml'
     else:
         s_path = pd['project_dir'] + '/html_files/sitemap.xml'
     with open(s_path, 'w', encoding='utf-8') as f:

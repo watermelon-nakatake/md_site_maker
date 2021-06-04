@@ -4,7 +4,7 @@ from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 
 SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
-KEY_FILE_LOCATION = 'absolute-nexus-311706-6f8ae9bea293.json'
+KEY_FILE_LOCATION = 'analysis/absolute-nexus-311706-6f8ae9bea293.json'
 
 
 def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
