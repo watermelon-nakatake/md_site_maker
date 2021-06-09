@@ -1,9 +1,9 @@
-import joshideai.main_info
-from upload import change_file_upload
+from joshideai import main_info
+import new_from_md
 
 if __name__ == '__main__':
-    # new_from_md.main(0, joshideai.main_info.info_dict, True, True, True, True)
-    change_file_upload.search_update_file(joshideai.main_info.info_dict)
+    new_from_md.main(0, main_info.info_dict, True, True, True, False)
+    # change_file_upload.search_update_file(joshideai.main_info.info_dict)
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param site_shift: サイトの表示に関するフラグ

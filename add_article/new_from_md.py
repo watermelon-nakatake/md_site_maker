@@ -11,13 +11,14 @@ from PIL import Image
 import time
 import glob
 from email import utils
+
 import make_article_list
 from add_article import amp_file_maker, common_tool
 from upload import file_upload
 from analysis import check_mod_date
 import relational_article
 import reibun.main_info
-import joshideai.main_info
+from joshideai import main_info
 import rei_site.main_info
 # import rei_site.main_info
 
@@ -33,6 +34,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     :param first_time_flag: 初回作成か否か
     :return: none
     """
+    os.chdir('../')
     now = datetime.datetime.now()
     if first_time_flag:
         last_mod_time = now
@@ -72,7 +74,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         upload_list.extend(pd['add_files'])
         upload_list = list(set(upload_list))
         upload_list.sort()
-        # upload_list = modify_file_check(upload_list, last_mod_time)
+        upload_list = modify_file_check(upload_list, last_mod_time)
         print(upload_list)
         file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
     if last_mod_flag:
@@ -587,6 +589,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
     upload_list = []
     title_change_id = []
     pd['site_shift_list'].remove(site_shift)
+    print(os.getcwd())
     if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html'):
         if not os.path.exists(pd['project_dir'] + '/html_files'):
             os.mkdir(pd['project_dir'] + '/html_files')
@@ -616,6 +619,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
+        plain_txt = insert_ds_link(plain_txt, pd)
         md_txt = plain_txt
         # print(md_txt)
 
@@ -907,6 +911,32 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
 # todo: main_data.txt 作成の修正
 
 
+def insert_ds_link(md_str, pd):
+    # pd = joshideai.main_info.info_dict
+    os.chdir('../')
+    used_name = []
+    # with open('joshideai/md_files/make_love/sex_30s.md', 'r', encoding='utf-8') as f:
+    #     md_str = f.read()
+    if 'aff_dir' in pd:
+        if pd['aff_dir']['dir'] + '/' not in md_str:
+            main_str = re.sub(r'^[\s\S]+?\n## ', '', md_str)
+            str_list = main_str.split('\n')
+            for key in pd['aff_dir']:
+                if key != 'dir' and key not in used_name:
+                    for row in str_list:
+                        if not row.startswith('#') and not row.startswith('- '):
+                            if key in row:
+                                if '](' not in row:
+                                    i_url = '[{}](../../{}{})'.format(key, '../' * pd['main_dir'].count('/'),
+                                                                      pd['aff_dir'][key])
+                                    new_row = row.replace(key, i_url)
+                                    md_str = md_str.replace(row, new_row)
+                                    print('insert {} link str'.format(key))
+                                    used_name.append(key)
+                                    break
+    return md_str
+
+
 def img_filter(new_str, pd):
     if pd['project_dir'] == 'reibun':
         new_str = reibun.main_info.reibun_img_filter(new_str)
@@ -929,7 +959,7 @@ def icon_filter(md_txt, pd):
     if pd['project_dir'] == 'reibun':
         md_txt = reibun.main_info.reibun_icon_filter(md_txt)
     elif pd['project_dir'] == 'joshideai':
-        md_txt = joshideai.main_info.joshideai_icon_filter(md_txt)
+        md_txt = main_info.joshideai_icon_filter(md_txt)
     elif pd['project_dir'] == 'rei_site':
         md_txt = rei_site.main_info.rei_site_icon_filter(md_txt)
     return md_txt
@@ -1012,7 +1042,7 @@ def img_str_filter(long_str, file_name, md_str, md_file_path, pd):
             if 'insert_image/' in img_data_l[0][1]:
                 img_url = img_data_l[0][1]
                 new_img_path, add_img = resize_and_rename_image(img_url, file_name, pd)
-                new_img_path = '../' * (md_file_path.count('/') - 3) + re.sub(r'^.*/images/', 'images/', new_img_path)
+                new_img_path = '../' + re.sub(r'^.*/images/', 'images/', new_img_path)
                 new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="760" height="470" /></div>' \
                     .format(new_img_path, img_data_l[0][0])
                 long_str = long_str.replace(img_str, new_str)
@@ -1047,7 +1077,7 @@ def resize_and_rename_image(img_path, file_path, pd):
             add_img.append('{}/html_files/amp/images/{}/'.format(pd['project_dir'], pd['ar_img_dir']) + new_name)
         img_gr.save(img_dir.replace('/html_files/', '/md_files/') + '/' + new_name)
         img.save(pd['project_dir'] + '/image_stock/' + file_name + '_' + str(i) + '.jpg')
-        os.remove(img_path)
+        os.remove(image_path)
     else:
         # print(img_path)
         add_img = make_thumbnail(file_name, pd['project_dir'] + '/' + img_path.replace('../', ''), img_dir, pd)
@@ -1400,7 +1430,9 @@ def first_make_html(pd):
 
 
 # if __name__ == '__main__':
-#     pd_dict = reibun.main_info.info_dict
+#     insert_ds_link('', '')
+
+    # pd_dict = reibun.main_info.info_dict
     #     main(1, pd_dict)
     # site_shift_flag ( 0: normal, 1:no jmail )
     # reibun_upload.files_upload(['reibun/index.html'])

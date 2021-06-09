@@ -6,6 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/make_new_site" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/rewrite" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/upload" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/add_article" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pj_souce" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pj_souce/joshideai" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9" jdkType="Python SDK" />

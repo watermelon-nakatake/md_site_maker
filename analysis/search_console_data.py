@@ -28,4 +28,4 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
 
 if __name__ == '__main__':
     # make_csv_from_gsc('https://www.sefure-do.com', '2021-01-23', '2021-05-07', 'sd', 'month', ['query', 'page'])
-    make_csv_from_gsc('https://www.demr.jp', '2020-04-01', '2021-05-07', '../reibun', 'test', ['page'])
+    make_csv_from_gsc('https://www.demr.jp', '2020-04-01', '2021-05-07', 'reibun', 'test', ['page'])

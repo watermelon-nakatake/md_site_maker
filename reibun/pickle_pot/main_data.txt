@@ -1292,10 +1292,10 @@
 	file_path: qa/q3.html
 	title: ハッピーメール等出会い系で短文やそっけない返信は業者やサクラ？
 	pub_date: 2012-03-07
-	mod_date: 2021-05-28
+	mod_date: 2021-06-07
 	category: qa
-	description: ハッピーメールやPCMAX等の出会い系サイトでそっけない短文や一言メッセージを書いたり、異常に返信が早い女性がいますが、サクラや業者でしょうか？長文ではなく短文メールをしてくる理由、一言メールの会話の盛り上げ方等、ハピメなどの出会い系で役立つ情報をお教えします。
-	str_len: 9297
+	description: ハッピーメールやPCMAX等の出会い系サイトでそっけない短文や一言メッセージを書いたり、異常に返信が早い女性がいますが、サクラや業者でしょうか？短文メールをしてくる理由、一言メールの会話の盛り上げ方等、ハピメなどの出会い系で役立つ情報をお教えします。
+	str_len: 9296
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1602,10 +1602,10 @@
 	file_path: qa/q9.html
 	title: ハッピーメールやPCMAXでいきなり長文メールはサクラや業者？
 	pub_date: 2021-05-28
-	mod_date: 2021-05-28
+	mod_date: 2021-06-07
 	category: qa
 	description: ハッピーメールやPCMAX等の出会い系サイトで一通目にやたらと長い長文を送ってくる女の人がいますが、サクラや悪質業者ですか？出会い系で女性が長文メールをしてくる理由やサクラや業者の情報等、ハピメなどの出会い系サイトで役立つ情報をお教えします。
-	str_len: 7451
+	str_len: 7450
 	layout_flag: True
 	shift_flag: False
 	edit_flag: False}
@@ -1614,10 +1614,10 @@
 	file_path: majime/m1sexfriend_hm.html
 	title: ハッピーメールでセフレができるメッセージとハピメのセフレの作り方
 	pub_date: 2021-05-28
-	mod_date: 2021-06-04
+	mod_date: 2021-06-07
 	category: f_mail
 	description: セフレが欲しいなら出会い系サイトを使って探しましょう。本稿ではハッピーメールを使ったセフレの作り方やセフレ作りのステップ。ハッピーメールでのセフレ探しのメールの書き方を例文を豊富に用意してお教えします。Hやセフレ作りの大切な３つの秘訣もお教えします。
-	str_len: 12016
+	str_len: 12027
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}

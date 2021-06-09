@@ -4,11 +4,12 @@ import file_upload
 from add_article import make_article_list
 import reibun.main_info
 import rei_site.main_info
-import joshideai.main_info
+from joshideai import main_info
 
 
 def all_site_change_html_upload():
-    for info_dic in [reibun.main_info.info_dict, rei_site.main_info.info_dict, joshideai.main_info.info_dict]:
+    os.chdir('../')
+    for info_dic in [reibun.main_info.info_dict, rei_site.main_info.info_dict, main_info.info_dict]:
         pd = info_dic
         search_update_file(pd)
 

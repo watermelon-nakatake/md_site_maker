@@ -35,19 +35,21 @@ domain_str = 'demr.jp'
 ignore_files = ['reibun/html_files/google3d7d16f68a5d3b38.html', 'reibun/html_files/y_key_e2722b15d0cec302.html']
 upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
                'upload_dir': 'reibun'}
-sc_url = {'ワクワクメール': 'sitepage/wakuwakumail.html', 'PCMAX': 'sitepage/wakuwakumail.html',
+sc_url = {'ワクワクメール': 'sitepage/wakuwakumail.html', 'PCMAX': 'sitepage/pcmax.html',
           '口コミランキング': 'sitepage/ranking.html', '口コミ評価ランキング': 'sitepage/ranking.html',
           '出会い系口コミランキング': 'sitepage/ranking.html', 'ハッピーメール': 'sitepage/happymail.html',
           'Jメール': 'sitepage/mintj.html', '出会い系口コミ評価ランキング': 'sitepage/ranking.html',
           '出会い系サイト口コミランキング': 'sitepage/ranking.html'}
 eyec_img = {'img_path': 'eyec.jpg', 'height': '464', 'width': '700'}
+aff_dir = 'sitepage'
 
 info_dict = {'project_dir': project_dir, 'site_name': site_name, 'side_bar_list': side_bar_list,
              'category_name': category_name, 'category_data': category_data,
              'directory_name': directory_name, 'site_shift_list': site_shift_list, 'add_files': add_files,
              'main_dir': main_dir, 'ar_img_dir': article_image_dir, 'amp_flag': amp_flag,
              'default_img': default_img, 'h_sitemap_path': h_sitemap_path, 'domain_str': domain_str,
-             'ignore_files': ignore_files, 'upload_data': upload_data, 'sc_url': sc_url, 'eyec_img': eyec_img}
+             'ignore_files': ignore_files, 'upload_data': upload_data, 'sc_url': sc_url, 'eyec_img': eyec_img,
+             'aff_dir': aff_dir}
 
 
 def reibun_additional_replace_in_md(md_str):

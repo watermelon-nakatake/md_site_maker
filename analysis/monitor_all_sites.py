@@ -8,6 +8,7 @@ import query_check_and_make_html as qcm
 
 
 def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ignore_flag):
+    os.chdir('../')
     no_edit_c = []
     no_edit_q = []
     all_site_c = []
@@ -51,7 +52,12 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
             #                       period, target_project, ignore_flag)
         else:
             print('{} no data'.format(target_project))
-    print('no_edit: {}'.format(no_edit_c))
+    no_edit_c = [[y[0], int(y[1]), int(y[2]), float(y[3]), float(y[4])] for y in no_edit_c]
+    no_edit_c.sort(key=lambda x: x[2], reverse=True)
+    # print('no_edit: {}'.format(no_edit_c))
+    for ne in no_edit_c:
+        if ne[1] > 0 or ne[2] > 10:
+            print(ne)
     # print(no_edit_q)
     # print(all_site_p)
     # all_site_c.sort(key=lambda x: int(x[1]), reverse=True)
