@@ -1,6 +1,9 @@
+import os
 import re
 import MeCab
 import difflib
+import pprint
+import pickle
 
 
 def compare_manual_rewrite():
@@ -55,12 +58,95 @@ def md_match_filter(md_str):
     return md_str
 
 
+def pickup_chang_str(before_path, after_path, counter_num):
+    os.chdir('../')
+    b_list = []
+    with open(before_path, 'r', encoding='utf-8') as f:
+        b_str = f.read()
+    with open(after_path, 'r', encoding='utf-8') as g:
+        a_str = g.read()
+    if '<<<' in b_str or '>>>' in b_str:
+        b_str = b_str.replace('>>>', '').replace('<<<', '')
+    if '<<<' in a_str or '>>>' in a_str:
+        a_str = a_str.replace('>>>', '').replace('<<<', '')
+    # a_str = a_str.split('\n')
+    # b_str = b_str.split('\n')
+    d = difflib.Differ()
+    diff = d.compare(b_str, a_str)
+    now_f = ' '
+    pass_str = ''
+    str_stock = ''
+    list_stock = ['', '']
+    a_counter = 0
+    pc_num = -1 * counter_num
+    for ds in diff:
+        print(ds)
+        if now_f == ' ':
+            if ds[0] == '+':
+                str_stock = pass_str[pc_num:] + ds[2]
+                now_f = '+'
+            elif ds[0] == '-':
+                list_stock[0](pass_str[pc_num:])
+                str_stock = pass_str[pc_num:] + ds[2]
+                now_f = '-'
+        elif now_f == '+':
+            if ds[0] == '+':
+                str_stock += ds[2]
+            elif ds[0] == '-':
+                list_stock.append(str_stock)
+                str_stock = str_stock[:counter_num] + ds[2]
+                now_f = '-'
+            elif ds[0] == ' ':
+                list_stock.append(str_stock)
+                list_stock.append(str_stock[:counter_num])
+                str_stock = ''
+                b_list.append(list_stock)
+                list_stock = []
+                now_f = ' '
+                a_counter = counter_num
+        elif now_f == '-':
+            if ds[0] == '+':
+                print('error')
+                list_stock.append(str_stock)
+                b_list.append(list_stock)
+                list_stock = []
+                a_counter = counter_num
+                str_stock = pass_str[pc_num:] + ds[2]
+                now_f = '+'
+            elif ds[0] == '-':
+                str_stock += ds[2]
+            elif ds[0] == ' ':
+                list_stock.append(str_stock)
+                str_stock = ''
+                b_list.append(list_stock)
+                list_stock = []
+                now_f = ' '
+                a_counter = counter_num
+        if a_counter != 0:
+            b_list[-1][0] += ds[2]
+            b_list[-1][1] += ds[2]
+            a_counter -= 1
+        pass_str += ds[2]
+    dir_name = re.sub(r'/md_files/.*$', '/rewrite_log', after_path)
+    pk_name = after_path.replace('/', '_').replace('_md_files_', '/rewrite_log/').replace('.md', '.pkl')
+    print(pk_name)
+    if not os.path.exists(dir_name):
+        os.mkdir(dir_name)
+    with open(pk_name, 'wb') as p:
+        pickle.dump(b_list, p)
+    tx_str = '\n\n=======================================\n\n'.join(['{} ==> {}'.format(y[0], y[1]) for y in b_list])
+    with open(pk_name.replace('.pkl', '.txt'), 'w', encoding='utf-8') as h:
+        h.write(tx_str)
+    return b_list
+
+
 def md_resemblance(file_a, file_b, len_lim, url_flag):
+    os.chdir('../')
     with open(file_a, 'r', encoding='utf-8') as f:
         a_str = f.read()
     with open(file_b, 'r', encoding='utf-8') as g:
         b_str = g.read()
-    if '<<<' in b_str:
+    if '<<<' in b_str or '>>>' in b_str:
         b_str = b_str.replace('>>>', '').replace('<<<', '')
     a_str_f = md_match_filter(a_str)
     b_str_f = md_match_filter(b_str)
@@ -143,8 +229,10 @@ def md_resemblance(file_a, file_b, len_lim, url_flag):
 
 if __name__ == '__main__':
     # print(compare_manual_rewrite())
-    md_resemblance('../reibun/md_files/pc/majime/m1sexfriendmail.md', '../reibun/md_files/pc/majime/m1sexfriend_hm.md',
-                   30, False)
+    pprint.pprint(pickup_chang_str('reibun/md_files/pc/majime/m0_dt_hm.md',
+                                   'reibun/md_files/pc/majime/m0_dt_hm_rw_ud.md', 5))
+    # md_resemblance('reibun/md_files/pc/majime/m0_4.md', 'reibun/md_files/pc/majime/m0_dt_hm.md',
+    #                30, False)
     # example_switch_filter('方法にはナンパや合コン、SNSなどいろいろありますが、一番作りやすくて他へまた方法にはナンパや合コン、'
     #                       'SNS等いろいろありますが、一番作りやすくて他の方法にはナンパや合コン、SNS、テレビなどいろいろ'
     #                       'ありますが、一番作りやすくて他へまた方法にはナンパや合コン、ラジオ、カレンダー等たくさんたくさんアリます')
