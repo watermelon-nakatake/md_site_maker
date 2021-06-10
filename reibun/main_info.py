@@ -41,7 +41,7 @@ sc_url = {'ワクワクメール': 'sitepage/wakuwakumail.html', 'PCMAX': 'sitep
           'Jメール': 'sitepage/mintj.html', '出会い系口コミ評価ランキング': 'sitepage/ranking.html',
           '出会い系サイト口コミランキング': 'sitepage/ranking.html'}
 eyec_img = {'img_path': 'eyec.jpg', 'height': '464', 'width': '700'}
-aff_dir = 'sitepage'
+aff_dir = {'dir': 'sitepage'}
 
 info_dict = {'project_dir': project_dir, 'site_name': site_name, 'side_bar_list': side_bar_list,
              'category_name': category_name, 'category_data': category_data,

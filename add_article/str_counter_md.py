@@ -7,7 +7,6 @@ import reibun.main_info
 
 def title_counter(md_path, kw_list, site_shift, pd):
     print(md_path)
-    os.chdir('../')
     with open(md_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
         title_l = re.findall(r'(t::.+?)\n', long_str)

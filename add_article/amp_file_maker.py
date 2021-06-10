@@ -109,16 +109,16 @@ def css_insert(long_str):
 
 
 def make_amp_top_page():
-    with open('../reibun/html_files/index.html', "r", encoding='utf-8') as f:
+    with open('reibun/html_files/index.html', "r", encoding='utf-8') as f:
         pc_top = f.read()
-    with open('../reibun/html_files/amp/index.html', "r", encoding='utf-8') as g:
+    with open('reibun/html_files/amp/index.html', "r", encoding='utf-8') as g:
         amp_top = g.read()
     new_str = re.findall(r'<h2>主な更新履歴</h2>.+?</article>', pc_top)[0]
     new_str = new_str.replace('"pc/', '"')
     amp_top = re.sub(r'<h2>主な更新履歴</h2>.+?</article>', new_str, amp_top)
     mod_date = re.findall(r'<time itemprop="dateModified" datetime=".+?">(.+?)</time>', pc_top)[0]
     amp_top = re.sub(r'<!--mod-->.+?<!--e/mod-->', '<!--mod-->{}<!--e/mod-->'.format(mod_date), amp_top)
-    with open('../reibun/html_files/amp/index.html', "w", encoding='utf-8') as h:
+    with open('reibun/html_files/amp/index.html', "w", encoding='utf-8') as h:
         h.write(amp_top)
 
 

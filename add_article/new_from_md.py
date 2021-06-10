@@ -34,7 +34,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     :param first_time_flag: 初回作成か否か
     :return: none
     """
-    os.chdir('../')
+    print(os.getcwd())
     now = datetime.datetime.now()
     if first_time_flag:
         last_mod_time = now
@@ -107,6 +107,7 @@ def modify_file_check(file_list, last_md_mod):
 
 
 def pick_up_same_name_images(file_path, pd):
+    print(os.getcwd())
     file_name = re.sub(r'.*/(.+?).html', r'\1', file_path)
     img_list = os.listdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images/' + pd['ar_img_dir'])
     up_list = ['{}/html_files/{}images/{}/{}'.format(pd['project_dir'], pd['main_dir'], pd['ar_img_dir'], x)
@@ -262,14 +263,14 @@ def reibun_index_insert(pk_dic, title_change_id, pd):
                     as k:
                 k.write(long_str)
         if cat == 'majime' or directory == 'majime':
-            with open('../reibun/html_files/pc/majime/index.html', 'r', encoding='utf-8') as i:
+            with open('reibun/html_files/pc/majime/index.html', 'r', encoding='utf-8') as i:
                 long_str = i.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             cat_str_m = cat_index_str_maker(h_dec[cat], directory)
             long_str = re.sub(r'<!--' + cat + '-i/s-->.*?<!--' + cat + '-i/e-->',
                               '<!--' + cat + '-i/s-->' + cat_str_m.replace(' id="cat_index"', '')
                               + '<!--' + cat + '-i/e-->', long_str)
-            with open('../reibun/html_files/pc/majime/index.html', 'w', encoding='utf-8') as j:
+            with open('reibun/html_files/pc/majime/index.html', 'w', encoding='utf-8') as j:
                 j.write(long_str)
 
 
@@ -299,11 +300,11 @@ def qa_index_list_insert(pk_dic):
     index_str = ''.join(
         ['<li><a href="{}">{}</a><span>{}</span></li>'.format(y[0].replace('qa/', ''), y[1], y[2]) for y in qa_list])
     index_str = '<ul class="libut">' + index_str + '</ul>'
-    with open('../reibun/html_files/pc/qa/index.html', 'r', encoding='utf-8') as g:
+    with open('reibun/html_files/pc/qa/index.html', 'r', encoding='utf-8') as g:
         target_str = g.read()
     target_str = re.sub(r'<!--qa-index/s-->.*?<!--qa-index/e-->',
                         '<!--qa-index/s-->' + index_str + '<!--qa-index/e-->', target_str)
-    with open('../reibun/html_files/pc/qa/index.html', 'w', encoding='utf-8') as h:
+    with open('reibun/html_files/pc/qa/index.html', 'w', encoding='utf-8') as h:
         h.write(target_str)
 
 
@@ -586,6 +587,7 @@ def short_cut_filter(long_str, pd, md_file_path):
 
 
 def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
+    print(os.getcwd())
     upload_list = []
     title_change_id = []
     pd['site_shift_list'].remove(site_shift)
@@ -913,7 +915,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
 
 def insert_ds_link(md_str, pd):
     # pd = joshideai.main_info.info_dict
-    os.chdir('../')
     used_name = []
     # with open('joshideai/md_files/make_love/sex_30s.md', 'r', encoding='utf-8') as f:
     #     md_str = f.read()

@@ -8,7 +8,6 @@ from joshideai import main_info
 
 
 def all_site_change_html_upload():
-    os.chdir('../')
     for info_dic in [reibun.main_info.info_dict, rei_site.main_info.info_dict, main_info.info_dict]:
         pd = info_dic
         search_update_file(pd)

@@ -59,7 +59,6 @@ def md_match_filter(md_str):
 
 
 def pickup_chang_str(before_path, after_path, counter_num):
-    os.chdir('../')
     b_list = []
     with open(before_path, 'r', encoding='utf-8') as f:
         b_str = f.read()
@@ -75,73 +74,55 @@ def pickup_chang_str(before_path, after_path, counter_num):
     diff = d.compare(b_str, a_str)
     now_f = ' '
     pass_str = ''
-    str_stock = ''
     list_stock = ['', '']
     a_counter = 0
     pc_num = -1 * counter_num
     for ds in diff:
-        print(ds)
+        # print(ds)
         if now_f == ' ':
             if ds[0] == '+':
-                str_stock = pass_str[pc_num:] + ds[2]
-                now_f = '+'
+                list_stock[0] = pass_str[pc_num:] + ds[2]
+                list_stock[1] = pass_str[pc_num:]
             elif ds[0] == '-':
-                list_stock[0](pass_str[pc_num:])
-                str_stock = pass_str[pc_num:] + ds[2]
-                now_f = '-'
-        elif now_f == '+':
+                list_stock[0] = pass_str[pc_num:]
+                list_stock[1] = pass_str[pc_num:] + ds[2]
+        else:
             if ds[0] == '+':
-                str_stock += ds[2]
+                list_stock[0] += ds[2]
             elif ds[0] == '-':
-                list_stock.append(str_stock)
-                str_stock = str_stock[:counter_num] + ds[2]
-                now_f = '-'
+                list_stock[1] += ds[2]
             elif ds[0] == ' ':
-                list_stock.append(str_stock)
-                list_stock.append(str_stock[:counter_num])
-                str_stock = ''
                 b_list.append(list_stock)
-                list_stock = []
-                now_f = ' '
+                list_stock = ['', '']
                 a_counter = counter_num
-        elif now_f == '-':
-            if ds[0] == '+':
-                print('error')
-                list_stock.append(str_stock)
-                b_list.append(list_stock)
-                list_stock = []
-                a_counter = counter_num
-                str_stock = pass_str[pc_num:] + ds[2]
-                now_f = '+'
-            elif ds[0] == '-':
-                str_stock += ds[2]
-            elif ds[0] == ' ':
-                list_stock.append(str_stock)
-                str_stock = ''
-                b_list.append(list_stock)
-                list_stock = []
-                now_f = ' '
-                a_counter = counter_num
-        if a_counter != 0:
+        now_f = ds[0]
+        if a_counter != 0 and ds[0] == ' ':
             b_list[-1][0] += ds[2]
             b_list[-1][1] += ds[2]
             a_counter -= 1
         pass_str += ds[2]
     dir_name = re.sub(r'/md_files/.*$', '/rewrite_log', after_path)
-    pk_name = after_path.replace('/', '_').replace('_md_files_', '/rewrite_log/').replace('.md', '.pkl')
-    print(pk_name)
+    pk_path = after_path.replace('/', '_').replace('_md_files_', '/rewrite_log/').replace('.md', '.pkl')
+    print(pk_path)
     if not os.path.exists(dir_name):
         os.mkdir(dir_name)
-    with open(pk_name, 'wb') as p:
+    if os.path.exists(pk_path):
+        with open(pk_path, 'rb') as i:
+            o_pk = pickle.load(i)
+            b_list = o_pk + b_list
+    with open(pk_path, 'wb') as p:
         pickle.dump(b_list, p)
-    tx_str = '\n\n=======================================\n\n'.join(['{} ==> {}'.format(y[0], y[1]) for y in b_list])
-    with open(pk_name.replace('.pkl', '.txt'), 'w', encoding='utf-8') as h:
+    tx_str = '\n\n--------------------------------\n\n'.join(['{} ==> {}'.format(y[0], y[1]) for y in b_list])
+    if os.path.exists(pk_path.replace('.pkl', '.txt')):
+        with open(pk_path.replace('.pkl', '.txt'), 'r', encoding='utf-8') as j:
+            o_tx = j.read()
+            tx_str = o_tx + '-' * 20 + tx_str
+    with open(pk_path.replace('.pkl', '.txt'), 'w', encoding='utf-8') as h:
         h.write(tx_str)
     return b_list
 
 
 def md_resemblance(file_a, file_b, len_lim, url_flag):
-    os.chdir('../')
     with open(file_a, 'r', encoding='utf-8') as f:
         a_str = f.read()
     with open(file_b, 'r', encoding='utf-8') as g:
@@ -208,7 +189,7 @@ def md_resemblance(file_a, file_b, len_lim, url_flag):
         m_str += ''.join(diff_l)
     if same_l:
         m_str += ''.join(same_l)
-    print(m_str)
+    # print(m_str)
     print('len_lim: {} => {} match'.format(len_lim, r_count))
     new_file_path = re.sub(r'\.md', '_rw_ud.md', file_b)
     print(new_file_path)
@@ -224,15 +205,23 @@ def md_resemblance(file_a, file_b, len_lim, url_flag):
     return '\n'.join(diff)
 
 
+def reflect_rewrite_file(before_path):
+    with open(before_path.replace('.md', '_rw_ud.md'), 'r', encoding='utf-8') as f:
+        a_str = f.read()
+        a_str = a_str.replace('<<<', '').replace('>>>', '')
+    with open(before_path, 'w', encoding='utf-8') as g:
+        g.write(a_str)
+
+
 # todo: 関連記事の自動作成　複製元との被り防止
 
 
 if __name__ == '__main__':
     # print(compare_manual_rewrite())
-    pprint.pprint(pickup_chang_str('reibun/md_files/pc/majime/m0_dt_hm.md',
-                                   'reibun/md_files/pc/majime/m0_dt_hm_rw_ud.md', 5))
-    # md_resemblance('reibun/md_files/pc/majime/m0_4.md', 'reibun/md_files/pc/majime/m0_dt_hm.md',
-    #                30, False)
-    # example_switch_filter('方法にはナンパや合コン、SNSなどいろいろありますが、一番作りやすくて他へまた方法にはナンパや合コン、'
-    #                       'SNS等いろいろありますが、一番作りやすくて他の方法にはナンパや合コン、SNS、テレビなどいろいろ'
-    #                       'ありますが、一番作りやすくて他へまた方法にはナンパや合コン、ラジオ、カレンダー等たくさんたくさんアリます')
+    base_path = 'reibun/md_files/pc/majime/m0_4.md'
+    rewrite_path = 'reibun/md_files/pc/majime/m0_dt_hm.md'
+    checker_path = rewrite_path.replace('.md', '_rw_ud.md')
+    md_resemblance(base_path, rewrite_path, 20, False)
+    # pprint.pprint(pickup_chang_str(rewrite_path, checker_path, 5))
+    # reflect_rewrite_file(rewrite_path)
+

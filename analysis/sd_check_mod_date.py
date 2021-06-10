@@ -50,7 +50,6 @@ def make_target_data_for_today(today, period):
 
 
 def next_update_target_search(aim_date, period):
-    os.chdir('../')
     today = datetime.today()
     end_date = make_target_data_for_today(today, period)
     with open('gsc_data/sfd/p_month' + end_date + '.csv') as f:

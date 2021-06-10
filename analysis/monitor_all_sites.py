@@ -8,7 +8,6 @@ import query_check_and_make_html as qcm
 
 
 def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ignore_flag):
-    os.chdir('../')
     no_edit_c = []
     no_edit_q = []
     all_site_c = []
