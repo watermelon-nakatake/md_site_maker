@@ -34,7 +34,6 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     :param first_time_flag: 初回作成か否か
     :return: none
     """
-    print(os.getcwd())
     now = datetime.datetime.now()
     if first_time_flag:
         last_mod_time = now
@@ -107,7 +106,6 @@ def modify_file_check(file_list, last_md_mod):
 
 
 def pick_up_same_name_images(file_path, pd):
-    print(os.getcwd())
     file_name = re.sub(r'.*/(.+?).html', r'\1', file_path)
     img_list = os.listdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images/' + pd['ar_img_dir'])
     up_list = ['{}/html_files/{}images/{}/{}'.format(pd['project_dir'], pd['main_dir'], pd['ar_img_dir'], x)
@@ -587,11 +585,9 @@ def short_cut_filter(long_str, pd, md_file_path):
 
 
 def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
-    print(os.getcwd())
     upload_list = []
     title_change_id = []
     pd['site_shift_list'].remove(site_shift)
-    print(os.getcwd())
     if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html'):
         if not os.path.exists(pd['project_dir'] + '/html_files'):
             os.mkdir(pd['project_dir'] + '/html_files')

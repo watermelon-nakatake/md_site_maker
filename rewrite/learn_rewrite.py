@@ -53,8 +53,9 @@ def example_switch_filter(md_str):
 
 def md_match_filter(md_str):
     md_str = re.sub(r'\n\n', '\n', md_str)
-    md_str = re.sub(r'\(\.\./.*?\)', '', md_str)
+    md_str = re.sub(r']\(\.\./.*?\)', '', md_str)
     md_str = re.sub(r'%\w+?%', '', md_str)
+    md_str = re.sub(r'\n[a-z]::', '', md_str)
     return md_str
 
 
@@ -221,7 +222,7 @@ if __name__ == '__main__':
     base_path = 'reibun/md_files/pc/majime/m0_4.md'
     rewrite_path = 'reibun/md_files/pc/majime/m0_dt_hm.md'
     checker_path = rewrite_path.replace('.md', '_rw_ud.md')
-    md_resemblance(base_path, rewrite_path, 20, False)
+    md_resemblance(base_path, rewrite_path, 8, False)
     # pprint.pprint(pickup_chang_str(rewrite_path, checker_path, 5))
     # reflect_rewrite_file(rewrite_path)
 
