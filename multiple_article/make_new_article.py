@@ -6,7 +6,6 @@ import pprint
 
 import source_data
 import words_dict as wd
-import ts_new1
 import obj_source
 
 
@@ -35,6 +34,7 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
                 'act_connection': ['恋人関係', '恋愛関係'],
                 'o_reason': obj['reason'],
                 't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
+            # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
             recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name)
             keywords_dict[page_name] = keywords
@@ -365,13 +365,13 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
     return str_list, used_conj
 
 
-def sf_import_to_source():
+def sf_import_to_source(import_list):
     main_str = ''
     list_name = ['title', 'des', 'int_1', 'point', 'di_1_1', 'di_1_2', 'da_1', 'da_2', 'da_3', 'da_4', 'da_5', 'da_6',
                  'da_7', 'da_8', 'da_9', 'da_10', 'da_11', 'da_12', 'tips_8', 'pa_1', 'pa_2', 'pa_3', 'pa_4', 'pa_5',
                  'pa_6', 'use_1', 'use_2', 'use_3', 'use_4', 'use_5', 'use_6', 'use_7', 'tips_1', 'tips_2', 'tips_3',
                  'tips_4', 'tips_5', 'tips_6', 'tips_7', 'cnc_1']
-    for o_list, l_name in zip(ts_new1.all_list, list_name):
+    for o_list, l_name in zip(import_list, list_name):
         new_dict = {'info': {'deny': [], 'only': [], 'shuffle': []}}
         index_num = 0
         print(o_list)
@@ -386,16 +386,6 @@ def sf_import_to_source():
 
 
 if __name__ == '__main__':
-    keywords_p = {
-            'page_name': 'p', 'id': 'i',
-            's_adj': '真面目な', 'sub': '童貞',
-            'o_adj': '優しい', 'obj': '公務員', 'obj_key': '公務員', ''
-            'act_adj': '無料で', 'act': '彼女を作る', 'act_noun': '彼女', 'act_noun_flag': True,
-            'o_reason': 'ストレスが溜まっているから',
-            't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
-    # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
-
-    # make_new_page(keywords_p, source_data, [])
     # test_new_section(source_data.all_list, keywords_p)
     # sf_import_to_source()
 

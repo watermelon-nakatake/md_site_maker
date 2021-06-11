@@ -2,7 +2,6 @@ import pprint
 import re
 import MeCab
 import words_dict
-import ts_new1
 
 
 def pick_up_str(file_path):
@@ -27,10 +26,10 @@ def pick_up_str(file_path):
         h.write(long_str)
 
 
-def search_by_mecab():
+def search_by_mecab(data_list):
     m_list = []
     use_list = []
-    for w_list in ts_new1.all_list:
+    for w_list in data_list:
         for list1 in w_list:
             if type(list1) is list:
                 for sentence in list1:
@@ -213,9 +212,9 @@ def mecab_list(text):
 
 
 if __name__ == '__main__':
-    # md_to_data_dict('int_1_1.md')
+    md_to_data_dict('int_1_1.md')
     # t = pprint.pformat(resource_import_from_sf(sf_s_list.main_list))
     # with open('ts.py', 'w', encoding='utf-8') as p:
     #     p.write('i = ' + t)
     # pick_up_str('ts.py')
-    search_by_mecab()
+    # search_by_mecab()

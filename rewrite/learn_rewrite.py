@@ -52,10 +52,12 @@ def example_switch_filter(md_str):
 
 
 def md_match_filter(md_str):
+    md_str = md_str.replace('>>>', '').replace('<<<', '')
     md_str = re.sub(r'\n\n', '\n', md_str)
     md_str = re.sub(r']\(\.\./.*?\)', '', md_str)
     md_str = re.sub(r'%\w+?%', '', md_str)
     md_str = re.sub(r'\n[a-z]::', '', md_str)
+    md_str = re.sub(r'<.+?>', '', md_str)
     return md_str
 
 
