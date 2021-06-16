@@ -2,15 +2,15 @@ import re
 import shutil
 import MeCab
 import os
-import word_dict
+import rw_word_dict
 from numpy import random
 
 
 def md_rewrite(base_md_path, replace_words, target_words, import_wl):
     if import_wl:
         if os.path.getmtime('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py')\
-                > os.path.getmtime('word_dict.py'):
-            shutil.copy('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py', 'word_dict.py')
+                > os.path.getmtime('rw_word_dict.py'):
+            shutil.copy('/Users/tnakatake/PycharmProjects/multiple_article/words_dict.py', 'rw_word_dict.py')
     sorted_noun_list = []
     conj_dict = {}
     c_used = []
@@ -22,18 +22,18 @@ def md_rewrite(base_md_path, replace_words, target_words, import_wl):
                    ['PCMAX', '<!--pcmax-->'], ['例文アプリ', '<!--sample-app-->']]
     ignore_list = ['DM']
     ignore_elm = ['<!--there-is-->', '<!--exist-->', '<!--question-->']
-    for conj in word_dict.conj_list:
+    for conj in rw_word_dict.conj_list:
         for c in conj['after']:
             if c not in c_used:
                 conj_dict[c] = conj['after'][:conj['after'].index(c)] + conj['after'][conj['after'].index(c) + 1:]
-    for word in word_dict.noun_list:
+    for word in rw_word_dict.noun_list:
         if word['before'] not in ignore_elm:
             sorted_noun_list.extend(
                 [[x, word['before'], word['after'][:word['after'].index(x)] + word['after'][word['after'].index(x) + 1:]]
                  for x in word['after'] if len(x) > 1 and x not in target_words])
     for w in sorted_noun_list:
         if '<!--' in w[0]:
-            for y in word_dict.noun_list:
+            for y in rw_word_dict.noun_list:
                 if y['before'] in w[0]:
                     w[0] = w[0].replace(y['before'], y['after'][0])
                     break

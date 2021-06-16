@@ -7,7 +7,7 @@ import pickle
 import query_check_and_make_html as qcm
 
 
-def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ignore_flag):
+def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ignore_flag, sort_num):
     no_edit_c = []
     no_edit_q = []
     all_site_c = []
@@ -52,7 +52,7 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
         else:
             print('{} no data'.format(target_project))
     no_edit_c = [[y[0], int(y[1]), int(y[2]), float(y[3]), float(y[4])] for y in no_edit_c]
-    no_edit_c.sort(key=lambda x: x[2], reverse=True)
+    no_edit_c.sort(key=lambda x: x[sort_num], reverse=True)
     # print('no_edit: {}'.format(no_edit_c))
     for ne in no_edit_c:
         if ne[1] > 0 or ne[2] > 10:
@@ -131,6 +131,6 @@ def insert_rewrite_flag(prj_name, dir_list):
 # todo: そのページのクエリのデータを表示
 
 if __name__ == '__main__':
-    check_all_site_data(100, 28, 3000, False, True, False)
+    check_all_site_data(100, 28, 3000, False, True, False, 1)
     # add_http_and_https_csv('2020-04-23', '2021-05-25')
     # insert_rewrite_flag('joshideai', ['make_love'])

@@ -3,7 +3,6 @@ import re
 import numpy as np
 import os
 import pprint
-
 import source_data
 import words_dict as wd
 import obj_source
@@ -118,6 +117,7 @@ def key_phrase_maker(keywords):
     if '作る' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('を作る', 'にし')
+        act_and = act_base.replace('作る', '作って')
         act_can = act_base.replace('作る', '作れ')
         act_can_d = act_base.replace('を作る', 'にでき')
         act_noun = keywords['act_noun']
@@ -134,6 +134,7 @@ def key_phrase_maker(keywords):
     else:
         act_base = keywords['act']
         act_i = act_base.replace('する', 'し')
+        act_and = act_base.replace('する', 'して')
         act_can = act_base.replace('する', 'でき')
         act_can_d = act_base.replace('する', 'でき')
         act_noun = keywords['act_noun']
@@ -207,17 +208,20 @@ def key_phrase_maker(keywords):
             'k-obj-act-to-find': [obj_as_target + '探し'],
             'k-obj-act-want': [obj + act_with_d + act_i + 'たい'],
             'k-obj-act-way': [obj_k + act_with + act_way, obj_k + act_with_g + act_way_g],
-            'k-obj-act-do': [obj_k + act_with + act_base + ''],
+            'k-obj-act-do': [obj_k + act_with + act_base],
             'k-obj-act-easy': [obj + act_with_d + act_i + 'やすい'],
             'k-obj-act-find-easy': [act_can_d + 'る' + obj + 'を探しやすい', act_can_d + 'る' + obj + 'を見つけやすい'],
             'k-act': [act_base, act_adj + act_base],
             'k-act-adj': [act_adj + act_base],
             'k-act-adj-b': [act_adj],
             'k-act-i': [act_i],
+            'k-act-and': [act_and],
             'k-act-want': [act_i + 'たい'],
             'k-act-can': [act_can + 'る', act_can_d + 'る'],
             'k-act-can-i': [act_can],  # セフレにでき（そう）,セックスでき(ない）
             'k-act-can-long': [act_can + 'ます'],
+            'k-act-can-not-do': [act_can + 'ない'],
+            'k-act-can-not-do-long': [act_can + 'ません'],
             'k-act-way': [act_way],
             'k-act-can-easy': [act_i + 'やすい', '<!--easily-->' + act_can + 'る'],
             'k-act-to-find': [act_target + '探し'],
@@ -239,6 +243,28 @@ def key_phrase_maker(keywords):
             'k-2nd-act-want': [act_noun + 'にしたい'],
             'target-parson': [target_person],
             'reason': keywords['o_reason']}
+    if '作る' in keywords['act']:
+        keys['k-want'].append(sub + 'が' + obj_k + 'の' + act_target + 'が欲しい')
+        keys['k-obj-act-want'].append(obj_k + 'の' + act_target + 'が欲しい')
+        keys['k-obj-act-want'].append(obj_k + 'の' + act_target + 'を作りたい')
+        keys['k-act-want'].append(act_target + 'が欲しい')
+        keys['k-act-want'].append(act_target + 'を作りたい')
+        keys['k-act-to-find'].append(act_target + '作り')
+        keys['k-obj-act-to-find'].append(obj_as_target + '作り')
+        keys['k-obj-act-can-not-do'].append(obj_k + act_with + act_can.replace('を', 'が') + 'ない')
+        keys['k-act-can-not-do'].append(act_can.replace('を', 'が') + 'ない')
+        if 'の女性' not in keywords['obj']:
+            keys['k-how-to'].append(sub + 'が' + obj_k + act_way_g)
+            keys['k-can'].append(sub + 'が' + obj_k + act_can + 'る')
+            keys['k-can-s'].append(sub + 'が' + obj_k + act_can + 'ます')
+            keys['k-do'].append(sub + 'が' + obj_k + act_base)
+            keys['k-find'].append(sub + 'が' + obj_k + act_noun + 'を探す')
+            keys['k-obj-act-way'].append(obj_k + act_way)
+            keys['k-obj-act-way'].append(obj_k + act_way_g)
+            keys['k-obj-act-do'].append(obj_k + act_base)
+            keys['k-obj-act-find'].append(obj_k + act_noun + 'を探す')
+            keys['k-obj-act-to-find'].append(obj_k + act_noun + '作り')
+            keys['k-obj-act-to-find'].append(obj_k + act_noun + '探し')
     return keys
 
 
@@ -250,6 +276,36 @@ def make_keywords_sample(keywords):
         print('<!--{}-->  :  {}'.format(k, keys[k]))
     # with open('key_sample.md', 'w', encoding='utf-8') as f:
     #     f.write(r_str)
+
+
+def make_keywords_sample_dict(keywords):
+    result_dict = {}
+    new_dict = []
+    keys = key_phrase_maker(keywords)
+    anchor_dict = {y['before']: y['after'] for y in wd.noun_list}
+    # print(keys)
+    for before_s in keys:
+        if type(keys[before_s]) == str:
+            result_dict[keys[before_s]] = ['<!--{}-->'.format(before_s)]
+        else:
+            for x in keys[before_s]:
+                if x not in result_dict:
+                    result_dict[x] = ['<!--{}-->'.format(before_s)]
+                else:
+                    result_dict[x].append('<!--{}-->'.format(before_s))
+    for kw in result_dict:
+        if '<!--' in kw:
+            anchor_l = re.findall(r'<!--.+?-->', kw)
+            if anchor_l:
+                if len(anchor_l) == 1:
+                    anchor = anchor_l[0]
+                    for word in anchor_dict[anchor]:
+                        new_dict.append([kw.replace(anchor, word), result_dict[kw]])
+        else:
+            new_dict.append([kw, result_dict[kw]])
+    new_dict.sort(key=lambda y: len(y[0]), reverse=True)
+    # print(new_dict)
+    return new_dict
 
 
 def test_new_section(section_dict_list, keywords):
@@ -391,4 +447,14 @@ if __name__ == '__main__':
 
     # make_keywords_sample(keywords_p)
 
-    make_new_pages_to_md('rei_site', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78)
+    # make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78)
+
+    k_p = {
+        's_adj': '普通の', 'sub': '男性',
+        'o_adj': '淫乱な', 'obj': '巨乳女性', 'obj_key': '巨乳', 'obj_p': 'の',
+        'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+        'act_connection': ['セフレ関係'],
+        'o_reason': '',
+        't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
+
+    pprint.pprint(make_keywords_sample_dict(k_p))

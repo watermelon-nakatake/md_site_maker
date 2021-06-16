@@ -1,7 +1,27 @@
 import pprint
 import re
 import MeCab
+from numpy import random
 import words_dict
+# import rw_word_dict
+# import rewrite_word_list
+import make_new_article
+
+
+def joint_word_list(lists_list):
+    joint_list = []
+    used_key = {}
+    review_list = []
+    for w_list in lists_list:
+        for word in w_list:
+            if word['before'] not in used_key:
+                used_key[word['before']] = word
+                joint_list.append(word)
+            else:
+                if word != used_key[word['before']]:
+                    review_list.append(word)
+                    print(word)
+    # print(joint_list)
 
 
 def pick_up_str(file_path):
@@ -55,14 +75,35 @@ def make_word_dict(word_list):
     result = {}
     for row in word_list:
         for word in row['after']:
-            if word not in result:
-                result[word] = row['before']
+            if '<!--' in word:
+                find_l = re.findall(r'<!--.+?-->', word)
+                if find_l:
+                    for f_str in find_l:
+                        for i_w in word_list:
+                            if i_w['before'] == f_str:
+                                for aw in i_w['after']:
+                                    result[word.replace(f_str, aw)] = row['before']
+            else:
+                if word not in result:
+                    result[word] = row['before']
+                # else:
+                    # print('error : {}'.format(word))
     return result
 
 
-def word_filter(target_str, word_key_dict, word_key_list):
+def word_filter(target_str, word_key_dict, word_key_list, omit_list):
     for word in word_key_list:
-        target_str = target_str.replace(word, word_key_dict[word])
+        if word not in words_dict.ignore_words:
+            if word not in omit_list:
+                target_str = target_str.replace(word, word_key_dict[word])
+            else:
+                flag = False
+                for o_word in omit_list[word]:
+                    if o_word in target_str:
+                        flag = True
+                        break
+                if not flag:
+                    target_str = target_str.replace(word, word_key_dict[word])
     return target_str
 
 
@@ -83,11 +124,33 @@ def resource_import_from_sf(w_list):
         return w_list
 
 
-def md_to_data_dict(md_path):
+def make_omit_list(word_list):
+    result = {}
+    for word in word_list:
+        if 'omit' in word:
+            for after in word['after']:
+                result[after] = word['omit']
+    return result
+
+
+def list_duplication_check(noun_list):
+    used_list = []
+    for word in noun_list:
+        if word['before'] not in used_list:
+            used_list.append(word['before'])
+        else:
+            print('error : {} already used'.format(word['before']))
+
+
+def md_to_data_dict(md_path, keywords):
+    key_phrase_dict = make_new_article.make_keywords_sample_dict(keywords)
+    list_duplication_check(words_dict.noun_list)
+    # print(key_phrase_dict)
     conj_dict = make_word_dict(words_dict.conj_list)
     noun_dict = make_word_dict(words_dict.noun_list)
     noun_list = sorted(noun_dict.keys(), key=lambda x: len(x), reverse=True)
-    print(noun_list)
+    omit_list = make_omit_list(words_dict.noun_list)
+    # print(noun_list)
     with open(md_path, 'r', encoding='utf-8') as f:
         md_str = f.read()
         word_dict = {'info': {}}
@@ -116,24 +179,26 @@ def md_to_data_dict(md_path):
                             h_flag = False
                             h_mark = ''
                         word_dict[index] = [h_mark + sentence_filter(row, conj_dict, noun_dict,
-                                                                     noun_list).replace('#', '')]
+                                                                     noun_list, key_phrase_dict, omit_list).replace('#', '')]
                         index += 1
                     else:
                         if h_flag:
                             word_dict[index - 1].append(h_mark + sentence_filter(row.replace('|', ''),
-                                                                                 conj_dict, noun_dict, noun_list))
+                                                                                 conj_dict, noun_dict, noun_list,
+                                                                                 key_phrase_dict, omit_list))
                         else:
                             word_dict[index - 1].append(sentence_filter(row.replace('|', ''), conj_dict, noun_dict,
-                                                                        noun_list))
+                                                                        noun_list, key_phrase_dict, omit_list))
         r_index = list(filter(lambda x: type(x) == int, word_dict.keys()))
         i = max(r_index)
         while word_dict[i] == 'space':
             del word_dict[i]
             i -= 1
         word_dict = shuffle_filter(word_dict)
-    list_name = md_path.replace('.md', '')
+    list_name = re.sub(r'^.*/(.+?).md', r'\1', md_path)
     insert_str = '{} = {}\n# {}/end\n'.format(list_name, pprint.pformat(word_dict), list_name)
-    with open('source_data.py', 'r', encoding='utf-8') as h:
+    print(insert_str)
+    with open('multiple_article/source_data.py', 'r', encoding='utf-8') as h:
         souse_str = h.read()
         if list_name + ' =' in souse_str:
             souse_str = re.sub(list_name + r' =[\s\S]+?# ' + list_name + r'/end\n', insert_str, souse_str)
@@ -142,8 +207,9 @@ def md_to_data_dict(md_path):
             pre_list_name = re.sub(list_num + r'$', str(int(list_num) - 1), list_name)
             souse_str = souse_str.replace('# ' + pre_list_name + '/end\n',
                                           '# ' + pre_list_name + '/end\n\n' + insert_str + '\n')
-        with open('source_data.py', 'w', encoding='utf-8') as g:
-            g.write(souse_str)
+        # print(souse_str)
+        # with open('source_data.py', 'w', encoding='utf-8') as g:
+        #     g.write(souse_str)
 
 
 def shuffle_filter(md_dict):
@@ -168,8 +234,14 @@ def shuffle_filter(md_dict):
     return md_dict
 
 
-def sentence_filter(sentence_str, conj_dict, noun_dict, noun_list):
+def sentence_filter(sentence_str, conj_dict, noun_dict, noun_list, key_list, omit_list):
     after_list = []
+    for kw in key_list:
+        if len(kw[0]) > 2 and kw[0] in sentence_str:
+            if len(kw[1]) > 1:
+                sentence_str = sentence_str.replace(kw[0], random.choice(kw[1]))
+            else:
+                sentence_str = sentence_str.replace(kw[0], kw[1][0])
     m_list = mecab_list(sentence_str)
     for m_data in m_list:
         # print(m_data)
@@ -178,7 +250,7 @@ def sentence_filter(sentence_str, conj_dict, noun_dict, noun_list):
         else:
             after_list.append(m_data[0])
     new_str = ''.join(after_list)
-    new_str = word_filter(new_str, noun_dict, noun_list)
+    new_str = word_filter(new_str, noun_dict, noun_list, omit_list)
     return new_str
 
 
@@ -212,7 +284,18 @@ def mecab_list(text):
 
 
 if __name__ == '__main__':
-    md_to_data_dict('int_1_1.md')
+    # joint_word_list([words_dict.noun_list, rw_word_dict.noun_list, rewrite_word_list.word_dict])
+
+    k_p = {
+        's_adj': '普通の', 'sub': '男性',
+        'o_adj': '淫乱な', 'obj': '巨乳女性', 'obj_key': '巨乳', 'obj_p': 'の',
+        'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+        'act_connection': ['セフレ関係'],
+        'o_reason': '',
+        't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
+
+    md_to_data_dict('multiple_article/source_md/int/int_1_4.md', k_p)
+
     # t = pprint.pformat(resource_import_from_sf(sf_s_list.main_list))
     # with open('ts.py', 'w', encoding='utf-8') as p:
     #     p.write('i = ' + t)
