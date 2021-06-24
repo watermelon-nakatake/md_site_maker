@@ -221,8 +221,8 @@ def reflect_rewrite_file(before_path):
 
 if __name__ == '__main__':
     # print(compare_manual_rewrite())
-    base_path = 'reibun/md_files/pc/majime/m0_4.md'
-    rewrite_path = 'reibun/md_files/pc/majime/m0_dt_hm.md'
+    base_path = 'reibun/md_files/pc/caption/fwari.md'
+    rewrite_path = 'reibun/md_files/pc/caption/fwari_rw_copy.md'
     checker_path = rewrite_path.replace('.md', '_rw_ud.md')
     md_resemblance(base_path, rewrite_path, 8, False)
     # pprint.pprint(pickup_chang_str(rewrite_path, checker_path, 5))

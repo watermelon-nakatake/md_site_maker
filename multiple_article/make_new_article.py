@@ -4,6 +4,7 @@ import numpy as np
 import os
 import pprint
 import source_data
+import words_dict
 import words_dict as wd
 import obj_source
 
@@ -16,6 +17,8 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
                [source_mod.tips_bonus, 2, 0], [source_mod.process, 'straight'],
                [source_mod.tips_bonus, 2, 1], [source_mod.conclusion, 1]]
     id_num = start_num
+    if not os.path.exists(project_dir + '/md_files/' + dir_name):
+        os.mkdir(project_dir + '/md_files/' + dir_name)
     for obj in obj_list:
         if obj['ms'] == 's':
             sub_str = np.random.choice(['独身男性', '童貞', '男性'])
@@ -29,10 +32,10 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
                 'page_name': page_name, 'id': id_num,
                 's_adj': sub_adj, 'sub': sub_str,
                 'o_adj': obj['adj'], 'obj': obj['noun'], 'obj_key': obj['keyword'], 'obj_p': obj['particle'],
-                'act_adj': act_adj, 'act': '彼女を作る', 'act_noun': '彼女', 'act_noun_flag': True,
-                'act_connection': ['恋人関係', '恋愛関係'],
+                'act_adj': act_adj, 'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
+                'act_connection': ['肉体関係'],
                 'o_reason': obj['reason'],
-                't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
+                't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'sex'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
             recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name)
@@ -100,6 +103,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name):
         recipe_list[this_sec['info']['sec_name']] = recipe
     result_str = replace_code_to_md(result_str)
     result_str = result_str.replace('\n\n- ', '\n\n%arlist%\n- ')
+    result_str += 'recipe_list = ' + str(recipe_list)
     # print(result_str)
     with open(project_dir + '/md_files/' + dir_name + '/' + keywords['page_name'] + '.md', 'w', encoding='utf-8') as f:
         f.write(result_str)
@@ -186,6 +190,7 @@ def key_phrase_maker(keywords):
             'k-can': [sub + 'が' + obj_k + act_with + act_can + 'る'],
             'k-can-s': [sub + 'が' + obj_k + act_with + act_can + 'ます'],
             'k-do': [sub + 'が' + obj_k + act_with + act_base],
+            'k-do-a': [sub + 'が' + obj_adj + obj_k + act_with + act_base],
             'k-easy': [sub + 'が' + obj + act_with_d + act_i + 'やすい'],
             'k-want': [sub + 'が' + obj + act_with_d + act_i + 'たい'],
             'k-find': [sub + 'が' + obj_k + 'の' + act_target + 'を探す'],
@@ -200,17 +205,26 @@ def key_phrase_maker(keywords):
             'k-obj-want': [act_i + 'たい' + obj],
             'k-obj-wife': ['<!--wife-->の' + obj],
             'k-obj-act-find': [obj_as_target + 'を探す'],
+            'k-obj-act-find-a': [obj_adj + obj_as_target + 'を探す'],
             'k-obj-act-can-find': [obj_as_target + 'が見つかる', obj_as_target + 'が探せる'],
             'k-obj-act-can-do': [obj_k + act_with + act_can + 'る'],
+            'k-obj-act-can-do-a': [obj_adj + obj_k + act_with + act_can + 'る'],
             'k-obj-act-can-do-long': [obj_k + act_with + act_can + 'ます'],
             'k-obj-act-can-not-do': [obj_k + act_with + act_can + 'ない'],
             'k-obj-act-can-not-do-long': [obj_k + act_with + act_can + 'ません'],
             'k-obj-act-to-find': [obj_as_target + '探し'],
+            'k-obj-act-to-find-a': [obj_adj + obj_as_target + '探し'],
             'k-obj-act-want': [obj + act_with_d + act_i + 'たい'],
+            'k-obj-act-want-a': [obj_adj + obj + act_with_d + act_i + 'たい'],
             'k-obj-act-way': [obj_k + act_with + act_way, obj_k + act_with_g + act_way_g],
             'k-obj-act-do': [obj_k + act_with + act_base],
+            'k-obj-act-do-a': [obj_adj + obj_k + act_with + act_base],
             'k-obj-act-easy': [obj + act_with_d + act_i + 'やすい'],
             'k-obj-act-find-easy': [act_can_d + 'る' + obj + 'を探しやすい', act_can_d + 'る' + obj + 'を見つけやすい'],
+            'k-obj-act-can-meet': [obj_as_target + 'と出会える'],
+            'k-obj-act-can-meet-a': [obj_adj + obj_as_target + 'と出会える'],
+            'k-obj-act-noun': [obj_as_target],
+            'k-obj-act-noun-a': [obj_adj + obj_as_target],
             'k-act': [act_base, act_adj + act_base],
             'k-act-adj': [act_adj + act_base],
             'k-act-adj-b': [act_adj],
@@ -246,6 +260,7 @@ def key_phrase_maker(keywords):
     if '作る' in keywords['act']:
         keys['k-want'].append(sub + 'が' + obj_k + 'の' + act_target + 'が欲しい')
         keys['k-obj-act-want'].append(obj_k + 'の' + act_target + 'が欲しい')
+        keys['k-obj-act-want'].append(obj_adj + obj_k + 'の' + act_target + 'が欲しい')
         keys['k-obj-act-want'].append(obj_k + 'の' + act_target + 'を作りたい')
         keys['k-act-want'].append(act_target + 'が欲しい')
         keys['k-act-want'].append(act_target + 'を作りたい')
@@ -258,13 +273,27 @@ def key_phrase_maker(keywords):
             keys['k-can'].append(sub + 'が' + obj_k + act_can + 'る')
             keys['k-can-s'].append(sub + 'が' + obj_k + act_can + 'ます')
             keys['k-do'].append(sub + 'が' + obj_k + act_base)
+            keys['k-do-a'].append(sub + 'が' + obj_adj + obj_k + act_base)
             keys['k-find'].append(sub + 'が' + obj_k + act_noun + 'を探す')
             keys['k-obj-act-way'].append(obj_k + act_way)
             keys['k-obj-act-way'].append(obj_k + act_way_g)
             keys['k-obj-act-do'].append(obj_k + act_base)
+            keys['k-obj-act-do-a'].append(obj_adj + obj_k + act_base)
+            keys['k-obj-act-can-do'].append(obj_k + act_can + 'る')
+            keys['k-obj-act-can-do-a'].append(obj_adj + obj_k + act_can + 'る')
+            keys['k-obj-act-want'].append(obj_k + act_noun + 'が欲しい')
+            keys['k-obj-act-want-a'].append(obj_adj + obj_k + act_noun + 'が欲しい')
             keys['k-obj-act-find'].append(obj_k + act_noun + 'を探す')
+            keys['k-obj-act-find-a'].append(obj_adj + obj_k + act_noun + 'を探す')
             keys['k-obj-act-to-find'].append(obj_k + act_noun + '作り')
             keys['k-obj-act-to-find'].append(obj_k + act_noun + '探し')
+            keys['k-obj-act-to-find-a'].append(obj_adj + obj_k + act_noun + '作り')
+            keys['k-obj-act-to-find-a'].append(obj_adj + obj_k + act_noun + '探し')
+            keys['k-obj-act-can-meet'].append(obj_k + act_noun + 'と出会える')
+            keys['k-obj-act-can-meet-a'].append(obj_adj + obj_k + act_noun + 'と出会える')
+            keys['k-obj-act-can-do-a'].append(obj_adj + obj_k + act_can + 'る')
+            keys['k-obj-act-noun'].append(obj_k + act_noun)
+            keys['k-obj-act-noun-a'].append(obj_adj + obj_k + act_noun)
     return keys
 
 
@@ -273,7 +302,7 @@ def make_keywords_sample(keywords):
     keys = key_phrase_maker(keywords)
     for k in keys:
         r_str += '<!--{}-->  :  {}\n'.format(k, pprint.pformat(keys[k]))
-        print('<!--{}-->  :  {}'.format(k, keys[k]))
+        # print('<!--{}-->  :  {}'.format(k, keys[k]))
     # with open('key_sample.md', 'w', encoding='utf-8') as f:
     #     f.write(r_str)
 
@@ -415,6 +444,9 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
                         sentence_str = sentence_str.replace(blank,
                                                             np.random.choice(noun_dict[blank][0],
                                                                              p=noun_dict[blank][1]), 1)
+    for bad_w in words_dict.correct_dict:
+        if bad_w in sentence_str:
+            sentence_str = sentence_str.replace(bad_w, words_dict.correct_dict[bad_w])
     if '。' in sentence_str:
         sentence_str = re.sub(r'。(.+)$', r'。\n\1', sentence_str)
     str_list.append(sentence_str)
@@ -447,7 +479,7 @@ if __name__ == '__main__':
 
     # make_keywords_sample(keywords_p)
 
-    # make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78)
+    make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78)
 
     k_p = {
         's_adj': '普通の', 'sub': '男性',
@@ -457,4 +489,4 @@ if __name__ == '__main__':
         'o_reason': '',
         't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
 
-    pprint.pprint(make_keywords_sample_dict(k_p))
+    # pprint.pprint(make_keywords_sample_dict(k_p))

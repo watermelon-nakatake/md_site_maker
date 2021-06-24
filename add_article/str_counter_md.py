@@ -93,7 +93,7 @@ def read_this_title_log(md_path, pd):
 
 
 if __name__ == '__main__':
-    target_md = 'joshideai/md_files/make_love/sex_flasher.md'
+    target_md = 'reibun/md_files/pc/caption/fwari_rw_copy_rw_ud.md'
     # query_check_and_make_html.check_single_page_seo(28, target_md, False)
     # read_this_title_log(target_md, reibun.main_info.info_dict)
     key_list = ['長文', 'ハッピーメール']
