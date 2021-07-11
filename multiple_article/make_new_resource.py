@@ -6,6 +6,7 @@ import words_dict
 # import rw_word_dict
 # import rewrite_word_list
 import make_new_article
+import source_data_test
 
 
 def joint_word_list(lists_list):
@@ -49,6 +50,7 @@ def pick_up_str(file_path):
 def search_by_mecab(data_list):
     m_list = []
     use_list = []
+    print(data_list)
     for w_list in data_list:
         for list1 in w_list:
             if type(list1) is list:
@@ -321,6 +323,67 @@ def mecab_list(text):
     # adv_str = []  # 確実に、早く
 
 
+def insert_additional_word_to_exist_source(add_str, ignore_words):
+    counter = 0
+    sp_list = []
+    m_list = []
+    use_m = []
+    noun_dict = make_word_dict(words_dict.noun_list, ignore_words)
+    noun_list = sorted(noun_dict.keys(), key=lambda x: len(x), reverse=True)
+    omit_list = make_omit_list(words_dict.noun_list)
+    with open('multiple_article/source_data.py', 'r', encoding='utf-8') as f:
+        base_str = f.read()
+    base_list = base_str.split('\n')
+
+    new_list = [word_filter(x, noun_dict, noun_list, omit_list, ignore_words) for x in base_list]
+    # for b_str in base_list:
+    #     if b_str:
+    #         new_str = word_filter(b_str, noun_dict, noun_list, omit_list, ignore_words)
+    for a, b in zip(base_list, new_list):
+        if a != b:
+            print('{}\n{}\n'.format(a, b))
+            counter += 1
+    for row in new_list:
+        c_str = re.sub(r'<!--.+?-->', ' ', row)
+        sp_list.extend(c_str.split(' '))
+    sp_list.sort(key=lambda y: len(y), reverse=True)
+    print(sp_list[:10])
+    result = '\n'.join(new_list)
+    # print(result)
+    with open('multiple_article/source_data{}.py'.format(add_str), 'w', encoding='utf-8') as g:
+        g.write(result)
+    print(counter)
+    return
+
+    t_list = source_data_test.source_list
+    # print(t_list)
+    t_f = t_list[:2]
+    t_r = t_list[2:]
+    for t1 in t_r:
+        for t2 in t1:
+            for t3 in t2:
+                for t_num in t3:
+                    if t3[t_num] != 'space':
+                        for sentence in t3[t_num]:
+                            # print(sentence)
+                            # print(mecab_list(sentence))
+                            sentence = re.sub(r'<!--.+?-->', '', sentence)
+                            sentence = re.sub(r'%\w+', '', sentence)
+                            sentence = sentence.replace('### ', '').replace('## ', '').replace('<li>', '')\
+                                .replace('</li>', '')
+                            for m in mecab_list(sentence):
+                                if m not in use_m:
+                                    m_list.append([m, 0])
+                                    use_m.append(m)
+                                else:
+                                    m_list[use_m.index(m)] = [m, m_list[use_m.index(m)][1] + 1]
+                                    # print(m_list[use_m.index(m)])
+    m_list.sort(key=lambda x: x[1], reverse=True)
+    for m_row in m_list:
+        if m_row[0][1] not in ['記号', '助詞', '助動詞'] and m_row[1] > 3:
+            print(m_row)
+
+
 if __name__ == '__main__':
     # joint_word_list([words_dict.noun_list, rw_word_dict.noun_list, rewrite_word_list.word_dict])
 
@@ -332,7 +395,9 @@ if __name__ == '__main__':
         'o_reason': '',
         't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
 
-    md_to_data_dict('multiple_article/source_md/tips/tips_9_1.md', k_p, [], [['誠実さ', '<!--vrt-imp-->']])
+    # md_to_data_dict('multiple_article/source_md/tips/tips_9_1.md', k_p, [], [['誠実さ', '<!--vrt-imp-->']])
+
+    insert_additional_word_to_exist_source('_test', [])
 
     # t = pprint.pformat(resource_import_from_sf(sf_s_list.main_list))
     # with open('ts.py', 'w', encoding='utf-8') as p:

@@ -4,6 +4,7 @@ import os
 from add_article import new_from_md, make_article_list
 import re
 import reibun.main_info
+import query_check_and_make_html
 
 
 def make_mod_date_list(pd):
@@ -40,18 +41,31 @@ def sc_data_match_page(csv_list):
 
 def next_update_target_search(aim_date, len_dec, pd):
     i = 0
-    with open('/Users/nakataketetsuhiko/Downloads/https___www/ページ.csv') as f:
+    # with open('/Users/nakataketetsuhiko/Downloads/https___www/ページ.csv') as f:
+    #     reader = csv.reader(f)
+    #     csv_list = [row for row in reader]
+    # c_list = sc_data_match_page(csv_list)
+    # c_list = [y for y in csv_list[1:] if '#' not in y[0] and '/amp/' not in y[0]]
+    today = datetime.date.today()
+    pj_dir, domain, main_dir, site_name, pj_domain_main = query_check_and_make_html.project_select(pd['project_dir'] + '/')
+    end_date = query_check_and_make_html.make_target_data_for_today(today, aim_date, pj_dir, domain)
+    if aim_date == 28:
+        period_name = 'month'
+    elif aim_date == 7:
+        period_name = 'week'
+    else:
+        period_name = str(aim_date) + '_'
+    with open('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv') as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
-    c_list = sc_data_match_page(csv_list)
-    # c_list = [y for y in csv_list[1:] if '#' not in y[0] and '/amp/' not in y[0]]
+    c_list = query_check_and_make_html.sc_data_match_page(csv_list, domain)
     mod_list = make_article_list.read_pickle_pot('mod_date_list', pd)
     limit_d = datetime.datetime.now() - datetime.timedelta(days=aim_date)
     for i in range(len(mod_list)):
         if datetime.datetime.strptime(mod_list[i][1], '%Y-%m-%d') < limit_d:
             break
     mod_list_n = mod_list[:i + 1]
-    print('日数 : ' + str(check_number_of_days()) + '日間')
+    print('日数 : ' + str(aim_date) + '日間')
     print('クリック数順')
     click_list = check_no_mod_page(mod_list_n, c_list, len_dec, pd)
     c_list.sort(key=lambda x: int(x[2]), reverse=True)
@@ -245,9 +259,9 @@ if __name__ == '__main__':
     layout_dec = {'/' + p_d['main_dir'] + pickle_dec[x]['file_path']: pickle_dec[x]['layout_flag'] for x in pickle_dec}
     shift_dec = {'/' + p_d['main_dir'] + pickle_dec[x]['file_path']: pickle_dec[x]['shift_flag'] for x in pickle_dec}
     # print(str_len_dec)
-    make_side_bar_article_list(10, p_d)
-    print('\n')
-    c_l, d_l, c_l2 = next_update_target_search(100, str_len_dec, p_d)
+    # make_side_bar_article_list(10, p_d)
+    # print('\n')
+    c_l, d_l, c_l2 = next_update_target_search(60, str_len_dec, p_d)
     print('\n')
     t_l = count_title_str_num(str_len_dec, p_d)
     print('\n')

@@ -1,3 +1,4 @@
+import copy
 import random
 import re
 import numpy as np
@@ -9,25 +10,28 @@ import words_dict as wd
 import obj_source
 
 
-def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, dir_name, start_num):
+def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, dir_name, start_num, html_head):
     keywords_dict = {}
     recipe_dict = {}
-    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'], [source_mod.d_advantage, 3],
+    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'], [source_mod.d_advantage, [2, 3, 4]],
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
-               [source_mod.tips_bonus, 2, 0], [source_mod.process, 'straight'],
-               [source_mod.tips_bonus, 2, 1], [source_mod.conclusion, 1]]
+               [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
+               [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
+    # print(art_map_p)
+    # art_map = [[[{x['info']['sec_name']: x for x in u} for u in z[0]], z[1]] for z in art_map_p]
+    # print(art_map)
     id_num = start_num
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
     for obj in obj_list:
-        if obj['ms'] == 's':
+        if obj_source_filter(obj):
             sub_str = np.random.choice(['独身男性', '童貞', '男性'])
             sub_adj = np.random.choice(['普通の', 'モテない', '婚活中の'])
             if obj['ms'] == 'm':
                 act_adj = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 act_adj = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
-            page_name = 'gf_{}'.format(obj['eng'].replace('-', '_'))
+            page_name = '{}_{}'.format(html_head, obj['eng'].replace('-', '_'))
             keywords = {
                 'page_name': page_name, 'id': id_num,
                 's_adj': sub_adj, 'sub': sub_str,
@@ -38,14 +42,22 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
                 't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'sex'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
-            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name)
+            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head)
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
     # print(recipe_dict)
 
 
-def make_new_page(keywords, source_mod, art_map, project_dir, dir_name):
+def obj_source_filter(source_dict):
+    return True
+    # if source_dict['ms'] == 's':
+    #     return True
+    # else:
+    #     return False
+
+
+def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head):
     recipe_list = {}
     site_list = ['ワクワクメール', 'PCMAX']
     site1 = np.random.choice(['ワクワクメール', 'PCMAX'])
@@ -55,29 +67,34 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name):
     else:
         site2 = np.random.choice(site_list.remove(site1))
     section_list = []
+    used_list = []
     for section in art_map:
         if section[1] == 'straight':
-            for s_sec in section[0]:
+            for s_code in section[0]:
                 section_list.append(
-                    np.random.choice([x for x in s_sec if ((x['info']['only'] and keywords['act_code']
-                                                            in x['info']['only']) or not x['info']['only'])
+                    np.random.choice([x for x in section[0][s_code] if ((x['info']['only'] and keywords['act_code']
+                                                                         in x['info']['only']) or not x['info']['only'])
                                       and keywords['act_code'] not in x['info']['deny']]))
         else:
             if type(section[1]) == int:
                 s_num = section[1]
             else:
                 s_num = np.random.choice(section[1])
-            sample_l = list(range(len(section[0])))
+            sample_l = [x for x in section[0].keys() if x not in used_list]
+            print(sample_l)
             if s_num == 1:
                 t1 = [np.random.choice(sample_l)]
             else:
                 np.random.shuffle(sample_l)
                 t1 = sample_l[:s_num]
+            print(t1)
             for t1e in t1:
                 section_list.append(
                     np.random.choice([x for x in section[0][t1e] if ((x['info']['only'] and keywords['act_code']
                                                                       in x['info']['only']) or not x['info']['only'])
                                       and keywords['act_code'] not in x['info']['deny']]))
+                used_list.append(t1e)
+    # print(section_list)
     result_str = ''
     key_phrase = key_phrase_maker(keywords)
     noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
@@ -87,20 +104,24 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name):
         else:
             noun_dict[noun['before']] = [noun['after']]
     conj_dict = {x['before']: x['after'] for x in wd.conj_list}
-    title_str, t_recipe = make_new_title(source_mod.title[keywords['act_code']], noun_dict, conj_dict, site1, site2)
+    title_str, t_recipe = make_new_title(source_mod.title[keywords['act_code']], noun_dict, conj_dict, site1, site2,
+                                         obj_list)
     result_str += 't::' + title_str + '\n'
     print(title_str)
-    des_str, d_recipe = make_new_title(source_mod.des[keywords['act_code']], noun_dict, conj_dict, site1, site2)
+    des_str, d_recipe = make_new_title(source_mod.des[keywords['act_code']], noun_dict, conj_dict, site1, site2,
+                                       obj_list)
     result_str += 'd::' + des_str.replace('\n', '') + '\n'
     result_str += 'n::' + str(keywords['id']) + '\n'
     result_str += 'e::\n'
     result_str += 'k::' + ' '.join([str(keywords['obj_key']), keywords['act_noun']]) + '\n'
 
     for this_sec in section_list:
-        section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2)
+        section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, obj_list)
         section_str = section_str.replace('%', '\n%')
         result_str += section_str + '\n\n'
         recipe_list[this_sec['info']['sec_name']] = recipe
+    if 'ins_link_' in result_str:
+        result_str = result_str.replace('ins_link_', html_head + '_')
     result_str = replace_code_to_md(result_str)
     result_str = result_str.replace('\n\n- ', '\n\n%arlist%\n- ')
     result_str += 'recipe_list = ' + str(recipe_list)
@@ -256,7 +277,8 @@ def key_phrase_maker(keywords):
             'k-2nd-act-noun': ['デート'],
             'k-2nd-act-want': [act_noun + 'にしたい'],
             'target-parson': [target_person],
-            'reason': keywords['o_reason']}
+            'reason': keywords['o_reason'],
+            'act-with-d': [act_with_d]}
     if '作る' in keywords['act']:
         keys['k-want'].append(sub + 'が' + obj_k + 'の' + act_target + 'が欲しい')
         keys['k-obj-act-want'].append(obj_k + 'の' + act_target + 'が欲しい')
@@ -340,6 +362,7 @@ def make_keywords_sample_dict(keywords):
 def test_new_section(section_dict_list, keywords):
     site1 = 'ワクワクメール'
     site2 = 'PCMAX'
+    obj_list = obj_source.obj_key_list
     key_phrase = key_phrase_maker(keywords)
     result_str = ''
     noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
@@ -367,13 +390,14 @@ def test_new_section(section_dict_list, keywords):
                             str_list.append('')
                         elif len(section_dict[sen_num]) == 1:
                             str_list, used_conj = insert_word_to_sentence(section_dict[sen_num][0], noun_dict,
-                                                                          conj_dict, site1, site2, str_list, used_conj)
+                                                                          conj_dict, site1, site2, str_list, used_conj,
+                                                                          [], obj_list)
                         else:
                             # print(section_dict[sen_num])
                             # print(j % len(section_dict[sen_num]))
                             choice_str = section_dict[sen_num][j % len(section_dict[sen_num])]
                             str_list, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1,
-                                                                          site2, str_list, used_conj)
+                                                                          site2, str_list, used_conj, [], obj_list)
                     section_str = '\n'.join(str_list)
                     result_str += section_str + '\n' * 2 + '-' * 30 + '\n' * 2
     print(result_str)
@@ -384,38 +408,99 @@ def test_new_section(section_dict_list, keywords):
         f.write(result_str)
 
 
-def make_new_section(section_dict, noun_dict, conj_dict, site1, site2):
+def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, obj_list):
     recipe = {}
     str_list = []
     used_conj = []
+    v_word = []
+    section_dict = copy.deepcopy(section_dict_p)
+    # print(section_dict)
+    if section_dict['info']['shuffle']:
+        for i in range(len(section_dict['info']['shuffle'])):
+            shuffle_nums = section_dict['info']['shuffle'][i]
+            random.shuffle(shuffle_nums)
+            # print(shuffle_nums)
+            for s_i, s_num in enumerate(shuffle_nums):
+                section_dict[section_dict_p['info']['shuffle'][i][s_i]] = section_dict_p[s_num]
+            # print(section_dict)
+    if '<!--vrt-' in section_dict[0][0]:
+        v_code = re.findall(r'<!--vrt-(.+?)-->', section_dict[0][0])[0]
+        v_word = ['<!--vrt-{}-->'.format(v_code), random.choice(words_dict.vrt_list[v_code])]
     for sen_num in range(len(section_dict) - 1):
         if section_dict[sen_num] == 'space':
             str_list.append('')
             recipe[sen_num] = 0
         elif len(section_dict[sen_num]) == 1:
             str_list, used_conj = insert_word_to_sentence(section_dict[sen_num][0], noun_dict, conj_dict, site1, site2,
-                                                          str_list, used_conj)
+                                                          str_list, used_conj, v_word, obj_list)
             recipe[sen_num] = 0
         else:
             choice_str = random.choice(section_dict[sen_num])
             str_list, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2,
-                                                          str_list, used_conj)
+                                                          str_list, used_conj, v_word, obj_list)
             recipe[sen_num] = section_dict[sen_num].index(choice_str)
     section_str = '\n'.join(str_list)
     return section_str, recipe
 
 
-def make_new_title(section_list, noun_dict, conj_dict, site1, site2):
+def make_new_title(section_list, noun_dict, conj_dict, site1, site2, obj_list):
     str_list = []
     used_conj = []
     choice_str = random.choice(section_list)
     section_str, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2, str_list,
-                                                     used_conj)
+                                                     used_conj, [], obj_list)
     recipe = {0: section_list.index(choice_str)}
     return section_str[0], recipe
 
 
-def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, str_list, used_conj):
+def link_area_insert(sentence_str):
+    used_list = []
+    choice_list = random.choice([words_dict.pref_list, words_dict.city_list])
+    while '<!--link-area-->' in sentence_str:
+        select_str = random.choice(choice_list)
+        if select_str in used_list:
+            while select_str in used_list:
+                select_str = random.choice(choice_list)
+            used_list.append(select_str)
+        sentence_str = sentence_str.replace('<!--link-area-->', select_str, 1)
+    return sentence_str
+
+
+def link_obj_word_insert(sentence_str, obj_list):
+    used_list = []
+    while '<!--link-word-->' in sentence_str:
+        select_str = random.choice(obj_list)
+        if select_str['keyword'] in used_list:
+            while select_str['keyword'] in used_list:
+                select_str = random.choice(obj_list)
+            used_list.append(select_str['keyword'])
+        sentence_str = sentence_str.replace('<!--link-word-->',
+                                            '[{}](ins_link_{}.md)'.format(select_str['noun'],
+                                                                          select_str['eng'].replace('-', '_')), 1)
+    return sentence_str
+
+
+def same_line_words_filter(sentence_str):
+    sl_str_l = re.findall(r'<!--sl-s-->.+?<!--sl-s/e-->', sentence_str)
+    for sl_str in sl_str_l:
+        inner_str = re.sub(r'<!--sl-s-->(.+?)<!--sl-s/e-->', r'\1', sl_str)
+        str_list = inner_str.split(',')
+        random.shuffle(str_list)
+        insert_s = ''
+        for i, s_str in enumerate(str_list):
+            if i == 0:
+                insert_s += s_str
+            elif i == 1:
+                insert_s += 'や' + s_str
+            elif i > 1:
+                insert_s += '、' + s_str
+        sentence_str = sentence_str.replace(sl_str, insert_s)
+    return sentence_str
+
+
+def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, str_list, used_conj, v_word, obj_list):
+    if v_word:
+        sentence_str = sentence_str.replace(v_word[0], v_word[1])
     conj_blank = re.findall(r'<!--c-.+?-->', sentence_str)
     if conj_blank:
         for c_blank in conj_blank:
@@ -428,9 +513,12 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
             used_conj.append(next_c)
     sentence_str = sentence_str.replace('<!--site-1-->', site1)
     sentence_str = sentence_str.replace('<!--site-2-->', site2)
-    sentence_str = sentence_str.replace('<!--link-word-->', '女教師')
-    sentence_str = sentence_str.replace('<!--link-area-->', '鹿児島')
-    sentence_str = sentence_str.replace('<!--sefre-page-->', '<a href="">記事</a>')
+    if '<!--link-word-->' in sentence_str:
+        sentence_str = link_obj_word_insert(sentence_str, obj_list)
+    if '<!--link-area-->' in sentence_str:
+        sentence_str = link_area_insert(sentence_str)
+    sentence_str = sentence_str.replace('<!--sefre-page-->', '')
+    sentence_str = same_line_words_filter(sentence_str)
     while '<!--' in sentence_str:
         blank_list = re.findall(r'<!--.+?-->', sentence_str)
         # print(noun_dict)
@@ -478,15 +566,13 @@ if __name__ == '__main__':
     # sf_import_to_source()
 
     # make_keywords_sample(keywords_p)
+    make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78, 'sex')
 
-    make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78)
-
-    k_p = {
-        's_adj': '普通の', 'sub': '男性',
-        'o_adj': '淫乱な', 'obj': '巨乳女性', 'obj_key': '巨乳', 'obj_p': 'の',
-        'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
-        'act_connection': ['セフレ関係'],
-        'o_reason': '',
-        't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
-
+    # k_p = {
+    #     's_adj': '普通の', 'sub': '男性',
+    #     'o_adj': '淫乱な', 'obj': '巨乳女性', 'obj_key': '巨乳', 'obj_p': 'の',
+    #     'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+    #     'act_connection': ['セフレ関係'],
+    #     'o_reason': '',
+    #     't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
     # pprint.pprint(make_keywords_sample_dict(k_p))
