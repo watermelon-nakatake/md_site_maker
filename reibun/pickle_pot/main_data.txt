@@ -124,10 +124,10 @@
 	file_path: caption/fwari.html
 	title: 車内Fとは？F割の意味や相場と車内フェラ割り切り募集出会い系掲示板
 	pub_date: 2014-05-18
-	mod_date: 2021-06-24
+	mod_date: 2021-07-13
 	category: caption
 	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトの掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
-	str_len: 12098
+	str_len: 12638
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -257,13 +257,13 @@
 	file_path: majime/m2htalk.html
 	title: メールエッチやエロメッセージできる出会い系とエッチなメールの誘い方
 	pub_date: 2014-06-29
-	mod_date: 2021-05-26
+	mod_date: 2021-07-13
 	category: s_mail
 	description: エロトークの相手が見つかるおすすめ出会い系サイトと、出会い系でメッセージのやりとりをしてる相手とエッチな話やメールHをする方法とメールエッチするための会話の流れを例文を使って解説します。出会い系でエッチする相手やメールエッチを楽しむ相手の探し方もお教えします。
-	str_len: 6365
+	str_len: 6923
 	layout_flag: True
 	shift_flag: True
-	ign_words: ['エッチなメッセージ', 'メールでエッチ', 'メールえっち']}
+	edit_flag: True}
 
 24: {
 	file_path: majime/m0aijin.html

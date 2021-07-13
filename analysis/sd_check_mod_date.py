@@ -56,6 +56,7 @@ def next_update_target_search(aim_date, period):
         reader = csv.reader(f)
         csv_list = [row for row in reader]
     c_list = sc_data_match_page(csv_list)
+    # print(c_list)
     with open('gsc_data/sfd/qp_month' + end_date + '.csv') as f:
         q_reader = csv.reader(f)
         q_list = [row for row in q_reader]
@@ -161,7 +162,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
                         if not page_data['k2_flag']:
                             print('make k2 comment')
                         if not page_data['mt_flag'] and 'area-bbs/' not in page_name:
-                            print('delete mt !')
+                            print('add mt !')
                         print('   {}        {}      {}'.format(click_num, view_num, order_num))
                         get_gsc_query(page_name, q_list)
                         i += 1
@@ -220,7 +221,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
     return pk_dic, target_list
 
 
-def read_sd_page(page_url):
+def read_sd_page(page_url):   # , hot_words
     # スクレイピング対象の URL にリクエストを送り HTML を取得する
     # print(page_url)
     # print('scrape: ' + page_url)
@@ -266,14 +267,15 @@ def read_sd_page(page_url):
             id_str = re.sub(r'postid-(\d*)', r'\1', c_str)
             break
     post_id = int(id_str)
-    if 'ミント' in text or 'Jメール' in text:
-        if '/area-bbs/' not in page_url:
-            # print('Jmail in this page')
-            mt_flag = False
-        else:
-            mt_flag = True
+    if 'PCMAX' in text and '裏プロフ' not in text and '/area-bbs/' not in page_url:
+        mt_flag = False
+        print('there is pcmax')
     else:
         mt_flag = True
+    # if hot_words:
+    #     for h_word in hot_words:
+    #         if h_word not in text:
+    #             print('no hot word {}'.format(h_word))
     if main_img_flag and k2_flag and mt_flag and tl_flag:
         update_flag = True
     else:

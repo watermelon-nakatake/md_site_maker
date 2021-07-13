@@ -6,6 +6,7 @@ from upload import file_upload
 from PIL import Image
 from add_article import make_article_list
 from analysis import check_mod_date
+import reibun.main_info
 
 site_name_list = ['wk', 'hm', 'mt', 'mp', 'max', 'iq']
 site_page_dict = {'hm': 'happymail', 'wk': 'wakuwakumail', 'mt': 'mintj', 'max': 'pcmax', 'iq': '194964'}
@@ -17,7 +18,7 @@ site_str = [['ハッピーメール', 'happymail'], ['ワクワクメール', 'w
             ['イククル', '194964']]
 
 
-def main():
+def main(pd):
     csv_path = 'csv_data/rb_csv.csv'
     star_count, site_dict = make_data(csv_path)
     star_count = make_ranking(star_count)
@@ -25,10 +26,10 @@ def main():
     insert_to_ranking(star_count)
     insert_data_to_amp_site_page()
     make_amp_ranking()
-    pc_and_amp_site_page_upload()
+    pc_and_amp_site_page_upload(pd)
 
 
-def insert_mod_log_to_top_page(date_str):
+def insert_mod_log_to_top_page(date_str, pd):
     with open('reibun/index.html', 'r', encoding='utf-8') as f:
         long_str = f.read()
     insert = ''.join(['<li>{} [出会い系サイト情報・<a href="pc/sitepage/{}.html">{}の口コミ情報と詳細データ</a>]を更新</li>'
@@ -45,7 +46,7 @@ def insert_mod_log_to_top_page(date_str):
                         long_str_a)
     with open('reibun/amp/index.html', 'w', encoding='utf-8') as g:
         g.write(long_str_a)
-    file_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'])
+    file_upload.ftp_upload(['reibun/index.html', 'reibun/amp/index.html'], pd)
 
 
 def insert_data_to_amp_site_page():
@@ -95,13 +96,13 @@ def make_amp_ranking():
         h.write(amp_str)
 
 
-def pc_and_amp_site_page_upload():
+def pc_and_amp_site_page_upload(pd):
     pc_list = ['reibun/pc/sitepage/' + x for x in os.listdir('reibun/pc/sitepage') if '.html' in x and '_test'
                not in x and '_copy' not in x]
     amp_list = ['reibun/amp/sitepage/' + x for x in os.listdir('reibun/amp/sitepage') if '.html' in x and '_test'
                 not in x and '_copy' not in x]
     up_list = pc_list + amp_list
-    file_upload.scp_upload(up_list)
+    file_upload.scp_upload(up_list, pd)
 
 
 def site_page_pc_to_amp_changer(amp_path):
@@ -386,8 +387,8 @@ def star_size_list():
         print(result)
 
 
-def manual_add_modify_log(mod_file_path_list):
-    mod_log = make_article_list.read_pickle_pot('modify_log')
+def manual_add_modify_log(mod_file_path_list, pd):
+    mod_log = make_article_list.read_pickle_pot('modify_log', pd)
     now = datetime.date.today()
     today_mod = [x[0] for x in mod_log if x[1] == str(now)]
     for mod_file_path in mod_file_path_list:
@@ -401,8 +402,8 @@ def manual_add_modify_log(mod_file_path_list):
                 if data[0] == mod_file_path and data[1] == str(now):
                     mod_log.remove(data)
                     mod_log.append([mod_file_path, str(now), 'sitepage', title, 'mod'])
-    make_article_list.save_data_to_pickle(mod_log, 'modify_log')
-    check_mod_date.make_mod_date_list()
+    make_article_list.save_data_to_pickle(mod_log, 'modify_log', pd)
+    check_mod_date.make_mod_date_list(pd)
 
 
 if __name__ == '__main__':
@@ -422,7 +423,7 @@ if __name__ == '__main__':
 
     # reibun_upload.ftp_upload(['reibun/pc/site/index.html'])
 
-    main()
+    main(reibun.main_info.info_dict)
     # insert_data_to_amp_site_page()
     # make_amp_ranking()
 
