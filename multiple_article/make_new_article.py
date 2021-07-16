@@ -11,9 +11,12 @@ import obj_source
 
 
 def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, dir_name, start_num, html_head):
+    # 必要最低限のキーワードリストで機動的に記事作成
+    # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     keywords_dict = {}
     recipe_dict = {}
-    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'], [source_mod.d_advantage, [2, 3, 4]],
+    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
+               [source_mod.d_advantage, [2, 3, 4]],
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
                [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
                [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
@@ -34,12 +37,17 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
             page_name = '{}_{}'.format(html_head, obj['eng'].replace('-', '_'))
             keywords = {
                 'page_name': page_name, 'id': id_num,
+
                 's_adj': sub_adj, 'sub': sub_str,
+
                 'o_adj': obj['adj'], 'obj': obj['noun'], 'obj_key': obj['keyword'], 'obj_p': obj['particle'],
+                'o_reason': obj['reason'], 't_sex': 'm', 't_age': 'n', 't_cat': 'j',
+
                 'act_adj': act_adj, 'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
                 'act_connection': ['肉体関係'],
-                'o_reason': obj['reason'],
-                't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'sex'}
+
+                'act_code': 'sex',
+                'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
             recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head)
@@ -124,7 +132,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list
         result_str = result_str.replace('ins_link_', html_head + '_')
     result_str = replace_code_to_md(result_str)
     result_str = result_str.replace('\n\n- ', '\n\n%arlist%\n- ')
-    result_str += 'recipe_list = ' + str(recipe_list)
+    result_str += 'recipe_list = ' + str(recipe_list) + '\n\n'
+    result_str += 'use_keywords = ' + str(keywords)
     # print(result_str)
     with open(project_dir + '/md_files/' + dir_name + '/' + keywords['page_name'] + '.md', 'w', encoding='utf-8') as f:
         f.write(result_str)
@@ -235,7 +244,7 @@ def key_phrase_maker(keywords):
             'k-obj-act-can-not-do-long': [obj_k + act_with + act_can + 'ません'],
             'k-obj-act-to-find': [obj_as_target + '探し'],
             'k-obj-act-to-find-a': [obj_adj + obj_as_target + '探し'],
-            'k-obj-act-want': [obj + act_with_d + act_i + 'たい'],
+            'k-obj-act-want': [obj + act_with_d + act_i + 'たい', obj + act_with_d + act_i + 'たい'],
             'k-obj-act-want-a': [obj_adj + obj + act_with_d + act_i + 'たい'],
             'k-obj-act-way': [obj_k + act_with + act_way, obj_k + act_with_g + act_way_g],
             'k-obj-act-do': [obj_k + act_with + act_base],
@@ -304,6 +313,10 @@ def key_phrase_maker(keywords):
             keys['k-obj-act-can-do'].append(obj_k + act_can + 'る')
             keys['k-obj-act-can-do-a'].append(obj_adj + obj_k + act_can + 'る')
             keys['k-obj-act-want'].append(obj_k + act_noun + 'が欲しい')
+            keys['k-obj-act-want'].append(obj_adj + obj_k + act_noun + 'が欲しい')
+            keys['k-obj-act-want'].append(obj_k + act_noun + 'を作りたい')
+            keys['k-obj-act-want'].append(obj_adj + obj_k + act_noun + 'を作りたい')
+            keys['k-obj-act-want'].append(obj_k + act_noun + 'が欲しい')
             keys['k-obj-act-want-a'].append(obj_adj + obj_k + act_noun + 'が欲しい')
             keys['k-obj-act-find'].append(obj_k + act_noun + 'を探す')
             keys['k-obj-act-find-a'].append(obj_adj + obj_k + act_noun + 'を探す')
@@ -314,8 +327,13 @@ def key_phrase_maker(keywords):
             keys['k-obj-act-can-meet'].append(obj_k + act_noun + 'と出会える')
             keys['k-obj-act-can-meet-a'].append(obj_adj + obj_k + act_noun + 'と出会える')
             keys['k-obj-act-can-do-a'].append(obj_adj + obj_k + act_can + 'る')
+            keys['k-obj-act-can-do-long'].append(obj_k + act_can + 'ます')
+            keys['k-obj-act-can-do-long'].append(obj_adj + obj_k + act_can + 'ます')
             keys['k-obj-act-noun'].append(obj_k + act_noun)
             keys['k-obj-act-noun-a'].append(obj_adj + obj_k + act_noun)
+    keys['hot-month'] = [keywords['hot_month']]
+    keys['hot-season'] = [keywords['hot_season']]
+    keys['hot-month-next'] = [keywords['hot_month_next']]
     return keys
 
 
@@ -566,7 +584,7 @@ if __name__ == '__main__':
     # sf_import_to_source()
 
     # make_keywords_sample(keywords_p)
-    make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'girl_friend', 78, 'sex')
+    make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'make_love_o', 1, 'sex')
 
     # k_p = {
     #     's_adj': '普通の', 'sub': '男性',

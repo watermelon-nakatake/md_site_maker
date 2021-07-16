@@ -148,7 +148,7 @@ def list_duplication_check(noun_list):
 def md_to_data_dict(md_path, keywords, ignore_words, replace_list):
     key_phrase_dict = make_new_article.make_keywords_sample_dict(keywords)
     list_duplication_check(words_dict.noun_list)
-    # print(key_phrase_dict)
+    print(key_phrase_dict)
     conj_dict = make_word_dict(words_dict.conj_list, ignore_words)
     conj_list = sorted(conj_dict.keys(), key=lambda x: len(x), reverse=True)
     # print(conj_dict)
@@ -395,9 +395,10 @@ if __name__ == '__main__':
         'o_reason': '',
         't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
 
-    # md_to_data_dict('multiple_article/source_md/tips/tips_9_1.md', k_p, [], [['誠実さ', '<!--vrt-imp-->']])
+    md_to_data_dict('multiple_article/source_md/di/di_3_1.md', k_p, [],
+                    [['７月', '<!--hot-month-->'], ['夏', '<!--hot-season-->'], ['８月', '<!--hot-month-next-->']])
 
-    insert_additional_word_to_exist_source('_test', [])
+    # insert_additional_word_to_exist_source('_test', [])
 
     # t = pprint.pformat(resource_import_from_sf(sf_s_list.main_list))
     # with open('ts.py', 'w', encoding='utf-8') as p:

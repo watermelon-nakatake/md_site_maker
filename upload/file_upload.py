@@ -462,7 +462,6 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/html_files/pc/images/common/max_sq_120.gif', 'reibun/html_files/pc/images/common/wkwk_sq_120.gif',
-                'reibun/html_files/pc/sitepage/pcmax.html', 'reibun/html_files/pc/sitepage/wakuwakumail.html']
+    up_files = ['reibun/html_files/pc/sitepage/mintj.html', 'reibun/html_files/amp/sitepage/mintj.html']
     # ftp_upload(up_files)
     scp_upload(up_files, reibun.main_info.info_dict)
