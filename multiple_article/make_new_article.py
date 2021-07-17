@@ -11,8 +11,6 @@ import obj_source
 
 
 def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, dir_name, start_num, html_head):
-    # 必要最低限のキーワードリストで機動的に記事作成
-    # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     keywords_dict = {}
     recipe_dict = {}
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
@@ -54,6 +52,58 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
+    # print(recipe_dict)
+
+
+def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_mod, use_id_list, key_list):
+    # 必要最低限のキーワードリストで機動的に記事作成
+    # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
+    # 既存記事のキーワードとurlをランダム選択scrに渡す
+    recipe_dict = {}
+    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
+               [source_mod.d_advantage, [2, 3, 4]],
+               [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
+               [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
+               [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
+    # print(art_map_p)
+    # art_map = [[[{x['info']['sec_name']: x for x in u} for u in z[0]], z[1]] for z in art_map_p]
+    # print(art_map)
+    add_key_dict = {'s_adj': ['普通の', 'モテない', '婚活中の'], 's_str': ['独身男性', '童貞', '男性']}
+    main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
+                             'act_connection': ['肉体関係'], 'act_code': 'sex'}}
+    act_adj_dict = {'sex': {'act_adj': ['安全に', '確実に', '簡単に', 'すぐに', '無料で'],
+                             'select_act_adj': {'obj': {'ms': ['不倫', '浮気', 'NTR']}}}}
+    if not os.path.exists(project_dir + '/md_files/' + dir_name):
+        os.mkdir(project_dir + '/md_files/' + dir_name)
+    for key_id in use_id_list:
+        keywords = key_list[key_id]
+        keywords['page_name'] = html_str.replace('{}', keywords['eng'].replace('-', '_'))
+        keywords.update(main_key_dict[key_list['main_key']])
+        for add_key in add_key_dict:
+            if not keywords[add_key]:
+                keywords[add_key] = np.random.choice(add_key_dict[add_key])
+        if not a
+
+        if obj_source_filter(obj):
+            if obj['ms'] == 'm':
+                act_adj = np.random.choice(['不倫', '浮気', 'NTR'])
+            else:
+                act_adj = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
+            keywords = {
+
+                'act_adj': act_adj,
+
+                'o_adj': obj['adj'], 'obj': obj['noun'], 'obj_key': obj['keyword'], 'obj_p': obj['particle'],
+                'o_reason': obj['reason'], 't_sex': 'm', 't_age': 'n', 't_cat': 'j',
+
+
+                'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
+            # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
+            print(keywords)
+            make_keywords_sample(keywords)
+            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, key_list,
+                                        keywords['page_name'])
+            recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
 
 
@@ -584,7 +634,8 @@ if __name__ == '__main__':
     # sf_import_to_source()
 
     # make_keywords_sample(keywords_p)
-    make_new_pages_to_md('test', obj_source.obj_key_list, [], [], source_data, 'make_love_o', 1, 'sex')
+    t_key_list = {1: {}}
+    make_new_pages_to_md_from_key_list('test', 'make_love_o', 'sex_{}_f', source_data, [1, 29], t_key_list)
 
     # k_p = {
     #     's_adj': '普通の', 'sub': '男性',
