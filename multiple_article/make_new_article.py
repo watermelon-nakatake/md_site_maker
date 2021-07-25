@@ -23,6 +23,7 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
     # print(art_map_p)
     # art_map = [[[{x['info']['sec_name']: x for x in u} for u in z[0]], z[1]] for z in art_map_p]
     # print(art_map)
+    link_dict = make_key_and_path_list(project_dir, dir_name, html_head, [], [])
     id_num = start_num
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
@@ -50,7 +51,8 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
                 'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
-            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head)
+            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head,
+                                        link_dict)
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
@@ -92,7 +94,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
         print(keywords)
         # make_keywords_sample(keywords)
         recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, key_list,
-                                    keywords['page_name'])
+                                    keywords['page_name'], link_dict)
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
 
@@ -110,8 +112,7 @@ def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_lis
     for key_id in use_id_list:
         keywords = key_list[key_id]
         if keywords['type'] == 'only_obj':
-            result['obj'].append([keywords['obj'],
-                                  dir_name + '/' + html_str.replace('{}', keywords['eng'].replace('-', '_'))])
+            result['obj'].append([keywords['obj'], html_str.replace('{}', keywords['eng'].replace('-', '_'))])
     with open(pkl_path, 'wb') as k:
         pickle.dump(use_id_list, k)
     return result
@@ -174,6 +175,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list
                                       and keywords['act_code'] not in x['info']['deny']]))
                 used_list.append(t1e)
     # print(section_list)
+    this_path = dir_name + '/' + keywords['page_name']
     result_str = ''
     key_phrase = key_phrase_maker(keywords)
     noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
@@ -184,23 +186,23 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list
             noun_dict[noun['before']] = [noun['after']]
     conj_dict = {x['before']: x['after'] for x in wd.conj_list}
     title_str, t_recipe = make_new_title(source_mod.title[keywords['act_code']], noun_dict, conj_dict, site1, site2,
-                                         obj_list)
+                                         link_dict, this_path)
     result_str += 't::' + title_str + '\n'
     print(title_str)
     des_str, d_recipe = make_new_title(source_mod.des[keywords['act_code']], noun_dict, conj_dict, site1, site2,
-                                       obj_list)
+                                       link_dict, this_path)
     result_str += 'd::' + des_str.replace('\n', '') + '\n'
     result_str += 'n::' + str(keywords['id']) + '\n'
     result_str += 'e::\n'
-    result_str += 'k::' + ' '.join([str(keywords['obj_key']), keywords['act_noun']]) + '\n'
+    result_str += 'k::' + ' '.join([keywords['all_key'], keywords['act'].replace('する', '')]) + '\n'
 
     for this_sec in section_list:
-        section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, obj_list)
+        section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, link_dict, this_path)
         section_str = section_str.replace('%', '\n%')
         result_str += section_str + '\n\n'
         recipe_list[this_sec['info']['sec_name']] = recipe
-    if 'ins_link_' in result_str:
-        result_str = result_str.replace('ins_link_', html_head + '_')
+    # if 'ins_link_' in result_str:
+    #     result_str = result_str.replace('ins_link_', html_head + '_')
     result_str = replace_code_to_md(result_str)
     result_str = result_str.replace('\n\n- ', '\n\n%arlist%\n- ')
     result_str += 'recipe_list = ' + str(recipe_list) + '\n\n'
@@ -448,56 +450,7 @@ def make_keywords_sample_dict(keywords):
     return new_dict
 
 
-def test_new_section(section_dict_list, keywords):
-    site1 = 'ワクワクメール'
-    site2 = 'PCMAX'
-    obj_list = obj_source.obj_key_list
-    key_phrase = key_phrase_maker(keywords)
-    result_str = ''
-    noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
-    for noun in wd.noun_list:
-        if 'plist' in noun:
-            noun_dict[noun['before']] = [noun['after'], noun['plist']]
-        else:
-            noun_dict[noun['before']] = [noun['after']]
-    conj_dict = {x['before']: x['after'] for x in wd.conj_list}
-    max_len = 0
-    for section_dict in section_dict_list:
-        used_conj = []
-        if (section_dict['info']['only'] and keywords['act_code'] in section_dict['info']['only']) or not \
-                section_dict['info']['only']:
-            if keywords['act_code'] not in section_dict['info']['deny']:
-                print(section_dict)
-                for i in range(len(section_dict) - 1):
-                    if type(section_dict[i]) is not str and len(section_dict[i]) > max_len and \
-                            '##' not in section_dict[i][0]:
-                        max_len = len(section_dict[i])
-                for j in range(max_len):
-                    str_list = []
-                    for sen_num in range(len(section_dict) - 1):
-                        if section_dict[sen_num] == 'space':
-                            str_list.append('')
-                        elif len(section_dict[sen_num]) == 1:
-                            str_list, used_conj = insert_word_to_sentence(section_dict[sen_num][0], noun_dict,
-                                                                          conj_dict, site1, site2, str_list, used_conj,
-                                                                          [], obj_list)
-                        else:
-                            # print(section_dict[sen_num])
-                            # print(j % len(section_dict[sen_num]))
-                            choice_str = section_dict[sen_num][j % len(section_dict[sen_num])]
-                            str_list, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1,
-                                                                          site2, str_list, used_conj, [], obj_list)
-                    section_str = '\n'.join(str_list)
-                    result_str += section_str + '\n' * 2 + '-' * 30 + '\n' * 2
-    print(result_str)
-    file_num = 1
-    while os.path.exists('test_md_{}.md'.format(file_num)):
-        file_num += 1
-    with open('test_md_{}.md'.format(file_num), 'w', encoding='utf-8') as f:
-        f.write(result_str)
-
-
-def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, obj_list):
+def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_dict, this_path):
     recipe = {}
     str_list = []
     used_conj = []
@@ -521,23 +474,23 @@ def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, obj_lis
             recipe[sen_num] = 0
         elif len(section_dict[sen_num]) == 1:
             str_list, used_conj = insert_word_to_sentence(section_dict[sen_num][0], noun_dict, conj_dict, site1, site2,
-                                                          str_list, used_conj, v_word, obj_list)
+                                                          str_list, used_conj, v_word, link_dict, this_path)
             recipe[sen_num] = 0
         else:
             choice_str = random.choice(section_dict[sen_num])
             str_list, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2,
-                                                          str_list, used_conj, v_word, obj_list)
+                                                          str_list, used_conj, v_word, link_dict, this_path)
             recipe[sen_num] = section_dict[sen_num].index(choice_str)
     section_str = '\n'.join(str_list)
     return section_str, recipe
 
 
-def make_new_title(section_list, noun_dict, conj_dict, site1, site2, obj_list):
+def make_new_title(section_list, noun_dict, conj_dict, site1, site2, obj_list, link_dict):
     str_list = []
     used_conj = []
     choice_str = random.choice(section_list)
     section_str, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2, str_list,
-                                                     used_conj, [], obj_list)
+                                                     used_conj, [], obj_list, link_dict)
     recipe = {0: section_list.index(choice_str)}
     return section_str[0], recipe
 
@@ -555,17 +508,20 @@ def link_area_insert(sentence_str):
     return sentence_str
 
 
-def link_obj_word_insert(sentence_str, obj_list, link_dict):
+def link_obj_word_insert(sentence_str, link_dict, this_path):
     used_list = []
-    while '<!--link-word-->' in sentence_str:
-        select_str = random.choice(obj_list)
-        if select_str['keyword'] in used_list:
-            while select_str['keyword'] in used_list:
-                select_str = random.choice(obj_list)
-            used_list.append(select_str['keyword'])
-        sentence_str = sentence_str.replace('<!--link-word-->',
-                                            '[{}](ins_link_{}.md)'.format(select_str['noun'],
-                                                                          select_str['eng'].replace('-', '_')), 1)
+    type_str_l = re.findall(r'<!--link-word-(.+?)-->', sentence_str)
+    for type_str in type_str_l:
+        select_str = random.choice(link_dict[type_str])
+        print(select_str)
+        print(link_dict[type_str])
+        # print(used_list)
+        if select_str[1] in used_list or select_str[1] == this_path:
+            while select_str[1] in used_list or select_str[1] == this_path:
+                select_str = random.choice(link_dict[type_str])
+            used_list.append(select_str[1])
+        sentence_str = sentence_str.replace('<!--link-word-{}-->'.format(type_str),
+                                            '[{}]({}.md)'.format(select_str[0], select_str[1]), 1)
     return sentence_str
 
 
@@ -587,7 +543,8 @@ def same_line_words_filter(sentence_str):
     return sentence_str
 
 
-def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, str_list, used_conj, v_word, obj_list):
+def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, str_list, used_conj, v_word, link_dict,
+                            this_path):
     if v_word:
         sentence_str = sentence_str.replace(v_word[0], v_word[1])
     conj_blank = re.findall(r'<!--c-.+?-->', sentence_str)
@@ -603,7 +560,7 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
     sentence_str = sentence_str.replace('<!--site-1-->', site1)
     sentence_str = sentence_str.replace('<!--site-2-->', site2)
     if '<!--link-word-' in sentence_str:
-        sentence_str = link_obj_word_insert(sentence_str, obj_list)
+        sentence_str = link_obj_word_insert(sentence_str, link_dict, this_path)
     if '<!--link-area-->' in sentence_str:
         sentence_str = link_area_insert(sentence_str)
     sentence_str = sentence_str.replace('<!--sefre-page-->', '')
@@ -656,7 +613,8 @@ if __name__ == '__main__':
 
     # make_keywords_sample(keywords_p)
     t_key_list = key_source.keyword_dict
-    make_new_pages_to_md_from_key_list('test', 'make_love_o', 'sex_{}_f', source_data, 'sex', [0, 29], t_key_list)
+    make_new_pages_to_md_from_key_list('test', 'make_love_o', 'sex_{}_f', source_data, 'sex',
+                                       list(range(0, 208, 1)), t_key_list)
 
     # pprint.pprint(obj_source_changer(), width=150)
 

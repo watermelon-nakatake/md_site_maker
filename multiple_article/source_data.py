@@ -982,7 +982,7 @@ pi_1_1 = {
     7: 'space',
     8: ['その<!--profile-->を<!--nicely--><!--if-use-->、<!--liking-->の<!--woman--><!--can-meet-with-->ので、'
         '<!--k-obj-noun-->と知り合って<!--k-act-->ことも<!--that-much-->難しいことでは<!--is-not-->。',
-        '<!--c-順接--><!--k-obj-status-->でも<!--link-word-->でも、<!--deaikei-->なら<!--liking-->の<!--woman-->を'
+        '<!--c-順接--><!--k-obj-status-->でも<!--link-word-obj-->でも、<!--deaikei-->なら<!--liking-->の<!--woman-->を'
         '選ぶことが<!--s-can-->。'],
     'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'pa_1_1'}}
 # pi_1_1/end
@@ -1219,7 +1219,7 @@ pa_2_1 = {
         'はっきり言って、<!--deaikei-->を<!--use-->いる<!--woman-->は多いです。',
         '上の方でも書きましたが、<!--deaikei-->の<!--b-bbs-->には<!--woman-->の<!--post-->が<!--many-->あります。'],
     5: ['<!--boy-friend-->募集中の若い<!--woman-y-->から、<!--companion-->を<!--find--><!--marriage-->中のアラサー<!--woman-o-->、'
-        '寂しい<!--link-word-->、<!--hな--><!--partner-->を<!--find-->いる<!--older-woman-->、<!--link-word-->、<!--furin--><!--sex-->の'
+        '寂しい<!--link-word-obj-->、<!--hな--><!--partner-->を<!--find-->いる<!--older-woman-->、<!--link-word-obj-->、<!--furin--><!--sex-->の'
         '<!--partner-->を<!--find-->いるセクシーな<!--wife-->など<!--various-->タイプの<!--woman-o-->が<!--use-->います。',
         '<!--at-first-l--><!--deaikei-->を<!--use-a-->方は、**「こんなに出会いを<!--find-->いる<!--woman-->がいるのか！」**と'
         '驚くかもしれません。'],
@@ -1450,7 +1450,7 @@ use_4_1 = {
         'そうすれば、<!--very-->高い<!--success-rate-->で<!--k-can-s-->。'],
     5: ['<!--profile--><!--search-->機能を<!--if-use-->、<!--easily--><!--k-obj-status-->をしている<!--woman-->を探すことが'
         '<!--s-can-->。',
-        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-->でも<!--k-obj-noun-->でも、<!--you-->が'
+        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-obj-noun-->でも、<!--you-->が'
         '出会いたい<!--socialize-women-->の<!--woman-->が見つかります。'],
     6: ['特に<!--sl-s--><!--wkwk-sn-->,<!--hm-sn--><!--sl-s/e-->などの<!--profile-->閲覧で<!--point-->を消費しない<!--deaikei-->では、'
         'この<!--way-->が<!--best-->です。'],
@@ -1749,16 +1749,16 @@ tips_2_1 = {
         '<!--c-逆接--><!--nicely2-->いかない時はなぜかどうしても<!--nicely2-->いかないものです。'],
     7: ['これははっきり言って運も大きいです。', '<!--deaikei-->での出会いもやはり運には左右されますからね。'],
     8: 'space',
-    9: ['<!--link-word-->や<!--link-word-->など<!--k-obj-noun-->とは別のタイプの<!--woman-->と<!--can-meet-i-->てみて、<!--k-act-->方が'
+    9: ['<!--link-word-obj-->や<!--link-word-obj-->など<!--k-obj-noun-->とは別のタイプの<!--woman-->と<!--can-meet-i-->てみて、<!--k-act-->方が'
         'オススメです。',
-        'そういう時には、<!--k-obj-noun-s-->にこだわらず<!--link-word-->や<!--link-word-->などの他のタイプの'
+        'そういう時には、<!--k-obj-noun-s-->にこだわらず<!--link-word-obj-->や<!--link-word-obj-->などの他のタイプの'
         '<!--woman-->との出会いを<!--find-->みましょう。',
         'もしもなかなか気に入った<!--k-obj-noun-s-->と<!--k-act-connection-->になれない時は、気分転換に他のタイプの'
         '<!--k-act-noun-->を<!--k-act-v-i-->てみましょう。'],
     10: ['<!--you-->にとって<!--best-->の<!--k-act-noun-->ではない<!--may-be-->が、<!--sex-->の気持ち良さは同じです',
-         'なかなか<!--k-obj-noun-s-->とは<!--can-find-d-e-->なくても、<!--link-word-->などの他のタイプの<!--woman-->とは意外に'
+         'なかなか<!--k-obj-noun-s-->とは<!--can-find-d-e-->なくても、<!--link-word-obj-->などの他のタイプの<!--woman-->とは意外に'
          '<!--easily--><!--can-find-d-e-->たりします。',
-         '<!--k-obj-noun-->限定で<!--find-->いる<!--reader-->も、<!--link-word-->や<!--link-word-->など他のタイプの'
+         '<!--k-obj-noun-->限定で<!--find-->いる<!--reader-->も、<!--link-word-obj-->や<!--link-word-obj-->など他のタイプの'
          '<!--k-act-find-->と意外に<!--be-early--><!--k-act-can-i-->たりします。'],
     11: ['<!--c-並列--><!--k-act--><!--technique-->も上達します。',
          'それで<!--k-act-to-find-->の<!--technique-->も上がります。',
