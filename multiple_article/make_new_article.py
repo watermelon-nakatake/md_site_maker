@@ -12,7 +12,7 @@ import obj_source
 import key_source
 
 
-def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, dir_name, start_num, html_head):
+def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head):
     keywords_dict = {}
     recipe_dict = {}
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
@@ -51,8 +51,7 @@ def make_new_pages_to_md(project_dir, obj_list, act_list, sub_list, source_mod, 
                 'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
-            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head,
-                                        link_dict)
+            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict)
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
@@ -91,10 +90,9 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
             else:
                 keywords['a_adj'] = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
         keywords.update(hot_info)
-        print(keywords)
+        # print(keywords)
         # make_keywords_sample(keywords)
-        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, key_list,
-                                    keywords['page_name'], link_dict)
+        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict)
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
 
@@ -130,6 +128,7 @@ def obj_source_changer():
 
 
 def obj_source_filter(source_dict):
+    print(source_dict)
     return True
     # if source_dict['ms'] == 's':
     #     return True
@@ -137,7 +136,7 @@ def obj_source_filter(source_dict):
     #     return False
 
 
-def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list, html_head, link_dict):
+def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict):
     recipe_list = {}
     site_list = ['ワクワクメール', 'PCMAX']
     site1 = np.random.choice(['ワクワクメール', 'PCMAX'])
@@ -161,13 +160,13 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, obj_list
             else:
                 s_num = np.random.choice(section[1])
             sample_l = [x for x in section[0].keys() if x not in used_list]
-            print(sample_l)
+            # print(sample_l)
             if s_num == 1:
                 t1 = [np.random.choice(sample_l)]
             else:
                 np.random.shuffle(sample_l)
                 t1 = sample_l[:s_num]
-            print(t1)
+            # print(t1)
             for t1e in t1:
                 section_list.append(
                     np.random.choice([x for x in section[0][t1e] if ((x['info']['only'] and keywords['act_code']
@@ -513,9 +512,6 @@ def link_obj_word_insert(sentence_str, link_dict, this_path):
     type_str_l = re.findall(r'<!--link-word-(.+?)-->', sentence_str)
     for type_str in type_str_l:
         select_str = random.choice(link_dict[type_str])
-        print(select_str)
-        print(link_dict[type_str])
-        # print(used_list)
         if select_str[1] in used_list or select_str[1] == this_path:
             while select_str[1] in used_list or select_str[1] == this_path:
                 select_str = random.choice(link_dict[type_str])

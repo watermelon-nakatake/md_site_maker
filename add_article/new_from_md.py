@@ -871,7 +871,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         if mod_flag:
             if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name):
                 pub_or_mod = 'mod'
-                print(pk_dic)
+                # print(pk_dic)
                 if pk_dic[this_id]['title'] != title_str:
                     update_title_log(file_name, title_str, str(now.date()), str_len, pd)
                     title_change_id.append(this_id)

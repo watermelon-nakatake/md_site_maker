@@ -34,6 +34,18 @@ def sc_data_match_page(csv_list):
     return result_list
 
 
+def rewrite_pk_data():
+    with open('sfd/pickle_pot/date_img.pkl', 'rb') as f:
+        pk_dic = pickle.load(f)
+    # print(pk_dic)
+    for p_path in pk_dic:
+        if pk_dic[p_path]['title_len'] > 30:
+            pk_dic[p_path]['update_flag'] = False
+    print(pk_dic)
+    with open('sfd/pickle_pot/date_img.pkl', 'wb') as p:
+        pickle.dump(pk_dic, p)
+
+
 def make_target_data_for_today(today, period):
     start_d = today - timedelta(days=period)
     end_d = today - timedelta(days=2)
@@ -64,6 +76,7 @@ def next_update_target_search(aim_date, period):
     # print(c_list)
     with open('sfd/pickle_pot/date_img.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
+    # print(pk_dic)
     limit_d = today - timedelta(days=aim_date)
     print('日数 : ' + str(period) + '日間')
     print('クリック数順')
@@ -118,7 +131,7 @@ def display_mod_target_data():
 
 def check_target_data(target_data, limit_date):
     print(target_data['path'] + '  ' + target_data['title'])
-    if target_data['title_len'] > 33 or target_data['title_len'] < 29:
+    if target_data['title_len'] > 30 or target_data['title_len'] < 28:
         print('change title !')
     if not target_data['main_img_flag']:
         print('there is no images !')
@@ -151,11 +164,12 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
             page_name = page[0].replace('https://www.sefure-do.com/', '')
             click_num, view_num, order_num = page[1], page[2], page[4]
             if page_name in pk_dic:
+                # print(pk_dic[page_name])
                 if not pk_dic[page_name]['update_flag']:
                     page_data = read_sd_page(page[0])
                     if not page_data['update_flag']:
                         print(page_data['path'] + '  ' + page_data['title'])
-                        if page_data['title_len'] > 33 or page_data['title_len'] < 29:
+                        if page_data['title_len'] > 30 or page_data['title_len'] < 28:
                             print('change title !')
                         if not page_data['main_img_flag']:
                             print('there is no images !')
@@ -188,7 +202,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
                 if not page_data['update_flag']:
                     if not page_data['update_flag']:
                         print(page_data['path'] + '  ' + page_data['title'])
-                        if page_data['title_len'] > 33 or page_data['title_len'] < 29:
+                        if page_data['title_len'] > 30 or page_data['title_len'] < 28:
                             print('change title !')
                         if not page_data['main_img_flag']:
                             print('there is no images !')
@@ -230,7 +244,7 @@ def read_sd_page(page_url):   # , hot_words
     soup = BeautifulSoup(res.text, 'html.parser')
     title_text = soup.find('title').get_text().replace(' - セフレ道', '')
     title_len = len(title_text)
-    if 29 <= title_len <= 33:
+    if 28 <= title_len <= 30:
         tl_flag = True
     else:
         tl_flag = False
@@ -473,6 +487,11 @@ if __name__ == '__main__':
 
     c_l = next_update_target_search(100, 28)
     # display_mod_target_data()
+
+    # rewrite_pk_data()
+    # with open('sfd/pickle_pot/date_img.pkl', 'rb') as f:
+    #     p_dic = pickle.load(f)
+    # print(p_dic)
 
     # get_gsc_query('gsc_data/sd/month2021-04-23.csv', 'chinese')
 

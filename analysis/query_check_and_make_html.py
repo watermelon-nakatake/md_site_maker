@@ -148,7 +148,8 @@ def check_single_page_seo(period, html_path, ignore_flag):
     if error_list:
         print(error_list)
     query_str_list, top_words, h_result, t_result, e_q_list = \
-        seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name, ignore_flag)
+        seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name, ignore_flag,
+                             period)
     if top_words:
         for tw in top_words:
             print(tw)
@@ -212,9 +213,9 @@ def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
     # if 'shift_flag' in pk_data:
     #     if not pk_data['shift_flag']:
     #         error_list.append('delete mt !')
-    if len(pk_data['title']) > 33:
+    if len(pk_data['title']) > 30:
         error_list.append('too long title str !')
-    elif len(pk_data['title']) < 29:
+    elif len(pk_data['title']) < 27:
         error_list.append('too short title !')
     if pk_data['str_len'] < main_str_limit:
         error_list.append('too short main contents')
@@ -224,7 +225,7 @@ def seo_checker_to_pk_data(pk_data, main_str_limit, limit_d, today):
     return error_list
 
 
-def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name, ignore_flag):
+def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_dic, site_name, ignore_flag, limit_d):
     result_list = []
     h_result = []
     t_result = []
@@ -258,6 +259,7 @@ def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_di
     i = 0
     words_list = [x[0] for x in q_dic]
     for word in q_dic:
+        # print(word)
         l_word = word[0].lower()
         l_word = l_word.replace('出会系', '出会い系')
         count_w = main_text.count(l_word)
@@ -304,7 +306,7 @@ def seo_checker_by_query(pk_data, q_dic, pj_dir, q_list, pj_domain_main, e_pk_di
                 ' ' * (5 - len(str(d_count))) + str(d_count) + ' ' * (5 - len(str(h2_count))) + str(h2_count) +
                 ' ' * (5 - len(str(h3_count))) + str(h3_count) + ' ' * 5 + word[0])
             h_result.append([word[0], word[1], word[2], count_w, t_count, d_count, h2_count, h3_count])
-        if i < 10 and t_count < 1 < word[1] and l_word not in ignore_list:
+        if i < 10 and word[1] > (limit_d / 10) and t_count < 1 < word[1] and l_word not in ignore_list:
             c_str = combined_keyword_checker(l_word, words_list, title_str)
             if not c_str:
                 top_words_data.append(
@@ -613,7 +615,12 @@ def make_simple_keyword_dic(this_q_list):
     return result_list
 
 
-def insert_ignore_key_to_pk_dic(target_project, path, keyword_list):
+def insert_ignore_key_to_pk_dic(target_project, alt_path, keyword_list):
+    if '.md' in alt_path:
+        path = re.sub(r'^.*/md_files/pc/', '', alt_path)
+        path = path.replace('.md', '.html')
+    else:
+        path = re.sub(r'^.*/html_files/pc/', '', alt_path)
     with open(target_project + '/pickle_pot/main_data.pkl', 'rb') as f:
         pk_dic = pickle.load(f)
     for p_id in pk_dic:
@@ -645,7 +652,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
             error_list = seo_checker_to_pk_data(this_pk_data, main_str_limit, limit_d, today)
             query_str_list, top_words, h_result, t_result, e_q_list \
                 = seo_checker_by_query(this_pk_data, q_dic, pj_dir, q_list, pj_domain_main, pk_dic, site_name,
-                                       ignore_flag)
+                                       ignore_flag, limit_d)
             if error_list:
                 print('\n{} : {}  ({})'.format(page_name, this_pk_data['title'], str(len(this_pk_data['title']))))
                 print(error_list)
@@ -684,6 +691,9 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
 
 if __name__ == '__main__':
     target_prj = 'reibun'
-    # insert_ignore_key_to_pk_dic(target_prj, 'majime/kakikata_f.html', ['ファーストメッセージ'])
+    # insert_ignore_key_to_pk_dic(target_prj, 'reibun/md_files/pc/majime/m2htalk.md', ['メールえっち'])
     next_update_target_search(100, 100, 3000, target_prj, False, True, True)
+    next_update_target_search(100, 28, 3000, target_prj, False, True, True)
     # make_data_for_graph('reibun', '2020-04-01', '2021-05-04')
+
+    # todo: ハッピーメール、セフレ、プロフィール
