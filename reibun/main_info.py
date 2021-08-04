@@ -20,7 +20,8 @@ category_data = {'policy': ['ポリシー', 'index.html', 1], 's_mail': ['２通
                  'majime': ['出会い系メール例文', 'index.html', 32], 'sitepage': ['出会い系サイト', 'index.html', 122]}
 directory_name = {'policy': 'ポリシー', 'caption': '出会い系の予備知識', 'majime': '出会いメール例文',
                   'qa': '出会い系Ｑ＆Ａ', 'site': '出会い系サイト情報', 'sitepage': '出会い系サイト紹介'}
-site_shift_list = [0, 1, 2]
+site_shift_list = [0, 1, 2, 3]
+site_shift_order = [2, 1, 0]
 
 add_files = ['reibun/html_files/index.html', 'reibun/html_files/amp/index.html',
              'reibun/html_files/pc/css/base13.css', 'reibun/html_files/pc/css/pc13.css',

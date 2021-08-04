@@ -68,9 +68,14 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
                [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
                [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
-    add_key_dict = {'s_adj': ['普通の', 'モテない', '婚活中の'], 'sub': ['独身男性', '童貞', '男性']}
+    add_key_dict = {'s_adj': ['普通の', 'モテない', '婚活中の'], 'sub': ['独身男性', '男性']}
     main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
-                             'act_connection': ['肉体関係'], 'act_code': 'sex'}}
+                             'act_connection': ['肉体関係'], 'act_code': 'sex', 'replace_words': []},
+                     'mh': {'act': '婚活で出会う', 'act_noun': '結婚相手', 'act_noun_flag': False,
+                            'act_connection': ['交際'], 'act_code': 'mh',
+                            'replace_words': [['出会い系サイト', '婚活サイト'], ['出会い掲示板', '婚活掲示板'],
+                                              ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト']]}
+                     }
     hot_info = {'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
     link_dict = make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list)
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
@@ -104,6 +109,7 @@ def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_lis
             pkl_data = pickle.load(p)
     else:
         pkl_data = []
+        os.mkdir('{}/pickle_pot/{}'.format(project_dir, dir_name))
     result = {'obj': [], 'sub': [], 'act': []}
     use_id_list.extend(pkl_data)
     use_id_list = list(set(use_id_list))
@@ -204,6 +210,9 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     #     result_str = result_str.replace('ins_link_', html_head + '_')
     result_str = replace_code_to_md(result_str)
     result_str = result_str.replace('\n\n- ', '\n\n%arlist%\n- ')
+    if keywords['replace_words']:
+        for r_words in keywords['replace_words']:
+            result_str = result_str.replace(r_words[0], r_words[1])
     result_str += 'recipe_list = ' + str(recipe_list) + '\n\n'
     result_str += 'use_keywords = ' + str(keywords)
     # print(result_str)
@@ -609,7 +618,7 @@ if __name__ == '__main__':
 
     # make_keywords_sample(keywords_p)
     t_key_list = key_source.keyword_dict
-    make_new_pages_to_md_from_key_list('test', 'make_love_o', 'sex_{}_f', source_data, 'sex',
+    make_new_pages_to_md_from_key_list('test', 'marriage_hunting', 'mh_{}_f', source_data, 'mh',
                                        list(range(0, 208, 1)), t_key_list)
 
     # pprint.pprint(obj_source_changer(), width=150)

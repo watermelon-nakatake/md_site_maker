@@ -21,6 +21,12 @@ title = {
              '<!--k-how-to-->と<!--k-obj-act-can-do--><!--recommended--><!--d-bbs-->',
              '<!--k-how-to-->と<!--d-app-->',
              '<!--k-obj--><!--can-meet-with--><!--d-bbs-->と<!--k-how-to-->'],
+    'mh': ['<!--k-obj-act-way-->と<!--k-obj-noun-l-->と<!--title-can-meet--><!--d-bbs-->',
+           '<!--k-obj-act-can-do--><!--d-bbs-->と<!--title-easy--><!--k-act-way-->',
+           '<!--k-obj-act-way-->と<!--k-act-can--><!--recommended--><!--d-bbs-->',
+           '<!--title-easy--><!--k-obj-act-way-->と<!--k-obj-act-easy--><!--d-bbs-->',
+           '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
+           '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--title-easy--><!--k-obj-act-way-->'],
     'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'title'}}
 # title/end
 
@@ -47,6 +53,14 @@ des = {
         '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
         '<!--k-obj-act-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。'
         '<!--deaikei-->は<!--k-obj-act-easy-->ので<!--my-recommend-s-->。',
+        '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
+        'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
+        '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
+    'mh': [
+        '<!--k-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
+        '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
+        '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
+        '<!--k-obj-act-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。<!--k-easy-->ので<!--my-recommend-s-->。',
         '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
@@ -1749,7 +1763,8 @@ tips_2_1 = {
         '<!--c-逆接--><!--nicely2-->いかない時はなぜかどうしても<!--nicely2-->いかないものです。'],
     7: ['これははっきり言って運も大きいです。', '<!--deaikei-->での出会いもやはり運には左右されますからね。'],
     8: 'space',
-    9: ['<!--link-word-obj-->や<!--link-word-obj-->など<!--k-obj-noun-->とは別のタイプの<!--woman-->と<!--can-meet-i-->てみて、<!--k-act-->方が'
+    9: [
+        '<!--link-word-obj-->や<!--link-word-obj-->など<!--k-obj-noun-->とは別のタイプの<!--woman-->と<!--can-meet-i-->てみて、<!--k-act-->方が'
         'オススメです。',
         'そういう時には、<!--k-obj-noun-s-->にこだわらず<!--link-word-obj-->や<!--link-word-obj-->などの他のタイプの'
         '<!--woman-->との出会いを<!--find-->みましょう。',
@@ -2164,7 +2179,8 @@ cnc_1_1 = {
     'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'cnc_1_1'}}
 # cnc_1_1/end
 
-all_list = [title, des, int_1_1, int_1_2, int_1_3, point, di_1_1, di_2_1, di_3_1, da_1_1, da_1_2, da_2_1, da_3_1, da_4_1,
+all_list = [title, des, int_1_1, int_1_2, int_1_3, point, di_1_1, di_2_1, di_3_1, da_1_1, da_1_2, da_2_1, da_3_1,
+            da_4_1,
             da_5_1,
             da_6_1,
             da_7_1, da_8_1, da_9_1, da_10_1, da_11_1, da_12_1, tips_8_1, pa_1_1, pa_2_1, pa_3_1, pa_4_1,

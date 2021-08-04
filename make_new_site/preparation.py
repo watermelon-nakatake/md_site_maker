@@ -1,12 +1,31 @@
+import reibun.main_info
 from add_article import make_article_list
 import re
 import os
 import collections
 import glob
+import shutil
+import add_article.new_from_md
+import konkatsu.main_info
+
+
+def make_project_dir_and_pd_file(project_name):
+    if not os.path.exists(project_name):
+        os.mkdir(project_name)
+    if not os.path.exists(project_name + '/' + 'main_info.py'):
+        pd_path = project_name + '/' + 'main_info.py'
+        shutil.copy('template_files/main_info.py', pd_path)
+        with open(pd_path, 'r', encoding='utf-8') as f:
+            pd_str = f.read()
+            pd_str = pd_str.replace('<!--project-name-->', project_name)
+            pd_str = pd_str.replace('rp_project_name', project_name)
+            with open(pd_path, 'w', encoding='utf-8') as g:
+                g.write(pd_str)
+        print('make pd file !')
 
 
 def preparation_for_new_project(pd):
-    change_pk_dic(pd)
+    add_article.new_from_md.first_make_html(pd)
 
 
 def change_pk_dic(pd):
@@ -107,10 +126,9 @@ def check_all_html(target_dir):
 
 
 if __name__ == '__main__':
-    # make_new_main_data_pkl()
-    # change_pk_dic()
-    # insert_pub_date()
-    # insert_id_and_category_to_html()
-    # print(make_article_list.read_pickle_pot('main_data', reibun.main_info.info_dict))
-    # insert_id_and_category_to_md(reibun.main_info.info_dict)
-    check_all_html('reibun/html_files/pc')
+    # pj_name = 'konkatsu'
+    # make_project_dir_and_pd_file(pj_name)
+
+    pd_t = konkatsu.main_info.info_dict
+    preparation_for_new_project(pd_t)
+

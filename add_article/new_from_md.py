@@ -596,7 +596,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                 os.mkdir(pd['project_dir'] + '/html_files' + pd['main_dir'])
         if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template'):
             os.mkdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template')
-        shutil.copy('../template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir']
+        shutil.copy('template_files/template/main_tmp.html', pd['project_dir'] + '/html_files/' + pd['main_dir']
                     + 'template/main_tmp.html')
     with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
             as t:
@@ -659,12 +659,15 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
 
         if '%ss' in md_txt:
             ss_flag = True
-            for ss_num in range(len(pd['site_shift_list']) + 1):
+            for ss_num in pd['site_shift_order']:
                 if md_txt.count('%ss' + str(ss_num) + '%') != md_txt.count('%ss' + str(ss_num) + '%'):
                     raise Exception('%ss の数が合っていません！！')
-            md_txt = re.sub(r'%ss' + str(site_shift) + r'%\n([\s\S]*?)%ss' + str(site_shift) + r'e%\n', r'\1', md_txt)
-            for s_num in pd['site_shift_list']:
-                md_txt = re.sub(r'%ss' + str(s_num) + r'%\n([\s\S]*?)%ss' + str(s_num) + r'e%\n', '', md_txt)
+            for shift_num in pd['site_shift_order']:
+                if '%ss' + str(shift_num) in md_txt:
+                    md_txt = re.sub(r'%ss' + str(shift_num) + r'%\n([\s\S]*?)%ss' + str(shift_num) + r'e%\n', r'\1',
+                                    md_txt)
+                    md_txt = re.sub(r'%ss\d%\n([\s\S]*?)%ss\de%\n', '', md_txt)
+                    break
         else:
             ss_flag = False
         if '%arlist' in md_txt:
@@ -1382,6 +1385,17 @@ def all_html_insert():
                     g.write(long_str)
 
 
+def make_html_dir_and_md(pd):
+    print(pd)
+    print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
+    for cat_name in pd['category_data']:
+        if not os.path.exists(pd['project_dir'] + '/html_files/' + cat_name):
+            os.mkdir(pd['project_dir'] + '/html_files/' + cat_name)
+        if not os.path.exists(pd['project_dir'] + '/md_files/' + cat_name):
+            os.mkdir(pd['project_dir'] + '/md_files/' + cat_name)
+
+
+
 def make_html_dir(pd):
     print(pd)
     print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
@@ -1425,7 +1439,6 @@ def first_make_html(pd):
     make_html_dir(pd)
     copy_template_files(pd)
     insert_to_temp(pd)
-    main(0, pd, True, True, False, True)
 
 
 # if __name__ == '__main__':
