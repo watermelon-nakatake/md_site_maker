@@ -20,6 +20,7 @@ import relational_article
 import reibun.main_info
 from joshideai import main_info
 import rei_site.main_info
+import konkatsu.main_info
 # import rei_site.main_info
 
 
@@ -137,12 +138,13 @@ def insert_to_top_page(title_change_id, pk_dic, pd):
         up_str = re.findall(r'<ul class="updli">(.+?)</ul>', long_str)[0]
         add_str = ''
         for c_id in title_change_id:
-            pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'] + ' 00:00:00', '%Y-%m-%d %H:%M:%S')
-            pub_date = datetime.date(pub_datetime.year, pub_datetime.month, pub_datetime.day)
-            status_str = '更新' if today - datetime.timedelta(days=3) > pub_date else '追加'
-            add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
-                today_str, pd['category_data'][pk_dic[c_id]['category']][0],
-                pd['main_dir'] + pk_dic[c_id]['file_path'], re.sub(r'【.+?】', '', pk_dic[c_id]['title']), status_str)
+            if pk_dic[c_id]['category'] != 'top':
+                pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'] + ' 00:00:00', '%Y-%m-%d %H:%M:%S')
+                pub_date = datetime.date(pub_datetime.year, pub_datetime.month, pub_datetime.day)
+                status_str = '更新' if today - datetime.timedelta(days=3) > pub_date else '追加'
+                add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
+                    today_str, pd['category_data'][pk_dic[c_id]['category']][0],
+                    pd['main_dir'] + pk_dic[c_id]['file_path'], re.sub(r'【.+?】', '', pk_dic[c_id]['title']), status_str)
         replace_str = update_filter(add_str + up_str)
         long_str = long_str.replace(up_str, replace_str)
         if pd['amp_flag']:
@@ -587,7 +589,8 @@ def short_cut_filter(long_str, pd, md_file_path):
 def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
     upload_list = []
     title_change_id = []
-    pd['site_shift_list'].remove(site_shift)
+    if pd['site_shift_list']:
+        pd['site_shift_list'].remove(site_shift)
     if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html'):
         if not os.path.exists(pd['project_dir'] + '/html_files'):
             os.mkdir(pd['project_dir'] + '/html_files')
@@ -614,7 +617,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         # print('file_name : ' + file_name)
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
-        plain_txt = re.sub(r'recipe_list = {.+$', '', plain_txt)
+        plain_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
@@ -964,6 +967,8 @@ def icon_filter(md_txt, pd):
         md_txt = main_info.joshideai_icon_filter(md_txt)
     elif pd['project_dir'] == 'rei_site':
         md_txt = rei_site.main_info.rei_site_icon_filter(md_txt)
+    elif pd['project_dir'] == 'konkatsu':
+        md_txt = konkatsu.main_info.konkatsu_icon_filter(md_txt)
     return md_txt
 
 
@@ -1383,62 +1388,6 @@ def all_html_insert():
                 print(long_str)
                 with open(file_path, 'w', encoding='utf-8') as g:
                     g.write(long_str)
-
-
-def make_html_dir_and_md(pd):
-    print(pd)
-    print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
-    for cat_name in pd['category_data']:
-        if not os.path.exists(pd['project_dir'] + '/html_files/' + cat_name):
-            os.mkdir(pd['project_dir'] + '/html_files/' + cat_name)
-        if not os.path.exists(pd['project_dir'] + '/md_files/' + cat_name):
-            os.mkdir(pd['project_dir'] + '/md_files/' + cat_name)
-
-
-
-def make_html_dir(pd):
-    print(pd)
-    print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
-    all_md_dir = [x.replace('/md_files/', '/html_files/') for x in glob.glob(pd['project_dir'] + '/md_files/**/',
-                                                                             recursive=True)]
-    # all_md_dir.extend([pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'css',
-    #                   pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images'])
-    print(all_md_dir)
-    for dir_path in all_md_dir:
-        if not os.path.exists(dir_path):
-            print('make_dir : ' + dir_path)
-            os.makedirs(dir_path)
-
-
-def copy_template_files(pd):
-    copy_list = ['template_files/template', 'template_files/images', 'template_files/css']
-    if not os.path.exists(pd['project_dir'] + '/html_files/pc/template'):
-        for base in copy_list:
-            shutil.copytree(base, pd['project_dir'] + '/html_files/' + pd['main_dir'] +
-                            base.replace('template_files/', ''))
-
-
-def insert_to_temp(pd):
-    with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'r',
-              encoding='utf-8') as f:
-        long_str = f.read()
-        long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
-        long_str = long_str.replace('<!--site-name-->', pd['site_name'])
-        long_str = long_str.replace('<!--main-domain-->', 'https://www.' + pd['domain_str'] + '/')
-        long_str = long_str.replace('<!--main-dir-->', pd['main_dir'])
-        cat_str = ''.join(['<li><a href="../{}/{}">{}</a></li>'
-                          .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
-                           pd['category_data']])
-        long_str = long_str.replace('<!--temp_category_list-->', cat_str)
-        with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'w',
-                  encoding='utf-8') as g:
-            g.write(long_str)
-
-
-def first_make_html(pd):
-    make_html_dir(pd)
-    copy_template_files(pd)
-    insert_to_temp(pd)
 
 
 # if __name__ == '__main__':

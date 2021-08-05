@@ -1,12 +1,11 @@
-import reibun.main_info
 from add_article import make_article_list
 import re
 import os
 import collections
 import glob
 import shutil
-import add_article.new_from_md
 import konkatsu.main_info
+import file_upload
 
 
 def make_project_dir_and_pd_file(project_name):
@@ -25,7 +24,7 @@ def make_project_dir_and_pd_file(project_name):
 
 
 def preparation_for_new_project(pd):
-    add_article.new_from_md.first_make_html(pd)
+    first_make_html(pd)
 
 
 def change_pk_dic(pd):
@@ -125,10 +124,77 @@ def check_all_html(target_dir):
         check_html_tag(long_str, h_path)
 
 
+def make_html_and_md_dir(pd):
+    with open('template_files/template/index_temp.md', 'r', encoding='utf-8') as f:
+        md_temp = f.read()
+    if not os.path.exists(pd['project_dir'] + '/pickle_pot'):
+        os.mkdir(pd['project_dir'] + '/pickle_pot')
+    if not os.path.exists(pd['project_dir'] + '/html_files'):
+        os.mkdir(pd['project_dir'] + '/html_files')
+    if not os.path.exists(pd['project_dir'] + '/md_files'):
+        os.mkdir(pd['project_dir'] + '/md_files')
+    for cat_name in pd['category_data']:
+        if not os.path.exists(pd['project_dir'] + '/html_files/' + cat_name):
+            os.mkdir(pd['project_dir'] + '/html_files/' + cat_name)
+        if not os.path.exists(pd['project_dir'] + '/md_files/' + cat_name):
+            os.mkdir(pd['project_dir'] + '/md_files/' + cat_name)
+            index_md = md_temp
+            index_md = index_md.replace('<!--title-->', pd['category_data'][cat_name][0])
+            index_md = index_md.replace('<!--id-num-->', str(pd['category_data'][cat_name][2]))
+            with open(pd['project_dir'] + '/md_files/' + cat_name + '/' +
+                      pd['category_data'][cat_name][1].replace('.html', '.md'), 'w', encoding='utf-8') as g:
+                g.write(index_md)
+    # todo: トップページとhtmlサイトマップページの自動作成
+
+
+def make_html_dir(pd):
+    print(pd)
+    print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
+    all_md_dir = [x.replace('/md_files/', '/html_files/') for x in glob.glob(pd['project_dir'] + '/md_files/**/',
+                                                                             recursive=True)]
+    # all_md_dir.extend([pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'css',
+    #                   pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images'])
+    print(all_md_dir)
+    for dir_path in all_md_dir:
+        if not os.path.exists(dir_path):
+            print('make_dir : ' + dir_path)
+            os.makedirs(dir_path)
+
+
+def copy_template_files(pd):
+    copy_list = ['template_files/template', 'template_files/images', 'template_files/css']
+    if not os.path.exists(pd['project_dir'] + '/html_files/pc/template'):
+        for base in copy_list:
+            shutil.copytree(base, pd['project_dir'] + '/html_files/' + pd['main_dir'] +
+                            base.replace('template_files/', ''))
+
+
+def insert_to_temp(pd):
+    with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'r',
+              encoding='utf-8') as f:
+        long_str = f.read()
+        long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
+        long_str = long_str.replace('<!--site-name-->', pd['site_name'])
+        long_str = long_str.replace('<!--main-domain-->', 'https://www.' + pd['domain_str'] + '/')
+        long_str = long_str.replace('<!--main-dir-->', pd['main_dir'])
+        cat_str = ''.join(['<li><a href="../{}/{}">{}</a></li>'
+                          .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
+                           pd['category_data']])
+        long_str = long_str.replace('<!--temp_category_list-->', cat_str)
+        with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'w',
+                  encoding='utf-8') as g:
+            g.write(long_str)
+
+
+def first_make_html(pd):
+    make_html_and_md_dir(pd)
+    copy_template_files(pd)
+    insert_to_temp(pd)
+
+
 if __name__ == '__main__':
     # pj_name = 'konkatsu'
     # make_project_dir_and_pd_file(pj_name)
 
     pd_t = konkatsu.main_info.info_dict
     preparation_for_new_project(pd_t)
-
