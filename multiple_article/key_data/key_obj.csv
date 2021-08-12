@@ -1,0 +1,101 @@
+イケメン,イケメン,good-looking_guy,かっこいい,の,l,s,n,TRUE,m,only_sub
+元カレ,元カレ,ex-boyfriend,失恋した,の,s,s,n,FALSE,m,only_sub
+同僚,同僚,colleague,気になる,の,s,s,n,FALSE,m,only_sub
+外国人,外国人,alien,イケてる,の,c,s,n,FALSE,m,only_sub
+上司,上司,boss,ダンディーな,の,s,s,n,FALSE,m,only_sub
+外人,外人,alien2,ダンディーな,の,c,s,n,FALSE,m,only_sub
+医者,医者,doctor,優秀な,の,j,s,n,FALSE,m,only_sub
+先輩,先輩,elder,親切な,の,s,s,n,FALSE,m,only_sub
+バンドマン,バンドマン,bandsman,モテる,の,j,s,n,FALSE,m,only_sub
+消防士,消防士,fireman,,の,j,s,n,FALSE,m,only_sub
+未成年,未成年,under_age,,の,s,s,n,FALSE,m,only_sub
+マッチョ,マッチョ男子,machismo,,の,c,s,n,FALSE,m,only_sub
+医師,医師,doctor2,頭がいい,の,j,s,n,FALSE,m,only_sub
+ヤリチン,ヤリチン,man_whore,,の,c,s,n,FALSE,m,only_sub
+職場の先輩,職場の先輩,office_elder,,の,s,s,n,FALSE,m,only_sub
+経営者,経営者,manager,,の,j,s,n,FALSE,m,only_sub
+研修医,研修医,resident,,の,j,s,n,FALSE,m,only_sub
+自衛隊,自衛隊員,self‐defense_forces,,の,j,s,n,FALSE,m,only_sub
+独身男性,独身男性,single,,の,s,s,n,FALSE,m,only_sub
+公務員,公務員,public_service_worker,安定した,の,j,s,n,FALSE,m,only_sub
+高学歴,高学歴男子,higher_education,,の,c,s,n,FALSE,m,only_sub
+自慢できる,自慢できる男性,proud,,no,c,s,n,FALSE,m,only_sub
+都合のいい,都合のいい男性,convenient,,no,c,s,n,FALSE,m,only_sub
+飽きない,飽きない男性,not_tired,,no,c,s,n,FALSE,m,only_sub
+営業マン,営業マン,salesman,,の,j,s,n,FALSE,m,only_sub
+お金持ち,お金持ち男性,rich,,の,s,s,n,FALSE,m,only_sub
+芸能人,芸能人,entertainer,,の,j,s,n,FALSE,m,only_sub
+警察官,警察官,policeman,,の,j,s,n,FALSE,m,only_sub
+アスリート,アスリート,athlete,,の,j,s,n,FALSE,m,only_sub
+優しい,優しい男性,gentle,,no,c,s,n,FALSE,m,only_sub
+尽くしてくれる,尽くしてくれる男性,devoted,,の,c,s,n,FALSE,m,only_sub
+セックスが上手い,セックスが上手い男性,nice_sex,,の,c,s,n,FALSE,m,only_sub
+マメな,マメな男性,methodical,,no,c,s,n,FALSE,m,only_sub
+御曹司,御曹司,son_of_noble_family,,の,j,s,n,FALSE,m,only_sub
+社長,社長,president,,の,j,s,n,FALSE,m,only_sub
+海上保安庁,海上保安官,coast_guard,,の,j,s,n,FALSE,m,only_sub
+パイロット,パイロット,pilot,,の,j,s,n,FALSE,m,only_sub
+弁護士,弁護士,lawyar,,の,j,s,n,FALSE,m,only_sub
+政治家,政治家,atatesman,,の,j,s,n,FALSE,m,only_sub
+医大生,医大生,medical_student,,の,j,s,n,FALSE,m,only_sub
+エリート,エリート男性,elite,,の,s,s,n,FALSE,m,only_sub
+東大卒,東大卒男性,tokyo_university,,の,s,s,n,FALSE,m,only_sub
+高身長,高身長男性,tall,,の,c,s,n,FALSE,m,only_sub
+おじさん,おじさん,uncle,,の,c,s,o,FALSE,m,only_sub
+年上,年上男性,older,,の,c,s,o,FALSE,m,only_sub
+中年,中年男性,middle_age,,の,c,s,o,FALSE,m,only_sub
+真面目な,真面目な男性,serious,,no,c,s,n,FALSE,m,only_sub
+O型,O型男性,type_O,,の,c,s,n,FALSE,m,only_sub
+B型,B型男性,type_B,,の,c,s,n,FALSE,m,only_sub
+AB型,AB型男性,type_AB,,の,c,s,n,FALSE,m,only_sub
+A型,A型男性,type_A,,の,c,s,n,FALSE,m,only_sub
+サラリーマン,サラリーマン,Salary man,,の,c,s,n,FALSE,m,only_sub
+薬剤師,薬剤師,pharmacist,,の,c,s,n,FALSE,m,only_sub
+理学療法士,理学療法士,physical therapist,,の,c,s,n,FALSE,m,only_sub
+税理士,税理士,Tax accountant,,の,c,s,n,FALSE,m,only_sub
+教員,教員,Teacher,,の,c,s,n,FALSE,m,only_sub
+エンジニア,エンジニア,engineer,IT系の,の,c,s,n,FALSE,m,only_sub
+建築士,建築士,Architect,,の,c,s,n,FALSE,m,only_sub
+クリエイター,クリエイター,creator,,の,c,s,n,FALSE,m,only_sub
+IT社長,IT社長,IT president,,の,c,s,n,FALSE,m,only_sub
+商社マン,商社マン,Commercial man,,の,c,s,n,FALSE,m,only_sub
+銀行員,銀行員,banker,,の,c,s,n,FALSE,m,only_sub
+金融マン,金融マン,Financial man,,の,c,s,n,FALSE,m,only_sub
+セクシー男優,セクシー男優,Sexy actor,,の,c,s,n,FALSE,m,only_sub
+AV男優,AV男優,AV actor,,の,c,s,n,FALSE,m,only_sub
+スポーツ選手,スポーツ選手,athlete2,,の,c,s,n,FALSE,m,only_sub
+自衛官,自衛官,Self-defense officer,,の,c,s,n,FALSE,m,only_sub
+ホスト,ホスト,host,,の,c,s,n,FALSE,m,only_sub
+ガテン系,ガテン系,physical-labor,,の,c,s,n,FALSE,m,only_sub
+大工,大工,carpenter,,の,c,s,n,FALSE,m,only_sub
+土木作業員,土木作業員,Civil engineering worker,,の,c,s,n,FALSE,m,only_sub
+ジムインストラクター,ジムインストラクター,Gym instructor,,の,c,s,n,FALSE,m,only_sub
+美容師,美容師,hairdresser,,の,c,s,n,FALSE,m,only_sub
+IT関係,IT関係,IT relation,,の,c,s,n,FALSE,m,only_sub
+外資系,外資系,Foreign owned,英語ペラペラの,の,c,s,n,FALSE,m,only_sub
+実業家,実業家,Businessman,,の,c,s,n,FALSE,m,only_sub
+アパレル関係,アパレル関係,Apparel,,の,c,s,n,FALSE,m,only_sub
+料理人,料理人,Cook,,の,c,s,n,FALSE,m,only_sub
+広告代理店,広告代理店社員,Advertising agency,センスのいい,の,c,s,n,FALSE,m,only_sub
+メーカー社員,メーカー社員,Manufacturer employee,,の,c,s,n,FALSE,m,only_sub
+公認会計士,公認会計士,Certified public accountant,,の,c,s,n,FALSE,m,only_sub
+テレビ関係,テレビマン,Television relationship,,の,c,s,n,FALSE,m,only_sub
+マスコミ関係,マスコミ社員,Masquietual relations,,の,c,s,n,FALSE,m,only_sub
+国家公務員,国家公務員,government official,,の,c,s,n,FALSE,m,only_sub
+地方公務員,地方公務員,Local government employee,,の,c,s,n,FALSE,m,only_sub
+キャリア官僚,キャリア官僚,Carrier bureaucracy,,の,c,s,n,FALSE,m,only_sub
+教師,教師,teacher,,の,c,s,n,FALSE,m,only_sub
+プログラマー,プログラマー,programmer,,の,c,s,n,FALSE,m,only_sub
+大企業,大企業社員,Large companies,,の,c,s,n,FALSE,m,only_sub
+パティシエ,パティシエ,Patisier,,の,c,s,n,FALSE,m,only_sub
+整体師,整体師,chiropractor,,の,c,s,n,FALSE,m,only_sub
+マッサージ師,マッサージ師,masseur,,の,c,s,n,FALSE,m,only_sub
+シェフ,シェフ,chef,,の,c,s,n,FALSE,m,only_sub
+介護士,介護士,carer,,の,c,s,n,FALSE,m,only_sub
+バーテンダー,バーテンダー,bartender,,の,c,s,n,FALSE,m,only_sub
+お笑い芸人,お笑い芸人,Comedian,,の,c,s,n,FALSE,m,only_sub
+漁師,漁師,Fisherman,,の,c,s,n,FALSE,m,only_sub
+農家,農家,Farmer,,の,c,s,n,FALSE,m,only_sub
+お坊さん,お坊さん,monk,,の,c,s,n,FALSE,m,only_sub
+YouTuber,YouTuber,YouTUBER,,の,c,s,n,FALSE,m,only_sub
+既婚者,既婚者男性,married,,の,c,s,n,FALSE,m,only_sub

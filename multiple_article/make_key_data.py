@@ -29,6 +29,8 @@ def make_key_dict_from_csv(file_name, new_file_name, common_dict):
 
 
 def import_english_str(insert_list, reference_dict):
+    result = {}
+    used_eng = []
     r_dict = {reference_dict[x]['obj_key']: reference_dict[x]['eng'] for x in reference_dict}
     # print(r_dict)
     translator = Translator()
@@ -40,6 +42,26 @@ def import_english_str(insert_list, reference_dict):
         if not row['eng']:
             row['eng'] = translator.translate(row['obj_key'], src="ja", dest="en").text
             print('{} :  {}'.format(row['obj_key'], row['eng']))
+        if row['eng'] not in used_eng:
+            used_eng.append(row['eng'])
+        else:
+            if row['eng'] + '2' not in used_eng:
+                row['eng'] = row['eng'] + '2'
+                used_eng.append(row['eng'])
+            elif row['eng'] + '3' not in used_eng:
+                row['eng'] = row['eng'] + '3'
+                used_eng.append(row['eng'])
+            else:
+                print('error!!')
+        result[row_i] = row
+    return result
+
+
+def write_csv_file(t_dict, file_path):
+    t_list = [[t_dict[x][y] for y in t_dict[x]] for x in t_dict]
+    with open(file_path, 'w') as f:
+        writer = csv.writer(f)
+        writer.writerows(t_list)
 
 
 def translate_ja_to_eng():
@@ -52,4 +74,5 @@ def translate_ja_to_eng():
 
 if __name__ == '__main__':
     i_dict = make_key_dict_from_csv('new_key - obj_w.csv', '', {'type': 'only_sub'})
-    import_english_str(i_dict, key_data.key_source.keyword_dict)
+    o_dict = import_english_str(i_dict, key_data.key_source.keyword_dict)
+    write_csv_file(o_dict, 'multiple_article/key_data/key_obj.csv')
