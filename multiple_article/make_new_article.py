@@ -8,8 +8,7 @@ import pickle
 import source_data
 import words_dict
 import words_dict as wd
-import obj_source
-import key_source
+from key_data import key_source, obj_source
 
 
 def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head):
