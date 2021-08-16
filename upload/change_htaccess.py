@@ -39,4 +39,4 @@ if __name__ == '__main__':
     # reibun_mint_changer('https://track.bannerbridge.net/click.php?APID=169174&affID=50161&siteID=110769')
     # sf_mint_changer('https://track.bannerbridge.net/click.php?APID=169188&affID=50161&siteID=200322')
 
-    ht_changer('reibun', 'mintj', 'https://mintj.com/?mdc=991&afguid=1nfi5oghug7jf2sgw4f1tjy4o4')
+    ht_changer('reibun', 'mintj', 'https://track.bannerbridge.net/click.php?APID=169175&affID=50161&siteID=110769')

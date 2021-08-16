@@ -1,6 +1,7 @@
 import csv
 import key_data.key_source
 from googletrans import Translator
+import key_data.key_obj_man
 
 
 def make_key_dict_from_csv(file_name, new_file_name, common_dict):
@@ -36,12 +37,13 @@ def import_english_str(insert_list, reference_dict):
     translator = Translator()
     for row_i in insert_list:
         row = insert_list[row_i]
-        if not row['eng'] and row['obj_key'] in r_dict:
-            row['eng'] = r_dict[row['obj_key']]
-            # print('{} :  {}'.format(row['obj_key'], row['eng']))
         if not row['eng']:
-            row['eng'] = translator.translate(row['obj_key'], src="ja", dest="en").text
-            print('{} :  {}'.format(row['obj_key'], row['eng']))
+            if row['obj_key'] in r_dict:
+                row['eng'] = r_dict[row['obj_key']].lower().replace(' ', '_')
+                # print('{} :  {}'.format(row['obj_key'], row['eng']))
+            else:
+                row['eng'] = translator.translate(row['obj_key'], src="ja", dest="en").text.lower().replace(' ', '_')
+                print('{} :  {}'.format(row['obj_key'], row['eng']))
         if row['eng'] not in used_eng:
             used_eng.append(row['eng'])
         else:
@@ -72,7 +74,17 @@ def translate_ja_to_eng():
     print(r2.text)
 
 
+def match_list():
+    a_dict = key_data.key_obj_man.keyword_dict
+    b_dict = key_data.key_obj_man.keyword_dict
+    for i_num in a_dict:
+        a_dict[i_num]['eng'] = b_dict[i_num]['eng']
+        a_dict[i_num]['o_adj'] = b_dict[i_num]['adj']
+    print(a_dict)
+
+
 if __name__ == '__main__':
     i_dict = make_key_dict_from_csv('new_key - obj_w.csv', '', {'type': 'only_sub'})
-    o_dict = import_english_str(i_dict, key_data.key_source.keyword_dict)
-    write_csv_file(o_dict, 'multiple_article/key_data/key_obj.csv')
+    # o_dict = import_english_str(i_dict, key_data.key_source.keyword_dict)
+    # write_csv_file(o_dict, 'multiple_article/key_data/key_obj.csv')
+    # match_list()

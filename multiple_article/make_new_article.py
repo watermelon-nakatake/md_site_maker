@@ -8,10 +8,12 @@ import pickle
 import source_data
 import words_dict
 import words_dict as wd
-from key_data import key_source, obj_source
+import key_data.key_source
+import key_data.obj_source
+import key_data.key_obj_man
 
 
-def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head):
+def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head, main_key):
     keywords_dict = {}
     recipe_dict = {}
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
@@ -28,9 +30,9 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
         os.mkdir(project_dir + '/md_files/' + dir_name)
     for obj in obj_list:
         if obj_source_filter(obj):
-            sub_str = np.random.choice(['独身男性', '童貞', '男性'])
-            sub_adj = np.random.choice(['普通の', 'モテない', '婚活中の'])
-            if obj['ms'] == 'm':
+            sub_str = np.random.choice(['女性', '女子'])
+            sub_adj = np.random.choice(['普通の', 'モテない', '独身の'])
+            if obj['ms'] == 'm' and main_key == 'sex':
                 act_adj = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 act_adj = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
@@ -50,7 +52,7 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
                 'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
-            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict)
+            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key)
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
@@ -67,16 +69,19 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
                [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
                [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
-    add_key_dict = {'s_adj': ['普通の', 'モテない', '婚活中の'], 'sub': ['独身男性', '男性']}
+    add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身女性', '女性', '女子']}
     main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
                              'act_connection': ['肉体関係'], 'act_code': 'sex', 'replace_words': []},
                      'mh': {'act': '婚活で出会う', 'act_noun': '結婚相手', 'act_noun_flag': False,
                             'act_connection': ['交際'], 'act_code': 'mh',
                             'replace_words': [['出会い系サイト', '婚活サイト'], ['出会い掲示板', '婚活掲示板'],
-                                              ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト']]}
+                                              ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト']]},
+                     'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+                            'act_connection': ['セフレ関係'], 'act_code': 'sf', 'replace_words': []}
                      }
     hot_info = {'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
     link_dict = make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list)
+    print(link_dict)
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
     for key_id in use_id_list:
@@ -93,10 +98,12 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                 keywords['a_adj'] = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 keywords['a_adj'] = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
+        if 'o_reason' not in keywords:
+            keywords['o_reason'] = '素敵な出会いが欲しいから'
         keywords.update(hot_info)
         # print(keywords)
         # make_keywords_sample(keywords)
-        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict)
+        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key)
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
 
@@ -109,6 +116,7 @@ def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_lis
     else:
         pkl_data = []
         os.mkdir('{}/pickle_pot/{}'.format(project_dir, dir_name))
+    print(pkl_data)
     result = {'obj': [], 'sub': [], 'act': []}
     use_id_list.extend(pkl_data)
     use_id_list = list(set(use_id_list))
@@ -122,7 +130,7 @@ def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_lis
 
 
 def obj_source_changer():
-    o_list = obj_source.obj_key_list
+    o_list = key_data.obj_source.obj_key_list
     result = {
         int(x['id']): {'obj_key': x['keyword'], 'obj': x['noun'], 'o_adj': x['adj'], 'obj_p': x['particle'],
                        'o_sex': 'w', 'o_reason': x['reason'], 'o_cat': x['t_cat'], 'o_ms': x['ms'],
@@ -141,10 +149,11 @@ def obj_source_filter(source_dict):
     #     return False
 
 
-def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict):
+def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key):
     recipe_list = {}
-    site_list = ['ワクワクメール', 'PCMAX']
-    site1 = np.random.choice(['ワクワクメール', 'PCMAX'])
+    site_list = ['ワクワクメール', 'Jメール']
+    site1 = np.random.choice(['ワクワクメール', 'Jメール'])
+    site_data = {'sf': {'site_name': 'セフレ道', 'site_author': '田中'}}
     site_list.remove(site1)
     if len(site_list) <= 1:
         site2 = site_list[0]
@@ -182,6 +191,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     this_path = dir_name + '/' + keywords['page_name']
     result_str = ''
     key_phrase = key_phrase_maker(keywords)
+    key_phrase['this-site-title'] = [site_data[main_key]['site_name']]
+    key_phrase['this-site-author'] = [site_data[main_key]['site_author']]
     noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
     for noun in wd.noun_list:
         if 'plist' in noun:
@@ -616,9 +627,9 @@ if __name__ == '__main__':
     # sf_import_to_source()
 
     # make_keywords_sample(keywords_p)
-    t_key_list = key_source.keyword_dict
-    make_new_pages_to_md_from_key_list('test', 'marriage_hunting', 'mh_{}_f', source_data, 'mh',
-                                       list(range(0, 208, 1)), t_key_list)
+    t_key_list = key_data.key_obj_man.keyword_dict
+    make_new_pages_to_md_from_key_list('test', 'sf_woman_obj', 'sf_{}_m', source_data, 'sf',
+                                       list(range(0, 100, 1)), t_key_list)
 
     # pprint.pprint(obj_source_changer(), width=150)
 
