@@ -52,14 +52,16 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
                 'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords)
-            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key)
+            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, True,
+                                        'man')
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
     # print(recipe_dict)
 
 
-def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_mod, main_key, use_id_list, key_list):
+def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_mod, main_key, use_id_list, key_list,
+                                       recipe_flag, subject_sex):
     # 必要最低限のキーワードリストで機動的に記事作成
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
@@ -71,12 +73,15 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
     add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身女性', '女性', '女子']}
     main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
+                             '2act_w': 'セックスしたい', '2act_noun': 'セックス',
                              'act_connection': ['肉体関係'], 'act_code': 'sex', 'replace_words': []},
                      'mh': {'act': '婚活で出会う', 'act_noun': '結婚相手', 'act_noun_flag': False,
+                            '2act_w': '結婚したい', '2act_noun': '結婚',
                             'act_connection': ['交際'], 'act_code': 'mh',
                             'replace_words': [['出会い系サイト', '婚活サイト'], ['出会い掲示板', '婚活掲示板'],
                                               ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト']]},
                      'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+                            '2act_w': 'セックスしたい', '2act_noun': 'セックス',
                             'act_connection': ['セフレ関係'], 'act_code': 'sf', 'replace_words': []}
                      }
     hot_info = {'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
@@ -103,7 +108,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
         keywords.update(hot_info)
         # print(keywords)
         # make_keywords_sample(keywords)
-        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key)
+        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
+                                    recipe_flag, subject_sex)
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
 
@@ -149,11 +155,25 @@ def obj_source_filter(source_dict):
     #     return False
 
 
-def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key):
+def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex):
     recipe_list = {}
     site_list = ['ワクワクメール', 'Jメール']
     site1 = np.random.choice(['ワクワクメール', 'Jメール'])
     site_data = {'sf': {'site_name': 'セフレ道', 'site_author': '田中'}}
+    sex_dict = [[['男性', '男'], [0.9, 0.1]], [['女性', '女子', '女の人'], [0.6, 0.2, 0.2]],
+                [['女性', '女の人']], [['女の子', '女子']],
+                [['彼氏', '恋人'], [0.7, 0.3]], [['彼女', '恋人'], [0.7, 0.3]],
+                [['旦那', '旦那さん', '夫', '配偶者'], [0.3, 0.2, 0.3, 0.2]],
+                [['奥さん', '妻', '配偶者', '夫人'], [0.4, 0.3, 0.2, 0.1]],
+                [['人妻', '既婚女性'], [0.6, 0.4]], [['既婚男性', '既婚者', '妻子持ち'], [0.5, 0.3, 0.2]],  # 10
+                [['処女']], [['童貞']],
+                [['女性会員', '女性利用者', '女性の利用者']], [['男性会員', '男性利用者', '男性の利用者']],
+                [['方', '男性', '人'], [0.4, 0.4, 0.2]], [['方', '女性', '人'], [0.4, 0.4, 0.2]],
+                [['ブサイク', 'ブス', 'デブス'], [0.4, 0.4, 0.2]],
+                [['ブサイクな', 'ブサメンの', 'イケメンじゃない'], [0.5, 0.2, 0.3]],
+                [['美人', '美女', '美形'], [0.5, 0.4, 0.1]], [['イケメン', '男前', 'いい男'], [0.5, 0.4, 0.1]],
+                [['かわいい', '美人', '美女', '美形'], [0.5, 0.3, 0.1, 0.1]],  # 20
+                []]
     site_list.remove(site1)
     if len(site_list) <= 1:
         site2 = site_list[0]
@@ -167,7 +187,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
                 section_list.append(
                     np.random.choice([x for x in section[0][s_code] if ((x['info']['only'] and keywords['act_code']
                                                                          in x['info']['only']) or not x['info']['only'])
-                                      and keywords['act_code'] not in x['info']['deny']]))
+                                      and keywords['act_code'] not in x['info']['deny']
+                                      and subject_sex not in x['info']['deny']]))
         else:
             if type(section[1]) == int:
                 s_num = section[1]
@@ -199,6 +220,51 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
             noun_dict[noun['before']] = [noun['after'], noun['plist']]
         else:
             noun_dict[noun['before']] = [noun['after']]
+    if subject_sex == 'man':
+        noun_dict['<!--sub-sex-->'] = sex_dict[0]
+        noun_dict['<!--obj-sex-->'] = sex_dict[1]
+        noun_dict['<!--obj-sex-o-->'] = sex_dict[2]
+        noun_dict['<!--obj-sex-y-->'] = sex_dict[3]
+        noun_dict['<!--obj-partner-->'] = sex_dict[4]
+        noun_dict['<!--sub-partner-->'] = sex_dict[5]
+        noun_dict['<!--obj-l-partner-->'] = sex_dict[6]
+        noun_dict['<!--sub-l-partner-->'] = sex_dict[7]
+        noun_dict['<!--obj-married-->'] = sex_dict[8]
+        noun_dict['<!--sub-married-->'] = sex_dict[9]
+        noun_dict['<!--obj-virgin-->'] = sex_dict[10]
+        noun_dict['<!--sub-virgin-->'] = sex_dict[11]
+        noun_dict['<!--obj-user-->'] = sex_dict[12]
+        noun_dict['<!--sub-reader-->'] = sex_dict[14]
+        noun_dict['<!--obj-not-beauty-->'] = sex_dict[16]
+        noun_dict['<!--sub-not-beauty-->'] = sex_dict[17]
+        noun_dict['<!--obj-beauty-->'] = sex_dict[18]
+        noun_dict['<!--sub-beauty-->'] = sex_dict[19]
+        noun_dict['<!--obj-beauty-y-->'] = sex_dict[20]
+        noun_dict['<!--sub-beauty-y-->'] = sex_dict[19]
+
+    else:
+        noun_dict['<!--sub-sex-->'] = sex_dict[1]
+        noun_dict['<!--obj-sex-->'] = sex_dict[0]
+        noun_dict['<!--obj-sex-o-->'] = sex_dict[0]
+        noun_dict['<!--obj-sex-y-->'] = sex_dict[0]
+        noun_dict['<!--obj-partner-->'] = sex_dict[5]
+        noun_dict['<!--sub-partner-->'] = sex_dict[4]
+        noun_dict['<!--obj-l-partner-->'] = sex_dict[7]
+        noun_dict['<!--sub-l-partner-->'] = sex_dict[6]
+        noun_dict['<!--obj-married-->'] = sex_dict[9]
+        noun_dict['<!--sub-married-->'] = sex_dict[8]
+        noun_dict['<!--obj-virgin-->'] = sex_dict[11]
+        noun_dict['<!--sub-virgin-->'] = sex_dict[10]
+        noun_dict['<!--obj-user-->'] = sex_dict[13]
+        noun_dict['<!--sub-reader-->'] = sex_dict[15]
+        noun_dict['<!--obj-not-beauty-->'] = sex_dict[17]
+        noun_dict['<!--sub-not-beauty-->'] = sex_dict[16]
+        noun_dict['<!--obj-beauty-->'] = sex_dict[19]
+        noun_dict['<!--sub-beauty-->'] = sex_dict[18]
+        noun_dict['<!--obj-beauty-y-->'] = sex_dict[19]
+        noun_dict['<!--sub-beauty-y-->'] = sex_dict[20]
+    # todo: 童貞、処女, boyfriend, wife
+
     conj_dict = {x['before']: x['after'] for x in wd.conj_list}
     title_str, t_recipe = make_new_title(source_mod.title[keywords['act_code']], noun_dict, conj_dict, site1, site2,
                                          link_dict, this_path)
@@ -212,7 +278,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     result_str += 'k::' + ' '.join([keywords['all_key'], keywords['act'].replace('する', '')]) + '\n'
 
     for this_sec in section_list:
-        section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, link_dict, this_path)
+        section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, link_dict, this_path,
+                                               recipe_flag)
         section_str = section_str.replace('%', '\n%')
         result_str += section_str + '\n\n'
         recipe_list[this_sec['info']['sec_name']] = recipe
@@ -254,7 +321,10 @@ def key_phrase_maker(keywords):
         act_way_g = act_noun + '<!--make-way-g-->'
         obj = keywords['obj']
         obj_k = keywords['obj_key']
-        obj_as_target = keywords['obj_key'] + keywords['obj_p'] + keywords['act_noun']
+        if keywords['obj_p'] == 'no':
+            obj_as_target = keywords['obj_key'] + keywords['act_noun']
+        else:
+            obj_as_target = keywords['obj_key'] + keywords['obj_p'] + keywords['act_noun']
         connection = keywords['act_connection']
     else:
         act_base = keywords['act']
@@ -305,6 +375,10 @@ def key_phrase_maker(keywords):
     sub_adj = keywords['s_adj']
 
     obj_adj = keywords['o_adj']
+    if keywords['2act_w']:
+        act2_w = keywords['2act_w']
+    else:
+        act2_w = act_noun + 'にしたい'
     keys = {'k-how-to': [sub + 'が' + obj_k + act_with_g + act_way_g,
                          sub + 'が' + obj_adj + obj_k + act_with_g + act_way_g],
             'k-how-to-adj': [sub + 'が' + obj_adj + obj_k + act_with_g + act_way_g],
@@ -374,8 +448,8 @@ def key_phrase_maker(keywords):
             'k-sub-want': [act_i + 'たい' + sub],
             'k-obj-category': [obj_cat1],
             'k-obj-category2': [obj_cat2],
-            'k-2nd-act-noun': ['デート'],
-            'k-2nd-act-want': [act_noun + 'にしたい'],
+            'k-2nd-act-noun': [keywords['2act_noun']],
+            'k-2nd-act-want': [act2_w],
             'target-parson': [target_person],
             'reason': keywords['o_reason'],
             'act-with-d': [act_with_d]}
@@ -468,7 +542,7 @@ def make_keywords_sample_dict(keywords):
     return new_dict
 
 
-def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_dict, this_path):
+def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_dict, this_path, recipe_flag):
     recipe = {}
     str_list = []
     used_conj = []
@@ -493,13 +567,22 @@ def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_di
         elif len(section_dict[sen_num]) == 1:
             str_list, used_conj = insert_word_to_sentence(section_dict[sen_num][0], noun_dict, conj_dict, site1, site2,
                                                           str_list, used_conj, v_word, link_dict, this_path)
+            if recipe_flag:
+                str_list[-1] = str_list[-1] + '<!--sw-{}-n{}-c{}-->'.format(section_dict['info']['sec_name'],
+                                                                            str(sen_num), '0')
             recipe[sen_num] = 0
         else:
             choice_str = random.choice(section_dict[sen_num])
             str_list, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2,
                                                           str_list, used_conj, v_word, link_dict, this_path)
             recipe[sen_num] = section_dict[sen_num].index(choice_str)
+            if recipe_flag:
+                str_list[-1] = str_list[-1] + '<!--sw-{}-n{}-c{}-->'.format(section_dict['info']['sec_name'],
+                                                                            str(sen_num),
+                                                                            section_dict[sen_num].index(choice_str))
     section_str = '\n'.join(str_list)
+    if not recipe_flag:
+        section_str = section_str + '\n<!--rs-{}-->'.format(section_dict['info']['sec_name'])
     return section_str, recipe
 
 
@@ -628,8 +711,8 @@ if __name__ == '__main__':
 
     # make_keywords_sample(keywords_p)
     t_key_list = key_data.key_obj_man.keyword_dict
-    make_new_pages_to_md_from_key_list('test', 'sf_woman_obj', 'sf_{}_m', source_data, 'sf',
-                                       list(range(0, 100, 1)), t_key_list)
+    make_new_pages_to_md_from_key_list('test', 'sf_woman_obj2', 'sf_{}_m', source_data, 'sf',
+                                       list(range(0, 100, 1)), t_key_list, recipe_flag=True, subject_sex='woman')
 
     # pprint.pprint(obj_source_changer(), width=150)
 

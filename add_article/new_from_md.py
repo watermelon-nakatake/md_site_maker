@@ -820,6 +820,9 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
                          r'<div class="fr2"><div class="icon"><div class="rm_b rm_\1"></div></div>', new_str)
         new_str = re.sub(r'<!--rw_(\d)-->',
                          r'<div class="fr2"><div class="icon"><div class="rw_b rw_\1"></div></div>', new_str)
+        new_str = re.sub(r'<!--sw-.+?-->', '', new_str)
+        new_str = re.sub(r'<!--rs-.+?-->', '', new_str)
+
         new_str = new_str.replace('<!--e/rm-->', '</div>')
         new_str = new_str.replace('<!--e/rw-->', '</div>')
         if pd['project_dir'] == 'reibun':

@@ -25,6 +25,8 @@ def translate_md_to_html(temp_path, md_path_dir):
         m_str = re.sub(r'%r_.+?%([\s\S]+?)\n\n', r'\[st-kaiwa2]\1[/st-kaiwa2]\n\n', m_str)
         m_str = re.sub(r'%l_.+?%([\s\S]+?)\n\n', r'\[st-kaiwa1 r]\1[/st-kaiwa1]\n\n', m_str)
         m_str = re.sub(r'%r_\?([\s\S]+?)\n\n', r'\[st-kaiwa2]\1[/st-kaiwa2]\n\n', m_str)
+        m_str = re.sub(r'<!--sw-.+?-->', '', m_str)
+        m_str = re.sub(r'<!--rs-.+?-->', '', m_str)
 
         ht_str = markdown.markdown(m_str)
         ht_str = ht_str.replace('。\n', '。<br/>\n')
