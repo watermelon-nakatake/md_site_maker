@@ -4,7 +4,7 @@ import os
 import collections
 import glob
 import shutil
-import konkatsu.main_info
+import howto.main_info
 import file_upload
 
 
@@ -193,8 +193,10 @@ def first_make_html(pd):
 
 
 if __name__ == '__main__':
-    # pj_name = 'konkatsu'
+    # 新規プロジェクトの１段階
+    # pj_name = 'howto'
     # make_project_dir_and_pd_file(pj_name)
 
-    pd_t = konkatsu.main_info.info_dict
+    # info_dict.py の作成後実行
+    pd_t = howto.main_info.info_dict
     preparation_for_new_project(pd_t)

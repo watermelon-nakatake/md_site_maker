@@ -11,9 +11,10 @@ import words_dict as wd
 import key_data.key_source
 import key_data.obj_source
 import key_data.key_obj_man
+import key_data.key_obj_woman
 
 
-def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head, main_key):
+def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head, main_key, a_adj_flag):
     keywords_dict = {}
     recipe_dict = {}
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
@@ -32,7 +33,7 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
         if obj_source_filter(obj):
             sub_str = np.random.choice(['女性', '女子'])
             sub_adj = np.random.choice(['普通の', 'モテない', '独身の'])
-            if obj['ms'] == 'm' and main_key == 'sex':
+            if obj['o_ms'] == 'm' and main_key == 'sex':
                 act_adj = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 act_adj = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
@@ -51,9 +52,9 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
                 'act_code': 'sex',
                 'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
-            make_keywords_sample(keywords)
+            make_keywords_sample(keywords, a_adj_flag)
             recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, True,
-                                        'man')
+                                        'man', a_adj_flag)
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
@@ -71,22 +72,43 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
                [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
                [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
-    add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身女性', '女性', '女子']}
+    if subject_sex == 'man':
+        add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身男性', '男性']}
+    else:
+        add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身女性', '女性', '女子']}
     main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
-                             '2act_w': 'セックスしたい', '2act_noun': 'セックス',
+                             'a_adj_flag': False, '2act_w': 'セックスしたい', '2act_noun': 'セックス',
                              'act_connection': ['肉体関係'], 'act_code': 'sex', 'replace_words': []},
-                     'mh': {'act': '婚活で出会う', 'act_noun': '結婚相手', 'act_noun_flag': False,
-                            '2act_w': '結婚したい', '2act_noun': '結婚',
-                            'act_connection': ['交際'], 'act_code': 'mh',
+                     'mh': {'act': '出会う', 'act_noun': '出会い', 'act_noun_flag': False, 'a_adj': '婚活で',
+                            'a_adj_flag': True, '2act_w': '結婚したい', '2act_noun': '結婚',
+                            'act_connection': ['交際', 'お付き合い'], 'act_code': 'mh',
                             'replace_words': [['出会い系サイト', '婚活サイト'], ['出会い掲示板', '婚活掲示板'],
-                                              ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト']]},
-                     'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+                                              ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト'],
+                                              ['で婚活で', 'の婚活で']]},
+                     'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'a_adj_flag': False,
                             '2act_w': 'セックスしたい', '2act_noun': 'セックス',
-                            'act_connection': ['セフレ関係'], 'act_code': 'sf', 'replace_words': []}
+                            'act_connection': ['セフレ関係', '肉体関係'], 'act_code': 'sf', 'replace_words': []},
+                     'gf': {'act': '彼女を作る', 'act_noun': '彼女', 'act_noun_flag': False, 'a_adj_flag': False,
+                            '2act_w': 'デートしたい', '2act_noun': 'デート',
+                            'act_connection': ['交際', 'お付き合い'], 'act_code': 'gf',
+                            'replace_words': []},
+                     'cov': {'act': '彼女を作る', 'act_noun': '彼女', 'act_noun_flag': False,
+                             'a_adj': 'コロナ禍に', 'a_adj_flag': True,
+                             '2act_w': 'デートしたい', '2act_noun': 'デート',
+                             'act_connection': ['交際', 'お付き合い'], 'act_code': 'cov',
+                             'replace_words': [['出会い系サイト', 'マッチングアプリ'],
+                                               ['マッチングアプリのマッチングアプリ', 'マッチングアプリ'],
+                                               ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
+                                               ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
+                                               ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
                      }
     hot_info = {'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
+    a_adj_flag = main_key_dict[main_key]['a_adj_flag']
+    if not use_id_list:
+        use_id_list = list(key_list.keys())
+    use_id_list = id_filter(use_id_list, main_key, key_list)
     link_dict = make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list)
-    print(link_dict)
+    # print(link_dict)
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
     for key_id in use_id_list:
@@ -103,15 +125,26 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                 keywords['a_adj'] = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 keywords['a_adj'] = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
+        if main_key == 'mh' and subject_sex == 'man':
+            keywords['o_adj'] = np.random.choice(['素敵な', '理想的な', '', ''])
         if 'o_reason' not in keywords:
             keywords['o_reason'] = '素敵な出会いが欲しいから'
         keywords.update(hot_info)
         # print(keywords)
         # make_keywords_sample(keywords)
         recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
-                                    recipe_flag, subject_sex)
+                                    recipe_flag, subject_sex, a_adj_flag)
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
+
+
+def id_filter(use_id_list, main_key, key_list):
+    if main_key == 'mh':
+        use_id_list = [x for x in use_id_list if key_list[x]['o_ms'] != 'm' and 'ヤリチン' not in key_list[x]['all_key']
+                       and 'セックス' not in key_list[x]['all_key'] and 'AV' not in key_list[x]['all_key']
+                       and key_list[x]['o_cat'] != 'p']
+    # print(use_id_list)
+    return use_id_list
 
 
 def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list):
@@ -130,6 +163,8 @@ def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_lis
         keywords = key_list[key_id]
         if keywords['type'] == 'only_obj':
             result['obj'].append([keywords['obj'], html_str.replace('{}', keywords['eng'].replace('-', '_'))])
+        elif keywords['type'] == 'only_sub':
+            result['sub'].append([keywords['sub'], html_str.replace('{}', keywords['eng'].replace('-', '_'))])
     with open(pkl_path, 'wb') as k:
         pickle.dump(use_id_list, k)
     return result
@@ -139,7 +174,7 @@ def obj_source_changer():
     o_list = key_data.obj_source.obj_key_list
     result = {
         int(x['id']): {'obj_key': x['keyword'], 'obj': x['noun'], 'o_adj': x['adj'], 'obj_p': x['particle'],
-                       'o_sex': 'w', 'o_reason': x['reason'], 'o_cat': x['t_cat'], 'o_ms': x['ms'],
+                       'o_sex': 'w', 'o_reason': x['reason'], 'o_cat': x['t_cat'], 'o_ms': x['o_ms'],
                        'o_age': x['t_age'],
                        'o_look': x['look'], 'eng': x['eng'], 'type': 'only_obj', 'all_key': x['keyword']} for x in
         o_list}
@@ -149,17 +184,20 @@ def obj_source_changer():
 def obj_source_filter(source_dict):
     print(source_dict)
     return True
-    # if source_dict['ms'] == 's':
+    # if source_dict['o_ms'] == 's':
     #     return True
     # else:
     #     return False
 
 
-def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex):
+def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex,
+                  a_adj_flag):
     recipe_list = {}
     site_list = ['ワクワクメール', 'Jメール']
     site1 = np.random.choice(['ワクワクメール', 'Jメール'])
-    site_data = {'sf': {'site_name': 'セフレ道', 'site_author': '田中'}}
+    site_data = {'sf': {'site_name': 'セフレ道', 'site_author': '田中'},
+                 'mh': {'site_name': 'ネット婚活で結婚相手探し', 'site_author': '伊東'},
+                 'cov': {'site_name': 'マッチングアプリで恋人探し', 'site_author': '山本'}}
     sex_dict = [[['男性', '男'], [0.9, 0.1]], [['女性', '女子', '女の人'], [0.6, 0.2, 0.2]],
                 [['女性', '女の人']], [['女の子', '女子']],
                 [['彼氏', '恋人'], [0.7, 0.3]], [['彼女', '恋人'], [0.7, 0.3]],
@@ -173,7 +211,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
                 [['ブサイクな', 'ブサメンの', 'イケメンじゃない'], [0.5, 0.2, 0.3]],
                 [['美人', '美女', '美形'], [0.5, 0.4, 0.1]], [['イケメン', '男前', 'いい男'], [0.5, 0.4, 0.1]],
                 [['かわいい', '美人', '美女', '美形'], [0.5, 0.3, 0.1, 0.1]],  # 20
-                []]
+                [['熟女', '熟年女性']], [['熟年男性', 'イケオジ', 'おじ様']],
+                [['人', '女性', '女の人']], [['人', '男性', '男の人']]]
     site_list.remove(site1)
     if len(site_list) <= 1:
         site2 = site_list[0]
@@ -203,15 +242,23 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
                 t1 = sample_l[:s_num]
             # print(t1)
             for t1e in t1:
-                section_list.append(
-                    np.random.choice([x for x in section[0][t1e] if ((x['info']['only'] and keywords['act_code']
-                                                                      in x['info']['only']) or not x['info']['only'])
-                                      and keywords['act_code'] not in x['info']['deny']]))
-                used_list.append(t1e)
+                # print(t1e)
+                t_list = [x for x in section[0][t1e] if ((x['info']['only'] and keywords['act_code']
+                                                          in x['info']['only']) or not x['info']['only'])
+                          and keywords['act_code'] not in x['info']['deny']]
+                if t_list:
+                    section_list.append(
+                        np.random.choice([x for x in section[0][t1e] if ((x['info']['only'] and keywords['act_code']
+                                                                          in x['info']['only']) or not x['info'][
+                            'only'])
+                                          and keywords['act_code'] not in x['info']['deny']]))
+                    used_list.append(t1e)
     # print(section_list)
     this_path = dir_name + '/' + keywords['page_name']
     result_str = ''
-    key_phrase = key_phrase_maker(keywords)
+    key_phrase = key_phrase_maker(keywords, a_adj_flag)
+    # print(key_phrase)
+    # return
     key_phrase['this-site-title'] = [site_data[main_key]['site_name']]
     key_phrase['this-site-author'] = [site_data[main_key]['site_author']]
     noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
@@ -220,6 +267,34 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
             noun_dict[noun['before']] = [noun['after'], noun['plist']]
         else:
             noun_dict[noun['before']] = [noun['after']]
+    if main_key == 'mh':
+        noun_dict['<!--sex-->'] = [['結婚']]
+        noun_dict['<!--h-2-->'] = [['素敵', '魅力的']]
+        noun_dict['<!--hな-->'] = [['素敵な', '魅力的な']]
+        noun_dict['<!--ero-n-->'] = [['素敵', '魅力的']]
+        noun_dict['<!--ero-->'] = [['素敵', '魅力的']]
+        noun_dict['<!--sefure-->'] = [['結婚相手']]
+        noun_dict['<!--d-app-->'] = [['婚活サイト', '婚活アプリ', 'マッチングサイト', 'マッチングアプリ']]
+        noun_dict['<!--site-->'] = [['婚活サイト', '婚活アプリ', 'マッチングサイト', 'マッチングアプリ']]
+        noun_dict['<!--deaikei-->'] = [['婚活サイト', '婚活アプリ', 'マッチングサイト', 'マッチングアプリ']]
+        noun_dict['<!--net-d-->'] = [['ネット婚活', 'オンラインの出会い', 'オンライン婚活']]
+        noun_dict['<!--kiss-or-sof-->'] = [['彼氏', '恋人']]
+        noun_dict['<!--eros-degree-->'] = [['真剣さ']]
+        noun_dict['<!--be-adult-->'] = [['真面目な', '真剣な', '本気の']]
+        noun_dict['<!--adult-->'] = [['結婚相手探し', '婚活', '真面目な出会い', '真剣な出会い', '本気の出会い']]
+        noun_dict['<!--adult-bbs-->'] = [['婚活掲示板']]
+        noun_dict['<!--kiss-->'] = [['デート']]
+    elif main_key == 'cov':
+        noun_dict['<!--d-app-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--site-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--deaikei-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--net-d-->'] = [['オンラインの出会い', 'ネットの出会い'], [0.8, 0.2]]
+        noun_dict['<!--adult-bbs-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--d-bbs-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--s-bbs-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--pure-bbs-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+        noun_dict['<!--b-bbs-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
+
     if subject_sex == 'man':
         noun_dict['<!--sub-sex-->'] = sex_dict[0]
         noun_dict['<!--obj-sex-->'] = sex_dict[1]
@@ -241,7 +316,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         noun_dict['<!--sub-beauty-->'] = sex_dict[19]
         noun_dict['<!--obj-beauty-y-->'] = sex_dict[20]
         noun_dict['<!--sub-beauty-y-->'] = sex_dict[19]
-
+        noun_dict['<!--obj-older-->'] = sex_dict[21]
+        noun_dict['<!--target-person-->'] = sex_dict[23]
     else:
         noun_dict['<!--sub-sex-->'] = sex_dict[1]
         noun_dict['<!--obj-sex-->'] = sex_dict[0]
@@ -263,19 +339,24 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         noun_dict['<!--sub-beauty-->'] = sex_dict[18]
         noun_dict['<!--obj-beauty-y-->'] = sex_dict[19]
         noun_dict['<!--sub-beauty-y-->'] = sex_dict[20]
-    # todo: 童貞、処女, boyfriend, wife
+        noun_dict['<!--obj-older-->'] = sex_dict[22]
+        noun_dict['<!--target-person-->'] = sex_dict[24]
 
     conj_dict = {x['before']: x['after'] for x in wd.conj_list}
     title_str, t_recipe = make_new_title(source_mod.title[keywords['act_code']], noun_dict, conj_dict, site1, site2,
                                          link_dict, this_path)
     result_str += 't::' + title_str + '\n'
-    print(title_str)
     des_str, d_recipe = make_new_title(source_mod.des[keywords['act_code']], noun_dict, conj_dict, site1, site2,
                                        link_dict, this_path)
     result_str += 'd::' + des_str.replace('\n', '') + '\n'
     result_str += 'n::' + str(keywords['id']) + '\n'
     result_str += 'e::\n'
-    result_str += 'k::' + ' '.join([keywords['all_key'], keywords['act'].replace('する', '')]) + '\n'
+    if main_key == 'mh':
+        result_str += 'k::' + ' '.join([keywords['all_key'], '婚活']) + '\n'
+    elif main_key == 'cov':
+        result_str += 'k::' + ' '.join([keywords['all_key'], 'コロナ禍 マッチングアプリ']) + '\n'
+    else:
+        result_str += 'k::' + ' '.join([keywords['all_key'], keywords['act'].replace('する', '')]) + '\n'
 
     for this_sec in section_list:
         section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, link_dict, this_path,
@@ -285,7 +366,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         recipe_list[this_sec['info']['sec_name']] = recipe
     # if 'ins_link_' in result_str:
     #     result_str = result_str.replace('ins_link_', html_head + '_')
-    result_str = replace_code_to_md(result_str)
+    result_str = replace_code_to_md(result_str, subject_sex)
     result_str = result_str.replace('\n\n- ', '\n\n%arlist%\n- ')
     if keywords['replace_words']:
         for r_words in keywords['replace_words']:
@@ -298,14 +379,17 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     return recipe_list
 
 
-def replace_code_to_md(md_str):
-    replace_list = [['%rp', '%r_palm%\n'], ['%r?', '%r_?%\n'], ['%r!', '%r_!%\n'], ['%l!', '%l_!%\n']]
+def replace_code_to_md(md_str, subject_sex):
+    if subject_sex == 'man':
+        replace_list = [['%rp', '%r_palm%\n'], ['%r?', '%r_?%\n'], ['%r!', '%r_!%\n'], ['%l!', '%l_!%\n']]
+    else:
+        replace_list = [['%rp', '%rw_palm%\n'], ['%r?', '%rw_?%\n'], ['%r!', '%rw_!%\n'], ['%l!', '%l_!%\n']]
     for r_list in replace_list:
         md_str = md_str.replace(r_list[0], r_list[1])
     return md_str
 
 
-def key_phrase_maker(keywords):
+def key_phrase_maker(keywords, a_adj_flag):
     if '作る' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('を作る', 'にし')
@@ -326,6 +410,27 @@ def key_phrase_maker(keywords):
         else:
             obj_as_target = keywords['obj_key'] + keywords['obj_p'] + keywords['act_noun']
         connection = keywords['act_connection']
+    elif '出会う' in keywords['act']:
+        act_base = keywords['act']
+        act_i = act_base.replace('出会う', '出会い')
+        act_and = act_base.replace('出会う', '出会って')
+        act_can = act_base.replace('出会う', '出会え')
+        act_can_d = act_base.replace('出会う', '出会え')
+        act_noun = keywords['act_noun']
+        act_with = 'と'
+        act_with_g = 'と'
+        act_with_d = 'と'
+        act_way = act_base + '<!--way-->'
+        act_way_g = act_base + '<!--way-->'
+        obj = keywords['obj']
+        obj_k = keywords['obj']
+        if keywords['act_code'] == 'mh':
+            act_target = '結婚相手'
+            obj_as_target = '<!--sub-l-partner-->にしたい' + obj
+        else:
+            act_target = act_base.replace('出会う', '出会い')
+            obj_as_target = act_target + 'の' + obj
+        connection = keywords['act_connection']
     else:
         act_base = keywords['act']
         act_i = act_base.replace('する', 'し')
@@ -343,7 +448,6 @@ def key_phrase_maker(keywords):
         obj_k = keywords['obj']
         obj_as_target = act_target + 'の' + obj
         connection = keywords['act_connection']
-    act_adj = keywords['a_adj']
     if keywords['o_sex'] == 'w':
         target_person = '<!--women-{}-->'.format(keywords['o_age'])
     elif keywords['o_sex'] == 'm':
@@ -379,16 +483,22 @@ def key_phrase_maker(keywords):
         act2_w = keywords['2act_w']
     else:
         act2_w = act_noun + 'にしたい'
-    keys = {'k-how-to': [sub + 'が' + obj_k + act_with_g + act_way_g,
-                         sub + 'が' + obj_adj + obj_k + act_with_g + act_way_g],
-            'k-how-to-adj': [sub + 'が' + obj_adj + obj_k + act_with_g + act_way_g],
+    if a_adj_flag:
+        act_adj = ''
+        m_act_adj = keywords['a_adj']
+    else:
+        act_adj = keywords['a_adj']
+        m_act_adj = ''
+    keys = {'k-how-to': [sub + 'が' + m_act_adj + obj_k + act_with_g + act_way_g,
+                         sub + 'が' + m_act_adj + obj_adj + obj_k + act_with_g + act_way_g],
+            'k-how-to-adj': [sub + 'が' + m_act_adj + obj_adj + obj_k + act_with_g + act_way_g],
             'k-can': [sub + 'が' + obj_k + act_with + act_can + 'る'],
             'k-can-s': [sub + 'が' + obj_k + act_with + act_can + 'ます'],
-            'k-do': [sub + 'が' + obj_k + act_with + act_base],
-            'k-do-a': [sub + 'が' + obj_adj + obj_k + act_with + act_base],
-            'k-easy': [sub + 'が' + obj + act_with_d + act_i + 'やすい'],
-            'k-want': [sub + 'が' + obj + act_with_d + act_i + 'たい'],
-            'k-find': [sub + 'が' + obj_k + 'の' + act_target + 'を探す'],
+            'k-do': [sub + 'が' + m_act_adj + obj_k + act_with + act_base],
+            'k-do-a': [sub + 'が' + m_act_adj + obj_adj + obj_k + act_with + act_base],
+            'k-easy': [sub + 'が' + m_act_adj + obj + act_with_d + act_i + 'やすい'],
+            'k-want': [sub + 'が' + m_act_adj + obj + act_with_d + act_i + 'たい'],
+            'k-find': [sub + 'が' + m_act_adj + obj_k + 'の' + act_target + 'を探す'],
             'k-obj': [obj],
             'k-obj-adj': [obj_k + 'の'],
             'k-obj-status': [obj],
@@ -398,40 +508,42 @@ def key_phrase_maker(keywords):
             'k-obj-noun-j': [obj_adj + obj, obj],
             'k-obj-target': [obj_as_target],
             'k-obj-want': [act_i + 'たい' + obj],
-            'k-obj-wife': ['<!--wife-->の' + obj],
-            'k-obj-act-find': [obj_as_target + 'を探す'],
-            'k-obj-act-find-a': [obj_adj + obj_as_target + 'を探す'],
-            'k-obj-act-can-find': [obj_as_target + 'が見つかる', obj_as_target + 'が探せる'],
-            'k-obj-act-can-do': [obj_k + act_with + act_can + 'る'],
-            'k-obj-act-can-do-a': [obj_adj + obj_k + act_with + act_can + 'る'],
-            'k-obj-act-can-do-long': [obj_k + act_with + act_can + 'ます'],
-            'k-obj-act-can-not-do': [obj_k + act_with + act_can + 'ない'],
-            'k-obj-act-can-not-do-long': [obj_k + act_with + act_can + 'ません'],
+            'k-obj-wife': ['<!--obj-married-->の' + obj],
+            'k-obj-act-find': [m_act_adj + obj_as_target + 'を探す'],
+            'k-obj-act-find-a': [m_act_adj + obj_adj + obj_as_target + 'を探す'],
+            'k-obj-act-can-find': [m_act_adj + obj_as_target + 'が見つかる', m_act_adj + obj_as_target + 'が探せる'],
+            'k-obj-act-can-do': [m_act_adj + obj_k + act_with + act_can + 'る'],
+            'k-obj-act-can-do-a': [m_act_adj + obj_adj + obj_k + act_with + act_can + 'る'],
+            'k-obj-act-can-do-long': [m_act_adj + obj_k + act_with + act_can + 'ます'],
+            'k-obj-act-can-not-do': [m_act_adj + obj_k + act_with + act_can + 'ない'],
+            'k-obj-act-can-not-do-long': [m_act_adj + obj_k + act_with + act_can + 'ません'],
             'k-obj-act-to-find': [obj_as_target + '探し'],
             'k-obj-act-to-find-a': [obj_adj + obj_as_target + '探し'],
-            'k-obj-act-want': [obj + act_with_d + act_i + 'たい', obj + act_with_d + act_i + 'たい'],
-            'k-obj-act-want-a': [obj_adj + obj + act_with_d + act_i + 'たい'],
-            'k-obj-act-way': [obj_k + act_with + act_way, obj_k + act_with_g + act_way_g],
-            'k-obj-act-do': [obj_k + act_with + act_base],
-            'k-obj-act-do-a': [obj_adj + obj_k + act_with + act_base],
-            'k-obj-act-easy': [obj + act_with_d + act_i + 'やすい'],
-            'k-obj-act-find-easy': [act_can_d + 'る' + obj + 'を探しやすい', act_can_d + 'る' + obj + 'を見つけやすい'],
-            'k-obj-act-can-meet': [obj_as_target + 'と出会える'],
-            'k-obj-act-can-meet-a': [obj_adj + obj_as_target + 'と出会える'],
+            'k-obj-act-want': [m_act_adj + obj + act_with_d + act_i + 'たい',
+                               m_act_adj + obj + act_with_d + act_i + 'たい'],
+            'k-obj-act-want-a': [m_act_adj + obj_adj + obj + act_with_d + act_i + 'たい'],
+            'k-obj-act-way': [m_act_adj + obj_k + act_with + act_way, obj_k + act_with_g + act_way_g],
+            'k-obj-act-do': [m_act_adj + obj_k + act_with + act_base],
+            'k-obj-act-do-a': [m_act_adj + obj_adj + obj_k + act_with + act_base],
+            'k-obj-act-easy': [m_act_adj + obj + act_with_d + act_i + 'やすい'],
+            'k-obj-act-find-easy': [m_act_adj + act_can_d + 'る' + obj + 'を探しやすい',
+                                    m_act_adj + act_can_d + 'る' + obj + 'を見つけやすい'],
+            'k-obj-act-can-meet': [m_act_adj + obj_as_target + 'と出会える'],
+            'k-obj-act-can-meet-a': [m_act_adj + obj_adj + obj_as_target + 'と出会える'],
             'k-obj-act-noun': [obj_as_target],
             'k-obj-act-noun-a': [obj_adj + obj_as_target],
-            'k-act': [act_base, act_adj + act_base],
-            'k-act-adj': [act_adj + act_base],
-            'k-act-adj-b': [act_adj],
-            'k-act-i': [act_i],
-            'k-act-and': [act_and],
-            'k-act-want': [act_i + 'たい'],
+            'k-act': [m_act_adj + act_base, m_act_adj + act_adj + act_base],
+            'k-act-adj': [m_act_adj + act_adj + act_base],
+            'k-act-adj-b': [m_act_adj + act_adj],
+            'k-act-i': [m_act_adj + act_i],
+            'k-act-and': [m_act_adj + act_and],
+            'k-act-want': [m_act_adj + act_i + 'たい'],
             'k-act-can': [act_can + 'る', act_can_d + 'る'],
             'k-act-can-i': [act_can],  # セフレにでき（そう）,セックスでき(ない）
             'k-act-can-long': [act_can + 'ます'],
             'k-act-can-not-do': [act_can + 'ない'],
             'k-act-can-not-do-long': [act_can + 'ません'],
-            'k-act-way': [act_way],
+            'k-act-way': [m_act_adj + act_way],
             'k-act-can-easy': [act_i + 'やすい', '<!--easily-->' + act_can + 'る'],
             'k-act-to-find': [act_target + '探し'],
             'k-act-find': [act_target + 'を探す'],
@@ -502,9 +614,9 @@ def key_phrase_maker(keywords):
     return keys
 
 
-def make_keywords_sample(keywords):
+def make_keywords_sample(keywords, a_adj_flag):
     r_str = ''
-    keys = key_phrase_maker(keywords)
+    keys = key_phrase_maker(keywords, a_adj_flag)
     for k in keys:
         r_str += '<!--{}-->  :  {}\n'.format(k, pprint.pformat(keys[k]))
         # print('<!--{}-->  :  {}'.format(k, keys[k]))
@@ -512,10 +624,10 @@ def make_keywords_sample(keywords):
     #     f.write(r_str)
 
 
-def make_keywords_sample_dict(keywords):
+def make_keywords_sample_dict(keywords, a_adj_flag):
     result_dict = {}
     new_dict = []
-    keys = key_phrase_maker(keywords)
+    keys = key_phrase_maker(keywords, a_adj_flag)
     anchor_dict = {y['before']: y['after'] for y in wd.noun_list}
     # print(keys)
     for before_s in keys:
@@ -613,6 +725,7 @@ def link_obj_word_insert(sentence_str, link_dict, this_path):
     used_list = []
     type_str_l = re.findall(r'<!--link-word-(.+?)-->', sentence_str)
     for type_str in type_str_l:
+        # print(link_dict)
         select_str = random.choice(link_dict[type_str])
         if select_str[1] in used_list or select_str[1] == this_path:
             while select_str[1] in used_list or select_str[1] == this_path:
@@ -673,16 +786,30 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
                     if len(noun_dict[blank]) <= 1:
                         sentence_str = sentence_str.replace(blank, random.choice(noun_dict[blank][0]), 1)
                     else:
-                        sentence_str = sentence_str.replace(blank,
-                                                            np.random.choice(noun_dict[blank][0],
-                                                                             p=noun_dict[blank][1]), 1)
+                        sentence_str = sentence_str.replace(blank, np.random.choice(noun_dict[blank][0],
+                                                                                    p=noun_dict[blank][1]), 1)
     for bad_w in words_dict.correct_dict:
         if bad_w in sentence_str:
             sentence_str = sentence_str.replace(bad_w, words_dict.correct_dict[bad_w])
     if '。' in sentence_str:
         sentence_str = re.sub(r'。(.+)$', r'。\n\1', sentence_str)
+    sentence_str = a_adj_filter(sentence_str)
     str_list.append(sentence_str)
     return str_list, used_conj
+
+
+def a_adj_filter(sentence_str):
+    a_adj_list = ['婚活で', 'コロナ禍に']
+    for adj_str in a_adj_list:
+        if sentence_str.count(adj_str) > 1:
+            split_list = sentence_str.split(adj_str)
+            if len(split_list) > 1:
+                split_list.insert(1, adj_str)
+            else:
+                split_list.insert(0, adj_str)
+            sentence_str = ''.join(split_list)
+            # print('k_join : {}'.format(sentence_str))
+    return sentence_str
 
 
 def sf_import_to_source(import_list):
@@ -705,14 +832,41 @@ def sf_import_to_source(import_list):
         f.write(main_str)
 
 
+def auto_make_md_for_all_key(project_dir, dir_name, html_str, main_key, recipe_flag):
+    # html_str -> keyword : {},  性別 : {s},  main_key : {m}    for ex  '{}_{s}_{m}
+    key_data_dict = {'obj_m': {'data': key_data.key_obj_woman, 'sex': 'man'},
+                     'obj_w': {'data': key_data.key_obj_man, 'sex': 'woman'}}
+    if not os.path.exists(project_dir + '/' + dir_name):
+        os.mkdir(project_dir + '/' + dir_name)
+    for d_id in key_data_dict:
+        if key_data_dict[d_id]['sex'] == 'man':
+            sex_str = 'm'
+        else:
+            sex_str = 'w'
+        html_str = html_str.replace('{s}', sex_str).replace('{m}', main_key)
+        make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_data, main_key, [],
+                                           key_data_dict[d_id]['data'], recipe_flag=recipe_flag,
+                                           subject_sex=key_data_dict[d_id]['sex'])
+
+
 if __name__ == '__main__':
     # test_new_section(source_data.all_list, keywords_p)
     # sf_import_to_source()
 
     # make_keywords_sample(keywords_p)
-    t_key_list = key_data.key_obj_man.keyword_dict
-    make_new_pages_to_md_from_key_list('test', 'sf_woman_obj2', 'sf_{}_m', source_data, 'sf',
-                                       list(range(0, 100, 1)), t_key_list, recipe_flag=True, subject_sex='woman')
+    # t_key_list = key_data.key_obj_man.keyword_dict
+    # make_new_pages_to_md_from_key_list('test', 'mh_woman', 'mh_{}_m', source_data, 'mh',
+    #                                    list(range(0, 115, 1)), t_key_list, recipe_flag=True, subject_sex='woman',
+    #                                    a_adj_flag=True)
+    t_key_list = key_data.key_obj_woman.keyword_dict
+    make_new_pages_to_md_from_key_list('test', 'corona', '{}_m_cov', source_data, 'cov',
+                                       [], t_key_list, recipe_flag=True, subject_sex='man')
+
+    # todo: word dictのアダルトワードを置換
+    # todo: actの複数パターン　お泊まりセックス、アブノーマル、複数プレイ
+    # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
+    # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等
+    # todo: act_adj コロナ禍にオンラインの出会いで・・・な彼氏と出会う　を早急に
 
     # pprint.pprint(obj_source_changer(), width=150)
 

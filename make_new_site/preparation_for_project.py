@@ -49,5 +49,6 @@ if __name__ == '__main__':
     # make_new_main_data_pkl()
     # change_pk_dic()
     # insert_pub_date()
+    # 新規プロジェクトはpreparation.py から
     insert_id_and_category_to_html()
     print(make_article_list.read_pickle_pot('main_data'))
