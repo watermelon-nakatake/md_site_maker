@@ -29,10 +29,10 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param site_shift: サイトの表示に関するフラグ
     :param pd: projectのデータ
-    :param mod_date_flag: mod_dateを更新するかのフラグ
-    :param last_mod_flag: last_modを更新するか否か
+    :param mod_date_flag: mod_dateを更新するかのフラグ Trueなら更新
+    :param last_mod_flag: last_modを更新するか否か Trueなら更新
     :param upload_flag: アップロードするか否か
-    :param first_time_flag: 初回作成か否か
+    :param first_time_flag: 初回作成か否か 初回作成はTrue
     :return: none
     """
     now = datetime.datetime.now()
@@ -44,7 +44,8 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         mod_list, last_mod_time = pick_up_mod_md_files(pd)
     print('modify list :')
     print(mod_list)
-    upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag)
+    upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag,
+                                                                first_time_flag)
     side_bar_dic = make_all_side_bar(pk_dic, pd)
     print(upload_list)
     print(title_change_id)
@@ -102,7 +103,7 @@ def save_last_mod(pd):
 
 
 def modify_file_check(file_list, last_md_mod):
-    result = [y for y in file_list if os.path.getmtime(y) > last_md_mod]
+    result = [y for y in file_list if os.path.getmtime(y) > last_md_mod.timestamp()]
     return result
 
 
@@ -135,7 +136,7 @@ def insert_to_top_page(title_change_id, pk_dic, pd):
     with open(pd['project_dir'] + '/html_files/index.html', 'r', encoding='utf-8') as f:
         long_str = f.read()
         # 更新記事一覧
-        up_str = re.findall(r'<ul class="updli">(.+?)</ul>', long_str)[0]
+        up_str = re.findall(r'<ul class="updli">(.*?)</ul>', long_str)[0]
         add_str = ''
         for c_id in title_change_id:
             if pk_dic[c_id]['category'] != 'top':
@@ -200,7 +201,7 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
     # category page
     ct_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     for cat in ct_cat:
-        print(cat)
+        # print(cat)
         if cat != 'top':
             index_path = '{}/html_files/{}{}/{}'.format(pd['project_dir'], pd['main_dir'], cat, pd['category_data'][cat][1])
             with open(index_path, 'r', encoding='utf-8') as h:
@@ -373,13 +374,25 @@ def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd):
 
 def insert_sidebar_to_str(long_str, side_bar_dic, category, insert_cat, pd):
     if 'pop' in insert_cat:
-        long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
-                          '"sbh">人気記事</div><ul>' + side_bar_dic['pop'] + '</ul></div>', long_str)
+        if category == 'top':
+            pop_str = side_bar_dic['pop'].replace('"../', '"')
+        else:
+            pop_str = side_bar_dic['pop']
+        long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>', '"sbh">人気記事</div><ul>' + pop_str + '</ul></div>',
+                          long_str)
     if 'important' in insert_cat:
-        long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
-                          '"sbh">重要記事</div><ul>' + side_bar_dic['important'] + '</ul></div>', long_str)
+        if category == 'top':
+            imp_str = side_bar_dic['important'].replace('"../', '"')
+        else:
+            imp_str = side_bar_dic['important']
+        long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>', '"sbh">重要記事</div><ul>' + imp_str + '</ul></div>',
+                          long_str)
+    if category == 'top':
+        new_str = side_bar_dic['new'].replace('"../', '"')
+    else:
+        new_str = side_bar_dic['new']
     long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
-                      '"sbh">最近の更新記事</div><ul>' + side_bar_dic['new'] + '</ul></div>', long_str)
+                      '"sbh">最近の更新記事</div><ul>' + new_str + '</ul></div>', long_str)
     if category in insert_cat and category in pd['category_name']:
         long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
                           '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][0]
@@ -433,7 +446,7 @@ def make_all_side_bar(pk_dic, pd):
             keys = list(pk_dic.keys())[:]
             numpy.random.shuffle(keys)
             id_list = keys[:10]
-            print(pk_dic)
+            # print(pk_dic)
         result_dic[z] = ''.join(
             ['<li><a href="../{}">{}</a></li>'.format(pk_dic[use_id]['file_path'],
                                                       re.sub(r'【.+?】', '', pk_dic[use_id]['title'])) for use_id in
@@ -533,7 +546,7 @@ def insert_markdown_anchor(long_str):
         index_str_l = re.findall(r'<nav id="mokuji">.+?</nav>', long_str)
         index_list = [[str_i[1], str_i[0]] for str_i in re.findall(r'<a href="(.+?)">(.+?)</a>', index_str_l[0])]
         for a_str in a_str_l:
-            print(a_str)
+            # print(a_str)
             if a_str != 'href="#header"':
                 a_text = re.sub(r'href="#(.+?)"', r'\1', a_str)
                 r_str = re.sub(r'href="#(.+?)"', 'href="' + [x[1] for x in index_list if x[0] == a_text][0] + '"',
@@ -586,7 +599,7 @@ def short_cut_filter(long_str, pd, md_file_path):
     return long_str
 
 
-def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
+def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time_flag):
     upload_list = []
     title_change_id = []
     if pd['site_shift_list']:
@@ -608,9 +621,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         pk_dic = make_article_list.read_pickle_pot('main_data', pd)
     else:
         pk_dic = {}
-    # print(make_article_list.read_pickle_pot('main_data_c2', pd))
+    # print(make_article_list.read_pickle_pot('main_data', pd))
     # return
-    # todo: 事前作成
     for md_file_path in md_file_list:
         print('start : ' + md_file_path)
         file_name = md_file_path.replace(pd['project_dir'] + '/md_files/' + pd['main_dir'], '').replace('.md', '.html')
@@ -878,7 +890,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         layout_flag = check_page_layout(new_str)
         # print(new_str)
         if mod_flag:
-            if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name):
+            if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name) and not first_time_flag:
                 pub_or_mod = 'mod'
                 # print(pk_dic)
                 if pk_dic[this_id]['title'] != title_str:
@@ -917,7 +929,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag):
         with open(md_file_path, 'w', encoding='utf-8') as j:
             j.write(plain_txt)
     return upload_list, pk_dic, title_change_id
-# todo: main_data.txt 作成の修正
 
 
 def insert_ds_link(md_str, pd):
@@ -972,6 +983,8 @@ def icon_filter(md_txt, pd):
         md_txt = rei_site.main_info.rei_site_icon_filter(md_txt)
     elif pd['project_dir'] == 'konkatsu':
         md_txt = konkatsu.main_info.konkatsu_icon_filter(md_txt)
+    else:
+        md_txt = reibun.main_info.reibun_icon_filter(md_txt)
     return md_txt
 
 
@@ -1358,7 +1371,7 @@ def make_1st_title_log(pd):
     new_dec = {'index.html': {'2020/11/10': ['title', 2000]}}
     for p_id in pk_dic:
         new_dec[pk_dic[p_id][0]] = {'2020/11/10': [pk_dic[p_id][1], pk_dic[p_id][6]]}
-    print(new_dec)
+    # print(new_dec)
     make_article_list.save_data_to_pickle(new_dec, 'title_log', pd)
 
 
@@ -1388,7 +1401,7 @@ def all_html_insert():
             if 'https://www.demr.jp/pc/template/pc_tmp.html' in long_str:
                 long_str = long_str.replace('https://www.demr.jp/pc/template/pc_tmp.html',
                                             'https://www.demr.jp/' + file_path.replace('reibun/html_files/', ''))
-                print(long_str)
+                # print(long_str)
                 with open(file_path, 'w', encoding='utf-8') as g:
                     g.write(long_str)
 
@@ -1424,4 +1437,3 @@ def all_html_insert():
     # all_html_insert()
     # first_make_html(rpd)
     # insert_to_temp(rpd)
-# todo: 関連記事改善

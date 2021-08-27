@@ -105,6 +105,8 @@ def rei_site_icon_filter(long_str):
     long_str = long_str.replace('%rw_?%', '%rw_1%')
     long_str = long_str.replace('%rw_!%', '%rw_2%')
     long_str = long_str.replace('%rw_?', '%rw_1%')
+    long_str = long_str.replace('%rw_palm%', '%rw_1%')
+    long_str = long_str.replace('%rw_palm', '%rw_1%')
     long_str = long_str.replace('%rw_!', '%rw_2%')
     if '%r_' in long_str or '%l_' in long_str:
         print('There is wrong icon tag !')

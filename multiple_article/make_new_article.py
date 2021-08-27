@@ -13,6 +13,8 @@ import key_data.obj_source
 import key_data.key_obj_man
 import key_data.key_obj_woman
 
+key_source_dict = {'obj_m': key_data.key_obj_woman.keyword_dict, 'obj_w': key_data.key_obj_man.keyword_dict}
+
 
 def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head, main_key, a_adj_flag):
     keywords_dict = {}
@@ -25,7 +27,7 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
     # print(art_map_p)
     # art_map = [[[{x['info']['sec_name']: x for x in u} for u in z[0]], z[1]] for z in art_map_p]
     # print(art_map)
-    link_dict = make_key_and_path_list(project_dir, dir_name, html_head, [], [])
+    link_dict = make_key_and_path_list(project_dir, dir_name, html_head, [], [], 'man')
     id_num = start_num
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
@@ -54,7 +56,7 @@ def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num,
             # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
             make_keywords_sample(keywords, a_adj_flag)
             recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, True,
-                                        'man', a_adj_flag)
+                                        'man', a_adj_flag, [])
             keywords_dict[page_name] = keywords
             recipe_dict[page_name] = recipe_list
             id_num += 1
@@ -67,6 +69,11 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
     recipe_dict = {}
+    if os.path.exists(project_dir + '/pickle_pot/used_id.pkl'):
+        with open(project_dir + '/pickle_pot/used_id.pkl', 'rb') as p:
+            used_id = pickle.load(p)
+    else:
+        used_id = []
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
                [source_mod.d_advantage, [2, 3, 4]],
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
@@ -74,8 +81,10 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
     if subject_sex == 'man':
         add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身男性', '男性']}
+        friend_str = '彼女'
     else:
         add_key_dict = {'s_adj': ['普通の', 'モテない'], 'sub': ['独身女性', '女性', '女子']}
+        friend_str = '彼氏'
     main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
                              'a_adj_flag': False, '2act_w': 'セックスしたい', '2act_noun': 'セックス',
                              'act_connection': ['肉体関係'], 'act_code': 'sex', 'replace_words': []},
@@ -92,7 +101,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                             '2act_w': 'デートしたい', '2act_noun': 'デート',
                             'act_connection': ['交際', 'お付き合い'], 'act_code': 'gf',
                             'replace_words': []},
-                     'cov': {'act': '彼女を作る', 'act_noun': '彼女', 'act_noun_flag': False,
+                     'cov': {'act': friend_str + 'を作る', 'act_noun': friend_str, 'act_noun_flag': False,
                              'a_adj': 'コロナ禍に', 'a_adj_flag': True,
                              '2act_w': 'デートしたい', '2act_noun': 'デート',
                              'act_connection': ['交際', 'お付き合い'], 'act_code': 'cov',
@@ -107,7 +116,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
     if not use_id_list:
         use_id_list = list(key_list.keys())
     use_id_list = id_filter(use_id_list, main_key, key_list)
-    link_dict = make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list)
+    link_dict = make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list, subject_sex)
     # print(link_dict)
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
@@ -132,9 +141,12 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
         keywords.update(hot_info)
         # print(keywords)
         # make_keywords_sample(keywords)
-        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
-                                    recipe_flag, subject_sex, a_adj_flag)
+        recipe_list, used_id = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
+                                             recipe_flag, subject_sex, a_adj_flag, used_id)
+
         recipe_dict[keywords['page_name']] = recipe_list
+    with open(project_dir + '/pickle_pot/used_id.pkl', 'wb') as k:
+        pickle.dump(used_id, k)
     # print(recipe_dict)
 
 
@@ -147,26 +159,39 @@ def id_filter(use_id_list, main_key, key_list):
     return use_id_list
 
 
-def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list):
+def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list, subject_sex):
     pkl_path = '{}/pickle_pot/{}/key_and_path.pkl'.format(project_dir, dir_name)
+    result = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': []}
     if os.path.exists(pkl_path):
         with open(pkl_path, 'rb') as p:
             pkl_data = pickle.load(p)
     else:
-        pkl_data = []
-        os.mkdir('{}/pickle_pot/{}'.format(project_dir, dir_name))
-    print(pkl_data)
-    result = {'obj': [], 'sub': [], 'act': []}
-    use_id_list.extend(pkl_data)
-    use_id_list = list(set(use_id_list))
-    for key_id in use_id_list:
-        keywords = key_list[key_id]
-        if keywords['type'] == 'only_obj':
-            result['obj'].append([keywords['obj'], html_str.replace('{}', keywords['eng'].replace('-', '_'))])
-        elif keywords['type'] == 'only_sub':
-            result['sub'].append([keywords['sub'], html_str.replace('{}', keywords['eng'].replace('-', '_'))])
+        pkl_data = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': []}
+        if not os.path.exists('{}/pickle_pot/{}'.format(project_dir, dir_name)):
+            os.mkdir('{}/pickle_pot/{}'.format(project_dir, dir_name))
+    # print(pkl_data)
+    # print(key_list)
+    if key_list[0]['type'] == 'only_obj':
+        key_type = 'obj'
+    elif key_list[0]['type'] == 'only_sub':
+        key_type = 'sub'
+    else:
+        key_type = 'obj'
+    if subject_sex == 'man':
+        s_type = 'm'
+    else:
+        s_type = 'w'
+    if key_type != 'act':
+        type_str = key_type + '_' + s_type
+    else:
+        type_str = key_type
+    pkl_data[type_str] = list(set(pkl_data[type_str] + use_id_list))
+    for key_cat in pkl_data:
+        result[key_cat] = [[key_source_dict[key_cat][x]['obj'],
+                            html_str.replace('{}', key_source_dict[key_cat][x]['eng'].replace('-', '_'))]
+                           for x in pkl_data[key_cat]]
     with open(pkl_path, 'wb') as k:
-        pickle.dump(use_id_list, k)
+        pickle.dump(pkl_data, k)
     return result
 
 
@@ -191,7 +216,7 @@ def obj_source_filter(source_dict):
 
 
 def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex,
-                  a_adj_flag):
+                  a_adj_flag, used_id):
     recipe_list = {}
     site_list = ['ワクワクメール', 'Jメール']
     site1 = np.random.choice(['ワクワクメール', 'Jメール'])
@@ -344,12 +369,21 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
 
     conj_dict = {x['before']: x['after'] for x in wd.conj_list}
     title_str, t_recipe = make_new_title(source_mod.title[keywords['act_code']], noun_dict, conj_dict, site1, site2,
-                                         link_dict, this_path)
+                                         link_dict, this_path, subject_sex)
     result_str += 't::' + title_str + '\n'
     des_str, d_recipe = make_new_title(source_mod.des[keywords['act_code']], noun_dict, conj_dict, site1, site2,
-                                       link_dict, this_path)
+                                       link_dict, this_path, subject_sex)
     result_str += 'd::' + des_str.replace('\n', '') + '\n'
-    result_str += 'n::' + str(keywords['id']) + '\n'
+    # print(used_id)
+    # print(type(used_id[-1]))
+    # print(type(keywords['id']))
+    if int(keywords['id']) in used_id:
+        result_str += 'n::' + str(max(used_id) + 1) + '\n'
+        print(max(used_id))
+        used_id.append(max(used_id) + 1)
+    else:
+        result_str += 'n::' + str(keywords['id']) + '\n'
+        used_id.append(int(keywords['id']))
     result_str += 'e::\n'
     if main_key == 'mh':
         result_str += 'k::' + ' '.join([keywords['all_key'], '婚活']) + '\n'
@@ -360,7 +394,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
 
     for this_sec in section_list:
         section_str, recipe = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, link_dict, this_path,
-                                               recipe_flag)
+                                               recipe_flag, subject_sex)
         section_str = section_str.replace('%', '\n%')
         result_str += section_str + '\n\n'
         recipe_list[this_sec['info']['sec_name']] = recipe
@@ -376,7 +410,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # print(result_str)
     with open(project_dir + '/md_files/' + dir_name + '/' + keywords['page_name'] + '.md', 'w', encoding='utf-8') as f:
         f.write(result_str)
-    return recipe_list
+    return recipe_list, used_id
 
 
 def replace_code_to_md(md_str, subject_sex):
@@ -654,7 +688,8 @@ def make_keywords_sample_dict(keywords, a_adj_flag):
     return new_dict
 
 
-def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_dict, this_path, recipe_flag):
+def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_dict, this_path, recipe_flag,
+                     subject_sex):
     recipe = {}
     str_list = []
     used_conj = []
@@ -678,7 +713,8 @@ def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_di
             recipe[sen_num] = 0
         elif len(section_dict[sen_num]) == 1:
             str_list, used_conj = insert_word_to_sentence(section_dict[sen_num][0], noun_dict, conj_dict, site1, site2,
-                                                          str_list, used_conj, v_word, link_dict, this_path)
+                                                          str_list, used_conj, v_word, link_dict, this_path,
+                                                          subject_sex)
             if recipe_flag:
                 str_list[-1] = str_list[-1] + '<!--sw-{}-n{}-c{}-->'.format(section_dict['info']['sec_name'],
                                                                             str(sen_num), '0')
@@ -686,7 +722,8 @@ def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_di
         else:
             choice_str = random.choice(section_dict[sen_num])
             str_list, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2,
-                                                          str_list, used_conj, v_word, link_dict, this_path)
+                                                          str_list, used_conj, v_word, link_dict, this_path,
+                                                          subject_sex)
             recipe[sen_num] = section_dict[sen_num].index(choice_str)
             if recipe_flag:
                 str_list[-1] = str_list[-1] + '<!--sw-{}-n{}-c{}-->'.format(section_dict['info']['sec_name'],
@@ -698,12 +735,12 @@ def make_new_section(section_dict_p, noun_dict, conj_dict, site1, site2, link_di
     return section_str, recipe
 
 
-def make_new_title(section_list, noun_dict, conj_dict, site1, site2, obj_list, link_dict):
+def make_new_title(section_list, noun_dict, conj_dict, site1, site2, obj_list, link_dict, subject_sex):
     str_list = []
     used_conj = []
     choice_str = random.choice(section_list)
     section_str, used_conj = insert_word_to_sentence(choice_str, noun_dict, conj_dict, site1, site2, str_list,
-                                                     used_conj, [], obj_list, link_dict)
+                                                     used_conj, [], obj_list, link_dict, subject_sex)
     recipe = {0: section_list.index(choice_str)}
     return section_str[0], recipe
 
@@ -721,15 +758,20 @@ def link_area_insert(sentence_str):
     return sentence_str
 
 
-def link_obj_word_insert(sentence_str, link_dict, this_path):
+def link_obj_word_insert(sentence_str, link_dict, this_path, subject_sex):
     used_list = []
     type_str_l = re.findall(r'<!--link-word-(.+?)-->', sentence_str)
+    if subject_sex == 'man':
+        s_str = 'm'
+    else:
+        s_str = 'w'
     for type_str in type_str_l:
         # print(link_dict)
-        select_str = random.choice(link_dict[type_str])
+        type_str_s = type_str + '_' + s_str
+        select_str = random.choice(link_dict[type_str_s])
         if select_str[1] in used_list or select_str[1] == this_path:
             while select_str[1] in used_list or select_str[1] == this_path:
-                select_str = random.choice(link_dict[type_str])
+                select_str = random.choice(link_dict[type_str_s])
             used_list.append(select_str[1])
         sentence_str = sentence_str.replace('<!--link-word-{}-->'.format(type_str),
                                             '[{}]({}.md)'.format(select_str[0], select_str[1]), 1)
@@ -755,7 +797,7 @@ def same_line_words_filter(sentence_str):
 
 
 def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, str_list, used_conj, v_word, link_dict,
-                            this_path):
+                            this_path, subject_sex):
     if v_word:
         sentence_str = sentence_str.replace(v_word[0], v_word[1])
     conj_blank = re.findall(r'<!--c-.+?-->', sentence_str)
@@ -771,7 +813,7 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
     sentence_str = sentence_str.replace('<!--site-1-->', site1)
     sentence_str = sentence_str.replace('<!--site-2-->', site2)
     if '<!--link-word-' in sentence_str:
-        sentence_str = link_obj_word_insert(sentence_str, link_dict, this_path)
+        sentence_str = link_obj_word_insert(sentence_str, link_dict, this_path, subject_sex)
     if '<!--link-area-->' in sentence_str:
         sentence_str = link_area_insert(sentence_str)
     sentence_str = sentence_str.replace('<!--sefre-page-->', '')
@@ -834,17 +876,17 @@ def sf_import_to_source(import_list):
 
 def auto_make_md_for_all_key(project_dir, dir_name, html_str, main_key, recipe_flag):
     # html_str -> keyword : {},  性別 : {s},  main_key : {m}    for ex  '{}_{s}_{m}
-    key_data_dict = {'obj_m': {'data': key_data.key_obj_woman, 'sex': 'man'},
-                     'obj_w': {'data': key_data.key_obj_man, 'sex': 'woman'}}
-    if not os.path.exists(project_dir + '/' + dir_name):
-        os.mkdir(project_dir + '/' + dir_name)
+    key_data_dict = {'obj_m': {'data': key_data.key_obj_woman.keyword_dict, 'sex': 'man'},
+                     'obj_w': {'data': key_data.key_obj_man.keyword_dict, 'sex': 'woman'}}
+    if not os.path.exists(project_dir + '/md_files/' + dir_name):
+        os.mkdir(project_dir + '/md_files/' + dir_name)
     for d_id in key_data_dict:
         if key_data_dict[d_id]['sex'] == 'man':
             sex_str = 'm'
         else:
             sex_str = 'w'
-        html_str = html_str.replace('{s}', sex_str).replace('{m}', main_key)
-        make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_data, main_key, [],
+        html_str_i = html_str.replace('{s}', sex_str).replace('{m}', main_key)
+        make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str_i, source_data, main_key, [],
                                            key_data_dict[d_id]['data'], recipe_flag=recipe_flag,
                                            subject_sex=key_data_dict[d_id]['sex'])
 
@@ -858,15 +900,15 @@ if __name__ == '__main__':
     # make_new_pages_to_md_from_key_list('test', 'mh_woman', 'mh_{}_m', source_data, 'mh',
     #                                    list(range(0, 115, 1)), t_key_list, recipe_flag=True, subject_sex='woman',
     #                                    a_adj_flag=True)
-    t_key_list = key_data.key_obj_woman.keyword_dict
-    make_new_pages_to_md_from_key_list('test', 'corona', '{}_m_cov', source_data, 'cov',
-                                       [], t_key_list, recipe_flag=True, subject_sex='man')
+    # t_key_list = key_data.key_obj_woman.keyword_dict
+    # make_new_pages_to_md_from_key_list('test', 'corona', '{}_m_cov', source_data, 'cov',
+    #                                    [], t_key_list, recipe_flag=True, subject_sex='man')
 
-    # todo: word dictのアダルトワードを置換
+    auto_make_md_for_all_key('test', 'corona2', '{}_{s}_{m}', 'cov', recipe_flag=True)
+
     # todo: actの複数パターン　お泊まりセックス、アブノーマル、複数プレイ
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等
-    # todo: act_adj コロナ禍にオンラインの出会いで・・・な彼氏と出会う　を早急に
 
     # pprint.pprint(obj_source_changer(), width=150)
 

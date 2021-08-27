@@ -24,7 +24,11 @@ def make_project_dir_and_pd_file(project_name):
 
 
 def preparation_for_new_project(pd):
-    first_make_html(pd)
+    make_html_and_md_dir(pd)
+    copy_template_files(pd)
+    insert_to_temp(pd)
+    make_top_page(pd)
+    make_sitemap_page(pd)
 
 
 def change_pk_dic(pd):
@@ -147,6 +151,52 @@ def make_html_and_md_dir(pd):
     # todo: トップページとhtmlサイトマップページの自動作成
 
 
+def make_top_page(pd):
+    if not os.path.exists(pd['project_dir'] + '/html_files/index.html'):
+        with open('template_files/sitemap.html', 'r', encoding='utf-8') as f:
+            long_str = f.read()
+            long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
+            long_str = long_str.replace('<!--site-name-->', pd['site_name'])
+            long_str = long_str.replace('<!--main-domain-->', 'https://www.' + pd['domain_str'] + '/')
+            long_str = long_str.replace('<!--main-dir-->', pd['main_dir'])
+            cat_str = ''.join(['<li><a href="{}/{}">{}</a></li>'
+                              .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
+                               pd['category_data']])
+            long_str = long_str.replace('<!--temp_category_list-->', cat_str)
+            if not pd['default_img']:
+                long_str = long_str.replace('<!--t-image-->', 'common/default_img.html')
+            else:
+                long_str = long_str.replace('<!--t-image-->', pd['default_img'])
+            if 'google_id' in pd:
+                if pd['google_id']:
+                    long_str = long_str.replace('<!--google-id-->', pd['google_id'])
+            with open(pd['project_dir'] + '/html_files/index.html', 'w', encoding='utf-8') as g:
+                g.write(long_str)
+
+
+def make_sitemap_page(pd):
+    if not os.path.exists(pd['project_dir'] + '/html_files/sitemap.html'):
+        with open('template_files/top_tmp.html', 'r', encoding='utf-8') as f:
+            long_str = f.read()
+            long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
+            long_str = long_str.replace('<!--site-name-->', pd['site_name'])
+            long_str = long_str.replace('<!--main-domain-->', 'https://www.' + pd['domain_str'] + '/')
+            long_str = long_str.replace('<!--main-dir-->', pd['main_dir'])
+            cat_str = ''.join(['<li><a href="{}/{}">{}</a></li>'
+                              .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
+                               pd['category_data']])
+            long_str = long_str.replace('<!--temp_category_list-->', cat_str)
+            if not pd['default_img']:
+                long_str = long_str.replace('<!--t-image-->', 'common/default_img.html')
+            else:
+                long_str = long_str.replace('<!--t-image-->', pd['default_img'])
+            if 'google_id' in pd:
+                if pd['google_id']:
+                    long_str = long_str.replace('<!--google-id-->', pd['google_id'])
+            with open(pd['project_dir'] + '/html_files/sitemap.html', 'w', encoding='utf-8') as g:
+                g.write(long_str)
+
+
 def make_html_dir(pd):
     print(pd)
     print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
@@ -162,7 +212,7 @@ def make_html_dir(pd):
 
 
 def copy_template_files(pd):
-    copy_list = ['template_files/template', 'template_files/images', 'template_files/css']
+    copy_list = ['template_files/template', 'template_files/images', 'template_files/css', 'template_files/link']
     if not os.path.exists(pd['project_dir'] + '/html_files/pc/template'):
         for base in copy_list:
             shutil.copytree(base, pd['project_dir'] + '/html_files/' + pd['main_dir'] +
@@ -181,15 +231,12 @@ def insert_to_temp(pd):
                           .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
                            pd['category_data']])
         long_str = long_str.replace('<!--temp_category_list-->', cat_str)
+        if 'google_id' in pd:
+            if pd['google_id']:
+                long_str = long_str.replace('<!--google-id-->', pd['google_id'])
         with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'w',
                   encoding='utf-8') as g:
             g.write(long_str)
-
-
-def first_make_html(pd):
-    make_html_and_md_dir(pd)
-    copy_template_files(pd)
-    insert_to_temp(pd)
 
 
 if __name__ == '__main__':
