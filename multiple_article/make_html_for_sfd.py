@@ -1,3 +1,6 @@
+import datetime
+import random
+
 import markdown
 import os
 import re
@@ -6,6 +9,7 @@ import re
 def translate_md_to_html(temp_path, md_path_dir, sub_sex):
     with open(temp_path, 'r', encoding='utf-8') as f:
         temp_str = f.read()
+    dt1 = datetime.datetime(2021, 8, 25, 8, 21, 33, 333)
     for md_path in os.listdir(md_path_dir):
         temp = temp_str
         with open(md_path_dir + '/' + md_path, 'r', encoding='utf-8') as m:
@@ -38,6 +42,12 @@ def translate_md_to_html(temp_path, md_path_dir, sub_sex):
         ht_str = markdown.markdown(m_str)
         ht_str = ht_str.replace('。\n', '。<br/>\n')
         temp = temp.replace('<!--main-->', ht_str)
+        dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
+                                       seconds=int(random.random() * 59))
+        dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
+        print(dt_str)
+        temp = temp.replace('<!--mod-time-->', dt_str)
+        temp = temp.replace('.md"', '"')
 
         # print(temp)
         with open('sfd/html_files/up_data/' + md_path.replace('.md', '.html'), 'w', encoding='utf-8') as g:
@@ -45,4 +55,4 @@ def translate_md_to_html(temp_path, md_path_dir, sub_sex):
 
 
 if __name__ == '__main__':
-    translate_md_to_html('sfd/wp_temp.html', 'test/md_files/sf_woman_obj2', 'woman')
+    translate_md_to_html('sfd/wp_temp.html', 'sfd/md_files/sf_m', 'man')

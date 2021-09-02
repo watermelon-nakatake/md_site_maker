@@ -1,11 +1,12 @@
 import csv
 import key_data.key_source
 from googletrans import Translator
+import difflib
 import key_data.key_obj_man
 import key_data.key_obj_woman
 
 
-def make_key_dict_from_csv(file_name, new_file_name, common_dict):
+def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num):
     with open('/Users/tnakatake/Downloads/' + file_name) as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
@@ -30,12 +31,14 @@ def make_key_dict_from_csv(file_name, new_file_name, common_dict):
                                     print('ascii error {}'.format(row))
                                 insert_dict['eng'] = data_i.replace(' ', '_')
                                 used_eng.append(data_i.replace(' ', '_'))
+                            elif not data_i:
+                                insert_dict['eng'] = ''
                             else:
                                 print('error! : {} in eng list !!'.format(data_i))
                         else:
                             insert_dict[csv_list[0][ii]] = data_i
                     insert_dict.update(common_dict)
-                    new_dict[i] = insert_dict
+                    new_dict[i + start_num] = insert_dict
                 else:
                     print('{} already in list !'.format(row[0]))
     print(new_dict)
@@ -48,7 +51,7 @@ def make_key_dict_from_csv(file_name, new_file_name, common_dict):
 
 def import_english_str(insert_list, reference_dict):
     result = {}
-    used_eng = []
+    used_eng = [reference_dict[y]['eng'] for y in reference_dict]
     r_dict = {reference_dict[x]['obj_key']: reference_dict[x]['eng'] for x in reference_dict}
     # print(r_dict)
     translator = Translator()
@@ -61,6 +64,10 @@ def import_english_str(insert_list, reference_dict):
             else:
                 row['eng'] = translator.translate(row['obj_key'], src="ja", dest="en").text.lower().replace(' ', '_')
                 print('{} :  {}'.format(row['obj_key'], row['eng']))
+        elif ' ' in row['eng']:
+            row['eng'] = row['eng'].replace(' ', '_')
+        elif '-' in row['eng']:
+            row['eng'] = row['eng'].replace('-', '_')
         if row['eng'] not in used_eng:
             used_eng.append(row['eng'])
         else:
@@ -115,13 +122,17 @@ def check_duplicate_keyword(new_dict, existing_dict):
                     print(new_dict[n_id]['all_key'] + '  in  ' + existing_dict[e_id]['all_key'])
                 elif existing_dict[e_id]['all_key'] in new_dict[n_id]['all_key']:
                     print(existing_dict[e_id]['all_key'] + '  in  ' + new_dict[n_id]['all_key'])
+                r = difflib.SequenceMatcher(None, new_dict[n_id]['all_key'], existing_dict[e_id]['all_key']).ratio()
+                if r > 0.5:
+                    print('near : {} and {}'.format(new_dict[n_id]['all_key'], existing_dict[e_id]['all_key']))
             result[n_num] = new_dict[n_id]
+            used_list.append(new_dict[n_id]['all_key'])
             n_num += 1
     print(result)
 
 
 if __name__ == '__main__':
-    i_dict = make_key_dict_from_csv('new_key - obj_m.csv', '', {'type': 'only_sub'})
+    i_dict = make_key_dict_from_csv('new_key - obj_m.csv', '', {'type': 'only_sub'}, 209)
     check_duplicate_keyword(i_dict, key_data.key_obj_woman.keyword_dict)
-    # o_dict = import_english_str(i_dict, key_data.key_source.keyword_dict)
-    # write_csv_file(o_dict, 'multiple_article/key_data/key_obj.csv')
+    # o_dict = import_english_str(i_dict, key_data.key_obj_woman.keyword_dict)
+    # write_csv_file(o_dict, 'multiple_article/key_data/key_obj_m2.csv')

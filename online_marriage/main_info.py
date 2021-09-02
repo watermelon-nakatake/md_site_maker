@@ -1,48 +1,32 @@
 import re
 
-project_dir = 'reibun'
+project_dir = 'online_marriage'
 
-site_name = '出会い系メール例文集'
-side_bar_list = {'important': [48, 21, 13, 66, 76, 112, 34, 96, 25],
-                 'pop': [117, 23, 130, 67, 64, 38, 107, 19, 73]}
-category_name = {'policy': ['ポリシー', 'index.html'], 'caption': ['出会い系の予備知識', 'index.html'],
-                 'profile': ['プロフィール例文', 'kakikata_p.html'], 'qa': ['出会い系Ｑ＆Ａ', 'index.html'],
-                 'site': ['出会い系サイト情報', 'index.html'], 'post': ['掲示板例文', 'kakikata_t.html'],
-                 'f_mail': ['ファーストメール例文', 'kakikata_f.html'], 's_mail': ['２通目以降のメール例文', 'majime.html'],
-                 'date': ['デートに誘うメール例文', 'date.html'], 'how_to': ['出会い系攻略法', 'kakikata_d.html'],
-                 'majime': '出会いメール例文'}
-category_data = {'policy': ['ポリシー', 'index.html', 1], 's_mail': ['２通目以降のメール例文', 'majime.html', 41],
-                 'caption': ['出会い系の予備知識', 'index.html', 6], 'profile': ['プロフィール例文', 'kakikata_p.html', 17],
-                 'qa': ['出会い系Ｑ＆Ａ', 'index.html', 114], 'site': ['出会い系サイト情報', 'index.html', 122],
-                 'post': ['掲示板例文', 'kakikata_t.html', 74], 'f_mail': ['ファーストメール例文', 'kakikata_f.html', 107],
-                 'date': ['デートに誘うメール例文', 'date.html', 102], 'how_to': ['出会い系攻略法', 'kakikata_d.html', 39],
-                 'ap_mail': ['メール例文アプリ情報', 'mail-applicaton.html', 92],
-                 'majime': ['出会い系メール例文', 'index.html', 32], 'sitepage': ['出会い系サイト', 'index.html', 122]}
-directory_name = {'policy': 'ポリシー', 'caption': '出会い系の予備知識', 'majime': '出会いメール例文',
-                  'qa': '出会い系Ｑ＆Ａ', 'site': '出会い系サイト情報', 'sitepage': '出会い系サイト紹介'}
-site_shift_list = [0, 1, 2, 3]
-site_shift_order = [2, 1, 0]
+site_name = 'オンラインの出会いで結婚する方法'
+side_bar_list = {'important': [],
+                 'pop': []}
+category_data = {'online_love': ['オンラインの出会い', 'index.html', 1]}
+category_name = {x: [category_data[x][0], category_data[x][1]] for x in category_data}
+directory_name = {x: category_data[x][0] for x in category_data}
+site_shift_list = []
+site_shift_order = []
 
-add_files = ['reibun/html_files/index.html', 'reibun/html_files/amp/index.html',
-             'reibun/html_files/pc/css/base13.css', 'reibun/html_files/pc/css/pc13.css',
-             'reibun/html_files/pc/css/phone13.css', 'reibun/html_files/p_sitemap.xml']
+add_files = []
 
-main_dir = 'pc/'
+main_dir = ''
 article_image_dir = 'art_images'
-amp_flag = True
-default_img = 'demr_mgirl_1200x630.jpg'
-h_sitemap_path = 'reibun/html_files/pc/policy/sitemap.html'
-domain_str = 'demr.jp'
-ignore_files = ['reibun/html_files/google3d7d16f68a5d3b38.html', 'reibun/html_files/y_key_e2722b15d0cec302.html']
+amp_flag = False
+default_img = ''
+h_sitemap_path = 'online_marriage/html_files/sitemap.html'
+domain_str = 'lovestrategyguide.com'
+ignore_files = ['online_marriage/html_files/google3d7d16f68a5d3b38.html']
 upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
-               'upload_dir': 'reibun'}
-sc_url = {'ワクワクメール': 'sitepage/wakuwakumail.html', 'PCMAX': 'sitepage/pcmax.html',
-          '口コミランキング': 'sitepage/ranking.html', '口コミ評価ランキング': 'sitepage/ranking.html',
-          '出会い系口コミランキング': 'sitepage/ranking.html', 'ハッピーメール': 'sitepage/happymail.html',
-          'Jメール': 'sitepage/mintj.html', '出会い系口コミ評価ランキング': 'sitepage/ranking.html',
-          '出会い系サイト口コミランキング': 'sitepage/ranking.html'}
+               'upload_dir': 'kouryaku'}
+sc_url = {'ワクワクメール': 'link/550909', 'PCMAX': 'link/pcmax',
+          'ハッピーメール': 'link/happymail', 'Jメール': 'link/mintj'}
 eyec_img = {'img_path': 'eyec.jpg', 'height': '464', 'width': '700'}
-aff_dir = {'dir': 'sitepage'}
+aff_dir = {'dir': 'link'}
+google_id = ''
 
 info_dict = {'project_dir': project_dir, 'site_name': site_name, 'side_bar_list': side_bar_list,
              'category_name': category_name, 'category_data': category_data,
@@ -50,17 +34,10 @@ info_dict = {'project_dir': project_dir, 'site_name': site_name, 'side_bar_list'
              'main_dir': main_dir, 'ar_img_dir': article_image_dir, 'amp_flag': amp_flag,
              'default_img': default_img, 'h_sitemap_path': h_sitemap_path, 'domain_str': domain_str,
              'ignore_files': ignore_files, 'upload_data': upload_data, 'sc_url': sc_url, 'eyec_img': eyec_img,
-             'aff_dir': aff_dir, 'site_shift_order': site_shift_order}
+             'aff_dir': aff_dir, 'google_id': google_id}
 
 
-def reibun_additional_replace_in_md(md_str):
-    md_str = md_str.replace(r'%app_b%', '<div class="center"><a href="../../app/"><img class="app_bn1" '
-                                        'src="../images/common/app_bn_f.png" alt="出会い系メール例文アプリ">'
-                                        '</a></div>')
-    return md_str
-
-
-def reibun_insert_site_banner(long_str):
+def online_marriage_insert_site_banner(long_str):
     b_dict = {'hm': '<a href="../ds/happymail/" target="_blank" rel="nofollow" class="happy-otherb"'
                     ' onclick="gtag(' + "'event', 'click', {'event_category': 'access','event_label': 'happy-otherb'}" +
                     ');"><img src="../images/hm234x60_1214.gif" width="234" height="60" alt="ハッピーメール"></a>',
@@ -83,7 +60,7 @@ def reibun_insert_site_banner(long_str):
     return long_str
 
 
-def reibun_icon_filter(long_str):
+def online_marriage_icon_filter(long_str):
     long_str = long_str.replace('%l_normal%', '%lm_1%')
     long_str = long_str.replace('%l_!%', '%lm_2%')
     long_str = long_str.replace('%l_?%', '%lm_5%')
@@ -127,7 +104,7 @@ def reibun_icon_filter(long_str):
     return long_str
 
 
-def reibun_search_category(directory, file_name):
+def online_marriage_search_category(directory, file_name):
     if directory != 'majime':
         category = directory
     else:
@@ -150,7 +127,7 @@ def reibun_search_category(directory, file_name):
     return category
 
 
-def reibun_change_category_class(new_str, category):
+def online_marriage_change_category_class(new_str, category):
     if category != 'majime':
         new_str = new_str.replace('<!--sb-category-->', '<div class="leftnav"><div class="sbh cat-i"></div>'
                                                         '<ul></ul></div>')
@@ -159,7 +136,7 @@ def reibun_change_category_class(new_str, category):
     return new_str
 
 
-def reibun_insert_additional_str(new_str):
+def online_marriage_insert_additional_str(new_str):
     new_str = new_str.replace('</section><section><div class="kanren">',
                               '</section><div class="only_mob teisite"><div class="sbh">出会系口コミランキング</div>'
                               '<ul class="slu"><li><a href="../sitepage/wakuwakumail.html"><div class="sli">'
@@ -180,7 +157,7 @@ def reibun_insert_additional_str(new_str):
     return new_str
 
 
-def reibun_img_filter(new_str):
+def online_marriage_img_filter(new_str):
     p_img_str_l = re.findall(r'<p><img .+?/></p>', new_str)
     if p_img_str_l:
         for p_img_str in p_img_str_l:
@@ -193,7 +170,7 @@ def reibun_img_filter(new_str):
     return new_str
 
 
-def reibun_breadcrumb_maker(category, directory, file_name):
+def online_marriage_breadcrumb_maker(category, directory, file_name):
     result = ''
     if 'index.html' in file_name:
         return result

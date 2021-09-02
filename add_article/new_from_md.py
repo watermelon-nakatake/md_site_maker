@@ -103,7 +103,10 @@ def save_last_mod(pd):
 
 
 def modify_file_check(file_list, last_md_mod):
-    result = [y for y in file_list if os.path.getmtime(y) > last_md_mod.timestamp()]
+    if type(last_md_mod) == float:
+        result = [y for y in file_list if os.path.getmtime(y) > last_md_mod]
+    else:
+        result = [y for y in file_list if os.path.getmtime(y) > last_md_mod.timestamp()]
     return result
 
 

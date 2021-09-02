@@ -16,64 +16,21 @@ import key_data.key_obj_woman
 key_source_dict = {'obj_m': key_data.key_obj_woman.keyword_dict, 'obj_w': key_data.key_obj_man.keyword_dict}
 
 
-def make_new_pages_to_md(project_dir, obj_list, source_mod, dir_name, start_num, html_head, main_key, a_adj_flag):
-    keywords_dict = {}
-    recipe_dict = {}
-    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
-               [source_mod.d_advantage, [2, 3, 4]],
-               [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
-               [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
-               [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
-    # print(art_map_p)
-    # art_map = [[[{x['info']['sec_name']: x for x in u} for u in z[0]], z[1]] for z in art_map_p]
-    # print(art_map)
-    link_dict = make_key_and_path_list(project_dir, dir_name, html_head, [], [], 'man')
-    id_num = start_num
-    if not os.path.exists(project_dir + '/md_files/' + dir_name):
-        os.mkdir(project_dir + '/md_files/' + dir_name)
-    for obj in obj_list:
-        if obj_source_filter(obj):
-            sub_str = np.random.choice(['女性', '女子'])
-            sub_adj = np.random.choice(['普通の', 'モテない', '独身の'])
-            if obj['o_ms'] == 'm' and main_key == 'sex':
-                act_adj = np.random.choice(['不倫', '浮気', 'NTR'])
-            else:
-                act_adj = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
-            page_name = '{}_{}'.format(html_head, obj['eng'].replace('-', '_'))
-            keywords = {
-                'page_name': page_name, 'id': id_num,
-
-                's_adj': sub_adj, 'sub': sub_str,
-
-                'o_adj': obj['adj'], 'obj': obj['noun'], 'obj_key': obj['keyword'], 'obj_p': obj['particle'],
-                'o_reason': obj['reason'], 't_sex': 'm', 't_age': 'n', 't_cat': 'j',
-
-                'act_adj': act_adj, 'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
-                'act_connection': ['肉体関係'],
-
-                'act_code': 'sex',
-                'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
-            # sex: m or w, age: y o n,  cat: job age chara body looks preference(性的嗜好) status
-            make_keywords_sample(keywords, a_adj_flag)
-            recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, True,
-                                        'man', a_adj_flag, [])
-            keywords_dict[page_name] = keywords
-            recipe_dict[page_name] = recipe_list
-            id_num += 1
-    # print(recipe_dict)
-
-
 def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_mod, main_key, use_id_list, key_list,
                                        recipe_flag, subject_sex):
     # 必要最低限のキーワードリストで機動的に記事作成
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
     recipe_dict = {}
-    if os.path.exists(project_dir + '/pickle_pot/used_id.pkl'):
-        with open(project_dir + '/pickle_pot/used_id.pkl', 'rb') as p:
-            used_id = pickle.load(p)
-    else:
-        used_id = []
+    if not use_id_list:
+        use_id_list = list(key_list.keys())
+    use_id_list = id_filter(use_id_list, main_key, key_list)
+    this_key_code = check_key_code(key_list)
+    used_dict, add_id_dict = make_used_key_dict(project_dir, use_id_list, this_key_code)
+    print(used_dict)
+    # print(add_id_dict)
+    link_dict = make_key_and_path_list(html_str, used_dict, project_dir)
+    print(link_dict)
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
                [source_mod.d_advantage, [2, 3, 4]],
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
@@ -94,6 +51,12 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                             'replace_words': [['出会い系サイト', '婚活サイト'], ['出会い掲示板', '婚活掲示板'],
                                               ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト'],
                                               ['で婚活で', 'の婚活で']]},
+                     'olm': {'act': '結婚する', 'act_noun': '結婚', 'act_noun_flag': False, 'a_adj': 'オンラインの出会いで',
+                             'a_adj_flag': True, '2act_w': '結婚したい', '2act_noun': '結婚',
+                             'act_connection': ['交際', 'お付き合い'], 'act_code': 'mh',
+                             'replace_words': [['出会い系サイト', '婚活サイト'], ['出会い掲示板', '婚活掲示板'],
+                                               ['出会い系掲示板', '婚活掲示板'], ['出会い系', '婚活サイト'],
+                                               ['で婚活で', 'の婚活で']]},
                      'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'a_adj_flag': False,
                             '2act_w': 'セックスしたい', '2act_noun': 'セックス',
                             'act_connection': ['セフレ関係', '肉体関係'], 'act_code': 'sf', 'replace_words': []},
@@ -110,13 +73,18 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                                                ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
                                                ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
                                                ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
+                     'tai': {'act': 'エッチする', 'act_noun': 'エッチの相手', 'act_noun_flag': False,
+                             'a_adj': 'マッチングアプリで', 'a_adj_flag': True,
+                             '2act_w': 'セフレにしたい', '2act_noun': 'セフレ',
+                             'act_connection': ['エッチな関係', 'ヤリ友'], 'act_code': 'tai',
+                             'replace_words': [['出会い系サイト', 'マッチングアプリ'],
+                                               ['マッチングアプリのマッチングアプリ', 'マッチングアプリ'],
+                                               ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
+                                               ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
+                                               ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
                      }
-    hot_info = {'hot_month': '８月', 'hot_season': '夏', 'hot_month_next': '９月'}
+    hot_info = {'hot_month': '9月', 'hot_season': '秋', 'hot_month_next': '10月'}
     a_adj_flag = main_key_dict[main_key]['a_adj_flag']
-    if not use_id_list:
-        use_id_list = list(key_list.keys())
-    use_id_list = id_filter(use_id_list, main_key, key_list)
-    link_dict = make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list, subject_sex)
     # print(link_dict)
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
@@ -141,12 +109,9 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
         keywords.update(hot_info)
         # print(keywords)
         # make_keywords_sample(keywords)
-        recipe_list, used_id = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
-                                             recipe_flag, subject_sex, a_adj_flag, used_id)
-
+        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
+                                    recipe_flag, subject_sex, a_adj_flag, add_id_dict)
         recipe_dict[keywords['page_name']] = recipe_list
-    with open(project_dir + '/pickle_pot/used_id.pkl', 'wb') as k:
-        pickle.dump(used_id, k)
     # print(recipe_dict)
 
 
@@ -159,39 +124,85 @@ def id_filter(use_id_list, main_key, key_list):
     return use_id_list
 
 
-def make_key_and_path_list(project_dir, dir_name, html_str, use_id_list, key_list, subject_sex):
-    pkl_path = '{}/pickle_pot/{}/key_and_path.pkl'.format(project_dir, dir_name)
-    result = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': []}
+def make_used_key_dict(project_dir, use_id_list, this_key_code):
+    pkl_path = '{}/pickle_pot/used_id.pkl'.format(project_dir)
+    add_id_dict = {}
     if os.path.exists(pkl_path):
         with open(pkl_path, 'rb') as p:
-            pkl_data = pickle.load(p)
+            used_dict = pickle.load(p)
+        # print(used_dict)
     else:
-        pkl_data = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': []}
-        if not os.path.exists('{}/pickle_pot/{}'.format(project_dir, dir_name)):
-            os.mkdir('{}/pickle_pot/{}'.format(project_dir, dir_name))
-    # print(pkl_data)
-    # print(key_list)
-    if key_list[0]['type'] == 'only_obj':
-        key_type = 'obj'
-    elif key_list[0]['type'] == 'only_sub':
-        key_type = 'sub'
+        used_dict = {'obj_m': {}, 'obj_w': {}, 'sub_m': {}, 'sub_w': {}, 'act': {}, 'max_id': 'n'}
+    if used_dict['max_id'] == 'n':
+        next_id = 0
     else:
-        key_type = 'obj'
-    if subject_sex == 'man':
-        s_type = 'm'
+        next_id = int(used_dict['max_id']) + 1
+    use_id_list.sort()
+    for use_id in use_id_list:
+        if use_id not in used_dict[this_key_code]:
+            used_dict[this_key_code][use_id] = next_id
+            add_id_dict[use_id] = next_id
+            next_id += 1
+        else:
+            add_id_dict[use_id] = used_dict[this_key_code][use_id]
+    with open(project_dir + '/pickle_pot/used_id.pkl', 'wb') as k:
+        pickle.dump(used_dict, k)
+    return used_dict, add_id_dict
+
+
+def make_used_key_data(project_dir):
+    used_dict = {'obj_m': {}, 'obj_w': {}, 'sub_m': {}, 'sub_w': {}, 'act': {}, 'max_id': 'n'}
+    obj_m = list(range(0, 209, 1))
+    obj_w = list(range(0, 116, 1))
+    used_dict['obj_m'] = {x: x for x in obj_m}
+    used_dict['obj_w'] = {y: y + 209 for y in obj_w}
+    used_dict['max_id'] = 324
+    print(used_dict)
+    with open(project_dir + '/pickle_pot/used_id.pkl', 'wb') as k:
+        pickle.dump(used_dict, k)
+
+
+def check_key_code(key_list):
+    if key_list[0]['type'] == 'only_obj' and key_list[0]['o_sex'] == 'w':
+        this_key_code = 'obj_m'
+    elif key_list[0]['type'] == 'only_obj' and key_list[0]['o_sex'] == 'm':
+        this_key_code = 'obj_w'
+    elif key_list[0]['type'] == 'only_sub' and key_list[0]['o_sex'] == 'm':
+        this_key_code = 'sub_m'
+    elif key_list[0]['type'] == 'only_sub' and key_list[0]['o_sex'] == 'w':
+        this_key_code = 'sub_w'
+    elif key_list[0]['type'] == 'only_act':
+        this_key_code = 'act'
     else:
-        s_type = 'w'
-    if key_type != 'act':
-        type_str = key_type + '_' + s_type
+        this_key_code = ''
+        print('key_code error!')
+    return this_key_code
+
+
+def make_key_and_path_list(html_str, used_dict, project_dir):
+    result = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': []}
+    if project_dir != 'sfd':
+        for key_name in key_source_dict:
+            result[key_name] = [[key_source_dict[key_name][x]['obj'],
+                                 html_str.replace('{}', key_source_dict[key_name][x]['eng'].replace('-', '_'))]
+                                for x in used_dict[key_name]]
     else:
-        type_str = key_type
-    pkl_data[type_str] = list(set(pkl_data[type_str] + use_id_list))
-    for key_cat in pkl_data:
-        result[key_cat] = [[key_source_dict[key_cat][x]['obj'],
-                            html_str.replace('{}', key_source_dict[key_cat][x]['eng'].replace('-', '_'))]
-                           for x in pkl_data[key_cat]]
-    with open(pkl_path, 'wb') as k:
-        pickle.dump(pkl_data, k)
+        for key_name in key_source_dict:
+            if key_name != 'obj_m':
+                result[key_name] = [[key_source_dict[key_name][x]['obj'],
+                                     html_str.replace('{}', key_source_dict[key_name][x]['eng'].replace('-', '_'))]
+                                    for x in used_dict[key_name]]
+            else:
+                for k_id in used_dict[key_name]:
+                    if int(k_id) < 209:
+                        result['obj_m'].append([key_source_dict['obj_m'][k_id]['obj'],
+                                                key_source_dict[key_name][k_id]['eng']])
+                    else:
+                        result['obj_m'].append([key_source_dict['obj_m'][k_id]['obj'],
+                                                html_str.replace('{}',
+                                                                 key_source_dict['obj_m'][k_id]['eng'].replace('-',
+                                                                                                               '_'))])
+    # print(result)
     return result
 
 
@@ -216,13 +227,15 @@ def obj_source_filter(source_dict):
 
 
 def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex,
-                  a_adj_flag, used_id):
+                  a_adj_flag, add_id_dict):
     recipe_list = {}
     site_list = ['ワクワクメール', 'Jメール']
     site1 = np.random.choice(['ワクワクメール', 'Jメール'])
     site_data = {'sf': {'site_name': 'セフレ道', 'site_author': '田中'},
                  'mh': {'site_name': 'ネット婚活で結婚相手探し', 'site_author': '伊東'},
-                 'cov': {'site_name': 'マッチングアプリで恋人探し', 'site_author': '山本'}}
+                 'olm': {'site_name': 'オンラインの出会いで結婚する方法', 'site_author': '池田'},
+                 'cov': {'site_name': 'マッチングアプリで恋人探し', 'site_author': '山本'},
+                 'tai': {'site_name': 'マッチングアプリのエッチ体験談', 'site_author': 'ごろう'}}
     sex_dict = [[['男性', '男'], [0.9, 0.1]], [['女性', '女子', '女の人'], [0.6, 0.2, 0.2]],
                 [['女性', '女の人']], [['女の子', '女子']],
                 [['彼氏', '恋人'], [0.7, 0.3]], [['彼女', '恋人'], [0.7, 0.3]],
@@ -377,13 +390,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # print(used_id)
     # print(type(used_id[-1]))
     # print(type(keywords['id']))
-    if int(keywords['id']) in used_id:
-        result_str += 'n::' + str(max(used_id) + 1) + '\n'
-        print(max(used_id))
-        used_id.append(max(used_id) + 1)
-    else:
-        result_str += 'n::' + str(keywords['id']) + '\n'
-        used_id.append(int(keywords['id']))
+    result_str += 'n::' + str(add_id_dict[int(keywords['id'])]) + '\n'
     result_str += 'e::\n'
     if main_key == 'mh':
         result_str += 'k::' + ' '.join([keywords['all_key'], '婚活']) + '\n'
@@ -410,7 +417,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # print(result_str)
     with open(project_dir + '/md_files/' + dir_name + '/' + keywords['page_name'] + '.md', 'w', encoding='utf-8') as f:
         f.write(result_str)
-    return recipe_list, used_id
+    return recipe_list
 
 
 def replace_code_to_md(md_str, subject_sex):
@@ -439,7 +446,7 @@ def key_phrase_maker(keywords, a_adj_flag):
         act_way_g = act_noun + '<!--make-way-g-->'
         obj = keywords['obj']
         obj_k = keywords['obj_key']
-        if keywords['obj_p'] == 'no':
+        if keywords['obj_p'] == 'no' or keywords['obj_p'] == 'n':
             obj_as_target = keywords['obj_key'] + keywords['act_noun']
         else:
             obj_as_target = keywords['obj_key'] + keywords['obj_p'] + keywords['act_noun']
@@ -874,6 +881,15 @@ def sf_import_to_source(import_list):
         f.write(main_str)
 
 
+def make_used_id_list_for_key_data(project_name):
+    used_id = {'obj_m': list(range(0, 209, 1)), 'obj_w': list(range(0, 116, 1)), 'sub_m': [], 'sub_w': [], 'act': []}
+    with open(project_name + '/pickle_pot/used_id.pkl', 'wb') as k:
+        pickle.dump(used_id, k)
+    with open(project_name + '/pickle_pot/used_id.pkl', 'rb') as p:
+        pkl_data = pickle.load(p)
+    print(pkl_data)
+
+
 def auto_make_md_for_all_key(project_dir, dir_name, html_str, main_key, recipe_flag):
     # html_str -> keyword : {},  性別 : {s},  main_key : {m}    for ex  '{}_{s}_{m}
     key_data_dict = {'obj_m': {'data': key_data.key_obj_woman.keyword_dict, 'sex': 'man'},
@@ -896,19 +912,31 @@ if __name__ == '__main__':
     # sf_import_to_source()
 
     # make_keywords_sample(keywords_p)
-    # t_key_list = key_data.key_obj_man.keyword_dict
-    # make_new_pages_to_md_from_key_list('test', 'mh_woman', 'mh_{}_m', source_data, 'mh',
-    #                                    list(range(0, 115, 1)), t_key_list, recipe_flag=True, subject_sex='woman',
-    #                                    a_adj_flag=True)
+
+    # make_used_key_data('sfd')
+
+    # t_key_list = key_data.key_obj_woman.keyword_dict
+    # make_new_pages_to_md_from_key_list('online_marriage', 'online_love', 'love_{s}_{}', source_data, 'olm',
+    #                                    list(range(0, 321, 1)), t_key_list, recipe_flag=True, subject_sex='man')
+
     # t_key_list = key_data.key_obj_woman.keyword_dict
     # make_new_pages_to_md_from_key_list('test', 'corona', '{}_m_cov', source_data, 'cov',
     #                                    [], t_key_list, recipe_flag=True, subject_sex='man')
 
-    auto_make_md_for_all_key('test', 'corona2', '{}_{s}_{m}', 'cov', recipe_flag=True)
+    auto_make_md_for_all_key('online_marriage', 'online_love', 'love_{s}_{}', 'olm', recipe_flag=True)
+
+    # make_used_id_list_for_key_data('sfd')
 
     # todo: actの複数パターン　お泊まりセックス、アブノーマル、複数プレイ
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等
+    # todo: オンラインの出会いで結婚する方法、　マッチングサイトでエッチする、　地域の婚活, パパ活、　割り切り
+    # todo: 趣味の出会い
+    # todo: 時期ネタの書き換え
+    # todo: 会話の話題やobj,subリンク、趣味などのワードリストで多様性
+    # todo: その対象の探し方、o_catで切り替えるなどして多様化
+    # todo: 関連記事の追加で相互リンク強化
+    # todo: 検索数が増えてきた記事をピンポイントで最新フォームで書き換えできる関数
 
     # pprint.pprint(obj_source_changer(), width=150)
 

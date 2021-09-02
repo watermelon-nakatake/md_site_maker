@@ -4,7 +4,7 @@ import os
 import collections
 import glob
 import shutil
-import howto.main_info
+import online_marriage.main_info
 import file_upload
 
 
@@ -153,7 +153,7 @@ def make_html_and_md_dir(pd):
 
 def make_top_page(pd):
     if not os.path.exists(pd['project_dir'] + '/html_files/index.html'):
-        with open('template_files/sitemap.html', 'r', encoding='utf-8') as f:
+        with open('template_files/top_tmp.html', 'r', encoding='utf-8') as f:
             long_str = f.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             long_str = long_str.replace('<!--site-name-->', pd['site_name'])
@@ -176,7 +176,7 @@ def make_top_page(pd):
 
 def make_sitemap_page(pd):
     if not os.path.exists(pd['project_dir'] + '/html_files/sitemap.html'):
-        with open('template_files/top_tmp.html', 'r', encoding='utf-8') as f:
+        with open('template_files/sitemap.html', 'r', encoding='utf-8') as f:
             long_str = f.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             long_str = long_str.replace('<!--site-name-->', pd['site_name'])
@@ -241,9 +241,9 @@ def insert_to_temp(pd):
 
 if __name__ == '__main__':
     # 新規プロジェクトの１段階
-    # pj_name = 'howto'
+    # pj_name = 'online_marriage'
     # make_project_dir_and_pd_file(pj_name)
 
     # info_dict.py の作成後実行
-    pd_t = howto.main_info.info_dict
+    pd_t = online_marriage.main_info.info_dict  # pdをimportに追加、変更
     preparation_for_new_project(pd_t)
