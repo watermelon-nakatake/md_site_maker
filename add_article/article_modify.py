@@ -3,8 +3,9 @@ import os
 import glob
 import datetime
 import shutil
+import pickle
 from upload import file_upload
-import make_article_list
+# import make_article_list
 
 
 def make_project_dir(project_name):
@@ -62,7 +63,9 @@ def all_file_to_markdown(before_dir, after_dir, pd, path_remove, remove_list):
         p_num = len(pk_dic)
         pk_data = file_to_markdown(h_file, before_dir, after_dir, today, path_remove, remove_list, p_num, pd)
         pk_dic[p_num] = pk_data
-    make_article_list.save_data_to_pickle(pk_dic, 'main_data', pd)
+    print(pk_dic)
+    with open('online_marriage/pickle_pot/main_data.pkl', 'wb') as k:
+        pickle.dump(pk_dic, k)
 
 
 def file_path_order(b_files):
@@ -112,8 +115,8 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
         print('no h1 !')
         h1 = 'n_a'
     # メインコンテンツ抽出
-    main_start = '<div id="con4">'
-    main_end = '<!-- con4/end -->'
+    main_start = '<!-- InstanceBeginEditable name="main-content" -->'
+    main_end = '<!-- InstanceEndEditable -->'
     remove_str = []
     main_srt_l = re.findall(main_start + r'(.*?)' + main_end, long_str)
     if main_srt_l:
@@ -129,7 +132,7 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
     #     pub_date = pub_date_l[0]
     # else:
     #     print('no pub_date !')
-    pub_date = '2016-07-09'
+    pub_date = '2017-07-09'
     result = 't::' + title + '\n'
     result += 'd::' + description + '\n'
     result += 'n::' + str(p_num) + '\n'
