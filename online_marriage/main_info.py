@@ -5,7 +5,13 @@ project_dir = 'online_marriage'
 site_name = 'オンラインの出会いで結婚する方法'
 side_bar_list = {'important': [],
                  'pop': []}
-category_data = {'online_love': ['オンラインの出会い', 'index.html', 1]}
+category_data = {'online_love': ['オンラインの出会い', 'index.html', 1],
+                 'technic': ['出会いの技術', 'index.html', 5],
+                 'information': ['出会い情報', 'index.html', 2],
+                 'guid': ['出会い攻略法', 'index.html', 0],
+                 'site': ['サイト情報', 'index.html', 4],
+                 'policy': ['サイトポリシー', 'index.html', 3],
+                 }
 category_name = {x: [category_data[x][0], category_data[x][1]] for x in category_data}
 directory_name = {x: category_data[x][0] for x in category_data}
 site_shift_list = []
@@ -16,7 +22,7 @@ add_files = []
 main_dir = ''
 article_image_dir = 'art_images'
 amp_flag = False
-default_img = ''
+default_img = 'common/olm_img.jpg'
 h_sitemap_path = 'online_marriage/html_files/sitemap.html'
 domain_str = 'lovestrategyguide.com'
 ignore_files = ['online_marriage/html_files/google3d7d16f68a5d3b38.html']

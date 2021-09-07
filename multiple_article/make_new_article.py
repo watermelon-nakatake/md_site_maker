@@ -5,6 +5,7 @@ import numpy as np
 import os
 import pprint
 import pickle
+import datetime
 import source_data
 import words_dict
 import words_dict as wd
@@ -17,7 +18,7 @@ key_source_dict = {'obj_m': key_data.key_obj_woman.keyword_dict, 'obj_w': key_da
 
 
 def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_mod, main_key, use_id_list, key_list,
-                                       recipe_flag, subject_sex):
+                                       recipe_flag, subject_sex, start_id, insert_pub_date):
     # 必要最低限のキーワードリストで機動的に記事作成
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
@@ -26,11 +27,25 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
         use_id_list = list(key_list.keys())
     use_id_list = id_filter(use_id_list, main_key, key_list)
     this_key_code = check_key_code(key_list)
-    used_dict, add_id_dict = make_used_key_dict(project_dir, use_id_list, this_key_code)
-    print(used_dict)
+    used_dict, add_id_dict = make_used_key_dict(project_dir, use_id_list, this_key_code, start_id)
+    if insert_pub_date:
+        dt1 = datetime.datetime.strptime(insert_pub_date, '%Y-%m-%dT%H:%M:%S')
+    else:
+        dt1 = ''
+    # print(used_dict)
     # print(add_id_dict)
-    link_dict = make_key_and_path_list(html_str, used_dict, project_dir)
-    print(link_dict)
+    if main_key == 'mh' or main_key == 'olm':
+        used_dict_l = {x: {y: used_dict[x][y] for y in used_dict[x] if key_source_dict[x][y]['ad'] == 3} if type(
+            used_dict[x]) == dict else used_dict[x] for x in used_dict}
+        ad_used_dict = {x: {y: used_dict[x][y] for y in used_dict[x] if key_source_dict[x][y]['ad'] == 1} if type(
+            used_dict[x]) == dict else used_dict[x] for x in used_dict}
+        ad_link_dict = make_key_and_path_list(html_str, ad_used_dict, project_dir)
+    else:
+        used_dict_l = used_dict
+        ad_link_dict = {}
+    # print(used_dict_l)
+    link_dict = make_key_and_path_list(html_str, used_dict_l, project_dir)
+    # print(link_dict)
     art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
                [source_mod.d_advantage, [2, 3, 4]],
                [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
@@ -73,15 +88,15 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                                                ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
                                                ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
                                                ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
-                     'tai': {'act': 'エッチする', 'act_noun': 'エッチの相手', 'act_noun_flag': False,
-                             'a_adj': 'マッチングアプリで', 'a_adj_flag': True,
-                             '2act_w': 'セフレにしたい', '2act_noun': 'セフレ',
-                             'act_connection': ['エッチな関係', 'ヤリ友'], 'act_code': 'tai',
-                             'replace_words': [['出会い系サイト', 'マッチングアプリ'],
-                                               ['マッチングアプリのマッチングアプリ', 'マッチングアプリ'],
-                                               ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
-                                               ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
-                                               ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
+                     'ht': {'act': 'エッチする', 'act_noun': 'エッチの相手', 'act_noun_flag': False,
+                            'a_adj': 'マッチングアプリで', 'a_adj_flag': True,
+                            '2act_w': 'セフレにしたい', '2act_noun': 'セフレ',
+                            'act_connection': ['エッチな関係', 'ヤリ友'], 'act_code': 'ht',
+                            'replace_words': [['出会い系サイト', 'マッチングアプリ'],
+                                              ['マッチングアプリのマッチングアプリ', 'マッチングアプリ'],
+                                              ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
+                                              ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
+                                              ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
                      }
     hot_info = {'hot_month': '9月', 'hot_season': '秋', 'hot_month_next': '10月'}
     a_adj_flag = main_key_dict[main_key]['a_adj_flag']
@@ -102,29 +117,36 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                 keywords['a_adj'] = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 keywords['a_adj'] = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに', '無料で'])
-        if main_key == 'mh' and subject_sex == 'man':
-            keywords['o_adj'] = np.random.choice(['素敵な', '理想的な', '', ''])
+        if main_key == 'mh' or main_key == 'olm':
+            keywords['o_adj'] = ''
+            link_dict_u = ad_link_dict
+        else:
+            link_dict_u = link_dict
         if 'o_reason' not in keywords:
             keywords['o_reason'] = '素敵な出会いが欲しいから'
         keywords.update(hot_info)
         # print(keywords)
         # make_keywords_sample(keywords)
-        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key,
-                                    recipe_flag, subject_sex, a_adj_flag, add_id_dict)
+        if dt1:
+            dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
+                                           seconds=int(random.random() * 59))
+            dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
+        else:
+            dt_str = ''
+        recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict_u, main_key,
+                                    recipe_flag, subject_sex, a_adj_flag, add_id_dict, dt_str)
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
 
 
 def id_filter(use_id_list, main_key, key_list):
-    if main_key == 'mh':
-        use_id_list = [x for x in use_id_list if key_list[x]['o_ms'] != 'm' and 'ヤリチン' not in key_list[x]['all_key']
-                       and 'セックス' not in key_list[x]['all_key'] and 'AV' not in key_list[x]['all_key']
-                       and key_list[x]['o_cat'] != 'p']
-    # print(use_id_list)
+    if main_key == 'mh' or main_key == 'olm':
+        use_id_list = [x for x in use_id_list if key_list[x]['ad'] != 0]
+    print(use_id_list)
     return use_id_list
 
 
-def make_used_key_dict(project_dir, use_id_list, this_key_code):
+def make_used_key_dict(project_dir, use_id_list, this_key_code, start_id):
     pkl_path = '{}/pickle_pot/used_id.pkl'.format(project_dir)
     add_id_dict = {}
     if os.path.exists(pkl_path):
@@ -134,7 +156,10 @@ def make_used_key_dict(project_dir, use_id_list, this_key_code):
     else:
         used_dict = {'obj_m': {}, 'obj_w': {}, 'sub_m': {}, 'sub_w': {}, 'act': {}, 'max_id': 'n'}
     if used_dict['max_id'] == 'n':
-        next_id = 0
+        if start_id:
+            next_id = start_id
+        else:
+            next_id = 1
     else:
         next_id = int(used_dict['max_id']) + 1
     use_id_list.sort()
@@ -145,6 +170,7 @@ def make_used_key_dict(project_dir, use_id_list, this_key_code):
             next_id += 1
         else:
             add_id_dict[use_id] = used_dict[this_key_code][use_id]
+    used_dict['max_id'] = next_id - 1
     with open(project_dir + '/pickle_pot/used_id.pkl', 'wb') as k:
         pickle.dump(used_dict, k)
     return used_dict, add_id_dict
@@ -227,7 +253,7 @@ def obj_source_filter(source_dict):
 
 
 def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex,
-                  a_adj_flag, add_id_dict):
+                  a_adj_flag, add_id_dict, dt_str):
     recipe_list = {}
     site_list = ['ワクワクメール', 'Jメール']
     site1 = np.random.choice(['ワクワクメール', 'Jメール'])
@@ -235,7 +261,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
                  'mh': {'site_name': 'ネット婚活で結婚相手探し', 'site_author': '伊東'},
                  'olm': {'site_name': 'オンラインの出会いで結婚する方法', 'site_author': '池田'},
                  'cov': {'site_name': 'マッチングアプリで恋人探し', 'site_author': '山本'},
-                 'tai': {'site_name': 'マッチングアプリのエッチ体験談', 'site_author': 'ごろう'}}
+                 'ht': {'site_name': '出会い系エッチ体験談', 'site_author': 'ごろう'}}
     sex_dict = [[['男性', '男'], [0.9, 0.1]], [['女性', '女子', '女の人'], [0.6, 0.2, 0.2]],
                 [['女性', '女の人']], [['女の子', '女子']],
                 [['彼氏', '恋人'], [0.7, 0.3]], [['彼女', '恋人'], [0.7, 0.3]],
@@ -305,7 +331,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
             noun_dict[noun['before']] = [noun['after'], noun['plist']]
         else:
             noun_dict[noun['before']] = [noun['after']]
-    if main_key == 'mh':
+    if main_key == 'mh' or main_key == 'olm':
         noun_dict['<!--sex-->'] = [['結婚']]
         noun_dict['<!--h-2-->'] = [['素敵', '魅力的']]
         noun_dict['<!--hな-->'] = [['素敵な', '魅力的な']]
@@ -392,7 +418,10 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # print(type(keywords['id']))
     result_str += 'n::' + str(add_id_dict[int(keywords['id'])]) + '\n'
     result_str += 'e::\n'
-    if main_key == 'mh':
+    if dt_str:
+        result_str += 'p::' + dt_str + '\n'
+    if main_key == 'mh' or main_key == 'olm':
+        result_str += 'a::' + str(keywords['ad']) + '\n'
         result_str += 'k::' + ' '.join([keywords['all_key'], '婚活']) + '\n'
     elif main_key == 'cov':
         result_str += 'k::' + ' '.join([keywords['all_key'], 'コロナ禍 マッチングアプリ']) + '\n'
@@ -465,7 +494,7 @@ def key_phrase_maker(keywords, a_adj_flag):
         act_way_g = act_base + '<!--way-->'
         obj = keywords['obj']
         obj_k = keywords['obj']
-        if keywords['act_code'] == 'mh':
+        if keywords['act_code'] == 'mh' or keywords['act_code'] == 'olm':
             act_target = '結婚相手'
             obj_as_target = '<!--sub-l-partner-->にしたい' + obj
         else:
@@ -890,7 +919,7 @@ def make_used_id_list_for_key_data(project_name):
     print(pkl_data)
 
 
-def auto_make_md_for_all_key(project_dir, dir_name, html_str, main_key, recipe_flag):
+def auto_make_md_for_all_key(project_dir, dir_name, html_str, main_key, recipe_flag, start_id, insert_pub_date):
     # html_str -> keyword : {},  性別 : {s},  main_key : {m}    for ex  '{}_{s}_{m}
     key_data_dict = {'obj_m': {'data': key_data.key_obj_woman.keyword_dict, 'sex': 'man'},
                      'obj_w': {'data': key_data.key_obj_man.keyword_dict, 'sex': 'woman'}}
@@ -899,12 +928,15 @@ def auto_make_md_for_all_key(project_dir, dir_name, html_str, main_key, recipe_f
     for d_id in key_data_dict:
         if key_data_dict[d_id]['sex'] == 'man':
             sex_str = 'm'
+            sex_str_f = 'm'
         else:
             sex_str = 'w'
-        html_str_i = html_str.replace('{s}', sex_str).replace('{m}', main_key)
+            sex_str_f = 'f'
+        html_str_i = html_str.replace('{s}', sex_str).replace('{m}', main_key).replace('{fs}', sex_str_f)
         make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str_i, source_data, main_key, [],
                                            key_data_dict[d_id]['data'], recipe_flag=recipe_flag,
-                                           subject_sex=key_data_dict[d_id]['sex'])
+                                           subject_sex=key_data_dict[d_id]['sex'], start_id=start_id,
+                                           insert_pub_date=insert_pub_date)
 
 
 if __name__ == '__main__':
@@ -923,20 +955,23 @@ if __name__ == '__main__':
     # make_new_pages_to_md_from_key_list('test', 'corona', '{}_m_cov', source_data, 'cov',
     #                                    [], t_key_list, recipe_flag=True, subject_sex='man')
 
-    auto_make_md_for_all_key('online_marriage', 'online_love', 'love_{s}_{}', 'olm', recipe_flag=True)
+    auto_make_md_for_all_key('htaiken', 'how_to_sex', '{s}_{m}_{}', 'ht', recipe_flag=True, start_id=12,
+                             insert_pub_date='2021-07-18T18:22:12')
+    # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
 
     # make_used_id_list_for_key_data('sfd')
 
     # todo: actの複数パターン　お泊まりセックス、アブノーマル、複数プレイ
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等
-    # todo: オンラインの出会いで結婚する方法、　マッチングサイトでエッチする、　地域の婚活, パパ活、　割り切り
+    # todo: マッチングサイトでエッチする、　地域の婚活, パパ活、　割り切り
     # todo: 趣味の出会い
     # todo: 時期ネタの書き換え
     # todo: 会話の話題やobj,subリンク、趣味などのワードリストで多様性
     # todo: その対象の探し方、o_catで切り替えるなどして多様化
     # todo: 関連記事の追加で相互リンク強化
     # todo: 検索数が増えてきた記事をピンポイントで最新フォームで書き換えできる関数
+    # todo: cssの色の一括変更とupload
 
     # pprint.pprint(obj_source_changer(), width=150)
 

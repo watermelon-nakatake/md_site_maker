@@ -22,6 +22,12 @@ title = {
             '<!--k-obj-noun-l-->と<!--k-act-can-easy--><!--adult-bbs-->',
             '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
             '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--k-obj-act-way-->'],
+    'ht': ['<!--k-obj-act-way-->と<!--k-obj-noun-l-->と<!--title-can-meet--><!--d-bbs-->',
+           '<!--k-obj-act-can-do--><!--d-bbs-->と<!--k-act-way-->',
+           '<!--k-obj-act-way-->と<!--k-act-can--><!--recommended--><!--d-bbs-->',
+           '<!--k-obj-noun-l-->と<!--k-act-can-easy--><!--adult-bbs-->',
+           '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
+           '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--k-obj-act-way-->'],
     'sex2': ['<!--k-how-to-->と<!--k-obj-act-can-do--><!--d-bbs-->',
              '<!--k-obj-act-can-do--><!--d-bbs-->と<!--k-how-to-->',
              '<!--k-how-to-->と<!--k-obj-act-can-do--><!--recommended--><!--d-bbs-->',
@@ -74,6 +80,15 @@ des = {
         '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
+    'ht': [
+        '<!--k-do-->ための<!--best-good--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
+        '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
+        '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
+        '<!--k-obj-act-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。'
+        '<!--deaikei-->は<!--k-obj-act-easy-->ので<!--my-recommend-s-->。',
+        '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
+        'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
+        '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
     'mh': [
         '<!--k-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
         '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
@@ -82,7 +97,7 @@ des = {
         '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
-'olm': [
+    'olm': [
         '<!--k-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
         '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
         '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'

@@ -4,7 +4,7 @@ import os
 import collections
 import glob
 import shutil
-import online_marriage.main_info
+import htaiken.main_info
 import file_upload
 
 
@@ -241,9 +241,9 @@ def insert_to_temp(pd):
 
 if __name__ == '__main__':
     # 新規プロジェクトの１段階
-    # pj_name = 'online_marriage'
+    # pj_name = 'htaiken'
     # make_project_dir_and_pd_file(pj_name)
 
     # info_dict.py の作成後実行
-    pd_t = online_marriage.main_info.info_dict  # pdをimportに追加、変更
+    pd_t = htaiken.main_info.info_dict  # pdをimportに追加、変更
     preparation_for_new_project(pd_t)

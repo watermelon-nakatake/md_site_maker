@@ -1,7 +1,9 @@
 import article_modify
-import online_marriage.main_info
+import htaiken.main_info
 
 
 if __name__ == '__main__':
-    article_modify.all_file_to_markdown(before_dir='online_marriage/old_files', after_dir='online_marriage/md_files',
-                                        pd=online_marriage.main_info.info_dict, path_remove='', remove_list=[])
+    target_dir = 'htaiken'
+    pd_dict = htaiken.main_info.info_dict
+    article_modify.all_file_to_markdown(before_dir=target_dir + '/old_files', after_dir=target_dir + '/md_files',
+                                        pd=pd_dict, path_remove='', remove_list=[])

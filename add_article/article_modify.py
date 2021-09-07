@@ -5,6 +5,8 @@ import datetime
 import shutil
 import pickle
 from upload import file_upload
+
+
 # import make_article_list
 
 
@@ -56,8 +58,9 @@ def all_file_to_markdown(before_dir, after_dir, pd, path_remove, remove_list):
         if not os.path.exists(n_dir):
             os.makedirs(n_dir)
     b_files = glob.glob(before_dir + '/**/**.html', recursive=True)
-    # print(b_files)
+    b_files = [x for x in b_files if 'wp-' not in x and x.count('/') == 3]
     b_files = file_path_order(b_files)
+    print(b_files)
     for h_file in b_files:
         print(h_file)
         p_num = len(pk_dic)
@@ -82,9 +85,10 @@ def file_path_order(b_files):
 
 def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remove_list, p_num, pd):
     new_path = file_path.replace(before_dir + '/', '').replace(path_remove, '').replace('.html', '.md')
-    md_path = file_path.replace(before_dir, after_dir).replace('.html', '.md')
+    # md_path = file_path.replace(before_dir, after_dir).replace('.html', '.md')
+    md_path = file_path.replace(before_dir, after_dir + '/experiences').replace('/index.html', '.md')
     category = file_path.split('/')[-1]
-    with open(file_path, 'r', encoding='Shift_JIS') as f:
+    with open(file_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
     long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
     title_l = re.findall(r'<title>(.+?)</title>', long_str)
@@ -115,8 +119,8 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
         print('no h1 !')
         h1 = 'n_a'
     # メインコンテンツ抽出
-    main_start = '<!-- InstanceBeginEditable name="main-content" -->'
-    main_end = '<!-- InstanceEndEditable -->'
+    main_start = '<div class="entry-content">'
+    main_end = '</div><!-- コピー禁止エリアここまで -->'
     remove_str = []
     main_srt_l = re.findall(main_start + r'(.*?)' + main_end, long_str)
     if main_srt_l:
@@ -127,12 +131,31 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
     for r_str in remove_str:
         if r_str in main_str:
             main_str.replace(r_str, '')
-    # pub_date_l = re.findall(r'', long_str)
-    # if pub_date_l:
-    #     pub_date = pub_date_l[0]
-    # else:
-    #     print('no pub_date !')
-    pub_date = '2017-07-09'
+    if '/wp-content/uploads/' in main_str:
+        img_l = re.findall(r'<img .+?>', main_str)
+        for i, img_str in enumerate(img_l):
+            # print(img_str)
+            f_img_l = re.findall(r'alt="(.*?)".+?static/wp-content/uploads/(.+?\.jpg)', img_str)
+            print(f_img_l)
+            if f_img_l:
+                old_img = 'htaiken/old_files/wp-content/uploads/' + f_img_l[0][1]
+                new_img = file_path.replace('/old_files/', '/md_files/images/art_images/') \
+                    .replace('/index.html', '_{}.jpg'.format(str(i + 1)))
+                shutil.copy(old_img, new_img)
+                # print(new_img)
+                insert_str = '<img src="{}" alt="{}">'.format(new_img.replace('htaiken/md_files', '..'),
+                                                              f_img_l[0][0])
+                main_str = main_str.replace(img_str, insert_str)
+            else:
+                print('image_error!! {}'.format(file_path))
+
+    pub_date_l = re.findall(r'<time class="updated" datetime="(.+?)T', long_str)
+    if pub_date_l:
+        pub_date = pub_date_l[0]
+    else:
+        print('no pub_date !')
+        pub_date = '2018-11-09'
+
     result = 't::' + title + '\n'
     result += 'd::' + description + '\n'
     result += 'n::' + str(p_num) + '\n'
@@ -143,7 +166,8 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
     result += 'f::' + new_path + '\n'
     result += 'p::' + pub_date + '\n'
     result += '\n# ' + h1 + '\n\n'
-    result += html_to_markdown(main_str, remove_list, md_path, pd)
+    result += html_to_markdown(main_str, remove_list, md_path, pd).replace('</div>', '') \
+        .replace('<div class="redbox">', '## ').replace('&nbsp;', '')
     naked_str = re.sub(r'<.+?>', '', result + h1)
     str_len = len(naked_str)
     pk_data = {'file_path': file_path,

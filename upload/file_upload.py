@@ -4,11 +4,19 @@ import os
 import time
 import re
 import datetime
+
+import howto.main_info
 from add_article import amp_file_maker, common_tool
 import random
 import paramiko
 import scp
 import reibun.main_info
+import online_marriage.main_info
+import konkatsu.main_info
+import rei_site.main_info
+import sfd.main_info
+import shoshin.main_info
+import htaiken.main_info
 
 
 def scp_upload(up_file_list, pd):
@@ -28,6 +36,28 @@ def scp_upload(up_file_list, pd):
                     up_dir = ''
                 scpc.put(up_file, 'www/' + up_dir)
             print('Upload finished !')
+            
+            
+def auto_scp_upload(up_file_list):
+    prj_dict = {'howto': howto.main_info.info_dict,
+                'joshideai': howto.main_info.info_dict,
+                'online_marriage': online_marriage.main_info.info_dict,
+                'konkatsu': konkatsu.main_info.info_dict,
+                'rei_site': rei_site.main_info.info_dict,
+                'reibun': reibun.main_info.info_dict,
+                'sfd': sfd.main_info.info_dict,
+                'shoshin': shoshin.main_info.info_dict,
+                'htaiken': htaiken.main_info.info_dict,
+                }
+    use_dict = {x: [] for x in prj_dict}
+    for pro in use_dict:
+        for file_path in up_file_list:
+            if file_path.startswith(pro):
+                use_dict[pro].append(file_path)
+    # print(use_dict)
+    for dir_name in use_dict:
+        if use_dict[dir_name]:
+            scp_upload(use_dict[dir_name], prj_dict[dir_name])
 
 
 def ftp_upload(up_file_list, pd):
@@ -462,6 +492,9 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/html_files/pc/sitepage/mintj.html', 'reibun/html_files/pc/sitepage/pcmax.html']
+    up_files = ['howto/html_files/css/main.css', 'howto/html_files/index.html',
+                'howto/html_files/images/common/site_name_500.png']
+    auto_scp_upload(up_files)
+
     # ftp_upload(up_files)
-    scp_upload(up_files, reibun.main_info.info_dict)
+    # scp_upload(up_files, konkatsu.main_info.info_dict)
