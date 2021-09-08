@@ -492,8 +492,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['howto/html_files/css/main.css', 'howto/html_files/index.html',
-                'howto/html_files/images/common/site_name_500.png']
+    up_files = ['rei_site/html_files/pc/adult/index.html', 'rei_site/html_files/pc/css/main.css']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)

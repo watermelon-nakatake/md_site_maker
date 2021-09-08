@@ -241,9 +241,9 @@ def insert_to_temp(pd):
 
 if __name__ == '__main__':
     # 新規プロジェクトの１段階
-    # pj_name = 'htaiken'
-    # make_project_dir_and_pd_file(pj_name)
+    pj_name = 'htaiken'
+    make_project_dir_and_pd_file(pj_name)
 
     # info_dict.py の作成後実行
-    pd_t = htaiken.main_info.info_dict  # pdをimportに追加、変更
-    preparation_for_new_project(pd_t)
+    # pd_t = htaiken.main_info.info_dict  # pdをimportに追加、変更
+    # preparation_for_new_project(pd_t)

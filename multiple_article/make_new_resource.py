@@ -146,7 +146,7 @@ def list_duplication_check(noun_list):
 
 
 def md_to_data_dict(md_path, keywords, ignore_words, replace_list):
-    key_phrase_dict = make_new_article.make_keywords_sample_dict(keywords)
+    key_phrase_dict = make_new_article.make_keywords_sample_dict(keywords, a_adj_flag=False)
     list_duplication_check(words_dict.noun_list)
     print(key_phrase_dict)
     conj_dict = make_word_dict(words_dict.conj_list, ignore_words)
@@ -353,7 +353,6 @@ def insert_additional_word_to_exist_source(add_str, ignore_words):
     with open('multiple_article/source_data{}.py'.format(add_str), 'w', encoding='utf-8') as g:
         g.write(result)
     print(counter)
-    return
 
     t_list = source_data_test.source_list
     # print(t_list)
@@ -390,8 +389,8 @@ if __name__ == '__main__':
     k_p = {
         's_adj': '普通の', 'sub': '男性',
         'o_adj': '淫乱な', 'obj': '巨乳女性', 'obj_key': '巨乳', 'obj_p': 'の',
-        'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
-        'act_connection': ['セフレ関係'],
+        'act_adj': '安全に', 'act': 'エッチする', 'act_noun': 'エッチ', 'act_noun_flag': True,
+        'act_connection': ['肉体関係'],
         'o_reason': '',
         't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf'}
 

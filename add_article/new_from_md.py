@@ -66,7 +66,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
             reibun_index_insert(pk_dic, title_change_id, pd)
         else:
             insert_to_index_page(pk_dic, title_change_id, pd)
-        insert_to_top_page(title_change_id, pk_dic, pd)
+        insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag)
     else:
         print('change only one page')
         change_files = [x for x in upload_list if '.html' in x]
@@ -142,7 +142,7 @@ def update_filter(up_str):
     return ''.join(display_list)
 
 
-def insert_to_top_page(title_change_id, pk_dic, pd):
+def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
     today = datetime.date.today()
     today_str = str(today).replace('-', '/').replace('/0', '/')
     with open(pd['project_dir'] + '/html_files/index.html', 'r', encoding='utf-8') as f:
@@ -150,32 +150,54 @@ def insert_to_top_page(title_change_id, pk_dic, pd):
         # 更新記事一覧
         up_str = re.findall(r'<ul class="updli">(.*?)</ul>', long_str)[0]
         add_str = ''
-        if pd['project_dir'] != 'konkatsu' and pd['project_dir'] != 'online_marriage':
-            for c_id in title_change_id:
-                if pk_dic[c_id]['category'] != 'top':
-                    if ':' not in pk_dic[c_id]['pub_date']:
-                        pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'] + ' 00:00:00',
-                                                                  '%Y-%m-%d %H:%M:%S')
-                    else:
-                        pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'], '%Y-%m-%d %H:%M:%S')
-                    pub_date = datetime.date(pub_datetime.year, pub_datetime.month, pub_datetime.day)
-                    status_str = '更新' if today - datetime.timedelta(days=3) > pub_date else '追加'
-                    add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
-                        today_str, pd['category_data'][pk_dic[c_id]['category']][0],
-                        pd['main_dir'] + pk_dic[c_id]['file_path'], re.sub(r'【.+?】', '', pk_dic[c_id]['title']),
-                        status_str)
+        if first_time_flag:
+            up_list = []
+            for i in pk_dic:
+                if ((pd['project_dir'] == 'konkatsu' or pd['project_dir'] == 'online_marriage') and pk_dic[i]['ad_flag'] \
+                        == 3) or pk_dic[i]['category'] == 'top':
+                    continue
+                if ':' in pk_dic[i]['pub_date']:
+                    up_list.append([datetime.datetime.strptime(pk_dic[i]['pub_date'], '%Y-%m-%d %H:%M:%S'),
+                                    pk_dic[i]['category'], pk_dic[i]['file_path'], pk_dic[i]['title']])
+                else:
+                    up_list.append(
+                        [datetime.datetime.strptime(pk_dic[i]['pub_date'] + ' 00:00:00', '%Y-%m-%d %H:%M:%S'),
+                         pk_dic[i]['category'], pk_dic[i]['file_path'], pk_dic[i]['title']])
+            up_list.sort(reverse=True)
+            print(up_list)
+            replace_str = ''.join(['<li>{} [{}・<a href="{}">{}</a>]を追加</li>'.format(
+                datetime.date.strftime(x[0], '%Y/%m/%d'), pd['category_data'][x[1]][0], x[2], x[3]) for x in up_list])
+            print(replace_str)
         else:
-            for c_id in title_change_id:
-                if pk_dic[c_id]['category'] != 'top' and pk_dic[c_id]['ad_flag'] == 3:
-                    pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'] + ' 00:00:00',
-                                                              '%Y-%m-%d %H:%M:%S')
-                    pub_date = datetime.date(pub_datetime.year, pub_datetime.month, pub_datetime.day)
-                    status_str = '更新' if today - datetime.timedelta(days=3) > pub_date else '追加'
-                    add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
-                        today_str, pd['category_data'][pk_dic[c_id]['category']][0],
-                        pd['main_dir'] + pk_dic[c_id]['file_path'], re.sub(r'【.+?】', '', pk_dic[c_id]['title']),
-                        status_str)
-        replace_str = update_filter(add_str + up_str)
+            if pd['project_dir'] != 'konkatsu' and pd['project_dir'] != 'online_marriage':
+                for c_id in title_change_id:
+                    if pk_dic[c_id]['category'] != 'top':
+                        if ':' not in pk_dic[c_id]['pub_date']:
+                            pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'] + ' 00:00:00',
+                                                                      '%Y-%m-%d %H:%M:%S')
+                        else:
+                            pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'], '%Y-%m-%d %H:%M:%S')
+                        pub_date = datetime.date(pub_datetime.year, pub_datetime.month, pub_datetime.day)
+                        status_str = '更新' if today - datetime.timedelta(days=3) > pub_date else '追加'
+                        add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
+                            today_str, pd['category_data'][pk_dic[c_id]['category']][0],
+                            pd['main_dir'] + pk_dic[c_id]['file_path'], re.sub(r'【.+?】', '', pk_dic[c_id]['title']),
+                            status_str)
+            else:
+                for c_id in title_change_id:
+                    if pk_dic[c_id]['category'] != 'top' and pk_dic[c_id]['ad_flag'] == 3:
+                        if ':' not in pk_dic[c_id]['pub_date']:
+                            pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'] + ' 00:00:00',
+                                                                      '%Y-%m-%d %H:%M:%S')
+                        else:
+                            pub_datetime = datetime.datetime.strptime(pk_dic[c_id]['pub_date'], '%Y-%m-%d %H:%M:%S')
+                        pub_date = datetime.date(pub_datetime.year, pub_datetime.month, pub_datetime.day)
+                        status_str = '更新' if today - datetime.timedelta(days=3) > pub_date else '追加'
+                        add_str += '<li>{} [{}・<a href="{}">{}</a>]を{}</li>'.format(
+                            today_str, pd['category_data'][pk_dic[c_id]['category']][0],
+                            pd['main_dir'] + pk_dic[c_id]['file_path'], re.sub(r'【.+?】', '', pk_dic[c_id]['title']),
+                            status_str)
+            replace_str = update_filter(add_str + up_str)
         long_str = long_str.replace(up_str, replace_str)
         if pd['amp_flag']:
             insert_to_amp_top(replace_str, pd)
@@ -209,7 +231,6 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
                 if pk_dic[id_num]['ad_flag'] == 3:
                     h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
             else:
-                h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
                 h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
     for category in h_dec:
         h_dec[category].sort(key=lambda x: x[0])
@@ -843,6 +864,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             md_txt = re.sub(r'k::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'e::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'a::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'p::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'^[a-zA-Z]::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)

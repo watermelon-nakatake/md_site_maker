@@ -100,6 +100,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                      }
     hot_info = {'hot_month': '9月', 'hot_season': '秋', 'hot_month_next': '10月'}
     a_adj_flag = main_key_dict[main_key]['a_adj_flag']
+    dt_str = ''
     # print(link_dict)
     if not os.path.exists(project_dir + '/md_files/' + dir_name):
         os.mkdir(project_dir + '/md_files/' + dir_name)
@@ -131,11 +132,11 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
             dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
                                            seconds=int(random.random() * 59))
             dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
-        else:
-            dt_str = ''
         recipe_list = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict_u, main_key,
                                     recipe_flag, subject_sex, a_adj_flag, add_id_dict, dt_str)
         recipe_dict[keywords['page_name']] = recipe_list
+    if dt_str:
+        print('last pub_date :  {}'.format(dt_str))
     # print(recipe_dict)
 
 
@@ -956,7 +957,7 @@ if __name__ == '__main__':
     #                                    [], t_key_list, recipe_flag=True, subject_sex='man')
 
     auto_make_md_for_all_key('htaiken', 'how_to_sex', '{s}_{m}_{}', 'ht', recipe_flag=True, start_id=12,
-                             insert_pub_date='2021-07-18T18:22:12')
+                             insert_pub_date='2021-05-18T18:22:12')
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
 
     # make_used_id_list_for_key_data('sfd')
@@ -964,7 +965,7 @@ if __name__ == '__main__':
     # todo: actの複数パターン　お泊まりセックス、アブノーマル、複数プレイ
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等
-    # todo: マッチングサイトでエッチする、　地域の婚活, パパ活、　割り切り
+    # todo: 地域の婚活, パパ活、　割り切り, 恋人、彼氏, 恋活
     # todo: 趣味の出会い
     # todo: 時期ネタの書き換え
     # todo: 会話の話題やobj,subリンク、趣味などのワードリストで多様性

@@ -132,7 +132,7 @@ def check_duplicate_keyword(new_dict, existing_dict):
 
 
 if __name__ == '__main__':
-    i_dict = make_key_dict_from_csv('new_key - obj_m.csv', '', {'type': 'only_sub'}, 209)
-    check_duplicate_keyword(i_dict, key_data.key_obj_woman.keyword_dict)
-    # o_dict = import_english_str(i_dict, key_data.key_obj_woman.keyword_dict)
+    i_dict = make_key_dict_from_csv('new_key - obj_w.csv', '', {'type': 'only_obj'}, 0)
+    check_duplicate_keyword(i_dict, key_data.key_obj_man.keyword_dict)
+    # o_dict = import_english_str(i_dict, key_data.key_obj_man.keyword_dict)
     # write_csv_file(o_dict, 'multiple_article/key_data/key_obj_m2.csv')
