@@ -17,6 +17,7 @@ import rei_site.main_info
 import sfd.main_info
 import shoshin.main_info
 import htaiken.main_info
+import joshideai.main_info
 
 
 def scp_upload(up_file_list, pd):
@@ -40,7 +41,7 @@ def scp_upload(up_file_list, pd):
             
 def auto_scp_upload(up_file_list):
     prj_dict = {'howto': howto.main_info.info_dict,
-                'joshideai': howto.main_info.info_dict,
+                'joshideai': joshideai.main_info.info_dict,
                 'online_marriage': online_marriage.main_info.info_dict,
                 'konkatsu': konkatsu.main_info.info_dict,
                 'rei_site': rei_site.main_info.info_dict,
@@ -492,7 +493,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['rei_site/html_files/pc/adult/index.html', 'rei_site/html_files/pc/css/main.css']
+    up_files = ['konkatsu/html_files/sitemap.xml']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)

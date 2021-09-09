@@ -16,6 +16,12 @@ title = {
            '<!--title-easy--><!--k-obj-act-way-->と<!--k-obj-act-easy--><!--d-bbs-->',
            '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
            '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--title-easy--><!--k-obj-act-way-->'],
+    'bf': ['<!--k-obj-act-way-->と<!--k-obj-noun-l-->と<!--title-can-meet--><!--d-bbs-->',
+           '<!--k-obj-act-can-do--><!--d-bbs-->と<!--title-easy--><!--k-act-way-->',
+           '<!--k-obj-act-way-->と<!--k-act-can--><!--recommended--><!--d-bbs-->',
+           '<!--title-easy--><!--k-obj-act-way-->と<!--k-obj-act-easy--><!--d-bbs-->',
+           '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
+           '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--title-easy--><!--k-obj-act-way-->'],
     'sex': ['<!--k-obj-act-way-->と<!--k-obj-noun-l-->と<!--title-can-meet--><!--d-bbs-->',
             '<!--k-obj-act-can-do--><!--d-bbs-->と<!--k-act-way-->',
             '<!--k-obj-act-way-->と<!--k-act-can--><!--recommended--><!--d-bbs-->',
@@ -64,6 +70,14 @@ des = {
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
     'gf': [
+        '<!--k-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
+        '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
+        '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
+        '<!--k-obj-act-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。<!--k-easy-->ので<!--my-recommend-s-->。',
+        '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
+        'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
+        '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
+    'bf': [
         '<!--k-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
         '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
         '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
@@ -1223,7 +1237,7 @@ da_12_1 = {
         '唯一の手段と言っていいかもしれません。'],
     4: [
         '<!--c-添加2--><!--deaikei-->なら<!--sub-partner-->や<!--sub-l-partner-->に<!--leak-->る<!--rate-->も低いので<!--my-recommend-s-->。'],
-    'info': {'deny': ['mh', 'olm'], 'only': [], 'shuffle': [], 'sec_name': 'da_12_1'}}
+    'info': {'deny': ['mh', 'olm', 'bf'], 'only': [], 'shuffle': [], 'sec_name': 'da_12_1'}}
 # da_12_1/end
 
 pi_1_1 = {
@@ -1408,7 +1422,7 @@ pa_4_1 = {
          '<!--k-obj-noun-->が<!--like-a-->人だけでなく、<!--hな--><!--obj-sex-->を<!--k-sub-want-->は<!--k-obj-noun-s-->を'
          '特に狙ってみるといい<!--think-->。'],
     14: ['<!--k-obj-noun-s-->は<!--ero-->で<!--enough-->よ！'],
-    'info': {'deny': ['mh', 'olm'], 'only': [], 'shuffle': [], 'sec_name': 'pa_4_1'}}
+    'info': {'deny': ['mh', 'olm', 'bf'], 'only': [], 'shuffle': [], 'sec_name': 'pa_4_1'}}
 # pa_4_1/end
 
 pa_1_1 = {
@@ -1462,7 +1476,7 @@ pa_1_1 = {
          '<!--c-当然-->若い<!--k-obj-noun-s-->が<!--like-a-->人には興味はないかもしれませんが、なかなか<!--can-find-d-e-->ない方や、'
          '<!--obj-older-->や<!--divorce--><!--obj-sex-o-->に興味がある方は、<!--obj-older-->や<!--divorce-->の<!--k-obj-noun-s-->を攻略するのが、'
          '<!--k-act-->早道です。'],
-    'info': {'deny': ['woman', 'mh', 'olm'], 'only': [], 'shuffle': [], 'sec_name': 'pa_1_1'}}
+    'info': {'deny': ['woman', 'mh', 'olm', 'bf'], 'only': [], 'shuffle': [], 'sec_name': 'pa_1_1'}}
 # pa_1_1/end
 
 pa_2_1 = {
@@ -2426,7 +2440,7 @@ tips_3_1 = {
          '対策しておいた方がいい<!--think-->。',
          '<!--other-side-->の<!--obj-married-->が完全否定して<!--nicely-->誤魔化せたので無事に済みましたが、大ピンチでした。'],
     25: ['反面教師にして下さい。', '死ぬかと思いました。'],
-    'info': {'deny': [], 'only': [], 'shuffle': [[11, 12, 13, 14, 15]], 'sec_name': 'tips_3_1'}}
+    'info': {'deny': ['mh', 'olm', 'bf'], 'only': [], 'shuffle': [[11, 12, 13, 14, 15]], 'sec_name': 'tips_3_1'}}
 # tips_3_1/end
 
 tips_4_1 = {
@@ -2563,7 +2577,7 @@ tips_6_1 = {
          '狙わないように<!--you-must-do-->！',
          '<!--deaikei-->で<!--k-act-to-find-->を<!--in-this-time-->は、<!--profile-->を見て本命<!--love-->希望ではない<!--obj-sex-->に'
          '<!--send-mail-->ようにしてください。'],
-    'info': {'deny': ['mh', 'olm'], 'only': [], 'shuffle': [], 'sec_name': 'tips_6_1'}}
+    'info': {'deny': ['mh', 'olm', 'bf'], 'only': [], 'shuffle': [], 'sec_name': 'tips_6_1'}}
 # tips_6_1/end
 
 tips_7_1 = {
@@ -2605,7 +2619,7 @@ tips_7_1 = {
          '<!--kind--><!--k-obj-noun-s-->は<!--mail-talk-->も続きやすく、<!--intimate-->なりやすいので、'
          '<!--k-act-noun-->候補の<!--k-obj-noun-s-->が複数いる<!--occasion-->は、<!--mail-->の反応で優先順位を決めると'
          '<!--k-act-to-find-->が<!--cost-performance-->がよくなります。'],
-    'info': {'deny': ['mh', 'olm'], 'only': [], 'shuffle': [], 'sec_name': 'tips_7_1'}}
+    'info': {'deny': ['mh', 'olm', 'bf'], 'only': [], 'shuffle': [], 'sec_name': 'tips_7_1'}}
 # tips_7_1/end
 
 tips_8_1 = {

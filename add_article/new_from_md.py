@@ -82,6 +82,8 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         upload_list.extend(amp_upload)
     if upload_flag:
         upload_list.extend(pd['add_files'])
+        if os.path.exists('{}/html_files/sitemap.xml'.format(pd['project_dir'])):
+            upload_list.append('{}/html_files/sitemap.xml'.format(pd['project_dir']))
         upload_list = list(set(upload_list))
         upload_list.sort()
         upload_list = modify_file_check(upload_list, last_mod_time)
@@ -153,8 +155,8 @@ def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
         if first_time_flag:
             up_list = []
             for i in pk_dic:
-                if ((pd['project_dir'] == 'konkatsu' or pd['project_dir'] == 'online_marriage') and pk_dic[i]['ad_flag'] \
-                        == 3) or pk_dic[i]['category'] == 'top':
+                if ((pd['project_dir'] == 'konkatsu' or pd['project_dir'] == 'online_marriage') and pk_dic[i][
+                    'ad_flag'] == 3) or pk_dic[i]['category'] == 'top':
                     continue
                 if ':' in pk_dic[i]['pub_date']:
                     up_list.append([datetime.datetime.strptime(pk_dic[i]['pub_date'], '%Y-%m-%d %H:%M:%S'),
@@ -430,7 +432,8 @@ def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad
     for html_path in all_html_path:
         with open(html_path, 'r', encoding='utf-8') as f:
             long_str = f.read()
-        if (pd['project_dir'] == 'konkatsu' or pd['project_dir'] == 'online_marriage') and '<!--adult_art-->' in long_str:
+        if (pd['project_dir'] == 'konkatsu' or pd[
+            'project_dir'] == 'online_marriage') and '<!--adult_art-->' in long_str:
             t_side_bar_dic = ad_side_bar_dic
         else:
             t_side_bar_dic = side_bar_dic
@@ -761,9 +764,9 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         md_txt = plain_txt
         # print(md_txt)
 
-        description = re.findall(r'd::(.+?)\n', md_txt)[0]
+        description = re.findall(r'd::(.*?)\n', md_txt)[0]
         if 'p::' in md_txt:
-            pub_date = re.findall(r'p::(.+?)\n', md_txt)[0]
+            pub_date = re.findall(r'p::(.*?)\n', md_txt)[0]
         else:
             if fixed_mod_date:
                 pub_date = fixed_mod_date
@@ -771,7 +774,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 pub_date = ''
 
         if 'l_path = ::' in md_txt:
-            keyword_str = re.findall(r'k::(.+?)\n', md_txt)[0]
+            keyword_str = re.findall(r'k::(.*?)\n', md_txt)[0]
             if '&' in keyword_str:
                 print('There is "&" !')
             keyword = keyword_str.split(' ')
@@ -1104,14 +1107,15 @@ def insert_ds_link(md_str, pd):
         if pd['aff_dir']['dir'] + '/' not in md_str:
             main_str = re.sub(r'^[\s\S]+?\n## ', '', md_str)
             str_list = main_str.split('\n')
-            for key in pd['aff_dir']:
-                if key != 'dir' and key not in used_name:
+            for key in pd['sc_url']:
+                if key not in used_name:
                     for row in str_list:
                         if not row.startswith('#') and not row.startswith('- '):
                             if key in row:
                                 if '](' not in row:
-                                    i_url = '[{}](../../{}{})'.format(key, '../' * pd['main_dir'].count('/'),
-                                                                      pd['aff_dir'][key])
+                                    i_url = '[{}](../../{}html_files/{}{})'.format(key,
+                                                                                   '../' * pd['main_dir'].count('/'),
+                                                                                   pd['main_dir'], pd['sc_url'][key])
                                     new_row = row.replace(key, i_url)
                                     md_str = md_str.replace(row, new_row)
                                     print('insert {} link str'.format(key))

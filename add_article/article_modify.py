@@ -85,8 +85,8 @@ def file_path_order(b_files):
 
 def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remove_list, p_num, pd):
     new_path = file_path.replace(before_dir + '/', '').replace(path_remove, '').replace('.html', '.md')
-    # md_path = file_path.replace(before_dir, after_dir).replace('.html', '.md')
-    md_path = file_path.replace(before_dir, after_dir + '/experiences').replace('/index.html', '.md')
+    md_path = file_path.replace(before_dir, after_dir).replace('.html', '.md')
+    # md_path = file_path.replace(before_dir, after_dir + '/experiences').replace('/index.html', '.md')
     category = file_path.split('/')[-1]
     with open(file_path, 'r', encoding='utf-8') as f:
         long_str = f.read()
@@ -106,7 +106,7 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
     else:
         print('no key_word !')
         key_word = 'n_a'
-    description_l = re.findall(r'<meta name="description" content="(.+?)"', long_str)
+    description_l = re.findall(r'<meta name="description" content="(.*?)"', long_str)
     if description_l:
         description = description_l[0]
     else:
@@ -119,8 +119,10 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
         print('no h1 !')
         h1 = 'n_a'
     # メインコンテンツ抽出
-    main_start = '<div class="entry-content">'
-    main_end = '</div><!-- コピー禁止エリアここまで -->'
+    # main_start = '<div class="entry-content">'
+    # main_end = '</div><!-- コピー禁止エリアここまで -->'
+    main_start = '<div class="contents">'
+    main_end = '<div class="postdate">'
     remove_str = []
     main_srt_l = re.findall(main_start + r'(.*?)' + main_end, long_str)
     if main_srt_l:
@@ -131,6 +133,8 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
     for r_str in remove_str:
         if r_str in main_str:
             main_str.replace(r_str, '')
+    if '<h4>関連記事' in main_str:
+        main_str = re.sub(r'<h4>関連記事.*$', '', main_str)
     if '/wp-content/uploads/' in main_str:
         img_l = re.findall(r'<img .+?>', main_str)
         for i, img_str in enumerate(img_l):
@@ -149,12 +153,14 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
             else:
                 print('image_error!! {}'.format(file_path))
 
-    pub_date_l = re.findall(r'<time class="updated" datetime="(.+?)T', long_str)
+    # pub_date_l = re.findall(r'<time class="updated" datetime="(.+?)T', long_str)
+    pub_date_l = re.findall(r'<time class="entry-time" itemprop="datePublished" datetime="(.+?)">', long_str)
     if pub_date_l:
         pub_date = pub_date_l[0]
+        pub_date = pub_date.replace('年', '-').replace('月', '-').replace('日', '-')
     else:
         print('no pub_date !')
-        pub_date = '2018-11-09'
+        pub_date = '2017-10-11'
 
     result = 't::' + title + '\n'
     result += 'd::' + description + '\n'
@@ -167,7 +173,7 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
     result += 'p::' + pub_date + '\n'
     result += '\n# ' + h1 + '\n\n'
     result += html_to_markdown(main_str, remove_list, md_path, pd).replace('</div>', '') \
-        .replace('<div class="redbox">', '## ').replace('&nbsp;', '')
+        .replace('<div class="redbox">', '## ').replace('&nbsp;', '').replace('<div id="kanren">', '')
     naked_str = re.sub(r'<.+?>', '', result + h1)
     str_len = len(naked_str)
     pk_data = {'file_path': file_path,
