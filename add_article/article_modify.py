@@ -120,9 +120,9 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
         h1 = 'n_a'
     # メインコンテンツ抽出
     # main_start = '<div class="entry-content">'
-    # main_end = '</div><!-- コピー禁止エリアここまで -->'
-    main_start = '<div class="contents">'
-    main_end = '<div class="postdate">'
+    # main_end = '<div class="adbox">'
+    main_start = '<div class="maincon">'
+    main_end = '<!-- InstanceEndEditable -->'
     remove_str = []
     main_srt_l = re.findall(main_start + r'(.*?)' + main_end, long_str)
     if main_srt_l:
@@ -142,19 +142,21 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
             f_img_l = re.findall(r'alt="(.*?)".+?static/wp-content/uploads/(.+?\.jpg)', img_str)
             print(f_img_l)
             if f_img_l:
-                old_img = 'htaiken/old_files/wp-content/uploads/' + f_img_l[0][1]
+                old_img = 'goodbyedt/old_files/wp-content/uploads/' + f_img_l[0][1]
                 new_img = file_path.replace('/old_files/', '/md_files/images/art_images/') \
                     .replace('/index.html', '_{}.jpg'.format(str(i + 1)))
-                shutil.copy(old_img, new_img)
+                if os.path.exists(old_img):
+                    shutil.copy(old_img, new_img)
                 # print(new_img)
-                insert_str = '<img src="{}" alt="{}">'.format(new_img.replace('htaiken/md_files', '..'),
+                insert_str = '<img src="{}" alt="{}">'.format(new_img.replace('goodbyedt/md_files', '..'),
                                                               f_img_l[0][0])
                 main_str = main_str.replace(img_str, insert_str)
             else:
                 print('image_error!! {}'.format(file_path))
+    main_str = main_str.replace('<!-- InstanceBeginEditable name="main-content" -->', '')
 
-    # pub_date_l = re.findall(r'<time class="updated" datetime="(.+?)T', long_str)
-    pub_date_l = re.findall(r'<time class="entry-time" itemprop="datePublished" datetime="(.+?)">', long_str)
+    pub_date_l = re.findall(r'<time class="updated" datetime="(.+?)T', long_str)
+    # pub_date_l = re.findall(r'<time class="entry-time" itemprop="datePublished" datetime="(.+?)">', long_str)
     if pub_date_l:
         pub_date = pub_date_l[0]
         pub_date = pub_date.replace('年', '-').replace('月', '-').replace('日', '-')
@@ -171,10 +173,12 @@ def file_to_markdown(file_path, before_dir, after_dir, today, path_remove, remov
         result += 'k::' + ' '.join(key_word) + '\n'
     result += 'f::' + new_path + '\n'
     result += 'p::' + pub_date + '\n'
-    result += '\n# ' + h1 + '\n\n'
-    result += html_to_markdown(main_str, remove_list, md_path, pd).replace('</div>', '') \
-        .replace('<div class="redbox">', '## ').replace('&nbsp;', '').replace('<div id="kanren">', '')
-    naked_str = re.sub(r'<.+?>', '', result + h1)
+    result += '\n# ' + title + '\n\n'
+    md_str = html_to_markdown(main_str, remove_list, md_path, pd)
+    md_str = md_str.replace('</div>', '').replace('<div class="redbox">', '## ').replace('&nbsp;', '') \
+        .replace('<div id="kanren">', '').replace('/ds/', '/link/').replace('(../../../html_files/', '(../../html_files/')
+    result += md_str
+    naked_str = re.sub(r'<.+?>', '', result + title)
     str_len = len(naked_str)
     pk_data = {'file_path': file_path,
                'title': title,
@@ -207,19 +211,19 @@ def aff_link_filter(long_str, pd):
                 if '<img' not in bn_str:
                     if 'ハッピーメール' in bn_str:
                         af_text = 'ハッピーメール'
-                        af_link = pd['aff_dir'] + '/happymail'
+                        af_link = pd['aff_dir']['dir'] + '/happymail'
                     elif 'ミント' in bn_str:
                         af_text = 'Jメール'
-                        af_link = pd['aff_dir'] + '/mintj'
+                        af_link = pd['aff_dir']['dir'] + '/mintj'
                     elif 'メルパラ' in bn_str:
                         af_text = 'メルパラ'
-                        af_link = pd['aff_dir'] + '/meru-para'
+                        af_link = pd['aff_dir']['dir'] + '/meru-para'
                     elif 'PCMAX' in bn_str:
                         af_text = 'PCMAX'
-                        af_link = pd['aff_dir'] + '/pcmax'
+                        af_link = pd['aff_dir']['dir'] + '/pcmax'
                     elif 'ワイワイシー' in bn_str or 'YYC' in bn_str or 'yyc' in bn_str:
                         af_text = 'YYC'
-                        af_link = pd['aff_dir'] + '/yyc'
+                        af_link = pd['aff_dir']['dir'] + '/yyc'
                     else:
                         print('unknown link')
                         af_text = re.findall(r'<a href="http://track\.bannerbridge\.net/.+?>(.+?)</a>', bn_str)[0]

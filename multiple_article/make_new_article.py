@@ -13,9 +13,10 @@ import key_data.key_source
 import key_data.obj_source
 import key_data.key_obj_man
 import key_data.key_obj_woman
+import key_data.key_adj_act
 
 key_source_dict = {'obj_m': key_data.key_obj_woman.keyword_dict, 'obj_w': key_data.key_obj_man.keyword_dict}
-no_adult_prj = ['mh', 'olm', 'women', 'bf']
+no_adult_prj = ['mh', 'olm', 'women', 'bf', 'koi']
 
 
 def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_mod, main_key, use_id_list, key_list,
@@ -61,6 +62,9 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
     main_key_dict = {'sex': {'act': 'セックスする', 'act_noun': 'セックス相手', 'act_noun_flag': False,
                              'a_adj_flag': False, '2act_w': 'セックスしたい', '2act_noun': 'セックス',
                              'act_connection': ['肉体関係'], 'act_code': 'sex', 'replace_words': []},
+                     'dt': {'act': '<!--lost-dt-->', 'act_noun': '<!--lost-dt-->相手', 'act_noun_flag': False,
+                            'a_adj_flag': False, '2act_w': 'セックスしたい', '2act_noun': 'セックス',
+                            'act_connection': ['肉体関係'], 'act_code': 'dt', 'replace_words': []},
                      'mh': {'act': '出会う', 'act_noun': '出会い', 'act_noun_flag': False, 'a_adj': '婚活で',
                             'a_adj_flag': True, '2act_w': '結婚したい', '2act_noun': '結婚',
                             'act_connection': ['交際', 'お付き合い'], 'act_code': 'mh',
@@ -84,6 +88,10 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                             '2act_w': 'デートしたい', '2act_noun': 'デート',
                             'act_connection': ['交際', 'お付き合い'], 'act_code': 'bf',
                             'replace_words': []},
+                     'koi': {'act': '恋人を作る', 'act_noun': '恋人', 'act_noun_flag': False, 'a_adj': 'ネットの恋活で',
+                             'a_adj_flag': True, '2act_w': 'デートしたい', '2act_noun': 'デート',
+                             'act_connection': ['恋愛'], 'act_code': 'gf',
+                             'replace_words': []},
                      'cov': {'act': friend_str + 'を作る', 'act_noun': friend_str, 'act_noun_flag': False,
                              'a_adj': 'コロナ禍に', 'a_adj_flag': True,
                              '2act_w': 'デートしたい', '2act_noun': 'デート',
@@ -102,6 +110,9 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
                                               ['マッチングアプリのマッチングサイト', 'マッチングサイト'],
                                               ['マッチングサイトのマッチングアプリ', 'マッチングアプリ'],
                                               ['マッチングサイトのマッチングサイト', 'マッチングサイト']]},
+                     'free': {
+                            'a_adj_flag': True, 'act_code': 'free'}
+                     # act と　a_adj の切り替え
                      }
     hot_info = {'hot_month': '9月', 'hot_season': '秋', 'hot_month_next': '10月'}
     a_adj_flag = main_key_dict[main_key]['a_adj_flag']
@@ -145,6 +156,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, html_str, source_m
         recipe_dict[keywords['page_name']] = recipe_list
     if dt_str:
         print('last pub_date :  {}'.format(dt_str))
+    print('last id : {}')
     # print(recipe_dict)
 
 
@@ -268,10 +280,12 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     site1 = np.random.choice(['ワクワクメール', 'ハッピーメール'])
     site_data = {'sf': {'site_name': 'セフレ道', 'site_author': '田中'},
                  'mh': {'site_name': 'ネット婚活で結婚相手探し', 'site_author': '伊東'},
+                 'dt': {'site_name': '出会い系で童貞卒業', 'site_author': 'サム'},
                  'olm': {'site_name': 'オンラインの出会いで結婚する方法', 'site_author': '池田'},
                  'cov': {'site_name': 'マッチングアプリで恋人探し', 'site_author': '山本'},
                  'ht': {'site_name': '出会い系エッチ体験談', 'site_author': 'ごろう'},
-                 'bf': {'site_name': '女性のための出会い系教室', 'site_author': '橋下'}}
+                 'bf': {'site_name': '女性のための出会い系教室', 'site_author': '橋下'},
+                 'koi': {'site_name': 'ネット恋活で恋人と出会う方法', 'site_author': '谷本'}}
     sex_dict = [[['男性', '男'], [0.9, 0.1]], [['女性', '女子', '女の人'], [0.6, 0.2, 0.2]],
                 [['女性', '女の人']], [['女の子', '女子']],
                 [['彼氏', '恋人'], [0.7, 0.3]], [['彼女', '恋人'], [0.7, 0.3]],
@@ -360,7 +374,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         noun_dict['<!--adult-->'] = [['結婚相手探し', '婚活', '真面目な出会い', '真剣な出会い', '本気の出会い']]
         noun_dict['<!--adult-bbs-->'] = [['婚活掲示板']]
         noun_dict['<!--kiss-->'] = [['デート']]
-    elif main_key in ['bf']:
+    elif main_key in ['bf', 'koi']:
         noun_dict['<!--sex-->'] = [['お付き合い', '交際']]
         noun_dict['<!--to-sex-->'] = [['お付き合い', '交際']]
         noun_dict['<!--can-sex-->'] = [['お付き合いできる', '交際できる', '付き合える', '恋愛できる']]
@@ -453,7 +467,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     if main_key in ['mh', 'olm']:
         result_str += 'a::' + str(keywords['ad']) + '\n'
         result_str += 'k::' + ' '.join([keywords['all_key'], '婚活']) + '\n'
-    elif main_key in ['bf']:
+    elif main_key in ['bf', 'koi']:
         result_str += 'a::' + str(keywords['ad']) + '\n'
         result_str += 'k::' + ' '.join([keywords['all_key'], '恋活']) + '\n'
     elif main_key == 'cov':
@@ -533,6 +547,23 @@ def key_phrase_maker(keywords, a_adj_flag):
             obj_as_target = keywords['obj_key'] + keywords['act_noun']
         else:
             obj_as_target = keywords['obj_key'] + keywords['obj_p'] + keywords['act_noun']
+        connection = keywords['act_connection']
+    elif keywords['act_code'] == 'dt':
+        act_base = keywords['act']
+        act_i = '<!--lost-dt-i-->'
+        act_and = '<!--lost-dt-i-->' + 'て'
+        act_can = '<!--lost-dt-can-->'
+        act_can_d = '<!--lost-dt-can-->'
+        act_noun = keywords['act_noun']
+        act_target = keywords['act_noun']
+        act_with = keywords['obj_p']
+        act_with_g = keywords['obj_p']
+        act_with_d = 'と'
+        act_way = act_noun + '<!--way-->'
+        act_way_g = act_noun + '<!--way-->'
+        obj = keywords['obj']
+        obj_k = keywords['obj_key']
+        obj_as_target = keywords['obj_key'] + keywords['obj_p'] + keywords['act_noun']
         connection = keywords['act_connection']
     elif '出会う' in keywords['act']:
         act_base = keywords['act']
@@ -1005,13 +1036,21 @@ if __name__ == '__main__':
     # make_new_pages_to_md_from_key_list('online_marriage', 'online_love', 'love_{s}_{}', source_data, 'olm',
     #                                    list(range(0, 321, 1)), t_key_list, recipe_flag=True, subject_sex='man')
 
-    t_key_list = key_data.key_obj_man.keyword_dict
-    make_new_pages_to_md_from_key_list('women', 'boyfriend', '{}_bf', source_data, 'bf',
-                                       [], t_key_list, recipe_flag=True, subject_sex='woman', start_id=95,
-                                       insert_pub_date='2021-03-28T11:33:19')
+    # t_key_list = key_data.key_obj_woman.keyword_dict
+    # make_new_pages_to_md_from_key_list('koibito', 'lover', '{}_love_{s}', source_data, 'dt',
+    #                                    [], t_key_list, recipe_flag=True, subject_sex='man', start_id=23,
+    #                                    insert_pub_date='2021-06-12T14:33:19')
 
-    # auto_make_md_for_all_key('htaiken', 'how_to_sex', '{s}_{m}_{}', 'ht', recipe_flag=True, start_id=12,
-    #                          insert_pub_date='2021-05-18T18:22:12')
+
+    a_k = key_data.key_adj_act.keyword_dict
+    j_k = key_data.key_adj_act.a_adj_dict
+    t_key_key_list = {a_k}
+    make_new_pages_to_md_from_key_list('koibito', 'lover', '{}_love_{s}', source_data, 'dt',
+                                       [], t_key_list, recipe_flag=True, subject_sex='man', start_id=23,
+                                       insert_pub_date='2021-06-12T14:33:19')
+
+    # auto_make_md_for_all_key('koibito', 'lover', '{}_love_{s}', 'koi', recipe_flag=True, start_id=23,
+    #                          insert_pub_date='2021-04-08T18:22:12')
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
 
     # make_used_id_list_for_key_data('sfd')
@@ -1020,7 +1059,7 @@ if __name__ == '__main__':
     # todo: subの複数パターン　無職男性が、など
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等
-    # todo: 地域の婚活, パパ活、　割り切り, 恋人、恋活, 不倫
+    # todo: 地域の婚活, パパ活、　割り切り, 不倫, 出会う
     # todo: 趣味の出会い
     # todo: 時期ネタの書き換え
     # todo: 会話の話題やobj,subリンク、趣味などのワードリストで多様性
@@ -1028,6 +1067,7 @@ if __name__ == '__main__':
     # todo: 関連記事の追加で相互リンク強化
     # todo: 検索数が増えてきた記事をピンポイントで最新フォームで書き換えできる関数
     # todo: cssの色の一括変更とupload
+    # todo: 高齢者向けの記事とキーワード
 
     # pprint.pprint(obj_source_changer(), width=150)
 

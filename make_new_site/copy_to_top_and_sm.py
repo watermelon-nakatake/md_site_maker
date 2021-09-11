@@ -63,6 +63,11 @@ def check_main_temp_for_copy(project_dir):
             tmp_str = tmp_str.replace('"height":"470","width":"760"}}', '"height":800,"width":1200}}')
     if '"name":"管理人' in tmp_str:
         print('insert author name !!')
+    if '<!--jd-' in tmp_str:
+        if os.path.exists('{}/html_files/images/common/{}_img.jpg'.format(project_dir, project_dir)):
+            tmp_str = tmp_str.replace('<!--jd-img-path-->', 'common/{}_img.jpg'.format(project_dir))
+            tmp_str = tmp_str.replace('"<!--jd-height-->"', '800')
+            tmp_str = tmp_str.replace('"<!--jd-width-->"', '1200')
     print(tmp_str)
     with open(project_dir + '/html_files/template/main_tmp.html', 'w', encoding='utf-8') as g:
         g.write(tmp_str)
@@ -75,5 +80,6 @@ def check_main_temp_for_copy(project_dir):
 
 
 if __name__ == '__main__':
-    check_main_temp_for_copy('women')
-    copy_from_main_tmp_to_top_and_sm('women')
+    target_dir = 'koibito'
+    # check_main_temp_for_copy(target_dir)
+    copy_from_main_tmp_to_top_and_sm(target_dir)

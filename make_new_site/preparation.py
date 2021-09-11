@@ -4,7 +4,7 @@ import os
 import collections
 import glob
 import shutil
-import women.main_info
+import koibito.main_info
 import file_upload
 
 
@@ -161,7 +161,7 @@ def make_top_page(pd):
             long_str = long_str.replace('<!--main-dir-->', pd['main_dir'])
             cat_str = ''.join(['<li><a href="{}/{}">{}</a></li>'
                               .format(x, pd['category_data'][x][1], pd['category_data'][x][0]) for x in
-                               pd['category_data']])
+                               pd['category_data']]).replace('/index.html"', '/"')
             long_str = long_str.replace('<!--temp_category_list-->', cat_str)
             if not pd['default_img']:
                 long_str = long_str.replace('<!--t-image-->', 'common/default_img.html')
@@ -241,9 +241,9 @@ def insert_to_temp(pd):
 
 if __name__ == '__main__':
     # 新規プロジェクトの１段階
-    # pj_name = 'women'
+    # pj_name = 'koibito'
     # make_project_dir_and_pd_file(pj_name)
 
     # info_dict.py の作成後実行
-    pd_t = women.main_info.info_dict  # pdをimportに追加、変更
+    pd_t = koibito.main_info.info_dict  # pdをimportに追加、変更
     preparation_for_new_project(pd_t)

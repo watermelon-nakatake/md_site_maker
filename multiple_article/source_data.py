@@ -28,6 +28,12 @@ title = {
             '<!--k-obj-noun-l-->と<!--k-act-can-easy--><!--adult-bbs-->',
             '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
             '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--k-obj-act-way-->'],
+    'dt': ['<!--k-obj-act-way-->と<!--k-obj-noun-l-->と<!--title-can-meet--><!--d-bbs-->',
+           '<!--k-obj-act-can-do--><!--d-bbs-->と<!--k-act-way-->',
+           '<!--k-obj-act-way-->と<!--k-act-can--><!--recommended--><!--d-bbs-->',
+           '<!--k-obj-noun-l-->と<!--k-act-can-easy--><!--adult-bbs-->',
+           '<!--k-obj-act-way-->と<!--k-act-adj-b--><!--k-act-can--><!--recommended--><!--d-app-->',
+           '<!--k-obj-->と<!--title-can-meet--><!--d-bbs-->と<!--k-obj-act-way-->'],
     'ht': ['<!--k-obj-act-way-->と<!--k-obj-noun-l-->と<!--title-can-meet--><!--d-bbs-->',
            '<!--k-obj-act-can-do--><!--d-bbs-->と<!--k-act-way-->',
            '<!--k-obj-act-way-->と<!--k-act-can--><!--recommended--><!--d-bbs-->',
@@ -86,6 +92,15 @@ des = {
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
     'sex': [
+        '<!--k-do-->ための<!--best-good--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
+        '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
+        '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
+        '<!--k-obj-act-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。'
+        '<!--deaikei-->は<!--k-obj-act-easy-->ので<!--my-recommend-s-->。',
+        '<!--k-do-->には<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->が<!--best-->です。'
+        'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
+        '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
+    'dt': [
         '<!--k-do-->ための<!--best-good--><!--way-->は、<!--deaikei-->の<!--b-bbs-->や<!--profile-->を<!--use-a--><!--way-->です。'
         '<!--there-->では、<!--deaikei-->を<!--use--><!--k-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
         '<!--k-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
