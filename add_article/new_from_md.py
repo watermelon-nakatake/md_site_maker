@@ -757,10 +757,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
         plain_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
+        plain_txt = re.sub(r'<!--sw.*?-->', '', plain_txt)
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
-        plain_txt = insert_ds_link(plain_txt, pd)
+        # plain_txt = insert_ds_link(plain_txt, pd)
         md_txt = plain_txt
         # print(md_txt)
 
@@ -1003,6 +1004,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                                   '"../')
         new_str = new_str.replace('<!--sample/s-->', '<div class="sample">')
         new_str = new_str.replace('<!--sample/e-->', '</div>')
+        new_str = new_str.replace('../html_files/', '')
+        new_str = new_str.replace('../../html_files/pc/', '')
 
         if 'i::' in md_txt:
             t_image_l = re.findall(r'i::(.+?)\n', md_txt)
