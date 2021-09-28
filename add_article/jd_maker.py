@@ -2,7 +2,8 @@ from joshideai import main_info
 import new_from_md
 
 if __name__ == '__main__':
-    new_from_md.main(0, main_info.info_dict, True, True, True, False)
+    new_from_md.main(0, main_info.info_dict, mod_date_flag=True, last_mod_flag=True, upload_flag=False,
+                     fixed_mod_date=False, first_time_flag=False)
     # change_file_upload.search_update_file(joshideai.main_info.info_dict)
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード

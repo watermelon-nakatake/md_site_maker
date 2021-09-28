@@ -4,7 +4,7 @@ import make_new_article
 
 
 def translate_single_sentence_to_source(md_str, keywords, ignore_words, replace_list):
-    key_phrase_dict = make_new_article.make_keywords_sample_dict(keywords)
+    key_phrase_dict = make_new_article.make_keywords_sample_dict(keywords, True, False, False)
     mr.list_duplication_check(words_dict.noun_list)
     print(key_phrase_dict)
     conj_dict = mr.make_word_dict(words_dict.conj_list, ignore_words)
@@ -20,12 +20,12 @@ def translate_single_sentence_to_source(md_str, keywords, ignore_words, replace_
 
 
 if __name__ == '__main__':
-    m_str = '当サイトでは、出会い系サイトでの出会いを豊富に経験してきた私が、男性の立場から、男性の弱点や心理を上手く利用して女性が広告代理店のセフレを作る方法をご紹介します。'
+    m_str = 'もちろん、セフレを作るだけでなく、３Pの相手や４Pの相手なども出会い系サイトのプロフィールを使えば簡単に探すことができます。'
 
     k_p = {
-        's_adj': '普通の', 'sub': '女性',
+        's_adj': '普通の', 'sub': '男性',
         'o_adj': 'センスのいい', 'obj': '広告代理店社員', 'obj_key': '広告代理店', 'obj_p': 'の',
-        'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True,
+        'act_adj': '安全に', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'act_target': 'セフレ',
         'act_connection': ['セフレ関係'], 'a_adj': '確実に', '2act_w': 'セックスする', '2act_noun': 'セックス',
         'o_reason': '',
         'o_sex': 'm', '_age': 'n', 'o_cat': 'j', 'act_code': 'gf',

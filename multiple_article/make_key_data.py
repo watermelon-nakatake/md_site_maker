@@ -5,6 +5,7 @@ import difflib
 import key_data.key_obj_man
 import key_data.key_obj_woman
 import key_data.key_adj_act
+import key_data.key_sub_man
 
 
 def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num):
@@ -147,7 +148,7 @@ def check_duplicate_keyword(new_dict, existing_dict):
 
 
 if __name__ == '__main__':
-    i_dict = make_key_dict_from_csv('new_key - act.csv', '', {}, 0)
-    check_duplicate_keyword(i_dict, key_data.key_adj_act.act_dict)
-    # o_dict = import_english_str(i_dict, key_data.key_adj_act.act_dict, 'act_noun')
-    # write_csv_file(o_dict, 'multiple_article/key_data/key_act.csv')
+    i_dict = make_key_dict_from_csv('new_key - sub_m.csv', '', {}, 0)
+    check_duplicate_keyword(i_dict, key_data.key_sub_man.keyword_dict)
+    # o_dict = import_english_str(i_dict, key_data.key_sub_man.keyword_dict, 'sub_key')
+    # write_csv_file(o_dict, 'multiple_article/key_data/key_sub_m.csv')

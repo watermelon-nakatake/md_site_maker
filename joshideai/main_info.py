@@ -5,7 +5,8 @@ project_dir = 'joshideai'
 site_name = 'セックスできる出会い系サイトを探せ！！'
 side_bar_list = {'important': [],
                  'pop': []}
-category_data = {'make_love': ['セックスする方法', 'index.html', 0], 'top': ['トップページ', 'index.html', 0]
+category_data = {'make_love': ['セックスする方法', 'index.html', 0],
+                 'website': ['出会い系で出会う', 'index.html', 12]
                  }
 category_name = {x: [category_data[x][0], category_data[x][1]] for x in category_data}
 directory_name = {x: category_data[x][0] for x in category_data}
@@ -18,7 +19,7 @@ main_dir = ''
 article_image_dir = 'art_images'
 amp_flag = False
 default_img = 'common/jd_image.jpeg'
-h_sitemap_path = 'joshideai/html_files/policy/sitemap.html'
+h_sitemap_path = 'joshideai/html_files/sitemap.html'
 domain_str = 'joshideai.com'
 ignore_files = []
 upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
