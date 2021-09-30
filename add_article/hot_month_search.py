@@ -67,6 +67,7 @@ def half_num_filter(half_str):
 
 def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
     md_list = glob.glob('**/**/md_files/', recursive=True)
+    md_list = list(set(md_list))
     counter = 0
     upload_list = []
     up_files = []
@@ -80,6 +81,7 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
         if '_copy' not in md_dir and '_test' not in md_dir and not md_dir.startswith('test') and 'sfd/' not in md_dir:
             change_list = []
             md_files = glob.glob(md_dir + '/**/**.md', recursive=True)
+            md_files = [x for x in md_files if '_copy' not in x and '_test' not in x and '_ud' not in x]
             if md_dir.startswith('reibun/'):
                 md_files.remove('reibun/md_files/pc/majime/m0summer.md')
             for md_path in md_files:
@@ -92,13 +94,13 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
                     md_str = md_str.replace(z_hot, h_next)
                     md_str = md_str.replace(z_nn, h_nn)
                     # print(md_str)
-                    # with open(md_path, 'w', encoding='utf-8') as g:
-                    #     g.write(md_str)
+                    with open(md_path, 'w', encoding='utf-8') as g:
+                        g.write(md_str)
                     change_list.append(md_path)
                     counter += 1
             if change_list:
                 # print(md_dir)
-                print(change_list)
+                # print(change_list)
                 upload_list.append(md_dir)
                 up_files.extend([x.replace('.md', '.html').replace('/md_files/', '/html_files/') for x in change_list])
                 if md_dir.startswith('reibun/'):
@@ -122,8 +124,8 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
 def auto_update(project_list):
     for prj in [x.replace('/md_files/', '') for x in project_list]:
         if prj not in ['sfd']:
-            # new_from_md.main(0, mi_dict[prj], mod_date_flag=True, last_mod_flag=True, upload_flag=False,
-            #                  fixed_mod_date=False, first_time_flag=False)
+            new_from_md.main(0, mi_dict[prj], mod_date_flag=True, last_mod_flag=True, upload_flag=False,
+                             fixed_mod_date=False, first_time_flag=False)
             print('update : {}'.format(prj))
 
 
@@ -144,9 +146,12 @@ def auto_month_update(old_month_str):
     next_next_str = make_next_month_str(int(next_month_str.replace('月', '')))
     print(next_next_str)
     upload_list, up_files = rewrite_hot_month(old_month_str, next_month_str, next_next_str)
-    auto_update(upload_list)
-    # file_upload.auto_scp_upload(up_files)
     print(up_files)
+    print(len(list(set(up_files))))
+    print(len(up_files))
+    auto_update(upload_list)
+    file_upload.auto_scp_upload(up_files)
+    # print(up_files)
 
 
 if __name__ == '__main__':

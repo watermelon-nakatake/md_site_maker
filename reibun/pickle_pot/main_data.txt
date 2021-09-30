@@ -125,10 +125,10 @@
 	file_path: caption/fwari.html
 	title: 車内Fとは？F割の意味や相場と車内フェラ割り切り募集掲示板
 	pub_date: 2014-05-18
-	mod_date: 2021-08-31
+	mod_date: 2021-09-30
 	category: caption
 	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトの掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
-	str_len: 12681
+	str_len: 12688
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -263,10 +263,10 @@
 	file_path: majime/m2htalk.html
 	title: メールエッチやエロメッセージ募集サイトとエッチなメールの誘い
 	pub_date: 2014-06-29
-	mod_date: 2021-08-31
+	mod_date: 2021-09-30
 	category: s_mail
 	description: エロトークの相手が見つかるおすすめ出会い系サイトと、出会い系でメッセージのやりとりをしてる相手とエッチな話やメールHをする方法とメールエッチするための会話の流れを例文を使って解説します。出会い系でエッチする相手やメールエッチを楽しむ相手の探し方もお教えします。
-	str_len: 6974
+	str_len: 6981
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -286,10 +286,10 @@
 	file_path: majime/m2_0_1.html
 	title: 出会い系アプリの会話のやりとりやトークのコツと質問メール例文
 	pub_date: 2012-03-01
-	mod_date: 2021-08-31
+	mod_date: 2021-09-30
 	category: s_mail
 	description: 出会い系でメールの会話が長続きする上手なトークややりとりのコツと、メッセージの質問の話題を例文を使って詳しく解説。出会い系暦１５年の管理人がハッピーメールなどの出会い系サイトや出会い系アプリでの女性への話しかけ方やモテる話の進め方と話し方も教えます。
-	str_len: 18039
+	str_len: 18045
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -1157,10 +1157,10 @@
 	file_path: majime/date.html
 	title: PCMAX等の出会い系でセックスやセフレに誘う例文と誘い方
 	pub_date: 2012-03-01
-	mod_date: 2021-08-31
+	mod_date: 2021-09-30
 	category: majime
 	description: 出会い系サイトで知り合った女の子と仲良くなったらデートに誘いましょう。セックスだけが目的であれば、セックスにうまくさそう方法もあります。この記事ではPCMAXやハッピーメールなどの出会い系で女の子のデートへの誘い方のテクニックと、うまくデートに誘うための例文、それと海や花火大会など夏のデートに誘う例文をご紹介します。
-	str_len: 7397
+	str_len: 7403
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1473,10 +1473,10 @@
 	file_path: site/kakaotalksexfriend.html
 	title: カカオトークのセフレ募集方法とカカオでエッチできるエロ掲示板
 	pub_date: 2013-04-18
-	mod_date: 2021-08-31
+	mod_date: 2021-09-30
 	category: site
 	description: ネットやスマホアプリのカカオ掲示板は実はあまり出会えません。そうではなく、出会い系サイトと組み合わせることで抜群に出会えるようになります。この記事では、スマホのカカオ掲示板よりセフレを作りやすい出会い掲示板と、カカオトークを使ってバレずにセフレを作る方法について、その手順とポイントをご紹介します。カカオトークでセックスフレンドを作るには、無料友達募集アプリ等を使っても絶対に出会えないので十分気をつけてください。
-	str_len: 8619
+	str_len: 8625
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -1617,10 +1617,10 @@
 	file_path: majime/m4coronavirus_sf.html
 	title: コロナ禍のセフレの作り方と出会い系アプリ以外の安全な出会い方
 	pub_date: 2020-12-28
-	mod_date: 2021-08-31
+	mod_date: 2021-09-30
 	category: how_to
 	description: 新型コロナウイルス感染症の影響で出会い系サイトは以前より出会えるようになっています。特にセフレを作るなら今がチャンスです。コロナ禍での出会い系サイトでセフレを作る方法と、コロナ下で人妻や彼氏持ちの女性をセフレにするためのコツを詳しくご紹介します。コロナ感染を避けつつ出会い系サイトでセフレを作りましょう。アプリ以外の安全な出会い方もご紹介します。
-	str_len: 8517
+	str_len: 8523
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}

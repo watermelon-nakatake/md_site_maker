@@ -87,7 +87,7 @@ title = {
                 '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
                 '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->'],
         'dt': ['<!--sl-a--><!--k-act-way-sim-->,<!--k-a-adj--><!--k-act-can-easy--><!--recommended--><!--d-bbs--><!--sl-a/e-->',
-               '<!--sl-a--><!--title-easy--><!--k-act-way-sim-->,<!--k-act-can-adj--><!--d-bbs--><!--sl-a/e-->',
+               # '<!--sl-a--><!--title-easy--><!--k-act-way-sim-->,<!--k-act-can-adj--><!--d-bbs--><!--sl-a/e-->',
                '<!--sl-a--><!--title-easy--><!--k-act-way-adj-->,<!--k-act-can--><!--d-bbs--><!--sl-a/e-->',
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can-easy--><!--d-bbs--><!--sl-a/e-->',
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',

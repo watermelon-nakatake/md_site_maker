@@ -1609,7 +1609,7 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
         # print(sentence_str)
         if blank_list:
             for blank in blank_list:
-                print(blank)
+                # print(blank)
                 if blank in noun_dict:
                     if len(noun_dict[blank]) <= 1:
                         sentence_str = sentence_str.replace(blank, random.choice(noun_dict[blank][0]), 1)
@@ -1747,7 +1747,7 @@ def search_max_id(project_dir):
     return max_num, last_pub
 
 
-def make_md_by_project_and_part(project_dir, part_cord, subject_sex):
+def make_md_by_project_and_part(project_dir, part_cord, subject_sex, next_id):
     part_dict = {'obj': {'man': 'obj_m', 'woman': 'obj_w'},
                  'sub': {'man': 'sub_m', 'woman': 'sub_w'},
                  'adj_act': {'man': 'adj_act', 'woman': 'adj_act'},
@@ -1758,7 +1758,8 @@ def make_md_by_project_and_part(project_dir, part_cord, subject_sex):
     key_source = key_source_dict[p_code]
     main_key_dict = {'goodbyedt': 'dt'}
     max_id, last_pub = search_max_id(project_dir)
-    next_id = max_id + 1
+    if not next_id:
+        next_id = max_id + 1
     if last_pub:
         if 'T' not in last_pub:
             last_pub = last_pub + 'T16:33:19'
@@ -1769,7 +1770,7 @@ def make_md_by_project_and_part(project_dir, part_cord, subject_sex):
 
 
 if __name__ == '__main__':
-    make_md_by_project_and_part('goodbyedt', 'act', 'man')
+    make_md_by_project_and_part('goodbyedt', 'act', 'man', 359)
 
     # test_new_section(source_data.all_list, keywords_p)
     # sf_import_to_source()
