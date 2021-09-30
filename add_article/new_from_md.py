@@ -105,6 +105,8 @@ def pick_up_mod_md_files(pd):
                     '_copy' not in x and
                     '_test' not in x and '_ud' not in x]
     result = [y for y in all_md_files if os.path.getmtime(y) > last_md_mod]
+    # for p in all_md_files:
+    #     print('{} : {}'.format(p, os.path.getmtime(p)))
     return result, last_md_mod
 
 
@@ -757,7 +759,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
         plain_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
-        plain_txt = re.sub(r'<!--sw.*?-->', '', plain_txt)
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
@@ -811,6 +812,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         title_str = re.findall(r't::(.+?)\n', md_txt)[0]
         plain_txt = re.sub(r'\n# .+?\n', r'\n# ' + title_str + r'\n', plain_txt)
         md_txt = additional_replace_in_md(md_txt, pd)
+        md_txt = re.sub(r'<!--sw.*?-->', '', md_txt)
 
         if '%ss' in md_txt:
             ss_flag = True
@@ -856,7 +858,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         md_txt = mail_sample_replace(md_txt)
         md_txt = strong_insert_filter(md_txt)
         # card挿入
-        # md_txt = insert_page_card(md_txt, pk_dic) todo: 完成させる
+        # md_txt = insert_page_card(md_txt, pk_dic)
         md_txt = re.sub(r'\(\)\[.*?]\n', '', md_txt)
         md_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', md_txt)
         # md_txt = re.sub(r'>[\s]+?<', '><', md_txt)

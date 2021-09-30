@@ -85,7 +85,13 @@ title = {
                 '<!--sl-a--><!--title-easy--><!--k-act-way-adj-->,<!--k-act-can--><!--d-bbs--><!--sl-a/e-->',
                 '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can-easy--><!--d-bbs--><!--sl-a/e-->',
                 '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
-                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->']
+                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->'],
+        'dt': ['<!--sl-a--><!--k-act-way-sim-->,<!--k-a-adj--><!--k-act-can-easy--><!--recommended--><!--d-bbs--><!--sl-a/e-->',
+               '<!--sl-a--><!--title-easy--><!--k-act-way-sim-->,<!--k-act-can-adj--><!--d-bbs--><!--sl-a/e-->',
+               '<!--sl-a--><!--title-easy--><!--k-act-way-adj-->,<!--k-act-can--><!--d-bbs--><!--sl-a/e-->',
+               '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can-easy--><!--d-bbs--><!--sl-a/e-->',
+               '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
+               '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->']
     },
     'sub': {
         'sf': [
@@ -627,7 +633,8 @@ di_2_1 = {
     0: ['### <!--on-earth--><!--deaikei-->って<!--k-sub-also--><!--really--><!--can-meet-->の？',
         '### 基本的に、<!--deaikei-->は<!--k-sub-also--><!--can-meet-->のか？'],
     1: 'space',
-    2: ['<!--k-rnd-do-->前に、「**<!--on-earth--><!--deaikei-->って<!--can-meet-->の？**」という<!--question-->をお持ちの<!--sub-reader-->も'
+    2: [
+        '<!--k-rnd-do-->前に、「**<!--on-earth--><!--deaikei-->って<!--can-meet-->の？**」という<!--question-->をお持ちの<!--sub-reader-->も'
         '<!--there-is-s--><!--think-->。',
         '%r?<!--k-obj-status-->云々の前に、<!--on-earth--><!--deaikei-->って<!--can-meet-->の？<br/><!--like-this2--><!--question-->がある'
         '<!--sub-reader-->も<!--there-is-s-->かもしれませんね。'],

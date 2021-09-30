@@ -1,4 +1,4 @@
-act_dict = {
+act_dict_s = {
     0: {'all_key': '不倫する', 'act': '不倫する', 'act_noun': '不倫', 'eng': 'affair', 'act_target': '不倫相手',
         'act_connection': ['不倫'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と', 'act_noun_flag': False,
         '2act_w': '', '2act_noun': '', 'a_ad': 0},
@@ -423,29 +423,32 @@ act_dict = {
           'act_target': 'お掃除フェラしてくれる<!--woman-->', 'act_connection': ['お掃除フェラ関係'], 'a_sex': 'a', 'ignore_a': [],
           'obj_p': 'に', 'act_noun_flag': False, '2act_w': '', '2act_noun': '', 'a_ad': 1}}
 
-adj_dict = {
-    # 0: {'a_adj': 'ワクワクメールで', 'site': 'wk'},
-    # 1: {'a_adj': 'ハッピーメールで', 'site': 'hm'},
-    # 2: {'a_adj': 'PCMAXで', 'site': 'pc'},
-    # 3: {'a_adj': 'Jメールで', 'site': 'mj'}
+adj_dict_one = {
     0: {'a_adj': 'セフレを作って'}
 }
+
+adj_dict_s = {
+    0: {'a_adj': 'ワクワクメールで', 'site': 'wk'},
+    1: {'a_adj': 'ハッピーメールで', 'site': 'hm'},
+    2: {'a_adj': 'PCMAXで', 'site': 'pc'},
+    3: {'a_adj': 'Jメールで', 'site': 'mj'}
+}
+
+act_dict = {x: act_dict_s[x] | {'type': 'only_act'} for x in act_dict_s}
+# act_dict = {x: act_dict[x] for x in act_dict if 'sf' not in act_dict[x]['ignore_a']}
+
 repeat_num = 1
-
-# key_list = [y for y in adj_dict_b]
-# for n in range(repeat_num):
-#     pop_n = key_list.pop(0)
-#     key_list.append(pop_n)
-# adj_dict = {i: adj_dict_b[y] for i, y in enumerate(key_list)}
-
-act_dict = {x: act_dict[x] for x in act_dict if 'sf' not in act_dict[x]['ignore_a']}
-
+key_list = [y for y in adj_dict_s]
+for n in range(repeat_num):
+    pop_n = key_list.pop(0)
+    key_list.append(pop_n)
+adj_dict = {i: adj_dict_s[y] for i, y in enumerate(key_list)}
 if len(act_dict) >= len(adj_dict):
-    key_data1 = act_dict
+    key_data1 = act_dict_s
     key_data2 = adj_dict
     ud_flag = ['key_a', 'key_b']
 else:
-    key_data1 = adj_dict
+    key_data1 = adj_dict_s
     key_data2 = act_dict
     ud_flag = ['key_b', 'key_a']
 result_list = {}
@@ -461,7 +464,6 @@ for id1 in key_data1:
     used_list.append(['{}_{}'.format(ud_flag[0], id1), '{}_{}'.format(ud_flag[1], i)])
     i += 1
 key_dict = result_list
-
 
 # print(result_list)
 # print(used_list)

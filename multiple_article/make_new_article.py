@@ -18,7 +18,7 @@ import key_data.key_adj_act
 import key_data.key_sub_man
 
 key_source_dict = {'obj_m': key_data.key_obj_woman.keyword_dict, 'obj_w': key_data.key_obj_man.keyword_dict,
-                   'adj_act': key_data.key_adj_act.act_dict}
+                   'adj_act': key_data.key_adj_act.key_dict, 'act': key_data.key_adj_act.act_dict}
 no_adult_prj = ['mh', 'olm', 'women', 'bf', 'koi']
 opposite_sex = {'man': 'w', 'woman': 'm'}
 html_str_dict = {
@@ -34,7 +34,8 @@ html_str_dict = {
 
 
 def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_key, use_id_list, key_list,
-                                       recipe_flag, subject_sex, start_id, insert_pub_date, part_code):
+                                       recipe_flag, subject_sex, start_id, insert_pub_date, part_code,
+                                       copy_pub_flag):
     # 必要最低限のキーワードリストで機動的に記事作成
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
@@ -134,7 +135,9 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                      'act': {
                          'sf': {'a_adj_flag': True, 'act_code': 'sf', 'replace_words': []},
                          'bf': {'a_adj_flag': True, 'act_code': 'bf', 'replace_words': []},
-                         'sex': {'a_adj_flag': True, 'act_code': 'sex', 'replace_words': []}
+                         'sex': {'a_adj_flag': True, 'act_code': 'sex', 'replace_words': []},
+                         'dt': {'a_adj_flag': True, 'act_code': 'dt', 'replace_words': [],
+                                'sub_key': '童貞', 'sub': '童貞男子', 's_sex': 'm', 's_ms': 's', 's_adj': '真面目な'}
                      },
                      'sub': {
                          'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'a_adj_flag': False,
@@ -205,10 +208,21 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
         keywords.update(hot_info)
         # print(keywords)
         make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
-        if dt1:
-            dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
-                                           seconds=int(random.random() * 59))
-            dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
+        old_md = '{}/md_files/{}/{}.md'.format(project_dir, dir_name, keywords['page_name'])
+        old_pub = ''
+        if os.path.exists(old_md):
+            with open(old_md, 'r', encoding='utf-8') as m:
+                md_str = m.read()
+            old_pub_l = re.findall(r'p::(.+?)\n', md_str)
+            if old_pub_l:
+                old_pub = old_pub_l[0]
+        if copy_pub_flag and old_pub:
+            dt_str = old_pub
+        else:
+            if dt1:
+                dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
+                                               seconds=int(random.random() * 59))
+                dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
         recipe_list, counter_d = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict_u,
                                                main_key, recipe_flag, subject_sex, a_adj_flag, add_id_dict, dt_str,
                                                part_code, no_obj_flag, no_sub_flag, counter_d)
@@ -319,7 +333,7 @@ def make_key_and_path_list(html_str, used_dict, project_dir):
     result = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': [], 'adj_act': []}
     if project_dir != 'sfd':
         for key_name in key_source_dict:
-            if key_name != 'adj_act':
+            if key_name != 'adj_act' and key_name != 'act':
                 if project_dir in html_str_dict:
                     if key_name in html_str_dict[project_dir]:
                         html_str = html_str_dict[project_dir][key_name]
@@ -482,7 +496,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     this_path = dir_name + '/' + keywords['page_name']
     result_str = ''
     key_phrase = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
-    print(key_phrase)
+    # print(key_phrase)
     # return
     key_phrase['this-site-title'] = [site_data[main_key]['site_name']]
     key_phrase['this-site-author'] = [site_data[main_key]['site_author']]
@@ -621,8 +635,8 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         result_str += 'k::' + ' '.join([keywords['all_key'], 'コロナ禍 マッチングアプリ']) + '\n'
     elif part_code == 'act':
         result_str += 'k::' + keywords['all_key'] + '\n'
-    elif part_code == 'dt':
-        result_str += 'k::' + keywords['all_key'] + '童貞卒業\n'
+    elif main_key == 'dt':
+        result_str += 'k::' + keywords['all_key'] + ' 童貞卒業\n'
     else:
         result_str += 'k::' + ' '.join([keywords['all_key'], keywords['act'].replace('する', '')]) + '\n'
 
@@ -1595,7 +1609,7 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
         # print(sentence_str)
         if blank_list:
             for blank in blank_list:
-                # print(blank)
+                print(blank)
                 if blank in noun_dict:
                     if len(noun_dict[blank]) <= 1:
                         sentence_str = sentence_str.replace(blank, random.choice(noun_dict[blank][0]), 1)
@@ -1678,7 +1692,7 @@ def auto_make_md_for_all_key(project_dir, dir_name, main_key, recipe_flag, start
         make_new_pages_to_md_from_key_list(project_dir, dir_name, source_data, main_key, [],
                                            key_data_dict[d_id]['data'], recipe_flag=recipe_flag,
                                            subject_sex=key_data_dict[d_id]['sex'], start_id=start_id,
-                                           insert_pub_date=insert_pub_date, part_code=part_code_str)
+                                           insert_pub_date=insert_pub_date, part_code=part_code_str, copy_pub_flag=False)
 
 
 def make_mix_act_key_list(key_data_a, key_data_b):
@@ -1716,16 +1730,47 @@ def search_max_id(project_dir):
             md_str = f.read()
             id_str_l = re.findall(r'\nn::(\d*)\n', md_str)
             if id_str_l:
-                num_list.append(int(id_str_l[0]))
-    num_list.sort()
+                num_list.append([int(id_str_l[0]), file_path])
+    num_list.sort(key=lambda x: x[0])
     # print(num_list)
-    max_num = num_list[-1]
+    max_num = num_list[-1][0]
     print(max_num)
-    no_use_list = [x for x in range(max_num + 1) if x not in num_list]
+    no_use_list = [x for x in range(max_num + 1) if x not in [y[0] for y in num_list]]
     print(no_use_list)
+    with open(num_list[-1][1], 'r', encoding='utf-8') as g:
+        l_str = g.read()
+        last_pub_l = re.findall(r'p::(.*?)\n', l_str)
+        if last_pub_l:
+            last_pub = last_pub_l[0]
+        else:
+            last_pub = ''
+    return max_num, last_pub
+
+
+def make_md_by_project_and_part(project_dir, part_cord, subject_sex):
+    part_dict = {'obj': {'man': 'obj_m', 'woman': 'obj_w'},
+                 'sub': {'man': 'sub_m', 'woman': 'sub_w'},
+                 'adj_act': {'man': 'adj_act', 'woman': 'adj_act'},
+                 'act': {'man': 'act', 'woman': 'act'}}
+    md_dir_dict = {'goodbyedt': {'obj': 'object', 'sub': 'subject', 'act': 'action', }}
+    md_dir = md_dir_dict[project_dir][part_cord]
+    p_code = part_dict[part_cord][subject_sex]
+    key_source = key_source_dict[p_code]
+    main_key_dict = {'goodbyedt': 'dt'}
+    max_id, last_pub = search_max_id(project_dir)
+    next_id = max_id + 1
+    if last_pub:
+        if 'T' not in last_pub:
+            last_pub = last_pub + 'T16:33:19'
+        last_pub = last_pub.replace('/', '-')
+    make_new_pages_to_md_from_key_list(project_dir, md_dir, source_data, main_key_dict[project_dir],
+                                       [], key_source, recipe_flag=True, subject_sex=subject_sex, start_id=next_id,
+                                       insert_pub_date=last_pub, part_code=part_cord, copy_pub_flag=True)
 
 
 if __name__ == '__main__':
+    make_md_by_project_and_part('goodbyedt', 'act', 'man')
+
     # test_new_section(source_data.all_list, keywords_p)
     # sf_import_to_source()
 
@@ -1749,17 +1794,17 @@ if __name__ == '__main__':
     #                                    subject_sex='man', start_id=210, insert_pub_date='2021-08-27T14:33:19',
     #                                    part_code='act')
 
-    t_key_list = key_data.key_obj_woman.keyword_dict
-    make_new_pages_to_md_from_key_list('goodbyedt', 'o_test', source_data, 'dt', [], t_key_list, recipe_flag=True,
-                                       subject_sex='man', start_id=210, insert_pub_date='2021-07-27T14:33:19',
-                                       part_code='obj')
+    # t_key_list = key_data.key_obj_woman.keyword_dict
+    # make_new_pages_to_md_from_key_list('goodbyedt', 'action', source_data, 'dt', [], t_key_list, recipe_flag=True,
+    #                                    subject_sex='man', start_id=359, insert_pub_date='2021-09-04T12:33:19',
+    #                                    part_code='act', copy_pub_flag=True)
 
     # t_key_list = key_data.key_sub_man.keyword_dict
     # make_new_pages_to_md_from_key_list('sfd', 'sf_s', source_data, 'sf', [], t_key_list, recipe_flag=True,
     #                                    subject_sex='man', start_id=466, insert_pub_date='2021-09-02T14:33:19',
     #                                    part_code='sub')
 
-    # search_max_id('sfd')
+    # search_max_id('goodbyedt')
 
     # auto_make_md_for_all_key('koibito', 'lover', '{}_love_{s}', 'koi', recipe_flag=True, start_id=23,
     #                          insert_pub_date='2021-04-08T18:22:12')
