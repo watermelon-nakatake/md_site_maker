@@ -369,10 +369,10 @@ act_dict_s = {
           'act_target': 'メール友達', 'act_connection': ['メール交換'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と',
           'act_noun_flag': False, '2act_w': '', '2act_noun': '', 'a_ad': 3},
     123: {'all_key': '彼氏募集する', 'act': '彼氏募集する', 'act_noun': '彼氏募集', 'eng': 'recruit_boyfriend',
-          'act_target': '彼氏', 'act_connection': ['彼氏募集'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と',
+          'act_target': '彼氏', 'act_connection': ['彼氏募集'], 'a_sex': 'w', 'ignore_a': [], 'obj_p': 'と',
           'act_noun_flag': False, '2act_w': '', '2act_noun': '', 'a_ad': 3},
     124: {'all_key': '彼女募集する', 'act': '彼女募集する', 'act_noun': '彼女募集', 'eng': 'recruit_girlfriend',
-          'act_target': '彼女', 'act_connection': ['彼女募集'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と',
+          'act_target': '彼女', 'act_connection': ['彼女募集'], 'a_sex': 'm', 'ignore_a': [], 'obj_p': 'と',
           'act_noun_flag': False, '2act_w': '', '2act_noun': '', 'a_ad': 3},
     125: {'all_key': '逆援交する', 'act': '逆援交する', 'act_noun': '逆援交', 'eng': 'backing', 'act_target': '逆援交の相手',
           'act_connection': ['逆援交'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と', 'act_noun_flag': False,
@@ -427,12 +427,13 @@ adj_dict_one = {
     0: {'a_adj': 'セフレを作って'}
 }
 
-adj_dict_s = {
-    0: {'a_adj': 'ワクワクメールで', 'site': 'wk'},
-    1: {'a_adj': 'ハッピーメールで', 'site': 'hm'},
-    2: {'a_adj': 'PCMAXで', 'site': 'pc'},
-    3: {'a_adj': 'Jメールで', 'site': 'mj'}
-}
+adj_dict_s = adj_dict_one
+#     {
+#     0: {'a_adj': 'ワクワクメールで', 'site': 'wk'},
+#     1: {'a_adj': 'ハッピーメールで', 'site': 'hm'},
+#     2: {'a_adj': 'PCMAXで', 'site': 'pc'},
+#     3: {'a_adj': 'Jメールで', 'site': 'mj'}
+# }
 
 act_dict = {x: act_dict_s[x] | {'type': 'only_act'} for x in act_dict_s}
 # act_dict = {x: act_dict[x] for x in act_dict if 'sf' not in act_dict[x]['ignore_a']}

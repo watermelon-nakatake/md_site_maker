@@ -391,17 +391,17 @@ if __name__ == '__main__':
     # joint_word_list([words_dict.noun_list, rw_word_dict.noun_list, rewrite_word_list.word_dict])
 
     k_p = {
-        's_adj': '普通の', 'sub': '男性',
+        's_adj': '普通の', 'sub': '初心者',
         'o_adj': '淫乱な', 'obj': '巨乳女性', 'obj_key': '巨乳', 'obj_p': 'の',
-        'act_adj': 'セフレを作って', 'act': '筆おろしする', 'act_noun': '筆おろし', 'act_noun_flag': True,
+        'act': '筆おろしする', 'act_noun': '筆おろし', 'act_noun_flag': True,
         'act_target': '筆おろし相手', 'act_connection': ['筆おろし関係'],
         'o_reason': '', 'o_sex': 'w', 'o_age': 'n', 'o_cat': 'p',
         't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf',
         '2act_w': 'セフレを作りたい', '2act_noun': 'セフレ', 'a_adj': 'セフレを作って',
         'hot_month': '10月', 'hot_season': '秋', 'hot_month_next': '11月'}
 
-    md_to_data_dict('multiple_article/source_md/tips/tips_2_2.md', k_p, [],
-                    [['７月', '<!--hot-month-->'], ['夏', '<!--hot-season-->'], ['８月', '<!--hot-month-next-->']])
+    md_to_data_dict('multiple_article/source_md/beginner.md', k_p, [],
+                    [['10月', '<!--hot-month-->'], ['秋', '<!--hot-season-->'], ['11月', '<!--hot-month-next-->']])
 
     # insert_additional_word_to_exist_source('_test', [])
 

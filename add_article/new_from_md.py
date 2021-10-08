@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import pickle
+import random
 import re
 import os
 import shutil
@@ -58,40 +59,69 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         ad_side_bar_dic = {}
     print(upload_list)
     print(title_change_id)
-
-    if title_change_id:
-        print('change other page')
-        change_files = insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad_side_bar_dic)
-        if pd['project_dir'] == 'reibun':
-            reibun_index_insert(pk_dic, title_change_id, pd)
-        else:
-            insert_to_index_page(pk_dic, title_change_id, pd)
-        insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag)
+    if pd['project_dir'] == 'shoshin':
+        shoshin_finish(pk_dic, upload_list, pd)
     else:
-        print('change only one page')
-        change_files = [x for x in upload_list if '.html' in x]
-    insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic)
-    if pd['project_dir'] == 'reibun':
-        change_files = reibun_qa_check(pk_dic, change_files, title_change_id)
-    xml_site_map_maker(pk_dic, pd)
-    # make_rss(new_file_data)
-    upload_list.extend(change_files)
-    if pd['amp_flag']:
-        change_files = list(set(change_files))
-        amp_upload = amp_file_maker.amp_maker([x for x in change_files if '/amp/' not in x], pd)
-        upload_list.extend(amp_upload)
-    if upload_flag:
-        upload_list.extend(pd['add_files'])
-        if os.path.exists('{}/html_files/sitemap.xml'.format(pd['project_dir'])):
-            upload_list.append('{}/html_files/sitemap.xml'.format(pd['project_dir']))
-        upload_list = list(set(upload_list))
-        upload_list.sort()
-        upload_list = modify_file_check(upload_list, last_mod_time)
-        print(upload_list)
-        file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
-    if last_mod_flag:
-        check_mod_date.make_mod_date_list(pd)
-        save_last_mod(pd)
+        if title_change_id:
+            print('change other page')
+            change_files = insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad_side_bar_dic)
+            if pd['project_dir'] == 'reibun':
+                reibun_index_insert(pk_dic, title_change_id, pd)
+            else:
+                insert_to_index_page(pk_dic, title_change_id, pd)
+            insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag)
+        else:
+            print('change only one page')
+            change_files = [x for x in upload_list if '.html' in x]
+        insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic)
+        if pd['project_dir'] == 'reibun':
+            change_files = reibun_qa_check(pk_dic, change_files, title_change_id)
+        xml_site_map_maker(pk_dic, pd)
+        # make_rss(new_file_data)
+        upload_list.extend(change_files)
+        if pd['amp_flag']:
+            change_files = list(set(change_files))
+            amp_upload = amp_file_maker.amp_maker([x for x in change_files if '/amp/' not in x], pd)
+            upload_list.extend(amp_upload)
+        if upload_flag:
+            upload_list.extend(pd['add_files'])
+            if os.path.exists('{}/html_files/sitemap.xml'.format(pd['project_dir'])):
+                upload_list.append('{}/html_files/sitemap.xml'.format(pd['project_dir']))
+            upload_list = list(set(upload_list))
+            upload_list.sort()
+            upload_list = modify_file_check(upload_list, last_mod_time)
+            print(upload_list)
+            file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
+        if last_mod_flag:
+            check_mod_date.make_mod_date_list(pd)
+            save_last_mod(pd)
+
+
+def shoshin_finish(pk_dic, update_list, pd):
+    new_list = [[pk_dic[x]['file_path'], pk_dic[x]['title']] for x in pk_dic if x > 6]
+    for u_path in update_list:
+        with open(u_path, 'r', encoding='utf-8') as f:
+            h_str = f.read()
+        h_str = re.sub(r'<section></section></section><section><h2><span id="sc(\d+)">出会い系サイト口コミ評価ランキング',
+                       r'<section><h2><span id="sc\1">出会い系サイト口コミ評価ランキング', h_str)
+        # print(h_str)
+        this_link = random.sample(new_list, 20)
+        m_str = ''.join(['<li><a href="../{}">{}</a></li>'.format(x[0], x[1]) for x in this_link if x[0] not in u_path])
+        if '<!--new-article-list-->' in h_str:
+            h_str = h_str.replace('<!--new-article-list-->', '<!--new-l-->' + m_str + '<!--new-l/e-->')
+        else:
+            h_str = re.sub(r'<!--new-l-->.+<!--new-l/e-->', '<!--new-l-->' + m_str + '<!--new-l/e-->', h_str)
+        with open(u_path, 'w', encoding='utf-8') as g:
+            g.write(h_str)
+    with open('shoshin/html_files/beginner/index.html', 'r', encoding='utf-8') as h:
+        i_str = h.read()
+    i_index = '<ul class="libut" id="cat_index">' + \
+              ''.join(['<li><a href="../{}">{}</a></li>'.format(x[0], x[1]) for x in new_list]) + '</ul>'
+    i_str = re.sub(r'<!--index/s-->.*?<!--index/e-->', '<!--index/s-->{}<!--index/e-->'.format(i_index), i_str)
+    with open('shoshin/html_files/beginner/index.html', 'w', encoding='utf-8') as j:
+        j.write(i_str)
+    x_pk = {x: pk_dic[x] for x in pk_dic if x >= 6}
+    xml_site_map_maker(x_pk, pd)
 
 
 def pick_up_mod_md_files(pd):
@@ -388,6 +418,8 @@ def xml_site_map_maker(pk_dic, pd):
     xml_str += '</urlset>'
     if pd['project_dir'] == 'reibun':
         s_path = 'reibun/html_files/p_sitemap.xml'
+    elif pd['project_dir'] == 'shoshin':
+        s_path = 'shoshin/html_files/a_sitemap.xml'
     else:
         s_path = pd['project_dir'] + '/html_files/sitemap.xml'
     with open(s_path, 'w', encoding='utf-8') as f:
@@ -746,6 +778,9 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
     with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
             as t:
         tmp_str = t.read()
+    if pd['project_dir'] == 'shoshin':
+        with open('shoshin/html_files/template/wp_temp.html', 'r', encoding='utf-8') as st:
+            tmp_str = st.read()
     if os.path.exists(pd['project_dir'] + '/pickle_pot/main_data.pkl'):
         pk_dic = make_article_list.read_pickle_pot('main_data', pd)
     else:
@@ -764,6 +799,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
         # plain_txt = insert_ds_link(plain_txt, pd)
         md_txt = plain_txt
+        md_txt = re.sub(r'<!--sw.*?-->', '', md_txt)
         # print(md_txt)
 
         description = re.findall(r'd::(.*?)\n', md_txt)[0]
@@ -812,7 +848,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         title_str = re.findall(r't::(.+?)\n', md_txt)[0]
         plain_txt = re.sub(r'\n# .+?\n', r'\n# ' + title_str + r'\n', plain_txt)
         md_txt = additional_replace_in_md(md_txt, pd)
-        md_txt = re.sub(r'<!--sw.*?-->', '', md_txt)
 
         if '%ss' in md_txt:
             ss_flag = True
@@ -1515,6 +1550,18 @@ def insert_main_length(pd):
     # make_article_list.save_data_to_pickle(pk_dic, 'main_data')
 
 
+def del_main_data(project_dir, start_num):
+    with open(project_dir + '/pickle_pot/main_data.pkl', 'rb') as p:
+        pk_dic = pickle.load(p)
+    print(pk_dic)
+    del_list = [x for x in pk_dic if x >= start_num]
+    for pk_id in del_list:
+        del pk_dic[pk_id]
+    # print(pk_dic)
+    # with open(project_dir + '/pickle_pot/main_data.pkl', 'wb') as s:
+    #     pickle.dump(pk_dic, s)
+
+
 def check_page_layout(long_str):
     new_img = re.findall(r'class="alt_img_t"', long_str)
     rm_str = re.findall(r'class="rm_', long_str)
@@ -1587,33 +1634,34 @@ def all_html_insert():
                     g.write(long_str)
 
 # if __name__ == '__main__':
-#     insert_ds_link('', '')
+#     del_main_data('goodbyedt', 359)
+    # insert_ds_link('', '')
 
-# pd_dict = reibun.main_info.info_dict
-#     main(1, pd_dict)
-# site_shift_flag ( 0: normal, 1:no jmail )
-# reibun_upload.files_upload(['reibun/index.html'])
-# print(make_article_list.read_pickle_pot('modify_log'))
-# print(make_article_list.read_pickle_pot('main_data', pd_dict))
+    # pd_dict = reibun.main_info.info_dict
+    #     main(1, pd_dict)
+    # site_shift_flag ( 0: normal, 1:no jmail )
+    # reibun_upload.files_upload(['reibun/index.html'])
+    # print(make_article_list.read_pickle_pot('modify_log'))
+    # print(make_article_list.read_pickle_pot('main_data', pd_dict))
 
-# print(make_article_list.read_pickle_pot('title_log'))
+    # print(make_article_list.read_pickle_pot('title_log'))
 
-# insert_main_length()
-# import_from_markdown(['md_files/pc/qa/q3_test.md'])
-# t_l = {0: ['']}
-# print(make_all_side_bar(t_l))
-# insert_to_index_page(t_l)
-# xml_site_map_maker(t_l)
-# reibun_upload.tab_and_line_feed_remover('reibun/index.html')
-# print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
-# print([x for x in test_l if x[1] == test_l[-1][1]])
-# print(str(datetime.datetime.now())[:-7])
-# print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
+    # insert_main_length()
+    # import_from_markdown(['md_files/pc/qa/q3_test.md'])
+    # t_l = {0: ['']}
+    # print(make_all_side_bar(t_l))
+    # insert_to_index_page(t_l)
+    # xml_site_map_maker(t_l)
+    # reibun_upload.tab_and_line_feed_remover('reibun/index.html')
+    # print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
+    # print([x for x in test_l if x[1] == test_l[-1][1]])
+    # print(str(datetime.datetime.now())[:-7])
+    # print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
 
-# make_rss([])
-# reibun_upload.files_upload(['reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml'])
-# rpd = rei_site.main_info.info_dict
-# make_html_dir(rpd)
-# all_html_insert()
-# first_make_html(rpd)
-# insert_to_temp(rpd)
+    # make_rss([])
+    # reibun_upload.files_upload(['reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml'])
+    # rpd = rei_site.main_info.info_dict
+    # make_html_dir(rpd)
+    # all_html_insert()
+    # first_make_html(rpd)
+    # insert_to_temp(rpd)
