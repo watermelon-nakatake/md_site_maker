@@ -12,7 +12,8 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
     no_edit_q = []
     all_site_c = []
     all_site_p = {}
-    target_project_list = ['reibun', 'rei_site', 'joshideai']  # , 'rei_site', 'joshideai'
+    target_project_list = ['reibun', 'rei_site', 'joshideai', 'goodbyedt', 'howto', 'htaiken', 'koibito',
+                           'konkatsu', 'online_marriage', 'shoshin', 'women']
     today = datetime.today()
     if period == 28:
         period_name = 'month'
@@ -21,8 +22,9 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
     else:
         period_name = str(period) + '_'
     for target_project in target_project_list:
-        print(target_project)
+        # print(target_project)
         pj_dir, domain, main_dir, site_name, pj_domain_main = qcm.project_select(target_project + '/')
+        # print('domain : {}'.format(domain))
         end_date = qcm.make_target_data_for_today(today, period, pj_dir, domain)
         if os.path.exists('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv'):
             with open('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv') as f:

@@ -8,13 +8,51 @@ import search_console_data
 import get_gsc_every_day_data
 
 project_info = {
-    'reibun': {'pj_dir': 'reibun', 'pj_domain': 'https://www.demr.jp',
-               'main_dir': 'reibun/html_files/pc/', 'site_name': '出会い系メール例文集'},
+    'reibun': {'pj_dir': 'reibun', 'pj_domain': 'https://www.demr.jp', 'main_dir': 'reibun/html_files/pc/',
+               'site_name': '出会い系メール例文集'},
     'rei_site': {'pj_dir': 'rei_site', 'pj_domain': 'https://www.reibunsite.com',
-                 'main_dir': 'rei_site/html_files/pc/', 'site_name': '出会い系メールの例文サイト'},
+                 'main_dir': 'rei_site/html_files/',
+                 'site_name': '出会い系メールの例文サイト'},
     'joshideai': {'pj_dir': 'joshideai', 'pj_domain': 'https://www.joshideai.com',
-                  'main_dir': 'joshideai/html_files/', 'site_name': '出会い系メールの例文サイト'},
+                  'main_dir': 'joshideai/html_files/', 'site_name': 'セックスできる出会い系サイトを探せ！！'},
+    'goodbyedt': {'pj_dir': 'goodbyedt', 'pj_domain': 'https://www.goodbyedt.com',
+                  'main_dir': 'goodbyedt/html_files/', 'site_name': '出会い系サイトで童貞卒業'},
+    'howto': {'pj_dir': 'howto', 'pj_domain': 'https://www.deaihowto.com', 'main_dir': 'howto/html_files/',
+              'site_name': 'マッチングアプリで恋人探し'},
+    'htaiken': {'pj_dir': 'htaiken', 'pj_domain': 'https://www.deaihtaiken.com',
+                'main_dir': 'htaiken/html_files/',
+                'site_name': '出会い系エッチ体験談'},
+    'koibito': {'pj_dir': 'koibito', 'pj_domain': 'https://www.koibitodeau.com',
+                'main_dir': 'koibito/html_files/',
+                'site_name': 'ネット恋活で恋人と出会う方法'},
+    'konkatsu': {'pj_dir': 'konkatsu', 'pj_domain': 'https://www.netdekonkatsu.com',
+                 'main_dir': 'konkatsu/html_files/', 'site_name': 'ネット婚活で結婚相手探し'},
+    'online_marriage': {'pj_dir': 'online_marriage', 'pj_domain': 'https://www.lovestrategyguide.com',
+                        'main_dir': 'online_marriage/html_files/', 'site_name': 'オンラインの出会いで結婚する方法'},
+    'shoshin': {'pj_dir': 'shoshin', 'pj_domain': 'https://www.deaishoshinsha.com',
+                'main_dir': 'shoshin/html_files/',
+                'site_name': '出会い系初心者のための攻略法'},
+    'women': {'pj_dir': 'women', 'pj_domain': 'https://www.deaiwomen.com', 'main_dir': 'women/html_files/',
+              'site_name': '女性のための出会い系教室'},
     'sfd': {'pj_dir': 'sfd', 'pj_domain': 'https://www.sefure-do.com', 'main_dir': '', 'site_name': 'セフレ道'}}
+
+
+def make_project_info():
+    pj_list = ['reibun', 'rei_site', 'joshideai', 'goodbyedt', 'howto', 'htaiken', 'koibito',
+               'konkatsu', 'online_marriage', 'shoshin', 'women']
+    result = {}
+    for pj in pj_list:
+        print(pj)
+        if os.path.exists(pj + '/main_info.py'):
+            with open(pj + '/main_info.py', 'r', encoding='utf-8') as f:
+                m_str = f.read()
+            pj_dir = re.findall(r"project_dir = '(.+?)'", m_str)[0]
+            pj_domain = re.findall(r"domain_str = '(.+?)'", m_str)[0]
+            main_dir = re.findall(r"main_dir = '(.*?)'", m_str)[0]
+            site_name = re.findall(r"site_name = '(.+?)'", m_str)[0]
+            result[pj] = {'pj_dir': pj_dir, 'pj_domain': 'https://www.' + pj_domain,
+                          'main_dir': pj_dir + '/html_files/' + main_dir, 'site_name': site_name}
+    print(result)
 
 
 def make_data_for_graph(pj_dir, start_period, end_period, domain):
@@ -96,6 +134,8 @@ def make_target_data_for_today(today, period, pj_dir, domain):
 def project_select(file_path):
     project_str = re.sub(r'^(.+?)/.*$', r'\1', file_path)
     if project_str in project_info:
+        print('project_str')
+        print(project_str)
         pj_dir = project_info[project_str]['pj_dir']
         domain = project_info[project_str]['pj_domain']
         main_dir = project_info[project_str]['main_dir']
@@ -695,5 +735,7 @@ if __name__ == '__main__':
     next_update_target_search(100, 100, 3000, target_prj, False, True, True)
     next_update_target_search(100, 28, 3000, target_prj, False, True, True)
     # make_data_for_graph('reibun', '2020-04-01', '2021-05-04')
+
+    # make_project_info()
 
     # todo: ハッピーメール、セフレ、プロフィール
