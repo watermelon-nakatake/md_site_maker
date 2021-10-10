@@ -22,6 +22,8 @@ def make_all_site_gsc_csv(start_date):
         r_csv = [row for row in reader_r]
         if r_csv[-1][-1] == end_date:
             get_flag = True
+        else:
+            get_flag = False
     for pj_id in pj_dict:
         if not get_flag:
             search_console_data.make_csv_from_gsc(pj_dict[pj_id]['pj_domain'], start_date, end_date, 'all_site_data',
