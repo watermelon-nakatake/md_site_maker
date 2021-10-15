@@ -16,10 +16,13 @@ import key_data.key_obj_man
 import key_data.key_obj_woman
 import key_data.key_adj_act
 import key_data.key_sub_man
+import key_data.key_act
+import insert_relational_list
 
 key_source_dict = {'obj_m': key_data.key_obj_woman.keyword_dict, 'obj_w': key_data.key_obj_man.keyword_dict,
-                   'adj_act': key_data.key_adj_act.key_dict, 'act': key_data.key_adj_act.act_dict}
-no_adult_prj = ['mh', 'olm', 'women', 'bf', 'koi']
+                   'adj_act': key_data.key_adj_act.key_dict, 'act': key_data.key_act.act_dict}
+no_adult_prj = ['mh', 'olm', 'women', 'bf', 'koi', 'test']
+no_adult_dir = ['konkatsu', 'online_marriage', 'women', 'koibito', 'test']
 opposite_sex = {'man': 'w', 'woman': 'm'}
 html_str_dict = {
     'sfd': {'obj_m': 'sf_{}_f', 'obj_w': 'sf_{}_m', 'sub_m': 'sf_s_{}_m', 'sub_w': 'sf_s_{}_f',
@@ -30,11 +33,15 @@ html_str_dict = {
             'act': 'sex_a_{}', 'adj_act': 'sex_a_{}'},
     'shoshin': {'obj_m': '{}_by_beginner_m', 'obj_w': '{}_by_beginner_w', 'sub_m': '{}_by_beginner_s',
                 'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_a'},
+    'test': {'obj_m': '{}_by_beginner_m', 'obj_w': '{}_by_beginner_w', 'sub_m': '{}_by_beginner_s',
+             'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_a'},
     'goodbyedt': {'obj_m': '{}_dt', 'obj_w': '', 'sub_m': '{}_s_dt', 'sub_w': '',
                   'act': '{}_a_dt', 'adj_act': '{}_a_dt'},
 }
 dir_dict = {'goodbyedt': {'obj': 'object', 'sub': 'subject', 'act': 'action'},
-            'shoshin': {'obj': 'object', 'sub': 'subject', 'act': 'beginner'}}
+            'shoshin': {'obj': 'object', 'sub': 'subject', 'act': 'beginner'},
+            'test': {'obj': 'o_test', 'sub': 's_test', 'act': 'a_test'}}
+relational_list_len = 15
 
 
 def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_key, use_id_list, key_list,
@@ -44,7 +51,16 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
     html_str = choice_html_str(subject_sex, project_dir, part_code)
-    recipe_dict = {}
+    if os.path.exists(project_dir + '/pickle_pot/recipe_dict.pkl'):
+        with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'rb') as rf:
+            recipe_dict = pickle.load(rf)
+    else:
+        recipe_dict = {}
+    if os.path.exists(project_dir + '/pickle_pot/key_dict.pkl'):
+        with open(project_dir + '/pickle_pot/key_dict.pkl', 'rb') as rk:
+            key_dict = pickle.load(rk)
+    else:
+        key_dict = {}
     counter_d = {}
     if not use_id_list:
         use_id_list = list(key_list.keys())
@@ -165,6 +181,17 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
         if main_key:
             keywords.update(main_key_dict[part_code][main_key])
         keywords['page_name'] = html_str.replace('{}', keywords['eng'].replace('-', '_'))
+        old_md = '{}/md_files/{}/{}.md'.format(project_dir, dir_name, keywords['page_name'])
+        old_pub = ''
+        if os.path.exists(old_md):
+            with open(old_md, 'r', encoding='utf-8') as m:
+                md_str = m.read()
+            if '<!--ori-->' in md_str:
+                print('original sentence in : ' + old_md)
+                continue
+            old_pub_l = re.findall(r'p::(.+?)\n', md_str)
+            if old_pub_l:
+                old_pub = old_pub_l[0]
         if 'sub' not in keywords:
             no_sub_flag = True
             if subject_sex == 'man':
@@ -200,27 +227,15 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                 keywords['a_adj'] = np.random.choice(['不倫', '浮気', 'NTR'])
             else:
                 keywords['a_adj'] = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに'])
-        if main_key in no_adult_prj and part_code == 'obj':
-            if keywords['ad'] != 3:
-                link_dict_u = ad_link_dict
-            else:
-                link_dict_u = link_dict
-                keywords['o_adj'] = ''
+        if adult_checker_by_keywords(keywords):
+            link_dict_u = ad_link_dict
         else:
             link_dict_u = link_dict
         if 'o_reason' not in keywords:
             keywords['o_reason'] = '素敵な出会いが欲しいから'
         keywords.update(hot_info)
         # print(keywords)
-        make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
-        old_md = '{}/md_files/{}/{}.md'.format(project_dir, dir_name, keywords['page_name'])
-        old_pub = ''
-        if os.path.exists(old_md):
-            with open(old_md, 'r', encoding='utf-8') as m:
-                md_str = m.read()
-            old_pub_l = re.findall(r'p::(.+?)\n', md_str)
-            if old_pub_l:
-                old_pub = old_pub_l[0]
+        # make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
         if copy_pub_flag and old_pub:
             dt_str = old_pub
         else:
@@ -228,15 +243,155 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                 dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
                                                seconds=int(random.random() * 59))
                 dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
-        recipe_list, counter_d = make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict_u,
-                                               main_key, recipe_flag, subject_sex, a_adj_flag, add_id_dict, dt_str,
-                                               part_code, no_obj_flag, no_sub_flag, counter_d)
-        recipe_dict[keywords['page_name']] = recipe_list
+        recipe_list, counter_d, title_str = make_new_page(keywords, source_mod, art_map, project_dir, dir_name,
+                                                          link_dict_u, main_key, recipe_flag, subject_sex, a_adj_flag,
+                                                          add_id_dict[key_id], dt_str, part_code, no_obj_flag, no_sub_flag,
+                                                          counter_d)
+        keywords['title_str'] = title_str
+        keywords['dir_name'] = dir_name
+        keywords['sub_sex'] = subject_sex
+        keywords['page_id'] = add_id_dict[key_id]
+        recipe_dict[dir_name + '/' + keywords['page_name']] = recipe_list
+        key_dict[dir_name + '/' + keywords['page_name']] = keywords
     if dt_str:
         print('last pub_date :  {}'.format(dt_str))
     # print(recipe_dict)
+    # print(key_dict)
+    with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'wb') as rp:
+        pickle.dump(recipe_dict, rp)
+    with open(project_dir + '/pickle_pot/key_dict.pkl', 'wb') as wk:
+        pickle.dump(key_dict, wk)
+    insert_relation_page_list_to_md(project_dir, key_dict)
     # print(counter_d)
     # sort_counter_dict(counter_d)
+
+
+def make_md_from_exist_keywords(use_path_list):
+    recipe_flag = True
+    source_mod = source_data
+    if type(use_path_list) == list:
+        project_dir = re.sub(r'/.*$', '', use_path_list[0])
+    else:
+        project_dir = re.sub(r'/.*$', '', use_path_list)
+    print(project_dir)
+    with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'rb') as rf:
+        recipe_dict = pickle.load(rf)
+    with open(project_dir + '/pickle_pot/key_dict.pkl', 'rb') as rk:
+        key_dict = pickle.load(rk)
+    counter_d = {}
+    # print(key_dict)
+    if type(use_path_list) == list:
+        change_list = [re.sub(r'^.+/md_files/(.+).md', r'\1', x) for x in use_path_list]
+    else:
+        change_dir = re.sub(r'^.+/md_files/', '', use_path_list)
+        change_list = [x for x in key_dict if change_dir in x]
+    if project_dir in no_adult_dir:
+        key_dict_l = keyword_dict_adult_filter(key_dict, 3)
+        ad_used_dict = keyword_dict_adult_filter(key_dict, 1)
+        ad_link_dict = make_key_and_path_list_from_exist_keys(ad_used_dict, project_dir, 1)
+    else:
+        key_dict_l = key_dict
+        ad_link_dict = {}
+
+    link_dict = make_key_and_path_list_from_exist_keys(key_dict_l, project_dir, 3)
+    # print(link_dict)
+    # print(ad_link_dict)
+    art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
+               [source_mod.d_advantage, [2, 3, 4]],
+               [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
+               [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
+               [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
+    for md_name in change_list:
+        old_md = '{}/md_files/{}.md'.format(project_dir, md_name)
+        with open(old_md, 'r', encoding='utf-8') as m:
+            md_str = m.read()
+        if '<!--ori-->' in md_str:
+            print('original sentence in : ' + old_md)
+            continue
+        keywords = key_dict[md_name]
+        if 'sub' not in keywords:
+            no_sub_flag = True
+        else:
+            no_sub_flag = False
+        if 'obj' not in keywords:
+            no_obj_flag = True
+        else:
+            no_obj_flag = False
+        a_adj_flag = keywords['a_adj_flag']
+        main_key = keywords['act_code']
+        part_code = keywords['type'].replace('only_', '')
+        dir_name = re.sub(r'/.*$', '', md_name)
+        subject_sex = keywords['sub_sex']
+        page_id = keywords['page_id']
+        # print(keywords)
+        # print(adult_checker_by_keywords(keywords))
+        if adult_checker_by_keywords(keywords):
+            link_dict_u = ad_link_dict
+        else:
+            link_dict_u = link_dict
+        # print(keywords)
+        make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+        old_pub = ''
+        old_pub_l = re.findall(r'p::(.+?)\n', md_str)
+        if old_pub_l:
+            old_pub = old_pub_l[0]
+        dt_str = old_pub
+        recipe_list, counter_d, title_str = make_new_page(keywords, source_mod, art_map, project_dir, dir_name,
+                                                          link_dict_u, main_key, recipe_flag, subject_sex, a_adj_flag,
+                                                          page_id, dt_str, part_code, no_obj_flag, no_sub_flag,
+                                                          counter_d)
+        keywords['title_str'] = title_str
+        recipe_dict[keywords['page_name']] = recipe_list
+    # print(recipe_dict)
+    with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'wb') as rp:
+        pickle.dump(recipe_dict, rp)
+    insert_relation_page_list_to_md(project_dir, key_dict)
+    
+    
+def adult_checker_by_keywords(keywords):
+    result = False
+    if keywords['act_code'] in no_adult_prj:
+        if 'ad' in keywords:
+            if keywords['ad'] != 3:
+                result = True
+        elif 'a_ad' in keywords:
+            if keywords['a_ad'] != 3:
+                result = True
+        elif 's_ad' in keywords:
+            if keywords['s_ad'] != 3:
+                result = True
+    return result
+    
+
+def keyword_dict_adult_filter(key_dict, ad_num):
+    result = {}
+    for key_id in key_dict:
+        if 'ad' in key_dict[key_id]:
+            if key_dict[key_id]['ad'] == ad_num:
+                result[key_id] = key_dict[key_id]
+        elif 'a_ad' in key_dict[key_id]:
+            if key_dict[key_id]['a_ad'] == ad_num:
+                result[key_id] = key_dict[key_id]
+        elif 's_ad' in key_dict[key_id]:
+            if key_dict[key_id]['s_ad'] == ad_num:
+                result[key_id] = key_dict[key_id]
+        else:
+            result[key_id] = key_dict[key_id]
+    return result
+
+
+def insert_relation_page_list_to_md(project_dir, key_dict):
+    re_dict = insert_relational_list.compare_key_for_relational_art(key_dict, relational_list_len)
+    for page_name in re_dict:
+        with open(project_dir + '/md_files/' + page_name + '.md', 'r', encoding='utf-8') as f:
+            md_str = f.read()
+        if 'relation_list' not in md_str:
+            md_str += "\n\nrelation_list　= '" + re_dict[page_name] + "'"
+        else:
+            md_str = re.sub(r"relation_list = '.+?'", "relation_list　= '" + re_dict[page_name] + "'", md_str)
+        # print(md_str)
+        with open(project_dir + '/md_files/' + page_name + '.md', 'w', encoding='utf-8') as g:
+            g.write(md_str)
 
 
 def sort_counter_dict(counter_d):
@@ -261,10 +416,12 @@ def choice_html_str(subject_sex, project_dir, part_code):
 def id_filter(use_id_list, main_key, key_list, part_cord):
     if main_key in no_adult_prj:
         # print(key_list)
-        if 'ad' not in key_list[0]:
-            use_id_list = use_id_list
-        else:
+        if 'ad' in key_list[0]:
             use_id_list = [x for x in use_id_list if key_list[x]['ad'] != 0]
+        elif 'a_ad' in key_list[0]:
+            use_id_list = [x for x in use_id_list if key_list[x]['a_ad'] != 0]
+        elif 's_ad' in key_list[0]:
+            use_id_list = [x for x in use_id_list if key_list[x]['s_ad'] != 0]
     if main_key == 'dt' and part_cord == 'act':
         use_id_list = [x for x in use_id_list if key_list[x]['a_sex'] != 'w']
     print(use_id_list)
@@ -408,6 +565,46 @@ def make_key_and_path_list(html_str, used_dict, project_dir):
     return result
 
 
+def make_key_and_path_list_from_exist_keys(key_dict, project_dir, ad_num):
+    result = {'obj_m': [], 'obj_w': [], 'sub_m': [], 'sub_w': [], 'act': [], 'adj_act': []}
+    for md_path in key_dict:
+        keywords = key_dict[md_path]
+        if keywords['type'] == 'only_act':
+            cat = 'act'
+        elif keywords['type'] == 'only_obj' and keywords['o_sex'] == 'm':
+            cat = 'obj_m'
+        elif keywords['type'] == 'only_obj' and keywords['o_sex'] == 'w':
+            cat = 'obj_w'
+        elif keywords['type'] == 'only_sub' and keywords['o_sex'] == 'm':
+            cat = 'sub_m'
+        elif keywords['type'] == 'only_sub' and keywords['o_sex'] == 'w':
+            cat = 'sub_w'
+        else:
+            print('error!! : ' + md_path)
+            return
+        result[cat].append([keywords['all_key'], '../' + md_path])
+    # print(result)
+    for key_n in key_source_dict:
+        if not result[key_n]:
+            if project_dir not in no_adult_dir:
+                if key_n == 'adj_act':
+                    result[key_n] = [[key_source_dict[key_n][x]['all_key'], ''] for x in key_source_dict[key_n]]
+                else:
+                    result[key_n] = [[key_source_dict[key_n][x]['all_key'], ''] for x in key_source_dict[key_n]]
+            else:
+                for key_id in key_source_dict[key_n]:
+                    if 'ad' in key_source_dict[key_n][key_id]:
+                        if key_source_dict[key_n][key_id]['ad'] == ad_num:
+                            result[key_n].append([key_source_dict[key_n][key_id]['all_key'], ''])
+                    elif 'a_ad' in key_source_dict[key_n][key_id]:
+                        if key_source_dict[key_n][key_id]['a_ad'] == ad_num:
+                            result[key_n].append([key_source_dict[key_n][key_id]['all_key'], ''])
+                    elif 's_ad' in key_source_dict[key_n][key_id]:
+                        if key_source_dict[key_n][key_id]['s_ad'] == ad_num:
+                            result[key_n].append([key_source_dict[key_n][key_id]['all_key'], ''])
+    return result
+
+
 def obj_source_changer():
     o_list = key_data.obj_source.obj_key_list
     result = {
@@ -429,7 +626,7 @@ def obj_source_filter(source_dict):
 
 
 def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dict, main_key, recipe_flag, subject_sex,
-                  a_adj_flag, add_id_dict, dt_str, part_code, no_obj_flag, no_sub_flag, counter_d):
+                  a_adj_flag, page_id, dt_str, part_code, no_obj_flag, no_sub_flag, counter_d):
     recipe_list = {}
     site_list = ['ワクワクメール', 'ハッピーメール']
     site1 = np.random.choice(['ワクワクメール', 'ハッピーメール'])
@@ -644,7 +841,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # print(used_id)
     # print(type(used_id[-1]))
     # print(type(keywords['id']))
-    result_str += 'n::' + str(add_id_dict[int(keywords['id'])]) + '\n'
+    result_str += 'n::' + str(page_id) + '\n'
     result_str += 'e::\n'
     if dt_str:
         result_str += 'p::' + dt_str + '\n'
@@ -685,7 +882,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         dir_name = 'pc/' + dir_name
     with open(project_dir + '/md_files/' + dir_name + '/' + keywords['page_name'] + '.md', 'w', encoding='utf-8') as f:
         f.write(result_str)
-    return recipe_list, counter_d
+    return recipe_list, counter_d, title_str
 
 
 def replace_code_to_md(md_str, subject_sex):
@@ -1786,9 +1983,16 @@ def make_md_by_project_and_part(project_dir, part_cord, subject_sex, next_id):
                  'act': {'man': 'act', 'woman': 'act'}}
     md_dir_dict = dir_dict
     md_dir = md_dir_dict[project_dir][part_cord]
+    if 'test' in project_dir:
+        test_dir = md_dir
+        test_num = 0
+        while os.path.exists(project_dir + '/md_files/' + test_dir):
+            test_num += 1
+            test_dir = md_dir + '_' + str(test_num)
+        md_dir = test_dir
     p_code = part_dict[part_cord][subject_sex]
     key_source = key_source_dict[p_code]
-    main_key_dict = {'goodbyedt': 'dt', 'shoshin': 'bg'}
+    main_key_dict = {'goodbyedt': 'dt', 'shoshin': 'bg', 'test': 'bg'}
     max_id, last_pub = search_max_id(project_dir)
     if not next_id:
         next_id = max_id + 1
@@ -1818,18 +2022,12 @@ if __name__ == '__main__':
 
     # make_used_id_list_for_key_data('sfd')
 
-    make_md_by_project_and_part('shoshin', 'act', 'man', 7)
+    make_md_by_project_and_part('test', 'act', 'man', 1)
     # search_max_id('shoshin')
 
-    # todo: 関連記事の追加で相互リンク強化
-
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等 アダルト
-    # todo: 会話の話題やobj,subリンク、趣味などのワードリストで多様性
-
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: 地域の婚活, パパ活、　割り切り, 不倫, 出会う, マッチングアプリで出会う、趣味の出会い
     # todo: 時期ネタの書き換え
     # todo: その対象の探し方、o_catで切り替えるなどして多様化
-    # todo: 検索数が増えてきた記事をピンポイントで最新フォームで書き換えできる関数
-    # todo: md変更箇所を<!--ori-->で管理
     # todo: 高齢者向けの記事とキーワード

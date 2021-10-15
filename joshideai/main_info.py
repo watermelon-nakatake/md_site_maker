@@ -31,13 +31,15 @@ sc_url = {'ワクワクメール': 'site_page/550909', 'PCMAX': 'site_page/pcmax
 eyec_img = {'img_path': 'common/jd_image.jpeg', 'height': '800', 'width': '1200'}
 aff_dir = {'dir': 'site_page', 'ワクワクメール': 'site_page/550909/', 'PCMAX': 'site_page/pcmax/'}
 
+relation_str = '<section><h2><!--keyword-main-noun-->の関連記事</h2><ul>{}</ul></section>'
+
 info_dict = {'project_dir': project_dir, 'site_name': site_name, 'side_bar_list': side_bar_list,
              'category_name': category_name, 'category_data': category_data,
              'directory_name': directory_name, 'site_shift_list': site_shift_list, 'add_files': add_files,
              'main_dir': main_dir, 'ar_img_dir': article_image_dir, 'amp_flag': amp_flag,
              'default_img': default_img, 'h_sitemap_path': h_sitemap_path, 'domain_str': domain_str,
              'ignore_files': ignore_files, 'upload_data': upload_data, 'sc_url': sc_url, 'eyec_img': eyec_img,
-             'aff_dir': aff_dir}
+             'aff_dir': aff_dir, 'relation_str': relation_str}
 
 
 def joshideai_additional_replace_in_md(md_str):

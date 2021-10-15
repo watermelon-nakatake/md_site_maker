@@ -793,15 +793,17 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         # print('file_name : ' + file_name)
         with open(md_file_path, 'r', encoding='utf-8') as f:
             plain_txt = f.read()
-        plain_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
+        if pd['project_dir'] != reibun and "relation_list = '" in plain_txt:
+            re_str = re.findall(r"relation_list = '(.*?)'", plain_txt)[0]
+        else:
+            re_str = ''
         # plain_txt = insert_ds_link(plain_txt, pd)
-        md_txt = plain_txt
+        md_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
         md_txt = re.sub(r'<!--sw.*?-->', '', md_txt)
         # print(md_txt)
-
         description = re.findall(r'd::(.*?)\n', md_txt)[0]
         if 'p::' in md_txt:
             pub_date = re.findall(r'p::(.*?)\n', md_txt)[0]
@@ -810,7 +812,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 pub_date = fixed_mod_date
             else:
                 pub_date = ''
-
         if 'l_path = ::' in md_txt:
             keyword_str = re.findall(r'k::(.*?)\n', md_txt)[0]
             if '&' in keyword_str:
@@ -968,7 +969,21 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
 
         new_str = new_str.replace('<!--kanren-->', '<section><div class="kanren"><h2>関連記事</h2>')
         new_str = new_str.replace('<!--e/kanren-->', '</div></section>')
-
+        if re_str and 'relation_str' in pd:
+            new_str = new_str.replace('<!--relation-list-->', pd['relation_str'.format(re_str)])
+        if '<!--keyword-main-noun-->' in new_str:
+            if "'type': 'only_act'" in plain_txt:
+                key_noun = re.findall(r"'act_noun': '(.+?)'", plain_txt)
+            elif "'type': 'only_obj'" in plain_txt:
+                key_noun = re.findall(r"'obj_noun': '(.+?)'", plain_txt)
+            elif "'type': 'only_sub'" in plain_txt:
+                key_noun = re.findall(r"'sub_noun': '(.+?)'", plain_txt)
+            else:
+                key_noun = []
+            if key_noun:
+                new_str = new_str.replace('<!--keyword-main-noun-->', key_noun[0])
+            else:
+                new_str = new_str.replace('<!--keyword-main-noun-->', 'この記事')
         new_str = insert_additional_str(new_str, pd)
 
         new_str = logical_box_filter(new_str)

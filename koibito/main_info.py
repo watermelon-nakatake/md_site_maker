@@ -34,13 +34,15 @@ eyec_img = {'img_path': 'koibito_img.jpg', 'height': '800', 'width': '1200'}
 aff_dir = {'dir': 'link'}
 google_id = 'G-8G8T94SGWF'
 
+relation_str = '<section><h2><!--keyword-main-noun-->の関連記事</h2><ul>{}</ul></section>'
+
 info_dict = {'project_dir': project_dir, 'site_name': site_name, 'side_bar_list': side_bar_list,
              'category_name': category_name, 'category_data': category_data,
              'directory_name': directory_name, 'site_shift_list': site_shift_list, 'add_files': add_files,
              'main_dir': main_dir, 'ar_img_dir': article_image_dir, 'amp_flag': amp_flag,
              'default_img': default_img, 'h_sitemap_path': h_sitemap_path, 'domain_str': domain_str,
              'ignore_files': ignore_files, 'upload_data': upload_data, 'sc_url': sc_url, 'eyec_img': eyec_img,
-             'aff_dir': aff_dir, 'google_id': google_id}
+             'aff_dir': aff_dir, 'google_id': google_id, 'relation_str': relation_str}
 
 
 def koibito_insert_site_banner(long_str):
