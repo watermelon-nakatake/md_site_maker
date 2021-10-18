@@ -346,6 +346,97 @@ def make_md_from_exist_keywords(use_path_list):
     with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'wb') as rp:
         pickle.dump(recipe_dict, rp)
     insert_relation_page_list_to_md(project_dir, key_dict)
+
+
+def change_section_in_exist_art(use_path_list, target_section, insert_section):
+    # 例えば、既存の時期もの段落の段落を他のsourceに差し替え
+    recipe_flag = True
+    source_mod = source_data
+    if type(use_path_list) == list:
+        project_dir = re.sub(r'/.*$', '', use_path_list[0])
+    else:
+        project_dir = re.sub(r'/.*$', '', use_path_list)
+    print(project_dir)
+    with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'rb') as rf:
+        recipe_dict = pickle.load(rf)
+    with open(project_dir + '/pickle_pot/key_dict.pkl', 'rb') as rk:
+        key_dict = pickle.load(rk)
+    counter_d = {}
+    # print(key_dict)
+    print(recipe_dict)
+    if type(use_path_list) == list:
+        change_list = [re.sub(r'^.+/md_files/(.+).md', r'\1', x) for x in use_path_list]
+    else:
+        change_dir = re.sub(r'^.+/md_files/', '', use_path_list)
+        change_list = [x for x in key_dict if change_dir in x]
+    print(change_list)
+    include_list = [x for x in change_list if target_section in recipe_dict[x]]
+    print(include_list)
+    # return
+    for md_name in include_list:
+        old_md = '{}/md_files/{}.md'.format(project_dir, md_name)
+        with open(old_md, 'r', encoding='utf-8') as m:
+            md_str = m.read()
+        sp_list = md_str.split('\n')
+        # for row in sp_list:
+        #     if '<!--' + target_section in row:
+        sec_str = re.findall(r'\n.*?<!--sw-' + target_section + r'[\s\S]*<!--sw-' + target_section + r'.+?-->\n', md_str)
+        print(sec_str)
+
+        key_phrase = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+        # print(key_phrase)
+        # return
+        key_phrase['this-site-title'] = [site_data[main_key]['site_name']]
+        key_phrase['this-site-author'] = [site_data[main_key]['site_author']]
+        noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
+        for noun in wd.noun_list:
+            if 'plist' in noun:
+                noun_dict[noun['before']] = [noun['after'], noun['plist']]
+            else:
+                noun_dict[noun['before']] = [noun['after']]
+        return
+
+        if '<!--ori-->' in md_str:
+            print('original sentence in : ' + old_md)
+            continue
+        keywords = key_dict[md_name]
+        if 'sub' not in keywords:
+            no_sub_flag = True
+        else:
+            no_sub_flag = False
+        if 'obj' not in keywords:
+            no_obj_flag = True
+        else:
+            no_obj_flag = False
+        a_adj_flag = keywords['a_adj_flag']
+        main_key = keywords['act_code']
+        part_code = keywords['type'].replace('only_', '')
+        dir_name = re.sub(r'/.*$', '', md_name)
+        subject_sex = keywords['sub_sex']
+        page_id = keywords['page_id']
+        # print(keywords)
+        # print(adult_checker_by_keywords(keywords))
+        if adult_checker_by_keywords(keywords):
+            link_dict_u = ad_link_dict
+        else:
+            link_dict_u = link_dict
+        # print(keywords)
+        make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+        old_pub = ''
+        old_pub_l = re.findall(r'p::(.+?)\n', md_str)
+        if old_pub_l:
+            old_pub = old_pub_l[0]
+        dt_str = old_pub
+        recipe_list, counter_d, title_str = make_new_page(keywords, source_mod, art_map, project_dir, dir_name,
+                                                          link_dict_u, main_key, recipe_flag, subject_sex, a_adj_flag,
+                                                          page_id, dt_str, part_code, no_obj_flag, no_sub_flag,
+                                                          counter_d)
+        keywords['title_str'] = title_str
+        recipe_dict[keywords['page_name']] = recipe_list
+    # print(recipe_dict)
+    with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'wb') as rp:
+        pickle.dump(recipe_dict, rp)
+    insert_relation_page_list_to_md(project_dir, key_dict)
     
     
 def adult_checker_by_keywords(keywords):
@@ -718,6 +809,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # return
     key_phrase['this-site-title'] = [site_data[main_key]['site_name']]
     key_phrase['this-site-author'] = [site_data[main_key]['site_author']]
+
     noun_dict = {'<!--{}-->'.format(y): [key_phrase[y]] for y in key_phrase}
     for noun in wd.noun_list:
         if 'plist' in noun:
@@ -822,6 +914,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     if not no_sub_flag:
         noun_dict['<!--sub-reader-->'][0][1] = keywords['sub']
         noun_dict['<!--sub-reader-->'][0][2] = keywords['sub']
+
     conj_dict = {x['before']: x['after'] for x in wd.conj_list}
     title_count = 40
     title_str = ''
@@ -883,6 +976,10 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     with open(project_dir + '/md_files/' + dir_name + '/' + keywords['page_name'] + '.md', 'w', encoding='utf-8') as f:
         f.write(result_str)
     return recipe_list, counter_d, title_str
+
+
+def noun_dict_maker():
+
 
 
 def replace_code_to_md(md_str, subject_sex):
@@ -2025,9 +2122,10 @@ if __name__ == '__main__':
     make_md_by_project_and_part('test', 'act', 'man', 1)
     # search_max_id('shoshin')
 
+    # todo: 時期ネタの書き換え
+
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等 アダルト
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: 地域の婚活, パパ活、　割り切り, 不倫, 出会う, マッチングアプリで出会う、趣味の出会い
-    # todo: 時期ネタの書き換え
     # todo: その対象の探し方、o_catで切り替えるなどして多様化
     # todo: 高齢者向けの記事とキーワード
