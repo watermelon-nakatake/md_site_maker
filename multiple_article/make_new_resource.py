@@ -398,10 +398,10 @@ if __name__ == '__main__':
         'o_reason': '', 'o_sex': 'w', 'o_age': 'n', 'o_cat': 'p',
         't_sex': 'm', 't_age': 'n', 't_cat': 'j', 'act_code': 'gf',
         '2act_w': 'セフレを作りたい', '2act_noun': 'セフレ', 'a_adj': 'セフレを作って',
-        'hot_month': '10月', 'hot_season': '秋', 'hot_month_next': '11月'}
+        'hot_month': '11月', 'hot_season': '秋', 'hot_month_next': '12月'}
 
-    md_to_data_dict('multiple_article/source_md/beginner.md', k_p, [],
-                    [['10月', '<!--hot-month-->'], ['秋', '<!--hot-season-->'], ['11月', '<!--hot-month-next-->']])
+    md_to_data_dict('multiple_article/source_md/di/di_3_2.md', k_p, [],
+                    [['11月', '<!--hot-month-->'], ['秋', '<!--hot-season-->'], ['12月', '<!--hot-month-next-->']])
 
     # insert_additional_word_to_exist_source('_test', [])
 

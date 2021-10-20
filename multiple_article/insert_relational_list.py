@@ -42,11 +42,11 @@ def compare_key_for_relational_art(key_dict, relation_len):
     for row in str_dict:
         if len(str_dict[row]) < 15:
             str_dict[row].extend([[x, title_dict[x]] for x in random.sample(minor_list, 15 - len(str_dict[row]))])
-        print(len(str_dict[row]))
+        # print(len(str_dict[row]))
     # print(str_dict)
     # minor_counter(key_dict, str_dict)
     out_dict = {y: ''.join(['<li><a href="../{}.md">{}</a></li>'.format(x[0], x[1]) for x in str_dict[y]]) for y in str_dict}
-    print(out_dict)
+    # print(out_dict)
     return out_dict
 
 
