@@ -44,7 +44,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         last_mod_time = now
         mod_list = [x for x in glob.glob(pd['project_dir'] + '/md_files/**/**.md', recursive=True) if
                     '_copy' not in x and '_test' not in x and '_ud' not in x]
-        print(mod_list)
+        # print(mod_list)
     else:
         mod_list, last_mod_time = pick_up_mod_md_files(pd)
     print('modify list :')
@@ -796,7 +796,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
-        if pd['project_dir'] != reibun and "relation_list = '" in plain_txt:
+        if pd['project_dir'] != 'reibun' and "relation_list = '" in plain_txt:
             re_str = re.findall(r"relation_list = '(.*?)'", plain_txt)[0]
         else:
             re_str = ''
@@ -911,7 +911,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)
 
-        print('markdown start!')
         con_str = markdown.markdown(md_txt, extensions=['tables'])
         con_str = con_str.replace('\n', '')
         con_str = re.sub(r'^([\s\S]*)</h1>', '', con_str)
@@ -970,7 +969,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--kanren-->', '<section><div class="kanren"><h2>関連記事</h2>')
         new_str = new_str.replace('<!--e/kanren-->', '</div></section>')
         if re_str and 'relation_str' in pd:
-            new_str = new_str.replace('<!--relation-list-->', pd['relation_str'.format(re_str)])
+            new_str = new_str.replace('<!--relation-list-->', pd['relation_str'].format(re_str))
         if '<!--keyword-main-noun-->' in new_str:
             if "'type': 'only_act'" in plain_txt:
                 key_noun = re.findall(r"'act_noun': '(.+?)'", plain_txt)
@@ -1110,7 +1109,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 if pk_dic[this_id]['title'] != title_str:
                     update_title_log(file_name, title_str, str(now.date()), str_len, pd)
                     title_change_id.append(this_id)
-                    print('title change: ' + file_name)
+                    # print('title change: ' + file_name)
                 elif str_len > pk_dic[this_id]['str_len'] + 300:
                     update_title_log(file_name, title_str, str(now.date()), str_len, pd)
                 new_mod_date = str(now.date())
@@ -1119,7 +1118,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 new_mod_date = str(now.date())
                 pub_or_mod = 'pub'
                 title_change_id.append(this_id)
-                print('title change: ' + file_name)
+                # print('title change: ' + file_name)
         else:
             pub_or_mod = 'mod'
             new_mod_date = pk_dic[this_id]['mod_date']

@@ -1,4 +1,4 @@
-keyword_dict = {
+key_dict = {
     0: {'all_key': '既婚者', 'sub_key': '既婚者', 'sub': '既婚者', 's_sex': 'm', 's_ms': 'm', 'eng': 'married_person',
         'type': 'only_sub', 'o_sex': 'w'},
     1: {'all_key': '既婚', 'sub_key': '既婚', 'sub': '既婚男性', 's_sex': 'm', 's_ms': 'm', 'eng': 'married_man',
