@@ -37,6 +37,27 @@ def scp_upload(up_file_list, pd):
                     up_dir = ''
                 scpc.put(up_file, 'www/' + up_dir)
             print('Upload finished !')
+
+
+def shoshin_scp_upload(up_file_list):
+    pd = shoshin.main_info.info_dict
+    upload_data = pd['upload_data']
+    with paramiko.SSHClient() as ssh:
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname=upload_data['host_name'], port=22, username=upload_data['user_name'],
+                    password=upload_data['password_str'])
+        # ファイルをアップロード
+        with scp.SCPClient(ssh.get_transport()) as scpc:
+            for up_file in up_file_list:
+                if up_file in ['.htaccess'] or '/beginner/' in up_file or '/css/' in up_file or '/images/' in up_file:
+                    print('upload: ' + up_file)
+                    if '/' in up_file:
+                        up_str = up_file.replace(pd['project_dir'] + '/html_files', upload_data['upload_dir'])
+                        up_dir = re.findall(r'^(.+)/', up_str)[0]
+                    else:
+                        up_dir = ''
+                    scpc.put(up_file, 'www/' + up_dir)
+            print('Upload finished !')
             
             
 def auto_scp_upload(up_file_list):

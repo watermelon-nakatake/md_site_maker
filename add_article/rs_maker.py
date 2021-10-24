@@ -3,7 +3,7 @@ import rei_site.main_info
 
 if __name__ == '__main__':
     new_from_md.main(0, rei_site.main_info.info_dict, mod_date_flag=True, last_mod_flag=True, upload_flag=True,
-                     first_time_flag=False, fixed_mod_date=False)
+                     first_time_flag=False, fixed_mod_date='', )
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param site_shift: サイトの表示に関するフラグ

@@ -80,6 +80,6 @@ def check_main_temp_for_copy(project_dir):
 
 
 if __name__ == '__main__':
-    target_dir = 'joshideai'
+    target_dir = 'rei_site'
     # check_main_temp_for_copy(target_dir)
     copy_from_main_tmp_to_top_and_sm(target_dir)

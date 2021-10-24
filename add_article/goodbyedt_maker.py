@@ -3,7 +3,7 @@ import new_from_md
 import make_new_article
 
 if __name__ == '__main__':
-    make_new_article.make_md_by_project_and_part('goodbyedt', [], 'man', 0)
+    # make_new_article.make_md_by_project_and_part('goodbyedt', [], 'man', 0)
     new_from_md.main(0, main_info.info_dict, mod_date_flag=True, last_mod_flag=True, upload_flag=True,
                      first_time_flag=False, fixed_mod_date='')
     # new_from_md.del_main_data('goodbyedt', 359)

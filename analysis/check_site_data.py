@@ -8,6 +8,7 @@ import make_new_article
 def check_all_key_data():
     counter = {}
     project_dict = make_new_article.dir_dict
+    del project_dict['test']
     for pj in project_dict:
         # print(pj)
         if os.path.exists(pj + '/pickle_pot/key_dict.pkl'):
@@ -52,7 +53,7 @@ def check_all_key_data():
                                                            str(counter[pj_c][c_c][s_c][k_c][:10]) + ' etc.'))
                         num_counter.append(len(counter[pj_c][c_c][s_c][k_c]))
                 summary[pj_c]['{} - {}'.format(c_c, s_c)] = max(num_counter)
-        summary[pj_c]['total'] = sum([summary[pj_c][x] for x in summary[pj_c]])
+        summary[pj_c]['sum'] = sum([summary[pj_c][x] for x in summary[pj_c]])
     print('\n')
     pprint.pprint(summary, width=40)
 

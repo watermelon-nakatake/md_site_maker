@@ -42,14 +42,22 @@ html_str_dict = {
     'htaiken': {'obj_m': 'm_ht_{}', 'obj_w': 'w_ht_{}'},
     'joshideai': {'obj_m': 'sex_{}', 'adj_act': 'sex_a_{}'},
     'koibito': {'obj_m': '{}_love_m', 'obj_w': '{}_love_w'},
-}  # for multiple
+    'konkatsu': {'obj_m': 'mh_{}_m', 'obj_w': 'mh_{}_f'},
+    'online_marriage': {'obj_m': 'love_m_{}', 'obj_w': 'love_w_{}'},
+    'rei_site': {'obj_m': 'gf_{}', 'adj_act': 'ac_{}'},
+    'women': {'obj_w': '{}_bf'}}  # for multiple
+
 dir_dict = {'goodbyedt': {'obj_m': 'object', 'act': 'action'},  # 'sub_m': 'subject',
             'howto': {'obj_m': 'online_love', 'obj_w': 'online_love'},
             'htaiken': {'obj_m': 'how_to_sex', 'obj_w': 'how_to_sex'},
-            'shoshin': {'obj_m': 'object', 'sub_m': 'subject', 'act': 'beginner'},
+            'shoshin': {'act': 'beginner'},  # 'obj_m': 'object', 'sub_m': 'subject',
             'joshideai': {'obj_m': 'make_love', 'adj_act': 'website'},
             'koibito': {'obj_m': 'lover', 'obj_w': 'lover'},
-            'test': {'obj': 'o_test', 'sub': 's_test', 'act': 'a_test'}}  # for multiple
+            'konkatsu': {'obj_m': 'partner', 'obj_w': 'partner'},
+            'online_marriage': {'obj_m': 'online_love', 'obj_w': 'online_love'},
+            'test': {'obj': 'o_test', 'sub': 's_test', 'act': 'a_test'},
+            'rei_site': {'obj_m': 'girl_friend', 'adj_act': 'site'},
+            'women': {'obj_w': 'boyfriend'}}  # for multiple
 relational_list_len = 15
 
 
@@ -171,7 +179,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                                 'sub_key': '童貞', 'sub': '童貞男性', 's_sex': 'm', 's_ms': 's', 's_adj': '真面目な'}
                      },
                      'adj_act': {
-                         'sex': {'a_adj_flag': True, 'act_code': 'sex', 'replace_words': []}
+                         'sex': {'a_adj_flag': True, 'act_code': 'sex', 'replace_words': []},
+                         'gf': {'a_adj_flag': True, 'act_code': 'gf', 'replace_words': []}
                      },
                      'sub': {
                          'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'a_adj_flag': False,
@@ -214,6 +223,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                 keywords['sub'] = np.random.choice(['独身女性', '女性', '女子'])
         else:
             no_sub_flag = False
+        if project_dir in no_adult_dir:
+            keywords['o_adj'] = np.random.choice(['魅力的な', '素敵な', '理想的な'])
         if 'obj' not in keywords:
             no_obj_flag = True
             c_obj = np.random.choice(['女性', '女性', '女子'])
@@ -484,7 +495,7 @@ def insert_relation_page_list_to_md(project_dir, key_dict):
         if 'relation_list' not in md_str:
             md_str += "\n\nrelation_list = '" + re_dict[page_name] + "'"
         else:
-            md_str = re.sub(r"relation_list = '.+?'", "relation_list　= '" + re_dict[page_name] + "'", md_str)
+            md_str = re.sub(r"relation_list = '.+?'", "relation_list = '" + re_dict[page_name] + "'", md_str)
         # print(md_str)
         with open(project_dir + '/md_files/' + page_name + '.md', 'w', encoding='utf-8') as g:
             g.write(md_str)
@@ -733,6 +744,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
                  'cov': {'site_name': 'マッチングアプリで恋人探し', 'site_author': '山本'},
                  'ht': {'site_name': '出会い系エッチ体験談', 'site_author': 'ごろう'},
                  'bf': {'site_name': '女性のための出会い系教室', 'site_author': '橋下'},
+                 'gf': {'site_name': '出会い系メールの例文サイト', 'site_author': 'ピエール'},
                  'koi': {'site_name': 'ネット恋活で恋人と出会う方法', 'site_author': '谷本'},
                  'sex': {'site_name': 'セックスできる出会い系サイトを探せ', 'site_author': '後藤'},
                  'bg': {'site_name': '出会い系初心者のための攻略法', 'site_author': '丸山'}}
@@ -2082,6 +2094,7 @@ def make_mix_act_key_list(key_data_a, key_data_b):
 
 def search_max_id(project_dir):
     num_list = []
+    dup_num = []
     md_files = glob.glob(project_dir + '/md_files/**/**.md')
     md_files = [x for x in md_files if '_copy' not in x]
     for file_path in md_files:
@@ -2090,6 +2103,8 @@ def search_max_id(project_dir):
             md_str = f.read()
             id_str_l = re.findall(r'\nn::(\d*)\n', md_str)
             if id_str_l:
+                if id_str_l[0] in num_list:
+                    dup_num.append(id_str_l[0])
                 num_list.append([int(id_str_l[0]), file_path])
     num_list.sort(key=lambda x: x[0])
     # print(num_list)
@@ -2108,6 +2123,8 @@ def search_max_id(project_dir):
     else:
         max_num = 0
         last_pub = ''
+    if dup_num:
+        print('dup_num : {}'.format(dup_num))
     return max_num, last_pub
 
 
@@ -2128,12 +2145,18 @@ def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id):
     #              'adj_act': {'man': 'adj_act', 'woman': 'adj_act'},
     #              'act': {'man': 'act', 'woman': 'act'}}
     main_key_dict = {'goodbyedt': 'dt', 'shoshin': 'bg', 'test': 'bg', 'howto': 'cov', 'htaiken': 'ht',
-                     'joshideai': 'sex', 'koibito': 'koi'}  # for multiple
+                     'joshideai': 'sex', 'koibito': 'koi', 'konkatsu': 'mh', 'online_marriage': 'olm',
+                     'rei_site': 'gf', 'women': 'bf'}  # for multiple
     sub_sex_dict = {'goodbyedt': {'act': ['man'], 'obj_m': ['man']},
+                    'shoshin': {'act': ['man']},
                     'howto': {'obj_m': ['man'], 'obj_w': ['woman']},
                     'htaiken': {'obj_m': ['man'], 'obj_w': ['woman']},
                     'joshideai': {'obj_m': ['man'], 'adj_act': ['man']},
-                    'koibito': {'obj_m': ['man'], 'obj_w': ['woman']}}  # for multiple
+                    'koibito': {'obj_m': ['man'], 'obj_w': ['woman']},
+                    'konkatsu': {'obj_m': ['man'], 'obj_w': ['woman']},
+                    'online_marriage': {'obj_m': ['man'], 'obj_w': ['woman']},
+                    'rei_site': {'obj_m': ['man'], 'adj_act': ['man']},
+                    'women': {'obj_w': ['woman']}}  # for multiple
     if not part_list:
         part_list = []
         for p in dir_dict[project_dir]:
@@ -2163,7 +2186,7 @@ def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id):
                     last_pub = last_pub + 'T16:33:19'
                 last_pub = last_pub.replace('/', '-')
             else:
-                last_pub = '2021-06-14T01:02:17'
+                last_pub = '2021-06-01T01:02:17'
             # return
             make_new_pages_to_md_from_key_list(project_dir, md_dir, source_data, main_key_dict[project_dir],
                                                [], key_source, recipe_flag=True, subject_sex=sub_sex, start_id=next_id,
@@ -2184,8 +2207,8 @@ if __name__ == '__main__':
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
     # make_used_id_list_for_key_data('sfd')
 
-    make_md_by_project_and_part('koibito', [], '', 0)
-    # search_max_id('shoshin')
+    make_md_by_project_and_part('women', [], '', 0)  # for multiple
+    # search_max_id('women')
 
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等 アダルト
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター

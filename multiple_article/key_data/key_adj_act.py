@@ -1,8 +1,9 @@
 import key_data.key_act
 
-project_name = 'joshideai'
+project_name = 'rei_site'
 
-a_adj_data = {'joshideai': {'adj_dict': 'site_name', 'slide_num': 1}}
+a_adj_data = {'joshideai': {'adj_dict': 'site_name', 'slide_num': 1},
+              'rei_site': {'adj_dict': 'site_name', 'slide_num': 0}}
 adj_dict = {
     'site_name': {
         0: {'a_adj': 'ワクワクメールで', 'site': 'wk'},
@@ -22,9 +23,10 @@ if project_name == 'sfd':
 if len(adj_dict[a_adj_data[project_name]['adj_dict']]) > 1:
     slide_num = a_adj_data[project_name]['slide_num']
     key_list = [y for y in adj_dict_s]
-    for n in range(slide_num):
-        pop_n = key_list.pop(0)
-        key_list.append(pop_n)
+    if slide_num > 0:
+        for n in range(slide_num):
+            pop_n = key_list.pop(0)
+            key_list.append(pop_n)
     adj_dict = {i: adj_dict_s[y] for i, y in enumerate(key_list)}
     if len(act_dict) >= len(adj_dict):
         key_data1 = act_dict

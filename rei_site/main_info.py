@@ -14,7 +14,7 @@ category_data = {'profil': ['プロフィールの書き方', 'index.html', 5],
                  'wife': ['人妻攻略メール例文', 'index.html', 8],
                  'howto': ['目的別の出会う方法', 'index.html', 3],
                  'site': ['出会い系サイト情報', 'list.html', 64],
-                 'girl_friend': ['彼女の作り方', 'index.html', 270]
+                 'girl_friend': ['彼女の作り方', 'index.html', 4],
                  }
 category_name = {x: [category_data[x][0], category_data[x][1]] for x in category_data}
 directory_name = {x: category_data[x][0] for x in category_data}
@@ -27,7 +27,7 @@ main_dir = ''
 article_image_dir = 'art_images'
 amp_flag = False
 default_img = 'common/rs_image.jpeg'
-h_sitemap_path = 'rei_site/html_files/sitemap/sm1.html'
+h_sitemap_path = 'rei_site/html_files/sitemap.html'
 domain_str = 'reibunsite.com'
 ignore_files = ['rei_site/html_files/google3d7d16f68a5d3b38.html', 'rei_site/html_files/y_key_e2722b15d0cec302.html']
 upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',

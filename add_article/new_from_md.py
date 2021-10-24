@@ -291,7 +291,7 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
     # category page
     ct_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     for cat in ct_cat:
-        # print(cat)
+        print('cat : '.format(cat))
         if cat != 'top':
             index_path = '{}/html_files/{}{}/{}'.format(pd['project_dir'], pd['main_dir'], cat,
                                                         pd['category_data'][cat][1])
@@ -868,6 +868,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             if arlist_o_l:
                 for arlist_o in arlist_o_l:
                     if '%%%' in arlist_o:
+                        arlist_o = arlist_o + '\n'
                         arlist_l = re.findall(r'- (.*?)\n', arlist_o)
                         for arlist in arlist_l:
                             if '%%%' in arlist:
@@ -1213,6 +1214,8 @@ def icon_filter(md_txt, pd):
 def insert_site_banner(md_txt, pd):
     if pd['project_dir'] == 'reibun':
         md_txt = reibun.main_info.reibun_insert_site_banner(md_txt)
+    elif pd['project_dir'] == 'rei_site':
+        md_txt = rei_site.main_info.rei_site_insert_site_banner(md_txt)
     return md_txt
 
 

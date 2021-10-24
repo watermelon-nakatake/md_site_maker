@@ -1,16 +1,13 @@
+import file_upload
 import new_from_md
 import shoshin.main_info
+import make_html_for_shoshin
+
+# import make_new_article
 
 if __name__ == '__main__':
-    new_from_md.main(0, shoshin.main_info.info_dict, mod_date_flag=True, last_mod_flag=True, upload_flag=False,
-                     first_time_flag=True, fixed_mod_date=False)
-    """
-    新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
-    :param site_shift: サイトの表示に関するフラグ
-    :param pd: projectのデータ
-    :param mod_date_flag: mod_dateを更新するかのフラグ
-    :param last_mod_flag: last_modを更新するか否かR
-    :param upload_flag: アップロードするか否か
-    :param first_time_flag: 初回作成か否か
-    :return: none
-    """
+    # make_new_article.make_md_by_project_and_part('shoshin', [], '', 0)
+    up_files = make_html_for_shoshin.translate_md_to_html('shoshin/html_files/template/wp_temp.html',
+                                                          'shoshin/md_files/beginner', 'man', pub_flag=False,
+                                                          pub_take_over=False, html_dir='beginner')
+    file_upload.shoshin_scp_upload(up_files)
