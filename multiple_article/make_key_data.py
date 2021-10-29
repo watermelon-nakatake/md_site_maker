@@ -6,9 +6,10 @@ import key_data.key_obj_man
 import key_data.key_obj_woman
 import key_data.key_adj_act
 import key_data.key_sub_man
+import key_data.key_adj
 
 
-def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num):
+def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num, start_row):
     with open('/Users/tnakatake/Downloads/' + file_name) as f:
         reader = csv.reader(f)
         csv_list = [row for row in reader]
@@ -21,12 +22,18 @@ def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num):
         eng_num = csv_list[0].index('eng')
     else:
         eng_num = 0
-    for i, row in enumerate(csv_list[1:]):
+    if start_row:
+        slice_num = start_row - 1
+    else:
+        slice_num = 1
+    for i, row in enumerate(csv_list[slice_num:]):
         if row[0]:
             if len(csv_list[0]) == len(row):
                 if row[0] not in used_key:
                     insert_dict = {}
                     for ii, data_i in enumerate(row):
+                        if ii == 0 and data_i not in used_key:
+                            used_key.append(data_i)
                         if eng_num != 0 and ii == eng_num:
                             if data_i not in used_eng:
                                 if not data_i.isascii():
@@ -37,6 +44,12 @@ def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num):
                                 insert_dict['eng'] = ''
                             else:
                                 print('error! : {} in eng list !!'.format(data_i))
+                        elif data_i == 'FALSE':
+                            insert_dict[csv_list[0][ii]] = False
+                        elif data_i == 'TRUE':
+                            insert_dict[csv_list[0][ii]] = True
+                        elif data_i in ['0', '1', '3']:
+                            insert_dict[csv_list[0][ii]] = int(data_i)
                         else:
                             insert_dict[csv_list[0][ii]] = data_i
                         if 'act' in file_name:
@@ -56,7 +69,7 @@ def make_key_dict_from_csv(file_name, new_file_name, common_dict, start_num):
                     insert_dict.update(common_dict)
                     new_dict[i + start_num] = insert_dict
                 else:
-                    print('{} already in list !'.format(row[0]))
+                    print('{} : {} already in list !'.format(i + 2, row[0]))
     print(new_dict)
     if new_file_name:
         py_str = 'key_dict = ' + str(new_dict)
@@ -148,7 +161,7 @@ def check_duplicate_keyword(new_dict, existing_dict):
 
 
 if __name__ == '__main__':
-    i_dict = make_key_dict_from_csv('new_key - sub_m.csv', '', {}, 0)
-    check_duplicate_keyword(i_dict, key_data.key_sub_man.keyword_dict)
-    # o_dict = import_english_str(i_dict, key_data.key_sub_man.keyword_dict, 'sub_key')
-    # write_csv_file(o_dict, 'multiple_article/key_data/key_sub_m.csv')
+    i_dict = make_key_dict_from_csv('new_key - obj_m.csv', '', {'type': 'only_obj'}, 321, start_row=114)
+    check_duplicate_keyword(i_dict, key_data.key_obj_woman.keyword_dict)
+    # o_dict = import_english_str(i_dict, key_data.key_obj_woman.keyword_dict, 'all_key')
+    # write_csv_file(o_dict, 'multiple_article/key_data/key_obj_m2.csv')

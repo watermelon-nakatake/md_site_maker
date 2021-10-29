@@ -35,7 +35,7 @@ html_str_dict = {
     'shoshin': {'obj_m': '{}_by_beginner_m', 'obj_w': '{}_by_beginner_w', 'sub_m': '{}_by_beginner_s',
                 'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_a'},
     'test': {'obj_m': '{}_by_beginner_m', 'obj_w': '{}_by_beginner_w', 'sub_m': '{}_by_beginner_s',
-             'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_a'},
+             'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_d'},
     'goodbyedt': {'obj_m': '{}_dt', 'obj_w': '', 'sub_m': '{}_s_dt', 'sub_w': '',
                   'act': '{}_a_dt', 'adj_act': '{}_a_dt'},
     'howto': {'obj_m': '{}_m_cov', 'obj_w': '{}_w_cov'},
@@ -47,7 +47,9 @@ html_str_dict = {
     'rei_site': {'obj_m': 'gf_{}', 'adj_act': 'ac_{}'},
     'women': {'obj_w': '{}_bf'}}  # for multiple
 
-dir_dict = {'goodbyedt': {'obj_m': 'object', 'act': 'action'},  # 'sub_m': 'subject',
+dir_dict = {'sfd': {'obj_m': 'obj_m', 'obj_w': 'obj_w', 'sub_m': 'sub_m', 'sub_w': 'sub_w', 'act': 'act',
+                    'adj_act': 'adj_act'},
+            'goodbyedt': {'obj_m': 'object', 'act': 'action'},  # 'sub_m': 'subject',
             'howto': {'obj_m': 'online_love', 'obj_w': 'online_love'},
             'htaiken': {'obj_m': 'how_to_sex', 'obj_w': 'how_to_sex'},
             'shoshin': {'act': 'beginner'},  # 'obj_m': 'object', 'sub_m': 'subject',
@@ -55,7 +57,7 @@ dir_dict = {'goodbyedt': {'obj_m': 'object', 'act': 'action'},  # 'sub_m': 'subj
             'koibito': {'obj_m': 'lover', 'obj_w': 'lover'},
             'konkatsu': {'obj_m': 'partner', 'obj_w': 'partner'},
             'online_marriage': {'obj_m': 'online_love', 'obj_w': 'online_love'},
-            'test': {'obj': 'o_test', 'sub': 's_test', 'act': 'a_test'},
+            'test': {'obj_m': 'o_test_m', 'sub_m': 's_test', 'act': 'a_test', 'adj_act': 'adj_test'},
             'rei_site': {'obj_m': 'girl_friend', 'adj_act': 'site'},
             'women': {'obj_w': 'boyfriend'}}  # for multiple
 relational_list_len = 15
@@ -63,7 +65,7 @@ relational_list_len = 15
 
 def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_key, use_id_list, key_list,
                                        recipe_flag, subject_sex, start_id, insert_pub_date, part_code,
-                                       copy_pub_flag):
+                                       copy_pub_flag, exist_update_flag):
     # 必要最低限のキーワードリストで機動的に記事作成
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
@@ -84,10 +86,12 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
     use_id_list = id_filter(use_id_list, main_key, key_list, part_code)
     this_key_code = check_key_code(key_list)
     used_dict, add_id_dict = make_used_key_dict(project_dir, use_id_list, this_key_code, start_id)
+    print(insert_pub_date)
     if insert_pub_date:
         dt1 = datetime.datetime.strptime(insert_pub_date, '%Y-%m-%dT%H:%M:%S')
     else:
         dt1 = ''
+    print(dt1)
     # print(used_dict)
     # print(add_id_dict)
     if main_key in no_adult_prj and part_code == 'obj':
@@ -180,7 +184,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                      },
                      'adj_act': {
                          'sex': {'a_adj_flag': True, 'act_code': 'sex', 'replace_words': []},
-                         'gf': {'a_adj_flag': True, 'act_code': 'gf', 'replace_words': []}
+                         'gf': {'a_adj_flag': True, 'act_code': 'gf', 'replace_words': []},
+                         'sf': {'a_adj_flag': True, 'act_code': 'sf', 'replace_words': []}
                      },
                      'sub': {
                          'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'a_adj_flag': False,
@@ -205,6 +210,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
         old_md = '{}/md_files/{}/{}.md'.format(project_dir, dir_name, keywords['page_name'])
         old_pub = ''
         if os.path.exists(old_md):
+            if not exist_update_flag:
+                continue
             with open(old_md, 'r', encoding='utf-8') as m:
                 md_str = m.read()
             if '<!--ori-->' in md_str:
@@ -287,7 +294,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
         pickle.dump(recipe_dict, rp)
     with open(project_dir + '/pickle_pot/key_dict.pkl', 'wb') as wk:
         pickle.dump(key_dict, wk)
-    insert_relation_page_list_to_md(project_dir, key_dict)
+    if project_dir != 'sfd':
+        insert_relation_page_list_to_md(project_dir, key_dict)
     # print(counter_d)
     # sort_counter_dict(counter_d)
 
@@ -850,7 +858,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
         result_str += 'k::' + ' '.join([keywords['all_key'], keywords['act'].replace('する', '')]) + '\n'
 
     for this_sec in section_list:
-        this_sec = option_section_filter(this_sec, keywords)
+        this_sec = option_section_filter(this_sec, keywords, project_dir)
         section_str, recipe, counter_d = make_new_section(this_sec, noun_dict, conj_dict, site1, site2, link_dict,
                                                           this_path, recipe_flag, subject_sex, main_key, part_code,
                                                           project_dir, counter_d)
@@ -875,16 +883,17 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     return recipe_list, counter_d, title_str
 
 
-def option_section_filter(this_sec, keywords):
-    random_list = [0, 1, 1]
-    opt_dict = {'month': [source_data.di_3_1, source_data.di_3_2]}
-    if 'option' in this_sec['info']:
-        if this_sec['info']['option'][0] == 'month':
-            if random.choice(random_list) == 1:
-                month_num = int(keywords['hot_month'].replace('月', ''))
-                for source in opt_dict['month']:
-                    if month_num in source['info']['option'][1]:
-                        this_sec = source
+def option_section_filter(this_sec, keywords, project_dir):
+    if project_dir != 'sfd':
+        random_list = [0, 1, 1]
+        opt_dict = {'month': [source_data.di_3_1, source_data.di_3_2]}
+        if 'option' in this_sec['info']:
+            if this_sec['info']['option'][0] == 'month':
+                if random.choice(random_list) == 1:
+                    month_num = int(keywords['hot_month'].replace('月', ''))
+                    for source in opt_dict['month']:
+                        if month_num in source['info']['option'][1]:
+                            this_sec = source
     return this_sec
 
 
@@ -1420,11 +1429,18 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
         act2_i = act_i
     if a_adj_flag:
         act_adj = ''
-        m_act_adj = keywords['a_adj']
-        t_act_adj = keywords['a_adj']
+        if 'adj_v' in keywords:
+            m_act_adj = keywords['adj_v']
+            m_act_adj_v = keywords['adj_n']
+            t_act_adj = keywords['a_adj']
+        else:
+            m_act_adj = keywords['a_adj']
+            m_act_adj_v = keywords['a_adj']
+            t_act_adj = keywords['a_adj']
     else:
         act_adj = keywords['a_adj']
         m_act_adj = ''
+        m_act_adj_v = ''
         t_act_adj = ''
     if no_sub_flag:
         alt_sub_s = ''
@@ -1565,9 +1581,9 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
             'k-act-can-long': [act_can + 'ます'],
             'k-act-can-not-do': [act_can + 'ない'],
             'k-act-can-not-do-long': [act_can + 'ません'],
-            'k-act-way': [m_act_adj + act_way, act_way],
+            'k-act-way': [m_act_adj_v + act_way, act_way, act_way, m_act_adj + act_way_g],
             'k-act-way-sim': [act_way],
-            'k-act-way-adj': [m_act_adj + act_way],
+            'k-act-way-adj': [m_act_adj_v + act_way, m_act_adj + act_way_g],
             'k-act-way-t': [act_way],
             'k-act-can-easy': [act_i + 'やすい', '<!--easily-->' + act_can + 'る'],
             'k-act-can-easy-with': ['を' + act_i + 'やすい', 'の' + act_can + 'る'],
@@ -1652,7 +1668,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
                     'k-obj-act-want': [m_act_adj + act_i + 'たい',
                                        m_act_adj + act_i + 'たい'],
                     'k-obj-act-want-a': [m_act_adj + obj_adj + act_i + 'たい'],
-                    'k-obj-act-way': [m_act_adj + act_way, act_way_g],
+                    'k-obj-act-way': [m_act_adj + act_way_g, act_way_g],
                     'k-obj-act-do': [m_act_adj + act_base],
                     'k-obj-act-do-a': [m_act_adj + obj_adj + act_base],
                     'k-obj-act-easy': [m_act_adj + act_i + 'やすい']}
@@ -2047,7 +2063,8 @@ def make_used_id_list_for_key_data(project_name):
     print('pkl_data : {}'.format(pkl_data))
 
 
-def auto_make_md_for_all_key(project_dir, dir_name, main_key, recipe_flag, start_id, insert_pub_date):
+def auto_make_md_for_all_key(project_dir, dir_name, main_key, recipe_flag, start_id, insert_pub_date,
+                             exist_update_flag):
     # html_str -> keyword : {},  性別 : {s},  main_key : {m}    for ex  '{}_{s}_{m}
     key_data_dict = {'obj_m': {'data': key_data.key_obj_woman.keyword_dict, 'sex': 'man', 'part': 'obj'},
                      'obj_w': {'data': key_data.key_obj_man.keyword_dict, 'sex': 'woman', 'part': 'obj'}}
@@ -2063,7 +2080,7 @@ def auto_make_md_for_all_key(project_dir, dir_name, main_key, recipe_flag, start
                                            key_data_dict[d_id]['data'], recipe_flag=recipe_flag,
                                            subject_sex=key_data_dict[d_id]['sex'], start_id=start_id,
                                            insert_pub_date=insert_pub_date, part_code=part_code_str,
-                                           copy_pub_flag=False)
+                                           copy_pub_flag=False, exist_update_flag=exist_update_flag)
 
 
 def make_mix_act_key_list(key_data_a, key_data_b):
@@ -2139,14 +2156,14 @@ def test_dir_filter(md_dir, project_dir):
     return md_dir
 
 
-def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id):
+def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id, exist_update_flag):
     # part_dict = {'obj': {'man': 'obj_m', 'woman': 'obj_w'},
     #              'sub': {'man': 'sub_m', 'woman': 'sub_w'},
     #              'adj_act': {'man': 'adj_act', 'woman': 'adj_act'},
     #              'act': {'man': 'act', 'woman': 'act'}}
-    main_key_dict = {'goodbyedt': 'dt', 'shoshin': 'bg', 'test': 'bg', 'howto': 'cov', 'htaiken': 'ht',
+    main_key_dict = {'goodbyedt': 'dt', 'shoshin': 'bg', 'test': 'sf', 'howto': 'cov', 'htaiken': 'ht',
                      'joshideai': 'sex', 'koibito': 'koi', 'konkatsu': 'mh', 'online_marriage': 'olm',
-                     'rei_site': 'gf', 'women': 'bf'}  # for multiple
+                     'rei_site': 'gf', 'women': 'bf', 'sfd': 'sf'}  # for multiple
     sub_sex_dict = {'goodbyedt': {'act': ['man'], 'obj_m': ['man']},
                     'shoshin': {'act': ['man']},
                     'howto': {'obj_m': ['man'], 'obj_w': ['woman']},
@@ -2156,7 +2173,11 @@ def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id):
                     'konkatsu': {'obj_m': ['man'], 'obj_w': ['woman']},
                     'online_marriage': {'obj_m': ['man'], 'obj_w': ['woman']},
                     'rei_site': {'obj_m': ['man'], 'adj_act': ['man']},
-                    'women': {'obj_w': ['woman']}}  # for multiple
+                    'women': {'obj_w': ['woman']},
+                    'test': {'adj_act': ['man'], 'obj_m': ['man']},
+                    'sfd': {'obj_m': ['man'], 'obj_w': ['woman'], 'sub_m': ['man'], 'sub_w': ['woman'], 'act': ['man'],
+                            'adj_act': ['man']}
+                    }  # for multiple
     if not part_list:
         part_list = []
         for p in dir_dict[project_dir]:
@@ -2190,7 +2211,8 @@ def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id):
             # return
             make_new_pages_to_md_from_key_list(project_dir, md_dir, source_data, main_key_dict[project_dir],
                                                [], key_source, recipe_flag=True, subject_sex=sub_sex, start_id=next_id,
-                                               insert_pub_date=last_pub, part_code=p_code, copy_pub_flag=True)
+                                               insert_pub_date=last_pub, part_code=p_code, copy_pub_flag=True,
+                                               exist_update_flag=exist_update_flag)
             next_id = 0
     # with open(project_dir + '/pickle_pot/key_dict.pkl', 'rb') as f:
     #     key_dict = pickle.load(f)
@@ -2202,12 +2224,12 @@ if __name__ == '__main__':
     # sf_import_to_source()
     # make_keywords_sample(keywords_p)
     # make_used_key_data('sfd')
-    # auto_make_md_for_all_key('koibito', 'lover', '{}_love_{s}', 'koi', recipe_flag=True, start_id=23,
+    # auto_make_md_for_all_key('sfd', 'obj_m', 'sf', recipe_flag=True, start_id=554,
     #                          insert_pub_date='2021-04-08T18:22:12')
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
     # make_used_id_list_for_key_data('sfd')
 
-    make_md_by_project_and_part('women', [], '', 0)  # for multiple
+    make_md_by_project_and_part('sfd', ['obj_m'], '', 554, exist_update_flag=False)  # for multiple
     # search_max_id('women')
 
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等 アダルト

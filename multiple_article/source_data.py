@@ -128,7 +128,10 @@ title = {
                '<!--sl-a--><!--title-easy--><!--k-act-way-adj-->,<!--k-act-can--><!--d-bbs--><!--sl-a/e-->',
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can-easy--><!--d-bbs--><!--sl-a/e-->',
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
-               '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->']
+               '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->'],
+        'sf': ['<!--sl-a--><!--k-how-to-->,<!--k-do--><!--secret--><!--sl-a/e-->',
+               '<!--sl-a--><!--k-rnd-how-to-->,<!--k-act--><!--secret--><!--sl-a/e-->',
+               '<!--sl-a--><!--k-obj-act-way-->,<!--k-act--><!--secret--><!--sl-a/e-->']
     },
     'sub': {
         'sf': [

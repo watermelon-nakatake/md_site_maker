@@ -56,6 +56,7 @@ def check_all_key_data():
         summary[pj_c]['sum'] = sum([summary[pj_c][x] for x in summary[pj_c]])
     print('\n')
     pprint.pprint(summary, width=40)
+    return summary
 
 
 if __name__ == '__main__':

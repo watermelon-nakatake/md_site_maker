@@ -142,20 +142,20 @@ def auto_month_update(old_month_str):
     # print(old_num)
     # print(type(old_num))
     next_month_str = make_next_month_str(old_num)
-    print(next_month_str)
+    print('next_month_str : '.format(next_month_str))
     next_next_str = make_next_month_str(int(next_month_str.replace('月', '')))
-    print(next_next_str)
+    print('next_next_str = {}'.format(next_next_str))
     upload_list, up_files = rewrite_hot_month(old_month_str, next_month_str, next_next_str)
-    print(up_files)
-    print(len(list(set(up_files))))
-    print(len(up_files))
+    print('up_files = {}'.format(up_files))
+    print('len of up_files : '.format(len(list(set(up_files)))))
+    # print(len(up_files))
     auto_update(upload_list)
     file_upload.auto_scp_upload(up_files)
     # print(up_files)
 
 
 if __name__ == '__main__':
-    auto_month_update('９月')
+    auto_month_update('10月')  # 現在の月を記入 not 新しい月
     # ul = rewrite_hot_month('９月', '１０月', '１１月')
     # auto_update(ul)
     # hot_month_pick_up('11月')
