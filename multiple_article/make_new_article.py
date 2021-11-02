@@ -69,6 +69,8 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
     # 必要最低限のキーワードリストで機動的に記事作成
     # 個別記事のリストの中にメインワードのキーワード ex.gf で選択
     # 既存記事のキーワードとurlをランダム選択scrに渡す
+    now = datetime.datetime.now()
+    # print(now)
     html_str = choice_html_str(subject_sex, project_dir, part_code)
     if os.path.exists(project_dir + '/pickle_pot/recipe_dict.pkl'):
         with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'rb') as rf:
@@ -86,12 +88,14 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
     use_id_list = id_filter(use_id_list, main_key, key_list, part_code)
     this_key_code = check_key_code(key_list)
     used_dict, add_id_dict = make_used_key_dict(project_dir, use_id_list, this_key_code, start_id)
-    print(insert_pub_date)
     if insert_pub_date:
         dt1 = datetime.datetime.strptime(insert_pub_date, '%Y-%m-%dT%H:%M:%S')
+        start_dt = dt1
+        print('insert_pub : {}'.format(insert_pub_date))
     else:
         dt1 = ''
-    print(dt1)
+        start_dt = now
+    print('dt1 : {}'.format(dt1))
     # print(used_dict)
     # print(add_id_dict)
     if main_key in no_adult_prj and part_code == 'obj':
@@ -103,7 +107,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
     else:
         used_dict_l = used_dict
         ad_link_dict = {}
-    # print(used_dict_l)
+    print('used_dict : {}'.format(used_dict_l))
     link_dict = make_key_and_path_list(html_str, used_dict_l, project_dir)
     # print('link_dict : {}'.format(link_dict))
     # return
@@ -273,9 +277,14 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
             dt_str = old_pub
         else:
             if dt1:
-                dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
-                                               seconds=int(random.random() * 59))
+                if dt1 < now:
+                    dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
+                                                   seconds=int(random.random() * 59))
+                else:
+                    dt1 = start_dt
                 dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
+            else:
+                dt_str = now.strftime('%Y-%m-%dT%H:%M:%S')
         recipe_list, counter_d, title_str = make_new_page(keywords, source_mod, art_map, project_dir, dir_name,
                                                           link_dict_u, main_key, recipe_flag, subject_sex, a_adj_flag,
                                                           add_id_dict[key_id], dt_str, part_code, no_obj_flag,
@@ -2229,7 +2238,7 @@ if __name__ == '__main__':
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
     # make_used_id_list_for_key_data('sfd')
 
-    make_md_by_project_and_part('sfd', ['obj_m'], '', 554, exist_update_flag=False)  # for multiple
+    make_md_by_project_and_part('sfd', ['adj_act'], 'man', 580, exist_update_flag=False)  # for multiple
     # search_max_id('women')
 
     # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等 アダルト
