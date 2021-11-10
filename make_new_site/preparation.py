@@ -131,28 +131,35 @@ def check_all_html(target_dir):
 def make_html_and_md_dir(pd):
     with open('template_files/template/index_temp.md', 'r', encoding='utf-8') as f:
         md_temp = f.read()
-    if not os.path.exists(pd['project_dir'] + '/pickle_pot'):
-        os.mkdir(pd['project_dir'] + '/pickle_pot')
-    if not os.path.exists(pd['project_dir'] + '/html_files'):
-        os.mkdir(pd['project_dir'] + '/html_files')
-    if not os.path.exists(pd['project_dir'] + '/md_files'):
-        os.mkdir(pd['project_dir'] + '/md_files')
+    if 'mass_flag' in pd:
+        project_dir = 'mass_production/' + pd['project_dir']
+    else:
+        project_dir = pd['project_dir']
+    if not os.path.exists(project_dir + '/pickle_pot'):
+        os.mkdir(project_dir + '/pickle_pot')
+    if not os.path.exists(project_dir + '/html_files'):
+        os.mkdir(project_dir + '/html_files')
+    if not os.path.exists(project_dir + '/md_files'):
+        os.mkdir(project_dir + '/md_files')
     for cat_name in pd['category_data']:
-        if not os.path.exists(pd['project_dir'] + '/html_files/' + cat_name):
-            os.mkdir(pd['project_dir'] + '/html_files/' + cat_name)
-        if not os.path.exists(pd['project_dir'] + '/md_files/' + cat_name):
-            os.mkdir(pd['project_dir'] + '/md_files/' + cat_name)
+        if not os.path.exists(project_dir + '/html_files/' + cat_name):
+            os.mkdir(project_dir + '/html_files/' + cat_name)
+        if not os.path.exists(project_dir + '/md_files/' + cat_name):
+            os.mkdir(project_dir + '/md_files/' + cat_name)
             index_md = md_temp
             index_md = index_md.replace('<!--title-->', pd['category_data'][cat_name][0])
             index_md = index_md.replace('<!--id-num-->', str(pd['category_data'][cat_name][2]))
-            with open(pd['project_dir'] + '/md_files/' + cat_name + '/' +
+            with open(project_dir + '/md_files/' + cat_name + '/' +
                       pd['category_data'][cat_name][1].replace('.html', '.md'), 'w', encoding='utf-8') as g:
                 g.write(index_md)
-    # todo: トップページとhtmlサイトマップページの自動作成
 
 
 def make_top_page(pd):
-    if not os.path.exists(pd['project_dir'] + '/html_files/index.html'):
+    if 'mass_flag' in pd:
+        project_dir = 'mass_production/' + pd['project_dir']
+    else:
+        project_dir = pd['project_dir']
+    if not os.path.exists(project_dir + '/html_files/index.html'):
         with open('template_files/top_tmp.html', 'r', encoding='utf-8') as f:
             long_str = f.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
@@ -170,12 +177,16 @@ def make_top_page(pd):
             if 'google_id' in pd:
                 if pd['google_id']:
                     long_str = long_str.replace('<!--google-id-->', pd['google_id'])
-            with open(pd['project_dir'] + '/html_files/index.html', 'w', encoding='utf-8') as g:
+            with open(project_dir + '/html_files/index.html', 'w', encoding='utf-8') as g:
                 g.write(long_str)
 
 
 def make_sitemap_page(pd):
-    if not os.path.exists(pd['project_dir'] + '/html_files/sitemap.html'):
+    if 'mass_flag' in pd:
+        project_dir = 'mass_production/' + pd['project_dir']
+    else:
+        project_dir = pd['project_dir']
+    if not os.path.exists(project_dir + '/html_files/sitemap.html'):
         with open('template_files/sitemap.html', 'r', encoding='utf-8') as f:
             long_str = f.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
@@ -193,17 +204,21 @@ def make_sitemap_page(pd):
             if 'google_id' in pd:
                 if pd['google_id']:
                     long_str = long_str.replace('<!--google-id-->', pd['google_id'])
-            with open(pd['project_dir'] + '/html_files/sitemap.html', 'w', encoding='utf-8') as g:
+            with open(project_dir + '/html_files/sitemap.html', 'w', encoding='utf-8') as g:
                 g.write(long_str)
 
 
 def make_html_dir(pd):
     print(pd)
-    print(glob.glob(pd['project_dir'] + '/md_files/**/', recursive=True))
-    all_md_dir = [x.replace('/md_files/', '/html_files/') for x in glob.glob(pd['project_dir'] + '/md_files/**/',
+    if 'mass_flag' in pd:
+        project_dir = 'mass_production/' + pd['project_dir']
+    else:
+        project_dir = pd['project_dir']
+    print(glob.glob(project_dir + '/md_files/**/', recursive=True))
+    all_md_dir = [x.replace('/md_files/', '/html_files/') for x in glob.glob(project_dir + '/md_files/**/',
                                                                              recursive=True)]
-    # all_md_dir.extend([pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'css',
-    #                   pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images'])
+    # all_md_dir.extend([project_dir + '/html_files/' + pd['main_dir'] + 'css',
+    #                   project_dir + '/html_files/' + pd['main_dir'] + 'images'])
     print(all_md_dir)
     for dir_path in all_md_dir:
         if not os.path.exists(dir_path):
@@ -212,15 +227,23 @@ def make_html_dir(pd):
 
 
 def copy_template_files(pd):
+    if 'mass_flag' in pd:
+        project_dir = 'mass_production/' + pd['project_dir']
+    else:
+        project_dir = pd['project_dir']
     copy_list = ['template_files/template', 'template_files/images', 'template_files/css', 'template_files/link']
-    if not os.path.exists(pd['project_dir'] + '/html_files/pc/template'):
+    if not os.path.exists(project_dir + '/html_files/' + pd['main_dir'] + '/template'):
         for base in copy_list:
-            shutil.copytree(base, pd['project_dir'] + '/html_files/' + pd['main_dir'] +
+            shutil.copytree(base, project_dir + '/html_files/' + pd['main_dir'] +
                             base.replace('template_files/', ''))
 
 
 def insert_to_temp(pd):
-    with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'r',
+    if 'mass_flag' in pd:
+        project_dir = 'mass_production/' + pd['project_dir']
+    else:
+        project_dir = pd['project_dir']
+    with open(project_dir + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'r',
               encoding='utf-8') as f:
         long_str = f.read()
         long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
@@ -234,7 +257,7 @@ def insert_to_temp(pd):
         if 'google_id' in pd:
             if pd['google_id']:
                 long_str = long_str.replace('<!--google-id-->', pd['google_id'])
-        with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'w',
+        with open(project_dir + '/html_files/' + pd['main_dir'] + '/template/main_tmp.html', 'w',
                   encoding='utf-8') as g:
             g.write(long_str)
 

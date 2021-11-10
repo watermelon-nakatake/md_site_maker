@@ -88,6 +88,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="dict.*" />
+          <option value="types.ModuleType.info_dict" />
         </list>
       </option>
     </inspection_tool>

@@ -45,7 +45,9 @@ html_str_dict = {
     'konkatsu': {'obj_m': 'mh_{}_m', 'obj_w': 'mh_{}_f'},
     'online_marriage': {'obj_m': 'love_m_{}', 'obj_w': 'love_w_{}'},
     'rei_site': {'obj_m': 'gf_{}', 'adj_act': 'ac_{}'},
-    'women': {'obj_w': '{}_bf'}}  # for multiple
+    'women': {'obj_w': '{}_bf'},
+    'mass': {'obj_m': '{}_m', 'obj_w': '{}_w', 'sub_m': '{}_s', 'sub_w': '{}_s', 'act': '{}_a', 'adj_act': '{}_d'}
+}  # for multiple
 
 dir_dict = {'sfd': {'obj_m': 'obj_m', 'obj_w': 'obj_w', 'sub_m': 'sub_m', 'sub_w': 'sub_w', 'act': 'act',
                     'adj_act': 'adj_act'},
@@ -59,7 +61,9 @@ dir_dict = {'sfd': {'obj_m': 'obj_m', 'obj_w': 'obj_w', 'sub_m': 'sub_m', 'sub_w
             'online_marriage': {'obj_m': 'online_love', 'obj_w': 'online_love'},
             'test': {'obj_m': 'o_test_m', 'sub_m': 's_test', 'act': 'a_test', 'adj_act': 'adj_test'},
             'rei_site': {'obj_m': 'girl_friend', 'adj_act': 'site'},
-            'women': {'obj_w': 'boyfriend'}}  # for multiple
+            'women': {'obj_w': 'boyfriend'},
+            'mass': {'obj_m': 'tec', 'obj_w': 'tec', 'sub_m': 'tec', 'sub_w': 'tec', 'act': 'tec', 'adj_act': 'tec'}
+            }  # for multiple
 relational_list_len = 15
 
 
@@ -307,6 +311,219 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
         insert_relation_page_list_to_md(project_dir, key_dict)
     # print(counter_d)
     # sort_counter_dict(counter_d)
+
+
+def make_new_pages_to_md_for_mass(pd, site_data, subject_sex, start_id, insert_pub_date):
+    # print(pd)
+    project_dir = pd['project_dir']
+    dir_name = [x for x in pd['category_data']][0]
+    now = datetime.datetime.now()
+    # print(now)
+    html_str = '{}'
+    p_dir_path = 'mass_production/' + project_dir
+    if os.path.exists(p_dir_path + 'mass_production/used_comb.pkl'):
+        with open('mass_production/used_comb.pkl', 'rb') as rc:
+            used_comb = pickle.load(rc)
+    else:
+        used_comb = []
+    if os.path.exists(p_dir_path + '/pickle_pot/recipe_dict.pkl'):
+        with open(p_dir_path + '/pickle_pot/recipe_dict.pkl', 'rb') as rf:
+            recipe_dict = pickle.load(rf)
+    else:
+        recipe_dict = {}
+    if os.path.exists(p_dir_path + '/pickle_pot/key_dict.pkl'):
+        with open(p_dir_path + '/pickle_pot/key_dict.pkl', 'rb') as rk:
+            key_dict = pickle.load(rk)
+    else:
+        key_dict = {}
+    counter_d = {}
+    key_base = {x: site_data[x] for x in site_data if x not in ['title', 'domain', 'dir']}
+    print(key_base)
+    if insert_pub_date:
+        dt1 = datetime.datetime.strptime(insert_pub_date, '%Y-%m-%dT%H:%M:%S')
+        start_dt = dt1
+        print('insert_pub : {}'.format(insert_pub_date))
+    else:
+        dt1 = ''
+        start_dt = now
+    print('dt1 : {}'.format(dt1))
+    art_num = random.choice(list(range(40, 100)))
+    print(art_num)
+    key_list = []
+    used_key1 = []
+    used_key2 = []
+    for i in range(art_num):
+        new_key = {}
+        ak_list = []
+        eng_list = []
+        type_list = []
+        part_counter = 1
+        key1 = ''
+        for part in key_base:
+            if key_base[part] == 'r':
+                if part in ['obj', 'sub']:
+                    part_c = part + '_m'
+                elif part == 'adj':
+                    part_c = 'adj_act'
+                else:
+                    part_c = part
+                this_key = key_source_dict[part_c][random.choice([x for x in key_source_dict[part_c]])]
+                if part_counter == 1:
+                    if this_key in used_key1:
+                        while this_key not in used_key1:
+                            this_key = key_source_dict[part_c][random.choice([x for x in key_source_dict[part_c]])]
+                    key1 = part_c + '_' + str(this_key)
+                else:
+                    if this_key in used_key2 or [key1, part_c + '_' + str(this_key)] in used_comb:
+                        while this_key not in used_key2 and [key1, part_c + '_' + str(this_key)] not in used_comb:
+                            this_key = key_source_dict[part_c][random.choice([x for x in key_source_dict[part_c]])]
+                new_key.update(this_key)
+                ak_list.append(this_key['all_key'])
+                eng_list.append(this_key['eng'])
+                type_list.append(part)
+                part_counter += 1
+            else:
+                new_key[part] = key_base[part]
+            new_key['eng'] = '_'.join(eng_list)
+            new_key['all_key'] = ' '.join(ak_list)
+            new_key['type'] = '+'.join(type_list)
+        key_list.append(new_key)
+        print(new_key)
+        print('\n')
+    # print(key_list)
+    if subject_sex == 'man':
+        friend_str = '彼女'
+    else:
+        friend_str = '彼氏'
+    # return
+
+    hot_info = {'hot_month': '11月', 'hot_season': '秋', 'hot_month_next': '12月'}
+    a_adj_flag = main_key_dict[part_code][main_key]['a_adj_flag']
+    dt_str = ''
+    # print(link_dict)
+    if not os.path.exists(project_dir + '/md_files/' + dir_name):
+        os.mkdir(project_dir + '/md_files/' + dir_name)
+    for key_id in use_id_list:
+        keywords = key_list[key_id]
+        keywords['id'] = str(key_id)
+        if main_key:
+            keywords.update(main_key_dict[part_code][main_key])
+        keywords['page_name'] = html_str.replace('{}', keywords['eng'].replace('-', '_'))
+        old_md = 'mass_production/{}/md_files/{}/{}.md'.format(project_dir, dir_name, keywords['page_name'])
+        old_pub = ''
+        if os.path.exists(old_md):
+            if not exist_update_flag:
+                continue
+            with open(old_md, 'r', encoding='utf-8') as m:
+                md_str = m.read()
+            if '<!--ori-->' in md_str:
+                print('original sentence in : ' + old_md)
+                continue
+            old_pub_l = re.findall(r'p::(.+?)\n', md_str)
+            if old_pub_l:
+                old_pub = old_pub_l[0]
+        if 'sub' not in keywords:
+            no_sub_flag = True
+            if subject_sex == 'man':
+                keywords['s_adj'] = np.random.choice(['普通の', 'モテない'])
+                keywords['sub'] = np.random.choice(['独身男性', '男性'])
+            else:
+                keywords['s_adj'] = np.random.choice(['普通の', 'モテない'])
+                keywords['sub'] = np.random.choice(['独身女性', '女性', '女子'])
+        else:
+            no_sub_flag = False
+        if project_dir in no_adult_dir:
+            keywords['o_adj'] = np.random.choice(['魅力的な', '素敵な', '理想的な'])
+        if 'obj' not in keywords:
+            no_obj_flag = True
+            c_obj = np.random.choice(['女性', '女性', '女子'])
+            if project_dir in ['sfd']:
+                women_list = ['魅力的な', 'かわいい', 'きれいな', 'エッチな', 'Hな', 'エロい', 'すけべな', 'スケベな',
+                              'セクシーな', 'セクシー']
+            else:
+                women_list = ['魅力的な', 'かわいい', 'きれいな']
+            c_adj = np.random.choice(women_list)
+            keywords['obj'] = c_adj + c_obj
+            keywords['obj_key'] = c_adj + c_obj
+            keywords['obj_p'] = 'の'
+            keywords['o_sex'] = opposite_sex[subject_sex]
+            keywords['o_age'] = 'n'
+            keywords['o_cat'] = 's'
+            keywords['o_adj'] = ''
+        else:
+            no_obj_flag = False
+        # print('no_obj_flag : {}'.format(no_obj_flag))
+        # print('no_sub_flag : {}'.format(no_sub_flag))
+        # print('a_adj_flag : {}'.format(a_adj_flag))
+        if keywords['obj_p'] == 'no' or keywords['obj_p'] == 'n':
+            keywords['obj_p'] = ''
+        if 'a_adj' not in keywords:
+            if main_key == 'sex' and keywords['o_ms'] == 'm':
+                keywords['a_adj'] = np.random.choice(['不倫', '浮気', 'NTR'])
+            else:
+                keywords['a_adj'] = np.random.choice(['安全に', '確実に', '簡単に', 'すぐに'])
+        if adult_checker_by_keywords(keywords):
+            link_dict_u = ad_link_dict
+        else:
+            link_dict_u = link_dict
+        if 'o_reason' not in keywords:
+            keywords['o_reason'] = '素敵な出会いが欲しいから'
+        keywords.update(hot_info)
+        # print(keywords)
+        # make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+        if copy_pub_flag and old_pub:
+            dt_str = old_pub
+        else:
+            if dt1:
+                if dt1 < now:
+                    dt1 = dt1 + datetime.timedelta(hours=int(random.random() * 12), minutes=int(random.random() * 60),
+                                                   seconds=int(random.random() * 59))
+                else:
+                    dt1 = start_dt
+                dt_str = dt1.strftime('%Y-%m-%dT%H:%M:%S')
+            else:
+                dt_str = now.strftime('%Y-%m-%dT%H:%M:%S')
+        source_mod = source_data
+        art_map = [[source_mod.introduction, 1], [source_mod.d_introduction, 'straight'],
+                   [source_mod.d_advantage, [2, 3, 4]],
+                   [source_mod.p_introduction, 'straight'], [source_mod.purpose_advantage, 3],
+                   [source_mod.tips_bonus, [0, 1, 2]], [source_mod.process, 'straight'],
+                   [source_mod.tips_bonus, [1, 2, 3]], [source_mod.conclusion, 1]]
+        recipe_list, counter_d, title_str = make_new_page(keywords, source_mod, art_map, project_dir, dir_name,
+                                                          link_dict_u, main_key, recipe_flag, subject_sex, a_adj_flag,
+                                                          add_id_dict[key_id], dt_str, part_code, no_obj_flag,
+                                                          no_sub_flag, counter_d)
+        keywords['title_str'] = title_str
+        keywords['dir_name'] = dir_name
+        keywords['sub_sex'] = subject_sex
+        keywords['page_id'] = add_id_dict[key_id]
+        recipe_dict[dir_name + '/' + keywords['page_name']] = recipe_list
+        key_dict[dir_name + '/' + keywords['page_name']] = keywords
+    if dt_str:
+        print('last pub_date :  {}'.format(dt_str))
+    # print(recipe_dict)
+    # print(key_dict)
+    with open(p_dir_path + '/pickle_pot/recipe_dict.pkl', 'wb') as rp:
+        pickle.dump(recipe_dict, rp)
+    with open(p_dir_path + '/pickle_pot/key_dict.pkl', 'wb') as wk:
+        pickle.dump(key_dict, wk)
+    if project_dir != 'sfd':
+        insert_relation_page_list_to_md(project_dir, key_dict)
+
+
+def insert_key_for_mass(part, new_key, this_key):
+    other_dict = {'act_noun_flag': False, 'a_adj_flag': False, 'act_code': 'sex', 'replace_words': []}
+    part_dict = {'obj': {},
+                 'act': {'act': 'セックスする', 'act_noun': 'セックス相手',
+                         '2act_w': 'セックスしたい', '2act_noun': 'セックス', '2act_do': 'セックスする',
+                         'act_connection': ['肉体関係'], 'act_target': 'セフレ'},
+                 'adj_act': {},
+                 'sub': {'sub_key': '初心者', 'sub': '出会い系初心者', 's_sex': 'm', 's_ms': 's', 's_adj': '普通の',
+                         }
+                 }
+    insert_part = []
+    for this_key
+    new_key.update()
 
 
 def make_md_from_exist_keywords(use_path_list):
@@ -2238,10 +2455,9 @@ if __name__ == '__main__':
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
     # make_used_id_list_for_key_data('sfd')
 
-    make_md_by_project_and_part('sfd', ['adj_act'], 'man', 580, exist_update_flag=False)  # for multiple
+    make_md_by_project_and_part('test', ['adj_act'], 'man', 580, exist_update_flag=False)  # for multiple
     # search_max_id('women')
 
-    # todo: act_adj を複数で 無料で、サークルで、既婚者同士で　等 アダルト
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: 地域の婚活, パパ活、　割り切り, 不倫, 出会う, マッチングアプリで出会う、趣味の出会い
     # todo: その対象の探し方、o_catで切り替えるなどして多様化
