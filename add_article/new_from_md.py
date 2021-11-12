@@ -159,9 +159,13 @@ def modify_file_check(file_list, last_md_mod):
 
 
 def pick_up_same_name_images(file_path, pd):
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
     file_name = re.sub(r'.*/(.+?).html', r'\1', file_path)
-    img_list = os.listdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images/' + pd['ar_img_dir'])
-    up_list = ['{}/html_files/{}images/{}/{}'.format(pd['project_dir'], pd['main_dir'], pd['ar_img_dir'], x)
+    img_list = os.listdir(pj_path + '/html_files/' + pd['main_dir'] + 'images/' + pd['ar_img_dir'])
+    up_list = ['{}/html_files/{}images/{}/{}'.format(pj_path, pd['main_dir'], pd['ar_img_dir'], x)
                for x in img_list
                if file_name in x]
     return up_list
@@ -184,7 +188,11 @@ def update_filter(up_str):
 def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
     today = datetime.date.today()
     today_str = str(today).replace('-', '/').replace('/0', '/')
-    with open(pd['project_dir'] + '/html_files/index.html', 'r', encoding='utf-8') as f:
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
+    with open(pj_path + '/html_files/index.html', 'r', encoding='utf-8') as f:
         long_str = f.read()
         # 更新記事一覧
         up_str = re.findall(r'<ul class="updli">(.*?)</ul>', long_str)[0]
@@ -243,7 +251,7 @@ def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
         long_str = re.sub(r'<time itemprop="dateModified" datetime=".+?">.+?</time>',
                           '<time itemprop="dateModified" datetime="' + str(today) + '">' + today_str + '</time>',
                           long_str)
-        with open(pd['project_dir'] + '/html_files/index.html', 'w', encoding='utf-8') as g:
+        with open(pj_path + '/html_files/index.html', 'w', encoding='utf-8') as g:
             g.write(long_str)
 
 
@@ -263,6 +271,10 @@ def insert_to_amp_top(replace_str, pd):
 
 
 def insert_to_index_page(pk_dic, title_change_id, pd):
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
     h_dec = {x: [] for x in pd['category_data']}
     for id_num in pk_dic:
         if pk_dic[id_num]['category'] in pd['category_name']:
@@ -298,7 +310,7 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
     for cat in ct_cat:
         print('cat : '.format(cat))
         if cat != 'top':
-            index_path = '{}/html_files/{}{}/{}'.format(pd['project_dir'], pd['main_dir'], cat,
+            index_path = '{}/html_files/{}{}/{}'.format(pj_path, pd['main_dir'], cat,
                                                         pd['category_data'][cat][1])
             with open(index_path, 'r', encoding='utf-8') as h:
                 long_str = h.read()
@@ -406,6 +418,10 @@ def qa_index_list_insert(pk_dic):
 
 
 def xml_site_map_maker(pk_dic, pd):
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
     pk_list = [[pk_dic[x]['file_path'], pk_dic[x]['mod_date']] for x in pk_dic]
     pk_list.sort(key=lambda y: y[0])
     now = datetime.datetime.now()
@@ -426,7 +442,7 @@ def xml_site_map_maker(pk_dic, pd):
     elif pd['project_dir'] == 'shoshin':
         s_path = 'shoshin/html_files/a_sitemap.xml'
     else:
-        s_path = pd['project_dir'] + '/html_files/sitemap.xml'
+        s_path = pj_path + '/html_files/sitemap.xml'
     with open(s_path, 'w', encoding='utf-8') as f:
         f.write(xml_str)
 
@@ -953,7 +969,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             new_str = new_str.replace('<!--mod-date-j-->', fixed_mod_date.replace('-', '/').replace('/0', '/'))
             new_str = new_str.replace('<!--pub-date-->', fixed_mod_date)
             new_str = new_str.replace('<!--pub-date-j-->', fixed_mod_date.replace('-', '/').replace('/0', '/'))
-        elif mod_flag or not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name):
+        elif mod_flag or not os.path.exists(pj_path + '/html_files/' + pd['main_dir'] + file_name):
             new_str = new_str.replace('<!--mod-date-->', str(now.date()))
             new_str = new_str.replace('<!--mod-date-j-->', str(now.year) + '/' + str(now.month) + '/' + str(now.day))
             if pub_date:
@@ -1098,8 +1114,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
 
         upload_list.extend(add_list)
         upload_list.extend(pick_up_same_name_images(file_name, pd))
-        if md_file_path == pd['project_dir'] + '/md_files/index.md':
-            with open(pd['project_dir'] + '/html_files/index.html', 'r', encoding='utf-8') as h:
+        if md_file_path == pj_path + '/md_files/index.md':
+            with open(pj_path + '/html_files/index.html', 'r', encoding='utf-8') as h:
                 top_long_str = h.read()
                 if pd['project_dir'] == 'reibun':
                     mod_log = re.findall(r'<div id="update"><ul class="updli">.+?</ul></div></div>', top_long_str)[0]
@@ -1113,7 +1129,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         layout_flag = check_page_layout(new_str)
         # print(new_str)
         if mod_flag:
-            if os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name) and not first_time_flag:
+            if os.path.exists(pj_path + '/html_files/' + pd['main_dir'] + file_name) and not first_time_flag:
                 pub_or_mod = 'mod'
                 # print(pk_dic)
                 if pk_dic[this_id]['title'] != title_str:
@@ -1149,11 +1165,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             raise Exception('md置換ミスがあります')
         if '_test' not in file_name and '_copy' not in file_name:
             pk_dic = add_pickle_dec(pk_dic, new_data, pd, this_id)
-        if not os.path.exists(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/' + directory):
-            os.mkdir(pd['project_dir'] + '/html_files/' + pd['main_dir'] + '/' + directory)
-        with open(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name, 'w', encoding='utf-8') as g:
+        if not os.path.exists(pj_path + '/html_files/' + pd['main_dir'] + '/' + directory):
+            os.mkdir(pj_path + '/html_files/' + pd['main_dir'] + '/' + directory)
+        with open(pj_path + '/html_files/' + pd['main_dir'] + file_name, 'w', encoding='utf-8') as g:
             g.write(new_str)
-            upload_list.append(pd['project_dir'] + '/html_files/' + pd['main_dir'] + file_name)
+            upload_list.append(pj_path + '/html_files/' + pd['main_dir'] + file_name)
 
         add_modify_log(file_name, now.date(), category, title, pub_or_mod, pd)
         # print(plain_txt)

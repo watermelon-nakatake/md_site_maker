@@ -6,7 +6,11 @@ import reibun.main_info
 
 
 def save_data_to_pickle(data, pickle_name, pd):
-    with open(pd['project_dir'] + '/pickle_pot/' + pickle_name + '.pkl', 'wb') as p:
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
+    with open(pj_path + '/pickle_pot/' + pickle_name + '.pkl', 'wb') as p:
         pickle.dump(data, p)
 
 
@@ -59,16 +63,24 @@ def make_current_file_list(pd):
 
 def save_text_file(data_dec, pd):
     result_str = ''
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
     data_list = [[y, data_dec[y]] for y in data_dec]
     data_list.sort(key=lambda z: z[0])
     for data in data_list:
         result_str += str(data[0]) + ': {' + ''.join(['\n\t{}: {}'.format(x, data[1][x]) for x in data[1]]) + '}\n\n'
-    with open(pd['project_dir'] + '/pickle_pot/main_data.txt', 'w', encoding='utf-8') as f:
+    with open(pj_path + '/pickle_pot/main_data.txt', 'w', encoding='utf-8') as f:
         f.write(result_str)
 
 
 def read_pickle_pot(pkl_name, pd):
-    with open(pd['project_dir'] + '/pickle_pot/' + pkl_name + '.pkl', 'rb') as f:
+    if 'mass_flag' in pd:
+        pj_path = 'mass_production/' + pd['project_dir']
+    else:
+        pj_path = pd['project_dir']
+    with open(pj_path + '/pickle_pot/' + pkl_name + '.pkl', 'rb') as f:
         pk_dec = pickle.load(f)
     # print(pk_dec)
     return pk_dec

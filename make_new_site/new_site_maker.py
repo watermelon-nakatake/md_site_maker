@@ -1,3 +1,4 @@
+import glob
 import pickle
 import os
 import re
@@ -8,6 +9,7 @@ import make_new_article
 # import source_data
 # import pprint
 import new_from_md
+import file_upload
 
 # Taichi Yamaoka
 # 239
@@ -126,13 +128,26 @@ site_data = {
 
 
 def make_new_site_dir_and_data(data_dict):
-    test_flag = True
+    test_flag = False
     if test_flag:
         shutil.rmtree('mass_production')
         os.mkdir('mass_production')
     for s_id in data_dict:
         pj_name = data_dict[s_id]['domain'].replace('.com', '').replace('-', '_')
         make_project_dir_and_pd_file_for_mass(pj_name, data_dict[s_id])
+
+
+def upload_all_files():
+    for s_id in site_data:
+        pj_name = site_data[s_id]['domain'].replace('.com', '').replace('-', '_')
+        info_mod = importlib.import_module('mass_production.' + pj_name + '.main_info')
+        preparation.preparation_for_new_project(info_mod.info_dict)
+        pd = info_mod.info_dict
+        files = glob.glob('mass_production/{}/html_files/**/**'.format(pj_name), recursive=True)
+        up_files = [x for x in files if '_copy' not in x and '_test' not in x]
+        print(up_files)
+        file_upload.scp_upload(up_files, pd)
+
 
 
 def make_project_dir_and_pd_file_for_mass(project_name, data_dict):
@@ -156,6 +171,7 @@ def make_project_dir_and_pd_file_for_mass(project_name, data_dict):
                                     "eyec_img = {'img_path': 'common/" + project_name +
                                     "_img.jpg', 'height': '800', 'width': '1200'}")
             pd_str = pd_str.replace("info_dict = ", "mass_flag = True\n\ninfo_dict = ")
+            pd_str = pd_str.replace("h_sitemap_path = '", "h_sitemap_path = 'mass_production/")
             pd_str = pd_str.replace("'google_id': google_id, 'relation_str': relation_str",
                                     "'google_id': google_id, 'mass_flag': mass_flag, 'relation_str': relation_str")
             with open(pd_path, 'w', encoding='utf-8') as g:
@@ -189,4 +205,5 @@ if __name__ == '__main__':
     # read_pickle('sfd/pickle_pot/used_id.pkl')
     # change_pickle('sfd/pickle_pot/used_id.pkl')
 
-    make_new_site_dir_and_data(site_data)
+    # make_new_site_dir_and_data(site_data)
+    # upload_all_files()

@@ -26,6 +26,26 @@ def scp_upload(up_file_list, pd):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(hostname=upload_data['host_name'], port=22, username=upload_data['user_name'],
                     password=upload_data['password_str'])
+
+        if 'mass_flag' in pd:
+            # mkdir を実行する
+            stdin, stdout, stderr = ssh.exec_command('mkdir www/{}'.format(pd['project_dir']))
+
+            # 実行結果のstdoutとstderrを読み出す
+            for o in stdout:
+                print(o)
+            for e in stderr:
+                print(e)
+            for cat_dir in [x for x in pd['category_data']]:
+                stdin, stdout, stderr = ssh.exec_command('mkdir www/{}/{}'.format(pd['project_dir'], cat_dir))
+
+                # 実行結果のstdoutとstderrを読み出す
+                for o in stdout:
+                    print(o)
+                for e in stderr:
+                    print(e)
+
+
         # ファイルをアップロード
         with scp.SCPClient(ssh.get_transport()) as scpc:
             for up_file in up_file_list:

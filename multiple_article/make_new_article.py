@@ -507,7 +507,7 @@ def make_new_pages_to_md_for_mass(pd, site_data, subject_sex, start_id, insert_p
         pickle.dump(key_dict, wk)
     with open('mass_production/used_comb.pkl', 'wb') as wk:
         pickle.dump(key_dict, wk)
-    # insert_relation_page_list_to_md(project_dir, key_dict)
+    insert_relation_page_list_to_md(project_dir, key_dict)
 
 
 def make_md_from_exist_keywords(use_path_list):

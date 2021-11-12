@@ -158,10 +158,12 @@ def make_html_and_md_dir(pd):
 def make_top_page(pd):
     if 'mass_flag' in pd:
         project_dir = 'mass_production/' + pd['project_dir']
+        tmp_path = 'template_files/top_tmp_mass.html'
     else:
         project_dir = pd['project_dir']
+        tmp_path = 'template_files/top_tmp.html'
     if not os.path.exists(project_dir + '/html_files/index.html'):
-        with open('template_files/top_tmp.html', 'r', encoding='utf-8') as f:
+        with open(tmp_path, 'r', encoding='utf-8') as f:
             long_str = f.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             long_str = long_str.replace('<!--site-name-->', pd['site_name'])
@@ -185,10 +187,12 @@ def make_top_page(pd):
 def make_sitemap_page(pd):
     if 'mass_flag' in pd:
         project_dir = 'mass_production/' + pd['project_dir']
+        tmp_path = 'template_files/sitemap_mass.html'
     else:
         project_dir = pd['project_dir']
+        tmp_path = 'template_files/sitemap.html'
     if not os.path.exists(project_dir + '/html_files/sitemap.html'):
-        with open('template_files/sitemap.html', 'r', encoding='utf-8') as f:
+        with open(tmp_path, 'r', encoding='utf-8') as f:
             long_str = f.read()
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             long_str = long_str.replace('<!--site-name-->', pd['site_name'])
