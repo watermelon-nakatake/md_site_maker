@@ -27,6 +27,7 @@ def preparation_for_new_project(pd):
     make_html_and_md_dir(pd)
     copy_template_files(pd)
     insert_to_temp(pd)
+
     make_top_page(pd)
     make_sitemap_page(pd)
 
@@ -236,6 +237,10 @@ def copy_template_files(pd):
         for base in copy_list:
             shutil.copytree(base, project_dir + '/html_files/' + pd['main_dir'] +
                             base.replace('template_files/', ''))
+    if 'mass_flag' in pd:
+        shutil.copy('template_files/css/mass_css.css', project_dir + '/html_files/css/main.css')
+        shutil.copy('template_files/template/mass_tmp.html',
+                    project_dir + '/html_files/template/main_tmp.html')
 
 
 def insert_to_temp(pd):

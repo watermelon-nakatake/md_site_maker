@@ -29,12 +29,21 @@ def scp_upload(up_file_list, pd):
         # ファイルをアップロード
         with scp.SCPClient(ssh.get_transport()) as scpc:
             for up_file in up_file_list:
-                print('upload: ' + up_file)
-                if '/' in up_file:
-                    up_str = up_file.replace(pd['project_dir'] + '/html_files', upload_data['upload_dir'])
-                    up_dir = re.findall(r'^(.+)/', up_str)[0]
+                if 'mass_flag' in pd:
+                    print('upload: ' + up_file)
+                    if '/' in up_file:
+                        up_str = up_file.replace('mass_production/' + pd['project_dir'] + '/html_files',
+                                                 upload_data['upload_dir'])
+                        up_dir = re.findall(r'^(.+)/', up_str)[0]
+                    else:
+                        up_dir = ''
                 else:
-                    up_dir = ''
+                    print('upload: ' + up_file)
+                    if '/' in up_file:
+                        up_str = up_file.replace(pd['project_dir'] + '/html_files', upload_data['upload_dir'])
+                        up_dir = re.findall(r'^(.+)/', up_str)[0]
+                    else:
+                        up_dir = ''
                 scpc.put(up_file, 'www/' + up_dir)
             print('Upload finished !')
 
