@@ -1,7 +1,7 @@
 import glob
 import pickle
 import os
-import re
+# import re
 import shutil
 import importlib
 import preparation
@@ -149,7 +149,6 @@ def upload_all_files():
         file_upload.scp_upload(up_files, pd)
 
 
-
 def make_project_dir_and_pd_file_for_mass(project_name, data_dict):
     test_flag = True
     if not os.path.exists('mass_production/' + project_name):
@@ -206,4 +205,4 @@ if __name__ == '__main__':
     # change_pickle('sfd/pickle_pot/used_id.pkl')
 
     # make_new_site_dir_and_data(site_data)
-    # upload_all_files()
+    upload_all_files()

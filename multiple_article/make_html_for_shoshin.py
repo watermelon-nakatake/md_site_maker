@@ -1,4 +1,5 @@
 import datetime
+import glob
 import pickle
 import random
 
@@ -124,3 +125,118 @@ def translate_md_to_html(temp_path, md_path_dir, sub_sex, pub_flag, pub_take_ove
             g.write(temp)
             up_file_list.append(h_file_name)
     return up_file_list
+
+
+def add_new_article(new_md_list):
+    temp_path = 'shoshin/html_files/template/wp_temp.html'
+    sub_sex = 'man'
+    up_file_list = []
+    with open('shoshin/pickle_pot/main_data.pkl', 'rb') as p:
+        pk_dict = pickle.load(p)
+    for md_path in new_md_list:
+        h_file_name = md_path.replace('/md_files/', '/html_files/').replace('.md', '.html')
+        with open(md_path, 'r', encoding='utf-8') as m:
+            main_str = m.read()
+
+        with open(temp_path, 'r', encoding='utf-8') as f:
+            temp = f.read()
+        t_str = re.findall(r't::(.+?)\n', main_str)[0]
+        t_str = re.sub(r'<!--.*?-->', '', t_str)
+        temp = temp.replace('<!--title-->', t_str)
+        d_str = re.findall(r'd::(.+?)\n', main_str)[0]
+        temp = temp.replace('<!--description-->', d_str)
+        n_str = re.findall(r'n::(.+?)\n', main_str)[0]
+        temp = temp.replace('#id__num#', '#' + n_str + '#')
+        k_str = re.findall(r'k::(.*?)\n', main_str)[0]
+        temp = temp.replace('#key__words#', '#' + k_str + '#')
+        re_str_l = re.findall(r"relation_list = '(.*?)'", main_str)
+        if re_str_l:
+            temp = temp.replace('<!--relation-list-->',
+                                '<section><h2><!--keyword-main-noun-->の関連記事</h2><ul>{}</ul></section>'.format(
+                                    re_str_l[0].replace('.md', '.html')))
+            temp = temp.replace('</section></section><section><h2><!--keyword-main-noun-->',
+                                '</section><section><h2><!--keyword-main-noun-->')
+        if '<!--keyword-main-noun-->' in temp:
+            if "'type': 'only_act'" in main_str:
+                key_noun = re.findall(r"'act_noun': '(.+?)'", main_str)
+            elif "'type': 'only_obj'" in main_str:
+                key_noun = re.findall(r"'obj_noun': '(.+?)'", main_str)
+            elif "'type': 'only_sub'" in main_str:
+                key_noun = re.findall(r"'sub_noun': '(.+?)'", main_str)
+            else:
+                key_noun = []
+            if key_noun:
+                temp = temp.replace('<!--keyword-main-noun-->', key_noun[0])
+            else:
+                temp = temp.replace('<!--keyword-main-noun-->', 'この記事')
+        m_str = re.sub(r'^[\s\S]+?k::.*?\n', '', main_str)
+        m_str = re.sub(r'recipe_list = {[\s\S]+$', '', m_str)
+
+        m_str = m_str.replace('%arlist%', '\n')
+        m_str = re.sub(r'%l_.+?%([\s\S]+?)\n\n', r'\[st-kaiwa1 r]\1[/st-kaiwa1]\n\n', m_str)
+        if sub_sex == 'woman':
+            m_str = re.sub(r'%r_.+?%([\s\S]+?)\n\n', r'\[st-kaiwa3]\1[/st-kaiwa3]\n\n', m_str)
+            m_str = re.sub(r'%r_\?([\s\S]+?)\n\n', r'\[st-kaiwa3]\1[/st-kaiwa3]\n\n', m_str)
+        else:
+            m_str = re.sub(r'%r_.+?%([\s\S]+?)\n\n', r'\[st-kaiwa2]\1[/st-kaiwa2]\n\n', m_str)
+            m_str = re.sub(r'%r_\?([\s\S]+?)\n\n', r'\[st-kaiwa2]\1[/st-kaiwa2]\n\n', m_str)
+        m_str = m_str.replace('[st-kaiwa1 r]\n', '[st-kaiwa1 r]')
+        m_str = m_str.replace('[st-kaiwa2]\n', '[st-kaiwa2]')
+        m_str = m_str.replace('[st-kaiwa3]\n', '[st-kaiwa3]')
+        m_str = m_str.replace('/link/', '/url/')
+        m_str = m_str.replace('../area-bbs/', '/area-bbs/')
+        m_str = m_str.replace('../../html_files/url/', '../url/')
+        m_str = m_str.replace('../url/', '/url/')
+        m_str = m_str.replace('.md', '.html')
+        fb_link_l = re.findall(r']\((.+?)\)', m_str)
+        if fb_link_l:
+            for fb_link in fb_link_l:
+                if '/' not in fb_link:
+                    m_str = m_str.replace('](' + fb_link + ')', '](/friend-with-benefits/' + fb_link + ')')
+        m_str = re.sub(r'<!--sw-.+?-->', '', m_str)
+        m_str = re.sub(r'<!--rs-.+?-->', '', m_str)
+        m_str = m_str.replace('<!--ori-->', '')
+
+        ht_str = markdown.markdown(m_str)
+        ht_str = ht_str.replace('<p>[st-kaiwa2]',
+                                '<div class="fr2"><div class="icon"><div class="rm_b rm_2"></div></div><p>')
+        ht_str = ht_str.replace('[/st-kaiwa2]</p>', '</p></div>')
+        ht_str = ht_str.replace('<p>[st-kaiwa1 r]',
+                                '<div class="fl1"><div class="icon"><div class="lm_b lm_2"></div></div><p>')
+        ht_str = ht_str.replace('[/st-kaiwa1]</p>', '</p></div>')
+        ht_str = ht_str.replace('<em>', '<strong>')
+        ht_str = ht_str.replace('</em>', '</strong>')
+
+        ht_str = ht_str.replace('。\n', '。<br/>\n')
+        temp = temp.replace('<!--main-->', ht_str)
+
+        with open(h_file_name, 'r', encoding='utf-8') as h:
+            old_s = h.read()
+        # print(old_s)
+        old_pub = re.findall(r'<time itemprop="dateModified" datetime=".*?">.*?</time>', old_s)[0]
+        temp = temp.replace('<time itemprop="dateModified" datetime="<!--mod-date-->"><!--mod-date-j--></time>', old_pub)
+        recent_art_str = re.findall(r'<h3 class="navi_title">最新記事</h3><ul>.+?</ul>', old_s)[0]
+        temp = temp.replace('<h3 class="navi_title">最新記事</h3><ul><!--new-article-list--></ul>', recent_art_str)
+
+        temp = temp.replace('.md"', '"')
+        temp = re.sub(r'<!--sw-.+?-->', '', temp)
+        # print(temp)
+        with open(h_file_name, 'w', encoding='utf-8') as g:
+            g.write(temp)
+            up_file_list.append(h_file_name)
+        if pk_dict[int(n_str)]['title'] != t_str:
+            old_title = pk_dict[int(n_str)]['title']
+            pk_dict[int(n_str)]['title'] = t_str
+            all_html = glob.glob('shoshin/html_files/**/**.html', recursive=True)
+            for o_h in all_html:
+                with open(o_h, 'r', encoding='utf-8') as oh:
+                    o_str = oh.read()
+                    if old_title in o_str:
+                        o_str = o_str.replace(old_title, t_str)
+                        with open(o_h, 'w', encoding='utr-8') as nh:
+                            nh.write(o_str)
+                        up_file_list.append(o_h)
+            with open('shoshin/pickle_pot/main_data.pkl', 'wb') as s:
+                pickle.dump(pk_dict, s)
+    return up_file_list
+

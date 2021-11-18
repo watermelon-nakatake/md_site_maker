@@ -11,11 +11,13 @@ def title_counter(md_path, kw_list, site_shift, pd):
         title_l = re.findall(r'(t::.+?)\n', long_str)
         if title_l:
             title = title_l[0]
+            title = re.sub(r'<!--.*?-->', '', title)
             title_len = len(title.replace('t::', ''))
             print('title : ' + str(title_len))
         des_l = re.findall(r'(d::.+?)\n', long_str)
         if des_l:
             des = des_l[0]
+            des = re.sub(r'<!--.*?-->', '', des)
             des_len = len(des.replace('d::', ''))
             print('description : ' + str(des_len))
         main_l = re.findall(r'\n(# [\s\S]*)$', long_str)

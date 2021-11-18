@@ -113,7 +113,7 @@ def make_target_data_for_today(today, period, pj_dir, domain):
             print('gsc_data/' + pj_dir + '/ed_data/ed' + (today - timedelta(days=i)).strftime('%Y-%m-%d') + '.csv')
             break
         i += 1
-    print(end_str)
+    # print(end_str)
     start_d = today - timedelta(days=(period + i))
     start_str = start_d.strftime('%Y-%m-%d')
     if period == 28:
@@ -134,8 +134,8 @@ def make_target_data_for_today(today, period, pj_dir, domain):
 def project_select(file_path):
     project_str = re.sub(r'^(.+?)/.*$', r'\1', file_path)
     if project_str in project_info:
-        print('project_str')
-        print(project_str)
+        # print('project_str')
+        # print(project_str)
         pj_dir = project_info[project_str]['pj_dir']
         domain = project_info[project_str]['pj_domain']
         main_dir = project_info[project_str]['main_dir']

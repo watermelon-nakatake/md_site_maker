@@ -28,6 +28,10 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
             df.to_csv('gsc_data/{}/{}.csv'.format(dir_path, file_name), index=False)
         else:
             df.to_csv('gsc_data/{}/{}.csv'.format(dir_path, file_name + end_date), index=False)
+            if 'qp_' in file_name:
+                df.to_csv('gsc_data/{}/qp_today.csv'.format(dir_path, file_name + end_date), index=False)
+            else:
+                df.to_csv('gsc_data/{}/p_today.csv'.format(dir_path, file_name + end_date), index=False)
 
 
 if __name__ == '__main__':

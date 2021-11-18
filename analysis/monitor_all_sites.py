@@ -1,10 +1,16 @@
 import os
 import glob
+import pprint
 import re
 from datetime import datetime, timedelta
 import csv
 import pickle
 import query_check_and_make_html as qcm
+
+
+def main():
+    target_list = check_all_site_data(100, 28, 3000, False, True, False, 1)
+    check_gsc_query_data(target_list[0][0])
 
 
 def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ignore_flag, sort_num):
@@ -56,14 +62,21 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
     no_edit_c = [[y[0], int(y[1]), int(y[2]), float(y[3]), float(y[4])] for y in no_edit_c]
     no_edit_c.sort(key=lambda x: x[sort_num], reverse=True)
     # print('no_edit: {}'.format(no_edit_c))
-    for ne in no_edit_c:
-        if ne[1] > 0 or ne[2] > 10:
-            print(ne)
+    # for ne in no_edit_c:
+    #     if ne[1] > 0 or ne[2] > 10:
+    #         print(ne)
+    #         print(ne[0].replace())
     # print(no_edit_q)
     # print(all_site_p)
     # all_site_c.sort(key=lambda x: int(x[1]), reverse=True)
     # for row in all_site_c:
     #     print(row)
+    print('no_edit_file : {}'.format(len(no_edit_c)))
+    ten_files = no_edit_c[:10]
+    for ne in ten_files:
+        if ne[1] > 0 or ne[2] > 10:
+            print(ne)
+    return no_edit_c
 
 
 def add_http_and_https_csv(start_period, end_period):
@@ -127,12 +140,58 @@ def insert_rewrite_flag(prj_name, dir_list):
             pickle.dump(pk_dic, j)
 
 
+def make_domain_list():
+    result = {}
+    target_project_list = ['reibun', 'rei_site', 'joshideai', 'goodbyedt', 'howto', 'htaiken', 'koibito',
+                           'konkatsu', 'online_marriage', 'shoshin', 'women']
+    for pj_dir in target_project_list:
+        with open(pj_dir + '/main_info.py', 'r', encoding='utf-8') as f:
+            i_str = f.read()
+            domain_str = re.findall(r"domain_str = '(.+?)'", i_str)[0]
+            result[pj_dir] = domain_str
+    print(result)
+
+
+def check_gsc_query_data(page_url):
+    result = []
+    domain_list = {'demr.jp': 'reibun', 'reibunsite.com': 'rei_site', 'joshideai.com': 'joshideai',
+                   'goodbyedt.com': 'goodbyedt', 'deaihowto.com': 'howto', 'deaihtaiken.com': 'htaiken',
+                   'koibitodeau.com': 'koibito', 'netdekonkatsu.com': 'konkatsu',
+                   'lovestrategyguide.com': 'online_marriage', 'deaishoshinsha.com': 'shoshin',
+                   'deaiwomen.com': 'women'}
+    domain_str = re.sub(r'https://www\.(.+?)/.*$', r'\1', page_url)
+    pj_dir = domain_list[domain_str]
+    # print('pj_name : {}'.format(pj_dir))
+    with open('gsc_data/' + pj_dir + '/qp_today.csv') as f:
+        q_reader = csv.reader(f)
+        q_list = [row for row in q_reader]
+    q_list = q_list[1:]
+    # print(q_list)
+    this_q = [x[:5] for x in q_list if x[5] == page_url]
+    for row in this_q:
+        new_row = []
+        for i, y in enumerate(row):
+            if i == 0 or i == 1:
+                new_row.append(int(y))
+            elif i == 2 or i == 3:
+                n_f = float(y)
+                if n_f > 0:
+                    n_f = round(n_f, 2)
+                new_row.append(n_f)
+            else:
+                new_row.append(y)
+        result.append(new_row)
+    pprint.pprint(result)
+
+
 # todo: scからページのデータを落として合わせる
 # todo: 新規作成のページで検索からの流入がスタートしたページを検索
 # todo: クリック数やimpが増加傾向のページをピックアップ
 # todo: そのページのクエリのデータを表示
 
 if __name__ == '__main__':
-    check_all_site_data(100, 28, 3000, False, True, False, 1)
+    main()
+    # make_domain_list()
+    # check_all_site_data(100, 28, 3000, False, True, False, 1)
     # add_http_and_https_csv('2020-04-23', '2021-05-25')
     # insert_rewrite_flag('joshideai', ['make_love'])
