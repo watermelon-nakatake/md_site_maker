@@ -35,6 +35,7 @@ def change_html_and_upload():
     with open('pickle_data/add_last_upload.pkl', 'rb') as n:
         last_mod = pickle.load(n)
     recent_files = search_edited_md()
+    print(recent_files)
     pj_name = re.sub(r'/md_files/.+$', '', recent_files[0][0])
     print(pj_name)
     pk_flag = False
@@ -83,5 +84,4 @@ def search_edited_md():
 
 if __name__ == '__main__':
     # print(search_edited_md())
-    # main()
     change_html_and_upload()

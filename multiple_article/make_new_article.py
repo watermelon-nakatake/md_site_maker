@@ -226,6 +226,7 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                 md_str = m.read()
             if '<!--ori-->' in md_str:
                 print('original sentence in : ' + old_md)
+                keywords['ori_flag'] = True
                 continue
             old_pub_l = re.findall(r'p::(.+?)\n', md_str)
             if old_pub_l:
@@ -511,6 +512,7 @@ def make_new_pages_to_md_for_mass(pd, site_data, subject_sex, start_id, insert_p
 
 
 def make_md_from_exist_keywords(use_path_list):
+    update_md = []
     recipe_flag = True
     source_mod = source_data
     if type(use_path_list) == list:
@@ -526,6 +528,8 @@ def make_md_from_exist_keywords(use_path_list):
     # print(key_dict)
     if type(use_path_list) == list:
         change_list = [re.sub(r'^.+/md_files/(.+).md', r'\1', x) for x in use_path_list]
+    elif type(use_path_list) == str and use_path_list == project_dir:
+        change_list = [x for x in key_dict if 'ori_flag' not in key_dict[x] or not key_dict[x]['ori_flag']]
     else:
         change_dir = re.sub(r'^.+/md_files/', '', use_path_list)
         change_list = [x for x in key_dict if change_dir in x]
@@ -549,10 +553,13 @@ def make_md_from_exist_keywords(use_path_list):
         old_md = '{}/md_files/{}.md'.format(project_dir, md_name)
         with open(old_md, 'r', encoding='utf-8') as m:
             md_str = m.read()
+        keywords = key_dict[md_name]
         if '<!--ori-->' in md_str:
             print('original sentence in : ' + old_md)
+            keywords['ori_flag'] = True
             continue
-        keywords = key_dict[md_name]
+        else:
+            update_md.append(old_md)
         if 'sub' not in keywords:
             no_sub_flag = True
         else:
@@ -574,7 +581,7 @@ def make_md_from_exist_keywords(use_path_list):
         else:
             link_dict_u = link_dict
         # print(keywords)
-        make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+        make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code)
         old_pub = ''
         old_pub_l = re.findall(r'p::(.+?)\n', md_str)
         if old_pub_l:
@@ -585,11 +592,15 @@ def make_md_from_exist_keywords(use_path_list):
                                                           page_id, dt_str, part_code, no_obj_flag, no_sub_flag,
                                                           counter_d)
         keywords['title_str'] = title_str
+        key_dict[md_name] = keywords
         recipe_dict[keywords['page_name']] = recipe_list
     # print(recipe_dict)
     with open(project_dir + '/pickle_pot/recipe_dict.pkl', 'wb') as rp:
         pickle.dump(recipe_dict, rp)
+    with open(project_dir + '/pickle_pot/key_dict.pkl', 'wb') as kp:
+        pickle.dump(key_dict, kp)
     insert_relation_page_list_to_md(project_dir, key_dict)
+    return update_md
 
 
 def change_section_in_exist_art(use_path_list, target_section, insert_source):
@@ -641,8 +652,9 @@ def change_section_in_exist_art(use_path_list, target_section, insert_source):
         if sec_str:
             if '<!--ori-->' in sec_str[0]:
                 print('original sentence in : ' + sec_str[0])
+                keywords['ori_flag'] = True
                 continue
-        key_phrase = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+        key_phrase = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code)
         noun_dict = noun_dict_maker(key_phrase, main_key, subject_sex, no_sub_flag, keywords)
         # print(noun_dict)
         conj_dict = {x['before']: x['after'] for x in wd.conj_list}
@@ -1037,7 +1049,7 @@ def make_new_page(keywords, source_mod, art_map, project_dir, dir_name, link_dic
     # print(section_list)
     this_path = dir_name + '/' + keywords['page_name']
     result_str = ''
-    key_phrase = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+    key_phrase = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code)
     # print('key_phrase : {}'.format(key_phrase))
     key_phrase['this-site-title'] = [site_data[main_key]['site_name']]
     key_phrase['this-site-author'] = [site_data[main_key]['site_author']]
@@ -1300,10 +1312,11 @@ def insert_ds_link(md_str, project_dir):
     return md_str
 
 
-def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
+def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code):
     if '作る' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('を作る', 'にし')
+        act_y = act_base.replace('を作る', 'を作っ')
         act_and = act_base.replace('作る', '作って')
         act_can = act_base.replace('作る', '作れ')
         act_can_d = act_base.replace('を作る', 'にでき')
@@ -1327,6 +1340,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif '探す' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('を探す', 'にし')
+        act_y = act_base.replace('を探す', 'を探し')
         act_and = act_base.replace('探す', '探して')
         act_can = act_base.replace('探す', '探せ')
         act_can_d = act_base.replace('を探す', 'にでき')
@@ -1350,6 +1364,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act_code'] == 'dt':
         act_base = keywords['act']
         act_i = '<!--lost-dt-i-->'
+        act_y = '<!--lost-dt-i-->'
         act_and = '<!--lost-dt-i-->' + 'て'
         act_can = '<!--lost-dt-can-->'
         act_can_d = '<!--lost-dt-can-->'
@@ -1367,6 +1382,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif '出会う' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('出会う', '出会い')
+        act_y = act_base.replace('出会う', '出会っ')
         act_and = act_base.replace('出会う', '出会って')
         act_can = act_base.replace('出会う', '出会え')
         act_can_d = act_base.replace('出会う', '出会え')
@@ -1392,6 +1408,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif 'をする' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('する', 'し')
+        act_y = act_base.replace('する', 'し')
         act_and = act_base.replace('する', 'して')
         act_can = act_base.replace('をする', 'ができ')
         act_can_d = act_base.replace('をする', 'ができ')
@@ -1412,6 +1429,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif 'する' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('する', 'し')
+        act_y = act_base.replace('する', 'し')
         act_and = act_base.replace('する', 'して')
         act_can = act_base.replace('する', 'でき')
         act_can_d = act_base.replace('する', 'でき')
@@ -1432,6 +1450,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif 'なる' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('なる', 'なり')
+        act_y = act_base.replace('なる', 'なっ')
         act_and = act_base.replace('なる', 'なって')
         act_can = act_base.replace('なる', 'なれ')
         act_can_d = act_base.replace('なる', 'なれ')
@@ -1452,6 +1471,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif 'てもらう' in keywords['act']:
         act_base = keywords['act']
         act_i = act_base.replace('てもらう', 'てもらい')
+        act_y = act_base.replace('てもらう', 'てもらっ')
         act_and = act_base.replace('てもらう', 'てもらって')
         act_can = act_base.replace('てもらう', 'てもらえ')
         act_can_d = act_base.replace('てもらう', 'てもらえ')
@@ -1472,6 +1492,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('う'):
         act_base = keywords['act']
         act_i = re.sub(r'う$', 'い', act_base)
+        act_y = re.sub(r'う$', 'っ', act_base)
         act_and = re.sub(r'う$', 'って', act_base)
         act_can = re.sub(r'う$', 'い', act_base)
         act_can_d = re.sub(r'う$', 'え', act_base)
@@ -1492,6 +1513,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('す'):
         act_base = keywords['act']
         act_i = re.sub(r'す$', 'し', act_base)
+        act_y = re.sub(r'す$', 'し', act_base)
         act_and = re.sub(r'す$', 'して', act_base)
         act_can = re.sub(r'す$', 'せ', act_base)
         act_can_d = re.sub(r'す$', 'せ', act_base)
@@ -1512,6 +1534,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('てる'):
         act_base = keywords['act']
         act_i = re.sub(r'てる$', 'て', act_base)
+        act_y = re.sub(r'てる$', 'て', act_base)
         act_and = re.sub(r'てる$', 'てて', act_base)
         act_can = re.sub(r'てる$', 'てられ', act_base)
         act_can_d = re.sub(r'てる$', 'てられ', act_base)
@@ -1532,6 +1555,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('れる'):
         act_base = keywords['act']
         act_i = re.sub(r'れる$', 'れ', act_base)
+        act_y = re.sub(r'れる$', 'れ', act_base)
         act_and = re.sub(r'れる$', 'って', act_base)
         act_can = re.sub(r'れる$', 'れ', act_base)
         act_can_d = re.sub(r'れる$', 'れ', act_base)
@@ -1552,6 +1576,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('せる'):
         act_base = keywords['act']
         act_i = re.sub(r'せる$', 'せ', act_base)
+        act_y = re.sub(r'せる$', 'せ', act_base)
         act_and = re.sub(r'せる$', 'せて', act_base)
         act_can = re.sub(r'せる$', 'せられ', act_base)
         act_can_d = re.sub(r'せる$', 'せられ', act_base)
@@ -1572,6 +1597,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('く'):
         act_base = keywords['act']
         act_i = re.sub(r'く$', 'き', act_base)
+        act_y = re.sub(r'く$', 'き', act_base)
         act_and = re.sub(r'く$', 'って', act_base)
         act_can = re.sub(r'く$', 'け', act_base)
         act_can_d = re.sub(r'く$', 'け', act_base)
@@ -1592,6 +1618,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     elif keywords['act'].endswith('る'):
         act_base = keywords['act']
         act_i = re.sub(r'る$', 'り', act_base)
+        act_y = re.sub(r'る$', 'っ', act_base)
         act_and = re.sub(r'る$', 'って', act_base)
         act_can = re.sub(r'る$', 'れ', act_base)
         act_can_d = re.sub(r'る$', 'れ', act_base)
@@ -1613,6 +1640,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
         # print(keywords)
         act_base = keywords['act']
         act_i = act_base.replace('する', 'し')
+        act_y = act_base.replace('する', 'し')
         act_and = act_base.replace('する', 'して')
         act_can = act_base.replace('する', 'でき')
         act_can_d = act_base.replace('する', 'でき')
@@ -1723,7 +1751,20 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
         alt_obj_d = obj + act_with_d
         alt_target = obj
         s_obj = obj
-
+    way_for_all = act_way
+    way_for_all_g = act_way_g
+    obj_want_act = act_base + 'したい<!--obj-sex-->'
+    if part_code == 'act':
+        total_target = act_target
+        act_way = '出会う<!--way-->'
+        act_way_g = '出会う<!--way-->'
+    elif part_code == 'sub':
+        total_target = sub
+    elif part_code == 'obj':
+        total_target = obj
+        obj_want_act = obj
+    else:
+        total_target = act_target
     keys = {'k-how-to': [sub + 'が' + m_act_adj + obj + act_with_g + act_way_g,
                          sub + 'が' + m_act_adj + obj_adj + obj + act_with_g + act_way_g,
                          alt_sub + m_act_adj + obj + act_with_g + act_way_g,
@@ -1791,7 +1832,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
 
             'k-obj': [obj],
             'k-obj-adj': [obj + 'の'],
-            'k-obj-status': [obj],
+            'k-obj-status': [obj_want_act],
             'k-obj-noun': [obj_adj + obj, obj],
             'k-obj-noun-l': [obj_adj + obj],
             'k-obj-noun-s': [s_obj],
@@ -1827,6 +1868,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
             'k-act-adj': [m_act_adj + act_adj + act_base],
             'k-act-adj-b': [m_act_adj + act_adj],
             'k-act-i': [m_act_adj + act_i],
+            'k-act-y': [m_act_adj + act_y],
             'k-act-and': [m_act_adj + act_and],
             'k-act-want': [m_act_adj + act_i + 'たい'],
             'k-act-want-sim': [act_i + 'たい'],
@@ -1842,6 +1884,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
             'k-act-way-adj': [m_act_adj_v + act_way, m_act_adj + act_way_g],
             'k-act-way-t': [act_way],
             'k-act-can-easy': [act_i + 'やすい', '<!--easily-->' + act_can + 'る'],
+            'k-act-can-easy-long': [act_i + 'やすいです', '<!--easily-->' + act_can + 'ます'],
             'k-act-can-easy-with': ['を' + act_i + 'やすい', 'の' + act_can + 'る'],
             'k-act-to-find': [act_target + '探し'],
             'k-act-find': [act_target + 'を探す'],
@@ -1880,7 +1923,11 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
             'target-parson': [target_person],
             'reason': keywords['o_reason'],
             'act-with-d': [act_with_d],
-            'k-title_a_adj': [t_act_adj]}
+            'k-title_a_adj': [t_act_adj],
+            'k-target-to-find': [total_target],
+            'k-act-way-all': [way_for_all, way_for_all_g],
+            'k-obj-want-act': [obj_want_act],
+            'k-act-bbs': [act_noun + '掲示板']}
     if 'を作って' in keywords['a_adj']:
         if keywords['obj_p'] == 'と':
             add_str = 'と'
@@ -2020,9 +2067,9 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     return keys
 
 
-def make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
+def make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code):
     r_str = ''
-    keys = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+    keys = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code)
     for k in keys:
         r_str += '<!--{}-->  :  {}\n'.format(k, pprint.pformat(keys[k]))
         # print('<!--{}-->  :  {}'.format(k, keys[k]))
@@ -2030,10 +2077,10 @@ def make_keywords_sample(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
     #     f.write(r_str)
 
 
-def make_keywords_sample_dict(keywords, a_adj_flag, no_obj_flag, no_sub_flag):
+def make_keywords_sample_dict(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code):
     result_dict = {}
     new_dict = []
-    keys = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag)
+    keys = key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code)
     anchor_dict = {y['before']: y['after'] for y in wd.noun_list}
     anchor_dict.update({'<!--obj-married-->': '人妻'})
     # print(keys)
@@ -2221,6 +2268,11 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
     if v_word:
         for v_row in v_word:
             sentence_str = sentence_str.replace(v_row[0], v_row[1])
+    if main_key == 'bg':
+        bbs_str = re.findall(r'<!--site-->', sentence_str)
+        if bbs_str:
+            if random.choices([True, False], [1, 4]):
+                sentence_str = sentence_str.replace('<!--site-->', '<!--k-act-bbs-->')
     conj_blank = re.findall(r'<!--c-.+?-->', sentence_str)
     if conj_blank:
         for c_blank in conj_blank:
