@@ -1,7 +1,7 @@
 import key_data.key_act
 import key_data.key_adj
 
-project_name = 'test'
+project_name = 'howto'
 
 one_act_dict = {
     'sf': {0: {'all_key': 'セフレを作る', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_target': 'セフレ',
@@ -11,6 +11,8 @@ one_act_dict = {
 
 a_adj_data = {'joshideai': {'adj_dict': 'site_name', 'slide_num': 1, 'act_dict': key_data.key_act.act_dict_s},
               'rei_site': {'adj_dict': 'site_name', 'slide_num': 0, 'act_dict': key_data.key_act.act_dict_s},
+              'howto': {'adj_dict': 'site_name', 'slide_num': 3, 'act_dict': key_data.key_act.act_dict_s},
+              'htaiken': {'adj_dict': 'site_name', 'slide_num': 2, 'act_dict': key_data.key_act.act_dict_s},
               'test': {'adj_dict': 'multi_adj', 'slide_num': 0, 'act_dict': one_act_dict['sf']},
               'sfd': {'adj_dict': 'make_sf_and', 'slide_num': 0, 'act_dict': key_data.key_act.act_dict_s}}
 adj_dict = {

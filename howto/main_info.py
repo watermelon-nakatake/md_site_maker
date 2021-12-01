@@ -5,7 +5,8 @@ project_dir = 'howto'
 site_name = 'マッチングアプリで恋人探し'
 side_bar_list = {'important': [],
                  'pop': []}
-category_data = {'online_love': ['オンラインの恋人探し', 'index.html', 1]}
+category_data = {'online_love': ['オンラインの恋人探し', 'index.html', 1],
+                 'site_tec': ['サイトと出会い方', 'index.html', 11]}
 category_name = {x: [category_data[x][0], category_data[x][1]] for x in category_data}
 directory_name = {x: category_data[x][0] for x in category_data}
 site_shift_list = []

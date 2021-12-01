@@ -182,6 +182,7 @@ def check_gsc_query_data(page_url):
                 new_row.append(y)
         result.append(new_row)
     pprint.pprint(result)
+    return result
 
 
 # todo: scからページのデータを落として合わせる

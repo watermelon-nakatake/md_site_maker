@@ -128,6 +128,7 @@ def translate_md_to_html(temp_path, md_path_dir, sub_sex, pub_flag, pub_take_ove
 
 
 def add_new_article(new_md_list):
+    now = datetime.datetime.today()
     temp_path = 'shoshin/html_files/template/wp_temp.html'
     sub_sex = 'man'
     up_file_list = []
@@ -137,16 +138,30 @@ def add_new_article(new_md_list):
         h_file_name = md_path.replace('/md_files/', '/html_files/').replace('.md', '.html')
         with open(md_path, 'r', encoding='utf-8') as m:
             main_str = m.read()
-
         with open(temp_path, 'r', encoding='utf-8') as f:
             temp = f.read()
-        t_str = re.findall(r't::(.+?)\n', main_str)[0]
-        t_str = re.sub(r'<!--.*?-->', '', t_str)
-        temp = temp.replace('<!--title-->', t_str)
-        d_str = re.findall(r'd::(.+?)\n', main_str)[0]
-        temp = temp.replace('<!--description-->', d_str)
         n_str = re.findall(r'n::(.+?)\n', main_str)[0]
         temp = temp.replace('#id__num#', '#' + n_str + '#')
+        this_id = int(n_str)
+        t_str = re.findall(r't::(.+?)\n', main_str)[0]
+        t_str = re.sub(r'<!--.*?-->', '', t_str)
+        pk_dict[this_id]['title'] = re.sub(r'<!--.*?-->', '', t_str)
+        temp = temp.replace('<!--title-->', t_str)
+        p_str = re.findall(r'p::(.+?)\n', main_str)[0]
+        if 'T' in p_str:
+            p_str = re.sub(r'T.*$', '', p_str)
+        pk_dict[this_id]['pub_date'] = p_str.replace('T', ' ')
+        pk_dict[this_id]['mod_date'] = str(now.date())
+        d_str = re.findall(r'd::(.+?)\n', main_str)[0]
+        temp = temp.replace('<!--description-->', d_str)
+        pk_dict[this_id]['description'] = re.sub(r'<!--.*?-->', '', d_str)
+        if not pk_dict[this_id]['edit_flag']:
+            e_str = re.findall(r'e::(.+?)\n', main_str)
+            if e_str:
+                pk_dict[this_id]['edit_flag'] = True
+            else:
+                if main_str.count('<!--ori-->') > 0:
+                    pk_dict[this_id]['edit_flag'] = True
         k_str = re.findall(r'k::(.*?)\n', main_str)[0]
         temp = temp.replace('#key__words#', '#' + k_str + '#')
         re_str_l = re.findall(r"relation_list = '(.*?)'", main_str)
@@ -204,6 +219,8 @@ def add_new_article(new_md_list):
         ht_str = ht_str.replace('<p>[st-kaiwa1 r]',
                                 '<div class="fl1"><div class="icon"><div class="lm_b lm_2"></div></div><p>')
         ht_str = ht_str.replace('[/st-kaiwa1]</p>', '</p></div>')
+        ht_str = re.sub(r'<p>(<img.+?>)</p>', r'<div class="alt_img_t">\1</div>', ht_str)
+        ht_str = ht_str.replace('../../html_files/images/', '../images/')
         ht_str = ht_str.replace('<em>', '<strong>')
         ht_str = ht_str.replace('</em>', '</strong>')
 
@@ -213,30 +230,32 @@ def add_new_article(new_md_list):
         with open(h_file_name, 'r', encoding='utf-8') as h:
             old_s = h.read()
         # print(old_s)
-        old_pub = re.findall(r'<time itemprop="dateModified" datetime=".*?">.*?</time>', old_s)[0]
-        temp = temp.replace('<time itemprop="dateModified" datetime="<!--mod-date-->"><!--mod-date-j--></time>', old_pub)
         recent_art_str = re.findall(r'<h3 class="navi_title">最新記事</h3><ul>.+?</ul>', old_s)[0]
         temp = temp.replace('<h3 class="navi_title">最新記事</h3><ul><!--new-article-list--></ul>', recent_art_str)
-
         temp = temp.replace('.md"', '"')
         temp = re.sub(r'<!--sw-.+?-->', '', temp)
+        temp = temp.replace('<!--pub-date-->', p_str)
+        temp = temp.replace('<!--pub-date-j-->', p_str.replace('-', '/'))
+        temp = temp.replace('<!--mod-date-->', str(now.date()))
+        temp = temp.replace('<!--mod-date-j-->', str(now.year) + '/' + str(now.month) + '/' + str(now.day))
         # print(temp)
         with open(h_file_name, 'w', encoding='utf-8') as g:
             g.write(temp)
             up_file_list.append(h_file_name)
         if pk_dict[int(n_str)]['title'] != t_str:
             old_title = pk_dict[int(n_str)]['title']
-            pk_dict[int(n_str)]['title'] = t_str
             all_html = glob.glob('shoshin/html_files/**/**.html', recursive=True)
             for o_h in all_html:
                 with open(o_h, 'r', encoding='utf-8') as oh:
                     o_str = oh.read()
                     if old_title in o_str:
                         o_str = o_str.replace(old_title, t_str)
-                        with open(o_h, 'w', encoding='utr-8') as nh:
+                        with open(o_h, 'w', encoding='utf-8') as nh:
                             nh.write(o_str)
                         up_file_list.append(o_h)
-            with open('shoshin/pickle_pot/main_data.pkl', 'wb') as s:
-                pickle.dump(pk_dict, s)
+        with open('shoshin/pickle_pot/main_data.pkl', 'wb') as s:
+            pickle.dump(pk_dict, s)
+        with open('shoshin/pickle_pot/main_data.txt', 'w', encoding='utf-8') as tp:
+            tp.write(str(pk_dict))
     return up_file_list
 

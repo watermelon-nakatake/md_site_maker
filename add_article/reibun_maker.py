@@ -3,7 +3,7 @@ import reibun.main_info
 
 
 if __name__ == '__main__':
-    new_from_md.main(1, reibun.main_info.info_dict, True, True, True, False)
+    new_from_md.main(1, reibun.main_info.info_dict, True, True, True, False, False)
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param site_shift: サイトの表示に関するフラグ

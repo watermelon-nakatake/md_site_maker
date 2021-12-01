@@ -25,7 +25,7 @@ def scp_upload(up_file_list, pd):
     with paramiko.SSHClient() as ssh:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(hostname=upload_data['host_name'], port=22, username=upload_data['user_name'],
-                    password=upload_data['password_str'])
+                    password=upload_data['password_str'], timeout=600)
         if 'mass_flag' in pd:
             # mkdir を実行する
             stdin, stdout, stderr = ssh.exec_command('mkdir www/{}'.format(pd['project_dir']))
@@ -43,7 +43,8 @@ def scp_upload(up_file_list, pd):
                 for e in stderr:
                     print(e)
         # ファイルをアップロード
-        with scp.SCPClient(ssh.get_transport()) as scpc:
+        with scp.SCPClient(ssh.get_transport(), socket_timeout=600) as scpc:
+            error_files = []
             for up_file in up_file_list:
                 if 'mass_flag' in pd:
                     print('upload: ' + up_file)
@@ -60,8 +61,16 @@ def scp_upload(up_file_list, pd):
                         up_dir = re.findall(r'^(.+)/', up_str)[0]
                     else:
                         up_dir = ''
-                scpc.put(up_file, 'www/' + up_dir)
-            print('Upload finished !')
+                try:
+                    scpc.put(up_file, 'www/' + up_dir)
+                except Exception as e:
+                    print(e)
+                    error_files.append(up_file)
+            if not error_files:
+                print('Upload finished !')
+            else:
+                print('cause error !! upload has not finished')
+            return error_files
 
 
 def shoshin_scp_upload(up_file_list):
@@ -73,6 +82,7 @@ def shoshin_scp_upload(up_file_list):
                     password=upload_data['password_str'])
         # ファイルをアップロード
         with scp.SCPClient(ssh.get_transport()) as scpc:
+            error_files = []
             for up_file in up_file_list:
                 if up_file in ['.htaccess'] or '/beginner/' in up_file or '/css/' in up_file or '/images/' in up_file:
                     print('upload: ' + up_file)
@@ -81,8 +91,13 @@ def shoshin_scp_upload(up_file_list):
                         up_dir = re.findall(r'^(.+)/', up_str)[0]
                     else:
                         up_dir = ''
-                    scpc.put(up_file, 'www/' + up_dir)
+                    try:
+                        scpc.put(up_file, 'www/' + up_dir)
+                    except BufferError as e:
+                        print(e)
+                        error_files.append(up_file)
             print('Upload finished !')
+            return error_files
             
             
 def auto_scp_upload(up_file_list):

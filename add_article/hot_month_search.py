@@ -12,6 +12,7 @@ import joshideai.main_info
 import howto.main_info
 import reibun.main_info
 import online_marriage.main_info
+import make_html_for_shoshin
 
 num_list = [['0', '０'], ['1', '１'], ['2', '２'], ['3', '３'], ['4', '４'], ['5', '５'], ['6', '６'], ['7', '７'],
             ['8', '８'], ['9', '９']]
@@ -68,6 +69,7 @@ def half_num_filter(half_str):
 def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
     md_list = glob.glob('**/**/md_files/', recursive=True)
     md_list = list(set(md_list))
+    md_list = [x for x in md_list if 'mass_production/' not in x]
     counter = 0
     upload_list = []
     up_files = []
@@ -123,7 +125,7 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
 
 def auto_update(project_list):
     for prj in [x.replace('/md_files/', '') for x in project_list]:
-        if prj not in ['sfd']:
+        if prj not in ['sfd', 'shoshin']:
             new_from_md.main(0, mi_dict[prj], mod_date_flag=True, last_mod_flag=True, upload_flag=False,
                              fixed_mod_date=False, first_time_flag=False)
             print('update : {}'.format(prj))
@@ -142,20 +144,25 @@ def auto_month_update(old_month_str):
     # print(old_num)
     # print(type(old_num))
     next_month_str = make_next_month_str(old_num)
-    print('next_month_str : '.format(next_month_str))
+    print('next_month_str : {}'.format(next_month_str))
     next_next_str = make_next_month_str(int(next_month_str.replace('月', '')))
-    print('next_next_str = {}'.format(next_next_str))
+    print('next_next_month_str = {}'.format(next_next_str))
     upload_list, up_files = rewrite_hot_month(old_month_str, next_month_str, next_next_str)
     print('up_files = {}'.format(up_files))
     print('len of up_files : '.format(len(list(set(up_files)))))
     # print(len(up_files))
+    shoshin_up = [x.replace('/html_files/', '/md_files/').replace('.html', '.md') for x in up_files if 'shoshin/' in x]
+    if shoshin_up:
+        up_files = make_html_for_shoshin.add_new_article(shoshin_up)
+        if up_files:
+            file_upload.shoshin_scp_upload(up_files)
     auto_update(upload_list)
     file_upload.auto_scp_upload(up_files)
     # print(up_files)
 
 
 if __name__ == '__main__':
-    auto_month_update('10月')  # 現在の月を記入 not 新しい月
+    auto_month_update('11月')  # 現在の月を記入 not 新しい月
     # ul = rewrite_hot_month('９月', '１０月', '１１月')
     # auto_update(ul)
     # hot_month_pick_up('11月')

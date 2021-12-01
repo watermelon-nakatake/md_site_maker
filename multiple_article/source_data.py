@@ -99,8 +99,8 @@ title = {
                 '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
                 '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->'],
         'bg': [
-            '<!--sl-a--><!--k-act-way-->,<!--k-sub-->が<!--title-can-meet--><!--k-act-bbs--><!--sl-a/e-->',
-            '<!--sl-a--><!--k-act-way-->,<!--recommended--><!--k-act-bbs--><!--sl-a/e-->',
+            '<!--sl-a--><!--k-obj-noun-s-->と<!--k-act-way-->,<!--k-sub-->が<!--title-can-meet--><!--k-act-bbs--><!--sl-a/e-->',
+            '<!--sl-a--><!--k-sub-act-way-->,初心者<!--for-this-parson--><!--recommended--><!--k-act-bbs--><!--sl-a/e-->',
             '<!--sl-a--><!--k-sub-act-way-->,<!--k-sub-->が<!--title-can-meet--><!--k-act-bbs--><!--sl-a/e-->',
             '<!--sl-a--><!--k-sub-act-way-->,<!--recommended--><!--k-act-bbs--><!--sl-a/e-->'],
         'dt': [
@@ -140,6 +140,13 @@ title = {
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can-easy--><!--d-bbs--><!--sl-a/e-->',
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->'],
+        'cov': ['<!--sl-a--><!--k-act-way-adj-->,<!--title-opt-act-bf--><!--sl-a/e-->',
+                '<!--sl-a--><!--k-act-way-sim-->,<!--k-a-adj--><!--k-act-can-easy--><!--recommended--><!--d-bbs--><!--sl-a/e-->',
+                '<!--sl-a--><!--title-easy--><!--k-act-way-sim-->,<!--k-act-can-adj--><!--d-bbs--><!--sl-a/e-->',
+                '<!--sl-a--><!--title-easy--><!--k-act-way-adj-->,<!--k-act-can--><!--d-bbs--><!--sl-a/e-->',
+                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can-easy--><!--d-bbs--><!--sl-a/e-->',
+                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->',
+                '<!--sl-a--><!--k-act-way-adj-->,<!--k-act-can--><!--recommended--><!--d-app--><!--sl-a/e-->'],
         'sf': ['<!--sl-a--><!--k-how-to-->,<!--k-do--><!--secret--><!--sl-a/e-->',
                '<!--sl-a--><!--k-rnd-how-to-->,<!--k-act--><!--secret--><!--sl-a/e-->',
                '<!--sl-a--><!--k-obj-act-way-->,<!--k-act--><!--secret--><!--sl-a/e-->'],
@@ -180,7 +187,7 @@ des = {
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--find-way-->についても<!--description-->します。'],
     'gf': [
-        '<!--k-rnd-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->を<!--use-a--><!--way-->です。'
+        '<!--k-rnd-do-->ための<!--title-easy--><!--way-->は、<!--deaikei-->の<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->を<!--use-a--><!--way-->です。'
         '<!--there-->では、<!--deaikei-->を<!--use--><!--k-rnd-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
         '<!--k-rnd-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
         '<!--k-alt-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。<!--deaikei2-->は<!--k-easy-->ので<!--my-recommend-s-->。',
@@ -188,7 +195,7 @@ des = {
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
     'bf': [
-        '<!--k-rnd-do-->ための一番<!--title-easy--><!--way-->は、<!--deaikei-->の<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->を<!--use-a--><!--way-->です。'
+        '<!--k-rnd-do-->ための<!--title-easy--><!--way-->は、<!--deaikei-->の<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->を<!--use-a--><!--way-->です。'
         '<!--there-->では、<!--deaikei-->を<!--use--><!--k-rnd-how-to-->を具体的に<!--in-detail--><!--description-->しています。',
         '<!--k-rnd-do-->には、<!--deaikei-->を<!--use-a--><!--way-->が最強です。<!--there-->では、<!--deaikei-->で'
         '<!--k-alt-do--><!--way-->を<!--in-detail-->具体的に<!--description-->します。<!--deaikei2-->は<!--k-easy-->ので<!--my-recommend-s-->。',
@@ -222,15 +229,14 @@ des = {
         '<!--k-rnd-do-->には<!--deaikei-->の<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->を<!--use-a--><!--way-->が<!--best-->です。'
         'そのための<!--deaikei-->を<!--use-a--><!--k-act-way-->を具体的に<!--description-->します。'
         '<!--k-obj-noun-l--><!--make-way-->についても<!--description-->します。'],
-
     'bg': [
         '<!--k-act-bbs-->を<!--at-first-l--><!--use-u--><!--k-sub-->が、<!--k-act-way-->を<!--in-detail--><!--go-introduce-->します。'
         '<!--sl-s--><!--k-sub-->が<!--k-obj-want-act-->と出会いやすい<!--recommended-->の<!--site-->、'
         '<!--k-sub-->が<!--k-obj-->と<!--nicely--><!--can-meet-i-->て<!--k-act--><!--secret--><!--sl-s/e-->なども<!--show-you-way-->。',
-        '<!--k-act-bbs-->を<!--so-far--><!--use-a-->ことがない<!--but-and-c--><!--k-obj-want-act-->と<!--can-meet-i-->て<!--k-do-->ために'
-        '<!--at-first-l--><!--use-u-->という<!--k-sub-->の方。<!--like-this2-->方のために、<!--site-->を<!--use-->'
-        '<!--k-sub-->が<!--k-obj-noun-j-->と<!--can-meet-i-->て<!--k-do-->ための<!--important-->な<!--point-->を<!--show-you-way-->。'
-        '<!--k-sub-->が<!--site-->を<!--use--><!--k-do-->際の<!--cautionary-note-->や、出会いやすい<!--k-obj--><!--make-way-->なども具体的に<!--publish-e-->います。',
+        '<!--k-act-bbs-->を<!--so-far--><!--use-a-->ことがない<!--but-and-c--><!--k-do-->ために<!--at-first-l--><!--use-u-->という<!--k-sub-->の方。'
+        '<!--like-this2-->方のために、<!--site-->を<!--use--><!--k-sub-->が<!--k-obj-noun-j-->と<!--can-meet-i-->て<!--k-act-->ための'
+        '<!--important-->な<!--secret-->を<!--show-you-way-->。'
+        '<!--k-sub-->が<!--site-->を<!--use--><!--k-act-->際の<!--cautionary-note-->や、出会いやすい<!--k-obj-want-act--><!--find-way-->なども具体的に<!--publish-e-->います。',
         '<!--so-far--><!--k-act-bbs-->を<!--use-a-->ことはない<!--but-and-c--><!--site-->を<!--use--><!--k-obj-want-act-->と<!--can-meet-i-->て'
         '<!--k-act-want-sim-->と考えている方は多い<!--think-->。<!--there-->では、<!--site-->の<!--k-rnd-how-to-->を、'
         '<!--in-detail-->具体的に<!--go-introduce-->します。'
@@ -451,7 +457,7 @@ int_1_3 = {
     11: 'space',
     12: [
         '<!--k-act-way-->では、そのまま*<!--copy-and-paste--><!--can-u--><!--mail--><!--sample-->*を<!--many-sp--><!--prepare-for-->ので、<!--everyone--><!--do-copy--><!--k-act-to-find-->が<!--make-to-be-able-->。',
-        '<!--blog-->で<!--publish-e-->いる<!--k-alt-way-->では、<!--sample-->を<!--many-sp--><!--publish-e-->いるので、<!--easily--><!--do-copy--><!--mail-->を<!--can-send-->ので、<!--everyone--><!--easily--><!--can-meet-s-->。'],
+        '<!--blog--><!--publish-e-->いる<!--k-alt-way-->では、<!--sample-->を<!--many-sp--><!--publish-e-->いるので、<!--easily--><!--do-copy--><!--mail-->を<!--can-send-->ので、<!--everyone--><!--easily--><!--can-meet-s-->。'],
     13: ['楽に<!--k-act-want--><!--sub-reader-->には、*<!--mail-app-->*も<!--you-can-use-->。',
          '<!--mail-->などの<!--writing-text-->のが<!--not-good-at-adj--><!--sub-reader-->のために、<!--can-meet--><!--mail-->が<!--everyone--><!--app-to-write-->も<!--have-made-->。',
          '<!--you-->は<!--not-good-at-writing-->という<!--sub-reader-->でも、<!--mail-app-->を<!--if-use--><!--copy-and-paste-->するだけで<!--can-meet-s-->。'],
@@ -644,7 +650,7 @@ int_1_6 = {
     11: 'space',
     12: [
         '<!--k-act-way-->では、そのまま*<!--copy-and-paste--><!--can-u--><!--mail--><!--sample-->*を<!--many-sp--><!--prepare-for-->ので、<!--everyone--><!--do-copy--><!--k-act-to-find-->が<!--make-to-be-able-->。',
-        '<!--blog-->で<!--publish-e-->いる<!--k-alt-way-->では、<!--sample-->を<!--many-sp--><!--publish-e-->いるので、<!--easily--><!--do-copy--><!--mail-->を<!--can-send-->ので、<!--everyone--><!--easily--><!--can-meet-s-->。'],
+        '<!--blog--><!--publish-e-->いる<!--k-alt-way-->では、<!--sample-->を<!--many-sp--><!--publish-e-->いるので、<!--easily--><!--do-copy--><!--mail-->を<!--can-send-->ので、<!--everyone--><!--easily--><!--can-meet-s-->。'],
     13: ['楽に<!--k-act-want--><!--sub-reader-->には、*<!--mail-app-->*も<!--you-can-use-->。',
          '<!--mail-->などの<!--writing-text-->のが<!--not-good-at-adj--><!--sub-reader-->のために、<!--can-meet--><!--mail-->が<!--everyone--><!--app-to-write-->も<!--have-made-->。',
          '<!--you-->は<!--not-good-at-writing-->という<!--sub-reader-->でも、<!--mail-app-->を<!--if-use--><!--copy-and-paste-->するだけで<!--can-meet-s-->。'],
@@ -707,19 +713,19 @@ int_1_7 = {
          '場所を選ばずいつでもアクセスできて、自由に<!--can-find-d-u--><!--site-->は、経験がない人にも出会いを提供します。',
          '<!--site-->は<!--anonymous--><!--anonymous--><!--can-find-d-u-s-->し、<!--at-online-->で<!--can-meet-->ので<!--time-zone-->を選ばず<!--can-meet-s-->。'],
     14: [
-        '特に<!--blog-->で<!--publish-e-->いる<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->はどれも<!--site-user-->が多いので、<!--k-sub-->でも<!--easily--><!--k-obj-noun-j-->を<!--find--><!--can-meet-s-->。',
+        '特に<!--blog--><!--publish-e-->いる<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->はどれも<!--site-user-->が多いので、<!--k-sub-->でも<!--easily--><!--k-obj-noun-j-->を<!--find--><!--can-meet-s-->。',
         '<!--pop-and-famous-n-->優良<!--site-->を<!--if-use-->、<!--many2--><!--woman-user-->の中から<!--me-->の<!--liking-->の<!--k-obj-category2-->の<!--woman-o-->を<!--find2-->、<!--k-2nd-act-->ことが<!--s-can-->。',
-        '<!--site-user-->が多くてシステム的にも<!--use-i-->やすい<!--site-->を<!--if-use-->、<!--at-first-l--><!--deaikei-->を<!--use-u--><!--k-sub-->でも<!--k-act-noun-f-->の<!--partner-->を<!--find-u-->ことが<!--s-can-->。',
+        '<!--site-user-->が多くてシステム的にも<!--use-i-->やすい<!--site-->を<!--if-use-->、<!--at-first-l--><!--deaikei-->を<!--use-u--><!--k-sub-->でも<!--k-act-noun-f-->の<!--other-part-->を<!--find-u-->ことが<!--s-can-->。',
         '<!--woman-user-->が多い<!--site-->であれば、<!--me-->とフィーリングが合って、しかも<!--liking-->の<!--woman-o-->を<!--find-u-->ことが<!--can-u-->ので、<!--k-can--><!--potency-->いです。'],
     15: [
-        '<!--site-->の中には<!--at-all--><!--can-find-d-e-->ない、いわゆる<!--bad-site-->もありますが、<!--blog-->で<!--publish-e-->いる<!--wkwk-sn-->な<!--which-site-->はどれも<!--surely--><!--can-meet-->優良<!--site-->です。',
-        '世の中には<!--unsure--><!--bad-site-->もありますが、<!--blog-->で<!--publish-e-->いる<!--site-1-->や<!--site-2-->であれば<!--be-right-way--><!--k-obj-noun-j-->と<!--can-meet-s-->。',
+        '<!--site-->の中には<!--at-all--><!--can-find-d-e-->ない、いわゆる<!--bad-site-->もありますが、<!--blog--><!--publish-e-->いる<!--wkwk-sn-->な<!--which-site-->はどれも<!--surely--><!--can-meet-->優良<!--site-->です。',
+        '世の中には<!--unsure--><!--bad-site-->もありますが、<!--blog--><!--publish-e-->いる<!--site-1-->や<!--site-2-->であれば<!--be-right-way--><!--k-obj-noun-j-->と<!--can-meet-s-->。',
         ''],
     16: [
-        '<!--c-添加--><!--blog-->で<!--publish-e-->いる<!--way-to-->を<!--if-use-->、<!--how--><!--k-sub-->でも高い<!--success-rate-->で<!--k-alt-do-->ことが<!--s-can-->。',
-        '<!--k-act-noun--><!--purpose-->での<!--way-to-encounter--><!--i-dont-know-->という方も、<!--blog-->で<!--publish-e-->いる<!--way-->を参考にすれば、<!--at-first-l-->でも<!--surely--><!--can-meet-s-->。',
+        '<!--c-添加--><!--blog--><!--publish-e-->いる<!--way-to-->を<!--if-use-->、<!--how--><!--k-sub-->でも高い<!--success-rate-->で<!--k-alt-do-->ことが<!--s-can-->。',
+        '<!--k-act-noun--><!--purpose-->での<!--way-to-encounter--><!--i-dont-know-->という方も、<!--blog--><!--publish-e-->いる<!--way-->を参考にすれば、<!--at-first-l-->でも<!--surely--><!--can-meet-s-->。',
         '<!--k-sub-->の中には、<!--site-->で<!--way-to-encounter-->を<!--at-all-->知らないという方も<!--there-is-s--><!--think-->が、<!--blog-->では<!--way-to-->も<!--publish-e-->いるので、それを読めば<!--surely--><!--can-meet-i-->て<!--k-act-can-long-->。',
-        '<!--k-obj-->と<!--way-to-encounter--><!--i-dont-know--><!--k-sub-->も、<!--blog-->で<!--publish-e-->いる<!--way-to-->を参考にすることで、<!--not-beginner-->並みの出会いの<!--technique-->を身につけられます。'],
+        '<!--k-obj-->と<!--way-to-encounter--><!--i-dont-know--><!--k-sub-->も、<!--blog--><!--publish-e-->いる<!--way-to-->を参考にすることで、<!--not-beginner-->並みの出会いの<!--technique-->を身につけられます。'],
     17: ['<!--c-言換--><!--everyone--><!--k-obj-act-can-do-a--><!--be-like-this-->。',
          '一言で言うと、<!--k-sub-->でも<!--no-plb--><!--k-obj-->と<!--can-meet-i-->て<!--k-act-can-->ということですね。',
          'しっかり<!--there-->を読めば、<!--k-sub-->でも<!--k-act-noun-f-->が<!--can-u-->ということになります。',
@@ -783,8 +789,8 @@ di_1_1 = {
     6: ['もっと簡単にいうと、<!--site-1-->と<!--site-2-->を<!--use-->探せば、<!--be-early-->安全に<!--k-alt-can-do-long-->。',
         '一言でいうと、<!--site-->の<!--wkwk-sn-->を<!--use-->探せば、<!--everyone--><!--easily--><!--k-obj-act-can-do-long-->',
         'ズバリ、<!--site-1-->と<!--site-2-->を<!--if-use-->、<!--everyone--><!--easily--><!--k-obj-act-can-do-long-->'],
-    7: ['<!--c-補足-->アプリではあまり<!--can-find-d-e-->ないので、<!--blog-->のリンクからweb版の<!--site-1-->を<!--use-->ください。',
-        'アプリではなく、<!--blog-->のリンクからwebの<!--site-1-->や<!--site-2-->を<!--use-->ください。',
+    7: ['<!--c-補足-->アプリではあまり<!--can-find-d-e-->ないので、<!--blog-->のリンクから<!--web-site-->版の<!--site-1-->を<!--use-->ください。',
+        'アプリではなく、<!--blog-->のリンクから<!--web-site-->の<!--site-1-->や<!--site-2-->を<!--use-->ください。',
         ''],
     'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'di_1_1'}}
 # di_1_1/end
@@ -853,24 +859,24 @@ di_2_2 = {
         ''],
     13: 'space',
     14: [
-        '<!--c-並列--><!--deaikei2-->では<!--profile-->を書くように<!--be-made-so-->、この<!--profile-->で<!--partner-->のことを<!--easily-->知ることが<!--s-can-->。',
-        '<!--k-2nd-act--><!--partner-->の<!--data-->収集しやすいのも<!--deaikei2-->の魅力です。',
-        '<!--mail-->でどう話しかければいいか分からないという方も、<!--partner-->の<!--profile-->の<!--data-->を参考にすれば、<!--easily--><!--topic-->を作れます。',
-        '<!--deaikei-->では<!--profile-->で<!--partner-->のことがよく<!--judge-->ので、それも<!--deaikei-->で出会いやすい理由の一つです。'],
+        '<!--c-並列--><!--deaikei2-->では<!--profile-->を書くように<!--be-made-so-->、この<!--profile-->で<!--other-part-->のことを<!--easily-->知ることが<!--s-can-->。',
+        '<!--k-2nd-act--><!--other-part-->の<!--data-->収集しやすいのも<!--deaikei2-->の魅力です。',
+        '<!--mail-->でどう話しかければいいか分からないという方も、<!--other-part-->の<!--profile-->の<!--data-->を参考にすれば、<!--easily--><!--topic-->を作れます。',
+        '<!--deaikei-->では<!--profile-->で<!--other-part-->のことがよく<!--judge-->ので、それも<!--deaikei-->で出会いやすい理由の一つです。'],
     15: [
         'その<!--profile-->の<!--data-->を<!--use-u-->ことで、<!--deaikei--><!--k-sub-->でも<!--easily--><!--k-obj-->と話が盛り上がって<!--intimate-->なることが<!--s-can-->。',
-        '<!--profile-->に書いてある<!--partner-->の<!--like-thing-->などの<!--data-->を基に<!--conversation-->すれば、<!--easily-->話が盛り上がります。',
+        '<!--profile-->に書いてある<!--other-part-->の<!--like-thing-->などの<!--data-->を基に<!--conversation-->すれば、<!--easily-->話が盛り上がります。',
         '<!--mail-->の<!--conversation-->を<!--nicely-->続けるのも、<!--profile-->に書いてある<!--like-thing-->などの<!--data-->を<!--if-use--><!--well--><!--easy-->です。',
-        '<!--partner-->の<!--like-thing-->などの<!--profile-->の記載事項を<!--nicely-->活用すれば、<!--easily--><!--intimate-->なれて、<!--k-obj-act-do-->のに一気に近づきます。'],
+        '<!--other-part-->の<!--like-thing-->などの<!--profile-->の記載事項を<!--nicely-->活用すれば、<!--easily--><!--intimate-->なれて、<!--k-obj-act-do-->のに一気に近づきます。'],
     16: ['<!--data-->収集が<!--remarkably--><!--title-easy--><!--be-like-this-->。',
          '<!--in-real-o-->出会いでは聞き出すのが難しいことも、<!--deaikei-->なら一瞬で<!--judge--><!--may-be-->。',
          '',
          ''],
     17: 'space',
     18: [
-        '例えば、<!--partner-->の<!--k-obj-->が<!--vrt-hobby-->が<!--like-a--><!--case-->、<!--at-first-->の<!--mail-->で<!--me-->も<!--vrt-hobby-->が好きだと書いておけば、高い<!--success-rate-->で<!--re-mail-->をもらうことが<!--s-can-->。',
+        '例えば、相手の<!--k-obj-->が<!--vrt-hobby-->が<!--like-a--><!--case-->、<!--at-first-->の<!--mail-->で<!--me-->も<!--vrt-hobby-->が好きだと書いておけば、高い<!--success-rate-->で<!--re-mail-->をもらうことが<!--s-can-->。',
         '例を挙げると、<!--profile-->に<!--vrt-hobby-->が好きだと書いている<!--woman-o-->であれば、<!--mail-->で<!--vrt-hobby-->の<!--topic-->を話せば<!--re-mail-->率が高くなります。',
-        '<!--woman-o-->からなかなか<!--re-mail-->がもらえないという方は、<!--partner-->の<!--like-thing-->、例えば<!--vrt-hobby-->の<!--topic-->から入ってみてください。',
+        '<!--woman-o-->からなかなか<!--re-mail-->がもらえないという方は、<!--other-part-->の<!--like-thing-->、例えば<!--vrt-hobby-->の<!--topic-->から入ってみてください。',
         'もし<!--profile-->に<!--vrt-hobby-->が好きだと書いている<!--woman-o-->がいた<!--case-->、<!--at-first-->は<!--vrt-hobby-->の<!--topic-->から<!--start-->すると<!--nicely--><!--conversation--><!--s-can-->。'],
     19: [
         '<!--c-添加-->その後の<!--conversation-->でも<!--vrt-hobby-->の<!--topic-->から<!--conversation-->を広げていくことで、いくらでも楽しい<!--conversation-->をすることができて、その<!--k-obj-->と<!--intimate-->なることが<!--s-can-->。',
@@ -909,7 +915,7 @@ di_2_2 = {
         'ですから、あまり<!--deaikei2-->に慣れていない<!--k-sub-->でも<!--can-meet-i-->て<!--k-2nd-act-->ことが<!--can-u--><!--be-like-this-->。',
         '<!--c-順接--><!--k-sub-->であっても<!--deaikei2-->を<!--if-use--><!--liking-->の<!--k-obj-category-->の<!--woman-o--><!--can-find-d-e-with-->て、無事に<!--k-rnd-do-->ことが<!--can-u--><!--be-like-this-->。',
         '<!--c-順接--><!--deaikei2-->を<!--use-i-->始めたばかりの<!--k-sub-->でも<!--can-meet-i-->て<!--k-act--><!--chance-->が大いにある<!--be-like-this-->。',
-        'これが、<!--k-sub-->でも<!--k-act-can-->最後の<!--point-->になります。'],
+        'これが、<!--k-sub-->でも<!--k-act-can-->最後の<!--secret-->になります。'],
     28: 'space',
     29: ['以上が、<!--k-sub-->でも<!--deaikei2-->で<!--k-obj-noun-j-->と<!--can-meet-i-->て<!--k-act-can-->理由です。',
          'これらの理由から、<!--deaikei2-->を<!--be-right-way--><!--if-use-->、<!--how--><!--man-->でも<!--k-obj--><!--can-find-d-e-with-->て<!--k-can-->のが理解していただける<!--think-->。',
@@ -930,10 +936,10 @@ di_2_2 = {
 
 di_3_1 = {
     0: ['## <!--hot-month-->は<!--k-alt-to-find-a-->に<!--best-good-->季節',
-        '## <!--k-obj-act-want-->なら<!--hot-month-->は<!--chance-->',
+        '## <!--k-obj-act-want-->なら<!--hot-month-->は<!--good-chance-->',
         '## <!--k-sub-adj-->が<!--k-obj-act-do-->なら<!--hot-month-->を狙おう',
         '## <!--hot-month-->は<!--k-sub-adj-->が<!--k-alt-do--><!--best-->シーズン',
-        '## <!--hot-month-->は<!--k-sub-also--><!--deaikei-->で出会いやすいから<!--k-obj-act-noun-->が作りやすい'],
+        '## <!--hot-month-->は<!--k-sub-also--><!--deaikei-->で出会いやすく<!--k-obj-act-to-find-a-->と簡単に出会える'],
     1: 'space',
     2: ['<!--deaikei2-->では一年を通じて<!--site-user-->数が多いですが、その中でも特に出会いやすいシーズンとしてよく<!--leak-->ているのが<!--hot-season-->です。',
         '<!--k-sub-adj-->が<!--surely--><!--k-obj-act-want-->なら、<!--hot-season-->、それも<!--hot-month-->は逃せません。',
@@ -950,7 +956,7 @@ di_3_1 = {
         '<!--sub-sex-->の方も実感がある<!--think-->が、<!--hot-season-->になると活動的な気分になりますからね。',
         '<!--hot-season-->は誰しも<!--positive-->になりますから。',
         ''],
-    6: ['<!--there-->を読んでいる<!--you-->も、<!--k-obj-act-noun-->を<!--find-i-->たくなっているの<!--think2-->。',
+    6: ['<!--there-->を読んでいる<!--you-->も、<!--k-obj-act-to-find-a-->を<!--find-i-->たくなっているの<!--think2-->。',
         '<!--hot-season-->になって<!--suddenly-->出会いたくなって<!--k-obj-act-to-find-a-->を始めた方も<!--there-is-s--><!--think2-->。',
         ''],
     7: 'space',
@@ -972,30 +978,30 @@ di_3_1 = {
          ''],
     13: 'space',
     14: [
-        'ですから、<!--deaikei2-->を<!--use--><!--k-obj-act-want-->方は、この<!--hot-month-->が<!--k-act-to-find-->の大<!--chance-->です。',
+        'ですから、<!--deaikei2-->を<!--use--><!--k-obj-act-want-->方は、この<!--hot-month-->が<!--k-act-to-find-->の<!--good-chance-->です。',
         '<!--c-添加--><!--like-this2-->焦って<!--find-d-i-->ている<!--obj-sex-o-->を狙えば、<!--k-sub-also--><!--easily--><!--k-obj-act-can-do-long-->。',
         '<!--like-this2--><!--positive-->に<!--find-d-i-->ている<!--obj-sex-o-->が<!--many-->いるので、<!--hot-month-->は<!--chance-d-->な<!--be-like-this-->。',
         ''],
     15: ['<!--hot-month-->の今なら、他の時期よりも<!--very--><!--easily--><!--k-alt-can-do-long-->。',
          '<!--like-this2--><!--positive-->な<!--obj-sex-o-->なら、<!--easily--><!--k-act-noun-->に<!--s-can-->。',
-         '急いで<!--find-d-i-->ている<!--obj-sex-o-->と<!--mail-->で<!--talk-->できれば、<!--very--><!--be-early--><!--intimate-->なって、短期間で<!--k-act-noun-->にすることが<!--s-can-->。'],
+         '<!--hurry-find-d-i-->ている<!--obj-sex-o-->と<!--mail-->で<!--talk-->できれば、<!--very--><!--be-early--><!--intimate-->なって、短期間で<!--k-act-noun-->にすることが<!--s-can-->。'],
     16: [
-        '<!--so-far--><!--k-obj-act-noun--><!--can-find-d-e-with-->なかった方も、<!--sl-s--><!--hot-month-->,<!--hot-season--><!--sl-s/e-->の間であれば、<!--k-sub-also--><!--surely--><!--k-act-->ことが<!--s-can-->。',
+        '<!--so-far--><!--k-obj-act-to-find-a--><!--can-find-d-e-with-->なかった方も、<!--sl-s--><!--hot-month-->,<!--hot-season--><!--sl-s/e-->の間であれば、<!--k-sub-also--><!--surely--><!--k-act-->ことが<!--s-can-->。',
         '他の時期ではなかなか<!--k-act-can-not-do-->という方でも、<!--hot-month-->なら<!--very-->高い<!--success-rate-->で<!--k-alt-do-->ことが<!--can-u--><!--be-like-this-->。',
-        '<!--deaikei2-->でなかなか<!--nicely--><!--can-find-d-e-->なかった方も、この<!--hot-month-->を<!--nicely-->活かせば<!--surely--><!--k-obj-act-noun-->と<!--can-meet-s-->。',
+        '<!--deaikei2-->でなかなか<!--nicely--><!--can-find-d-e-->なかった方も、この<!--hot-month-->を<!--nicely-->活かせば<!--surely--><!--k-obj-act-to-find-a-->と<!--can-meet-s-->。',
         '<!--at-online-->の出会いにまだ慣れていない<!--beginner-->でも、<!--hot-month-->なら<!--easily--><!--can-meet--><!--be-like-this-->。'],
     17: 'space',
     18: [
-        '<!--deaikei2-->を<!--use-a-->ことのない方は<!--rather-->不安があるかもしれませんが、<!--blog-->に<!--publish-e-->いる<!--deaikei2-->であれば<!--risk-->は<!--is-not-->。',
+        '<!--deaikei2-->を<!--use-a-->ことのない方は<!--rather-->不安があるかもしれませんが、<!--blog--><!--publish-e-->いる<!--deaikei2-->であれば<!--risk-->は<!--is-not-->。',
         ''],
     19: ['出会いの時期である<!--hot-month-->を<!--use-->、ぜひ<!--k-act-and-->みてください。',
-         '<!--hot-season-->、それも<!--hot-month-->は大<!--chance-->の時期なので、<!--fight-s-->！',
+         '<!--hot-season-->、それも<!--hot-month-->は<!--good-chance-->の時期なので、<!--fight-s-->！',
          '<!--hot-month-->の<!--chance-->を活用して、<!--k-obj-act-to-find-->を成功させましょう！'],
     'info': {'deny': [], 'only': [], 'sec_name': 'di_3_1', 'shuffle': [], 'option': ['month', ['all']]}}
 # di_3_1/end
 
 di_3_2 = {
-    0: ['##  <!--k-sub-->が<!--k-obj-act-want-a-->なら<!--hot-month-->は<!--chance-->',
+    0: ['##  <!--k-sub-->が<!--k-obj-act-want-a-->なら<!--hot-month-->は<!--good-chance-->',
         '## <!--hot-month-->は<!--k-obj-act-want-a--><!--k-sub-->には<!--important-->な<!--period-->',
         '## <!--hot-month-->に<!--net-d-->を始めれば<!--k-can-->',
         '## <!--k-want-->なら<!--hot-month-->から<!--net-d-->をスタート<!--you-must-do-->',
@@ -1017,7 +1023,7 @@ di_3_2 = {
     5: 'space',
     6: [
         '<!--winter-vacation-->は、一年の中でも最も<!--easy-to-meet--><!--period-->で、<!--k-sub-->が<!--k-obj-noun-j-->と<!--can-meet-->のも<!--easy-->です。',
-        'もう<!--rather-->したらやってくる<!--winter-vacation-->は、年間でも最も<!--easy-to-meet--><!--period-->で、<!--k-act-noun-->の<!--partner-->を<!--find-u-->のにも最も適しています。',
+        'もう<!--rather-->したらやってくる<!--winter-vacation-->は、年間でも最も<!--easy-to-meet--><!--period-->で、<!--k-act-noun-->の<!--other-part-->を<!--find-u-->のにも最も適しています。',
         'その<!--golden-season-->の中でも、<!--winter-vacation-->は特に出会いに適した<!--period-->です。',
         '現在の<!--hot-month-->の先にある<!--winter-vacation-->は、<!--net-d-->の繁忙期の中でも特別に出会いやすく、<!--k-sub-->が<!--k-obj--><!--find-d-u-with-->のには<!--very-good-->です。'],
     7: [
@@ -1030,10 +1036,10 @@ di_3_2 = {
         '',
         ''],
     9: [
-        '<!--c-添加-->暇なだけではなくて気分的にも<!--positive-->に<!--be-made-so-->、他の<!--period-->よりも<!--k-act-noun-f-->の<!--partner-->が探しやすくなります。',
-        '<!--c-添加2--><!--site-user-->が増えただけでなく、<!--seriously--><!--find-d-i-->ている<!--woman-o-->の比率も増えるので、<!--k-sub-->が<!--k-act-noun-->の<!--partner-->を<!--find-u-->のにはもってこいです。',
+        '<!--c-添加-->暇なだけではなくて気分的にも<!--positive-->に<!--be-made-so-->、他の<!--period-->よりも<!--k-act-noun-f-->の<!--other-part-->が探しやすくなります。',
+        '<!--c-添加2--><!--site-user-->が増えただけでなく、<!--seriously--><!--find-d-i-->ている<!--woman-o-->の比率も増えるので、<!--k-sub-->が<!--k-act-noun-->の<!--other-part-->を<!--find-u-->のにはもってこいです。',
         '<!--c-添加--><!--site-user-->数の増加のみならず、寂しさのせいか<!--positive-->に<!--find-d-u--><!--woman-o-->の割合が増えているのも<!--winter-vacation-->の特徴です。<!--c-順接--><!--k-sub-->でも<!--k-act-can-adj--><!--k-obj-noun-j-->と<!--easily--><!--can-meet-->ようになります。',
-        '<!--winter-vacation-->には<!--usual-->よりも<!--net-d-->で<!--positive-->に出会いを求める<!--woman-o-->が増えているので、<!--k-act-noun-f-->の<!--partner-->に<!--can-meet--><!--success-rate-->も高いです。'],
+        '<!--winter-vacation-->には<!--usual-->よりも<!--net-d-->で<!--positive-->に出会いを求める<!--woman-o-->が増えているので、<!--k-act-noun-f-->の<!--other-part-->に<!--can-meet--><!--success-rate-->も高いです。'],
     10: ['<!--k-obj-act-want-->のであれば、<!--k-sub-->にとって<!--winter-vacation-->は<!--very-->の<!--chance-->です。',
          '<!--c-かいせつ--><!--winter-vacation-->は<!--k-rnd-do-a-->のに<!--best-good--><!--period-->だと言っても過言では<!--is-not-->。',
          '<!--k-sub-->が<!--net-d-->で<!--k-act-want-->のであれば、<!--k-obj-->と<!--easy-to-meet--><!--winter-vacation-->は<!--absolutely-->逃さないように<!--you-must-do-->。',
@@ -1041,7 +1047,7 @@ di_3_2 = {
     11: ['絶好の<!--chance-->です。',
          '最大の<!--chance-->です。',
          '人生が変わるかも。',
-         '<!--k-sub-->こそ<!--chance-->！',
+         '<!--k-sub-->こそ<!--good-chance-->！',
          '',
          '',
          '',
@@ -1056,7 +1062,7 @@ di_3_2 = {
         '<!--winter-vacation-->に<!--suddenly--><!--deaikei-->を始めても、<!--k-sub-->が<!--suddenly--><!--find-d-u-->のが難しい<!--case-->もあるからです。',
         '<!--deaikei-->にはある程度の慣れも必要なので、<!--winter-vacation-->に<!--deaikei2-->に<!--entry-->して<!--use-i-->始めても、<!--k-obj-->を探したり<!--k-2nd-act-i-->たりするのに間に合わない<!--may-be-->から。',
         '<!--winter-vacation-->に安全でしかも<!--surely--><!--k-do-->には、<!--hot-month-->から<!--deaikei-->を<!--use-i-->始めておくのを<!--my-recommend-s-->。',
-        '<!--suddenly--><!--deaikei-->を<!--use--><!--suddenly--><!--k-act-noun-->の<!--partner-->を<!--can-find-->か不安な方は、<!--hot-month-->から<!--deaikei-->を<!--use-->慣れておくとより安心です。'],
+        '<!--suddenly--><!--deaikei-->を<!--use--><!--suddenly--><!--k-act-noun-->の<!--other-part-->を<!--can-find-->か不安な方は、<!--hot-month-->から<!--deaikei-->を<!--use-->慣れておくとより安心です。'],
     15: [
         '本番である<!--winter-vacation-->の前に、<!--hot-month-->に<!--deaikei-->の利用を始めておけば、<!--winter-vacation-->には<!--k-sub-->でも充分慣れた状態で<!--can-find-d-u-s-->。',
         '<!--deaikei-->を<!--at-first-l--><!--use-u-->方でも、<!--hot-month-->から<!--deaikei-->を<!--use-i-->始めれば、<!--winter-vacation-->の頃に離れて、もう<!--easily--><!--can-meet-->ようになっています。',
@@ -1090,7 +1096,7 @@ di_3_2 = {
     23: [
         '<!--c-かいせつ--><!--hot-month-->に<!--deaikei-->を<!--if-use-->、<!--k-rnd-do-->のに<!--very-->アドバンテージが<!--s-can-->。',
         '<!--c-総括--><!--description-->しましたように、今、<!--hot-month-->のうちに<!--deaikei-->を<!--use-i-->始めれば、<!--k-sub-->でも高<!--success-rate-->で<!--k-can-s-->。',
-        '今<!--k-obj-->と<!--want-meet-->方も、<!--winter-vacation-->に<!--k-obj-act-want-->方も、今のうちに<!--deaikei-->を<!--use-->慣れておきましょう。<!--hot-month-->こそ<!--chance-->です。',
+        '今<!--k-obj-->と<!--want-meet-->方も、<!--winter-vacation-->に<!--k-obj-act-want-->方も、今のうちに<!--deaikei-->を<!--use-->慣れておきましょう。<!--hot-month-->こそ<!--good-chance-->です。',
         '<!--c-言換--><!--k-obj-act-want--><!--k-sub-->の方にとって、<!--hot-month-->は最大の<!--chance-->です。'],
     24: ['<!--others-->より一足先に<!--hot-month-->に<!--deaikei-->を始めて、有利に<!--can-meet-i-->てください！',
          '早ければ早いほど<!--k-2nd-act-->のも<!--be-early-->なるので、早速<!--deaikei-->を始めてみる<!--my-recommend-long-->。',
@@ -1104,7 +1110,7 @@ di_3_2 = {
 da_1_1 = {
     0: ['### <!--deaikei-->は出会いのための専門<!--contents-->だから<!--can-meet-->',
         '### <!--deaikei-->には<!--seriously-->出会いを<!--find-->いる<!--obj-sex-->しかいない',
-        '### <!--deaikei-->では<!--seriously--><!--k-2nd-act-noun-->の<!--partner-->を<!--find-->いる'
+        '### <!--deaikei-->では<!--seriously--><!--k-2nd-act-noun-->の<!--other-part-->を<!--find-->いる'
         '<!--k-obj-noun-s--><!--can-meet-with-->'],
     1: 'space',
     2: ['<!--sl-s--><!--d-app-->,<!--deaikei--><!--sl-s/e-->は出会いのために作られた<!--internet-->上の<!--contents-->です。',
@@ -1158,7 +1164,7 @@ da_1_1 = {
     13: ['<!--c-逆接-->出会いを<!--find-->いる<!--obj-sex-->は少<!--is-not-->。というか、出会いを<!--find-->いない<!--obj-sex-->が'
          'ほとんどなので、<!--sl-s-->ツイッター,Facebook,インスタグラム<!--sl-s/e-->などで<!--suddenly--><!--send-mail-->も、<!--k-obj-noun-s-->から'
          '<!--reply-->がもらえる<!--rate-->はほとんど<!--is-not-->。',
-         '<!--c-順接-->、<!--at-all--><!--obj-sex-->に<!--partner-->にされなかった<!--think-->。それは<!--other-side-->が出会いを'
+         '<!--c-順接--><!--at-all--><!--obj-sex-->に相手にされなかった<!--think-->。それは<!--other-side-->が出会いを'
          '<!--find-->いなかったからです。',
          'これらの<!--way-to-encounter-->は<!--at-a-glance--><!--can-find-d-e-->そうですが、声をかけた<!--other-side-->が出会いを<!--find-->いる<!--case-->が少ない'
          'ので、<!--well--><!--cost-performance--><!--is-not-good-->ことでよく<!--leak-->ています。'],
@@ -1210,18 +1216,18 @@ da_1_2 = {
     9: ['わかりやすい<!--standard-->ですよね。', '<!--title-easy-->ことですね。', ''],
     10: 'space',
     11: [
-        '<!--blog-->で<!--publish-e-->いる<!--recommended--><!--site-->は<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->で<!--obj-user-->も<!--very-->多いところばかりです。',
-        '<!--blog-->で<!--publish-e-->いる<!--site-->は、全て歴史のある<!--pop-and-famous-p--><!--site-->です。',
+        '<!--blog--><!--publish-e-->いる<!--recommended--><!--site-->は<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->で<!--obj-user-->も<!--very-->多いところばかりです。',
+        '<!--blog--><!--publish-e-->いる<!--site-->は、全て歴史のある<!--pop-and-famous-p--><!--site-->です。',
         '<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->のみを<!--publish-e-->いる<!--blog-->の<!--recommended--><!--site-->一覧を見れば、<!--obj-user-->が多い<!--site-->が一目瞭然です。'],
-    12: ['<!--c-順接--><!--blog-->で<!--publish-e-->いる<!--site-->であれば、<!--k-sub-also--><!--k-act-->ことが<!--s-can-->。',
-         '<!--blog-->に<!--publish-e-->いる<!--site-->を<!--if-use-->、どれであっても<!--k-alt-can-do-a-->ということですね。',
+    12: ['<!--c-順接--><!--blog--><!--publish-e-->いる<!--site-->であれば、<!--k-sub-also--><!--k-act-->ことが<!--s-can-->。',
+         '<!--blog--><!--publish-e-->いる<!--site-->を<!--if-use-->、どれであっても<!--k-alt-can-do-a-->ということですね。',
          'できればランキング1位の<!--site-->を<!--recommend-n-->しますが、それ以外の<!--site-->でも問題なく<!--k-alt-do-->ことが<!--s-can-->。'],
     13: ['<!--no-plb-->ご利用ください。',
          '<!--like-a--><!--site-->を選んで<!--use-->みてください。',
          ''],
     14: 'space',
     15: [
-        '<!--recommend-n--><!--can-u--><!--site-->の<!--c-なかでも--><!--profile--><!--search-->でじっくり<!--partner-->を選んで、<!--from-me--><!--positive-->に<!--mail-->を送って<!--find-d-u-->ということまで考慮すると、<!--k-act-to-find-->に<!--be-best-->のは、<!--check-prf3--><!--free-->の<!--wkwk-sn-->になります。',
+        '<!--recommend-n--><!--can-u--><!--site-->の<!--c-なかでも--><!--profile--><!--search-->でじっくり<!--other-part-->を選んで、<!--from-me--><!--positive-->に<!--mail-->を送って<!--find-d-u-->ということまで考慮すると、<!--k-act-to-find-->に<!--be-best-->のは、<!--check-prf3--><!--free-->の<!--wkwk-sn-->になります。',
         'どの<!--recommended--><!--site-->でも<!--k-obj-act-noun-a-->を作れますが、その中でも特に<!--k-act-to-find-->にマッチしているのは、なんと言っても<!--wkwk-sn--><!--think2-->。',
         '<!--site-->をいろいろ試してみた<!--sub-reader-->はよくご存知<!--think2-->が、<!--blog-->の<!--recommended--><!--site-->の中でも最も<!--k-act-to-find-->がしやすいのは、<!--be-natural2--><!--wkwk-sn-->です。'],
     16: [
@@ -1252,7 +1258,7 @@ da_1_2 = {
     #     '<!--pcmax-sn-->特有の機能である「裏<!--profile-->」では、ユーザーの<!--be-adult--><!--data-->が良く<!--understand-->ので、その<!--data-->を<!--use-u-->ことで<!--k-obj-act-to-find-->に有利になります。',
     #     '<!--obj-sex-o-->の<!--sex-count-->や<!--sexual-pref-->が良く<!--understand-->裏<!--profile-->を<!--use-u-->と、より<!--cost-performance-->的に<!--k-act-to-find-->が<!--s-can-->。'],
     # 25: [
-    #     '裏<!--profile-->で<!--hな--><!--obj-sex-y-->を<!--find-->、<!--partner-->に<!--be-fit--><!--send-mail-->ことで、高い<!--re-mail-->率と<!--k-act-can--><!--chance-->を手に<!--s-can-->。',
+    #     '裏<!--profile-->で<!--hな--><!--obj-sex-y-->を<!--find-->、<!--other-part-->に<!--be-fit--><!--send-mail-->ことで、高い<!--re-mail-->率と<!--k-act-can--><!--chance-->を手に<!--s-can-->。',
     #     '<!--hな--><!--obj-sex-o-->を探せば、<!--easily--><!--making-love--><!--s-can-->からね。',
     #     '<!--hな--><!--k-obj-noun-s-->なら、<!--easily--><!--k-act-noun-->に<!--s-can-->。'],
     24: 'space',
@@ -1260,8 +1266,8 @@ da_1_2 = {
          '<!--c-とうぜん--><!--rather--><!--check-->しておきます。',
          ''],
     26: [
-        '<!--blog-->で<!--publish-e-->いる<!--site-->には全て共通していますが、全ての<!--site-->は*<!--entry--><!--free-->*で、初回<!--entry-->時点でお試しのための*<!--free-point-->*がもらえます。',
-        '多少の寡多はありますが、<!--blog-->に<!--publish-e-->いる<!--recommended--><!--site-->は、全て<!--entry--><!--free-->、<!--free-point-->ありです。',
+        '<!--blog--><!--publish-e-->いる<!--site-->には全て共通していますが、全ての<!--site-->は*<!--entry--><!--free-->*で、初回<!--entry-->時点でお試しのための*<!--free-point-->*がもらえます。',
+        '多少の寡多はありますが、<!--blog--><!--publish-e-->いる<!--recommended--><!--site-->は、全て<!--entry--><!--free-->、<!--free-point-->ありです。',
         '<!--publish-e-->いる<!--site-->はどれも<!--free-->で<!--entry--><!--s-can-->し、<!--entry-->した<!--occasion-->に<!--very-->な<!--free-point-->がもらえます。'],
     27: ['<!--c-とうぜん-->退会するのもワンクリックで<!--easily--><!--s-can-->。',
          '<!--site-user-->をやめるのも<!--title-easy-->ので、<!--no-plb--><!--entry--><!--s-can-->ね。',
@@ -1272,7 +1278,7 @@ da_1_2 = {
         'その<!--free-point-->はなかなかたっぷりあるので、ある程度の期間はその<!--free-point-->を<!--use--><!--k-act-to-find-->が<!--can-u--><!--think-->。',
         '<!--free-point-->なので、その<!--site-->が<!--can-meet-->かどうかを、<!--for-real--><!--mail-talk-->をしたりして確かめることが<!--s-can-->。'],
     30: [
-        '<!--blog-->で<!--publish-e-->いる<!--k-act-noun-f-->攻略法を<!--be-right-way--><!--do-real-->して成功すれば、そのお試し<!--point-->だけで<!--k-sub-is--><!--k-act-->ことも十分<!--s-can-->。',
+        '<!--blog--><!--publish-e-->いる<!--k-act-noun-f-->攻略法を<!--be-right-way--><!--do-real-->して成功すれば、そのお試し<!--point-->だけで<!--k-sub-is--><!--k-act-->ことも十分<!--s-can-->。',
         '<!--nicely-->やれれば、その<!--free-point-->だけでも<!--k-alt-can-do-a-->かもしれません。',
         '運が良ければ、<!--cost-->を使わずのその<!--free-point-->だけで<!--k-alt-can-do-a--><!--case-->もあります。'],
     31: ['<!--c-とうぜん--><!--point-->を<!--waste-->したらダメですが。',
@@ -1291,7 +1297,7 @@ da_1_2 = {
         'ずっと<!--some--><!--site-->を<!--use-u-->のではなく、<!--at-first-l--><!--some--><!--site-->を<!--use-->みて、<!--me--><!--liking-->の<!--can-meet--><!--site-->を<!--find-u-->という<!--use-i--><!--sub-reader-->もあります。',
         '試しに<!--some--><!--site-->を<!--use-->、その中から一番<!--can-meet--><!--site-->を選ぶことにもなります。'],
     36: ['<!--which-site-->も初回<!--entry-->時のお試し<!--point-->でしばらく<!--free-->で<!--can-meet-->ので<!--cost-->はかかりません。',
-         '<!--blog-->で<!--publish-e-->いる<!--site-->であれば、<!--entry--><!--free-->でお試し<!--free-point-->もあるので、<!--site-->をいくつ<!--use-->も<!--free-->です。',
+         '<!--blog--><!--publish-e-->いる<!--site-->であれば、<!--entry--><!--free-->でお試し<!--free-point-->もあるので、<!--site-->をいくつ<!--use-->も<!--free-->です。',
          '<!--use-u--><!--site-->を増やしても、<!--at-first-->は<!--free-point-->があるので、<!--free-->で<!--k-act-to-find-->が<!--can-u--><!--be-like-this-->。'],
     37: ['<!--seriously--><!--k-obj-act-want-a-->のであれば、試してみる価値あり<!--think2-->。',
          '人によって合う<!--site-->は違うので、<!--free-->の範囲で試してみるのは<!--my-recommend-s-->。',
@@ -1312,7 +1318,7 @@ da_1_2 = {
         '<!--me-->は<!--recommend-n-->している<!--site-->を１０年以上<!--for-real--><!--use-->いますが、<!--entry-->した<!--site-->から変な<!--sl-s-->電話,<!--mail--><!--sl-s/e-->が届いたことは一度も<!--is-not-->。',
         '<!--blog-->の推奨している<!--site-->を<!--me-->も個人的にずっと<!--use-->いますが、<!--tel-num-->が悪用されたことは<!--at-all--><!--is-not-->。',
         'ここで<!--publish-e-->いる<!--site-->であれば、<!--privacy-->が<!--foully-use-->されることは考えられません。'],
-    43: ['<!--c-とうぜん--><!--blog-->で<!--publish-e-->いる以外の所謂「<!--bad-site-->」はこの限りでは<!--is-not-->が。',
+    43: ['<!--c-とうぜん--><!--blog--><!--publish-e-->いる以外の所謂「<!--bad-site-->」はこの限りでは<!--is-not-->が。',
          ''],
     44: 'space',
     45: ['<!--c-なかでも--><!--wkwk-sn-->は20年の歴史がある老舗<!--site-->で、各都道府県公安委員会などへの*免許<!--entry-->*も完璧です。',
@@ -1322,7 +1328,7 @@ da_1_2 = {
          '<!--c-順接-->心配せず<!--no-plb--><!--tel-check-->を済ませて、<!--k-obj-act-to-find-->を始めましょう。',
          '<!--privacy-->など気にせず、<!--no-plb--><!--tel-check-->をしてください。',
          '<!--c-順接--><!--age-check-->の<!--occasion-->も、<!--privacy-->の安全性に関する心配は無用です。<!--no-plb--><!--age-check-->を済ませて<!--k-obj-act-noun-a-->を<!--find-->ください。。'],
-    47: ['<!--be-early-->始めれば、それだけ<!--be-early--><!--k-obj-act-noun-->が作れますから。',
+    47: ['<!--be-early-->始めれば、それだけ<!--be-early--><!--k-obj-act-to-find-a-->が作れますから。',
          ''],
     'info': {'deny': ['woman'], 'only': [], 'shuffle': [], 'sec_name': 'da_1_2'}}
 # da_1_2/end
@@ -1358,18 +1364,18 @@ da_1_3 = {
     9: ['わかりやすい<!--standard-->ですよね。', '<!--title-easy-->ことですね。', ''],
     10: 'space',
     11: [
-        '<!--blog-->で<!--publish-e-->いる<!--recommended--><!--site-->は<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->で<!--obj-user-->も<!--very-->多いところばかりです。',
-        '<!--blog-->で<!--publish-e-->いる<!--site-->は、全て歴史のある<!--pop-and-famous-p--><!--site-->です。',
+        '<!--blog--><!--publish-e-->いる<!--recommended--><!--site-->は<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->で<!--obj-user-->も<!--very-->多いところばかりです。',
+        '<!--blog--><!--publish-e-->いる<!--site-->は、全て歴史のある<!--pop-and-famous-p--><!--site-->です。',
         '<!--pop-and-famous-n--><!--pop-and-famous-p--><!--site-->のみを<!--publish-e-->いる<!--blog-->の<!--recommended--><!--site-->一覧を見れば、<!--obj-user-->が多い<!--site-->が一目瞭然です。'],
-    12: ['<!--c-順接--><!--blog-->で<!--publish-e-->いる<!--site-->であれば、<!--k-sub-also--><!--k-act-->ことが<!--s-can-->。',
-         '<!--blog-->に<!--publish-e-->いる<!--site-->を<!--if-use-->、どれであっても<!--k-alt-can-do-a-->ということですね。',
+    12: ['<!--c-順接--><!--blog--><!--publish-e-->いる<!--site-->であれば、<!--k-sub-also--><!--k-act-->ことが<!--s-can-->。',
+         '<!--blog--><!--publish-e-->いる<!--site-->を<!--if-use-->、どれであっても<!--k-alt-can-do-a-->ということですね。',
          'できればランキング1位の<!--site-->を<!--recommend-n-->しますが、それ以外の<!--site-->でも問題なく<!--k-alt-do-->ことが<!--s-can-->。'],
     13: ['<!--no-plb-->ご利用ください。',
          '<!--like-a--><!--site-->を選んで<!--use-->みてください。',
          ''],
     14: 'space',
     15: [
-        '<!--recommend-n--><!--can-u--><!--site-->の<!--c-なかでも--><!--profile--><!--search-->でじっくり<!--partner-->を選んで、<!--from-me--><!--positive-->に<!--mail-->を送って<!--find-d-u-->ということまで考慮すると、<!--k-act-to-find-->に<!--be-best-->のは、<!--check-prf3--><!--free-->の<!--wkwk-sn-->になります。',
+        '<!--recommend-n--><!--can-u--><!--site-->の<!--c-なかでも--><!--profile--><!--search-->でじっくり<!--other-part-->を選んで、<!--from-me--><!--positive-->に<!--mail-->を送って<!--find-d-u-->ということまで考慮すると、<!--k-act-to-find-->に<!--be-best-->のは、<!--check-prf3--><!--free-->の<!--wkwk-sn-->になります。',
         'どの<!--recommended--><!--site-->でも<!--k-obj-act-noun-a-->を作れますが、その中でも特に<!--k-act-to-find-->にマッチしているのは、なんと言っても<!--wkwk-sn--><!--think2-->。',
         '<!--site-->をいろいろ試してみた<!--sub-reader-->はよくご存知<!--think2-->が、<!--blog-->の<!--recommended--><!--site-->の中でも最も<!--k-act-to-find-->がしやすいのは、<!--be-natural2--><!--wkwk-sn-->です。'],
     16: [
@@ -1399,8 +1405,8 @@ da_1_3 = {
          '<!--c-とうぜん--><!--rather--><!--check-->しておきます。',
          ''],
     25: [
-        '<!--blog-->で<!--publish-e-->いる<!--site-->には全て共通していますが、全ての<!--site-->は*<!--entry--><!--free-->*で、初回<!--entry-->時点でお試しのための*<!--free-point-->*がもらえます。',
-        '多少の寡多はありますが、<!--blog-->に<!--publish-e-->いる<!--recommended--><!--site-->は、女性は全て<!--free-->です。',
+        '<!--blog--><!--publish-e-->いる<!--site-->には全て共通していますが、全ての<!--site-->は*<!--entry--><!--free-->*で、初回<!--entry-->時点でお試しのための*<!--free-point-->*がもらえます。',
+        '多少の寡多はありますが、<!--blog--><!--publish-e-->いる<!--recommended--><!--site-->は、女性は全て<!--free-->です。',
         '<!--publish-e-->いる<!--site-->は女性はどれも<!--free-->で利用できます。'],
     26: ['<!--c-とうぜん-->退会するのもワンクリックで<!--easily--><!--s-can-->。',
          '<!--site-user-->をやめるのも<!--title-easy-->ので、<!--no-plb--><!--entry--><!--s-can-->ね。',
@@ -1436,7 +1442,7 @@ da_1_3 = {
         '<!--me-->は<!--recommend-n-->している<!--site-->を１０年以上<!--for-real--><!--use-->いますが、<!--entry-->した<!--site-->から変な<!--sl-s-->電話,<!--mail--><!--sl-s/e-->が届いたことは一度も<!--is-not-->。',
         '<!--blog-->の推奨している<!--site-->を<!--me-->も個人的にずっと<!--use-->いますが、<!--tel-num-->が悪用されたことは<!--at-all--><!--is-not-->。',
         'ここで<!--publish-e-->いる<!--site-->であれば、<!--privacy-->が<!--foully-use-->されることは考えられません。'],
-    37: ['<!--c-とうぜん--><!--blog-->で<!--publish-e-->いる以外の所謂「<!--bad-site-->」はこの限りでは<!--is-not-->が。',
+    37: ['<!--c-とうぜん--><!--blog--><!--publish-e-->いる以外の所謂「<!--bad-site-->」はこの限りでは<!--is-not-->が。',
          ''],
     38: 'space',
     39: ['<!--c-なかでも--><!--wkwk-sn-->は20年の歴史がある老舗<!--site-->で、各都道府県公安委員会などへの*免許<!--entry-->*も完璧です。',
@@ -1446,7 +1452,7 @@ da_1_3 = {
          '<!--c-順接-->心配せず<!--no-plb--><!--tel-check-->を済ませて、<!--k-obj-act-to-find-->を始めましょう。',
          '<!--privacy-->など気にせず、<!--no-plb--><!--tel-check-->をしてください。',
          '<!--c-順接--><!--age-check-->の<!--occasion-->も、<!--privacy-->の安全性に関する心配は無用です。<!--no-plb--><!--age-check-->を済ませて<!--k-obj-act-noun-a-->を<!--find-->ください。。'],
-    41: ['<!--be-early-->始めれば、それだけ<!--be-early--><!--k-obj-act-noun-->が作れますから。',
+    41: ['<!--be-early-->始めれば、それだけ<!--be-early--><!--k-obj-act-to-find-a-->が作れますから。',
          ''],
     'info': {'deny': ['man'], 'only': [], 'shuffle': [], 'sec_name': 'da_1_3'}}
 # da_1_3/end
@@ -1508,7 +1514,7 @@ da_1_4 = {
     13: ['<!--c-逆接-->出会いを<!--find-->いる<!--obj-sex-->は少<!--is-not-->。というか、出会いを<!--find-->いない<!--obj-sex-->が'
          'ほとんどなので、<!--sl-s-->ツイッター,Facebook,インスタグラム<!--sl-s/e-->などで<!--suddenly--><!--send-mail-->も、<!--k-obj-noun-s-->から'
          '<!--reply-->がもらえる<!--rate-->はほとんど<!--is-not-->。',
-         '<!--c-順接-->、<!--at-all--><!--obj-sex-->に<!--partner-->にされなかった<!--think-->。それは<!--other-side-->が出会いを'
+         '<!--c-順接--><!--at-all--><!--obj-sex-->に相手にされなかった<!--think-->。それは<!--other-side-->が出会いを'
          '<!--find-->いなかったからです。',
          'これらの<!--way-to-encounter-->は<!--at-a-glance--><!--can-find-d-e-->そうですが、声をかけた<!--other-side-->が出会いを<!--find-->いる<!--case-->が少ない'
          'ので、<!--well--><!--cost-performance--><!--is-not-good-->ことでよく<!--leak-->ています。'],
@@ -1591,7 +1597,7 @@ da_3_1 = {
         'その<!--mail-->を閲覧して<!--reply-->をすることが<!--s-can-->。'],
     4: [
         '忙しい社会人でも、家族がいて自由になる<!--time-zone-->が少ない<!--sub-married-->でも、<!--deaikei-->なら<!--adult-->を<!--find-u-->ことが<!--s-can-->。',
-        '<!--sl-s-->異性から<!--mail-->が届いた通知,<!--site-->の<!--mail-magazine--><!--sl-s/e-->が<!--smart-phone--><!--address-->に届くようにも<!--s-can-->し、'
+        '<!--sl-s-->異性から<!--mail-->が届いた通知,<!--site-->の<!--mail-magazine--><!--sl-s/e-->が<!--smart-phone--><!--address-->に<!--be-sent-->ようにも<!--s-can-->し、'
         '<!--sl-s--><!--sub-l-partner-->,<!--sub-partner--><!--sl-s/e-->に<!--furin-->が<!--leak-->ないように通知しないように設定することも<!--s-can-->。'],
     5: ['<!--c-並列--><!--communication-->は<!--mail-->でするので、<!--time-zone-->があるときに<!--mail-->送っておけば'
         '<!--other-side-->も都合がいいときに読んで<!--re-mail-->してくれます。',
@@ -1619,7 +1625,7 @@ da_3_1 = {
     11: ['<!--time-zone-->に縛られずに<!--k-obj-act-can-find-->のが<!--good-->ですね。',
          'この、<!--men-and-women--><!--time-zone-->に拘束されず<!--adult-->が<!--can-u-->のが<!--deaikei-->の大きな魅力です。<!--k-obj-act-to-find-->にも'
          '<!--just-fit-->です。',
-         'この、いつでもどこでも<!--use--><!--k-2nd-act-noun-->の<!--partner-->を<!--can-find-->便利さが<!--deaikei-->で'
+         'この、いつでもどこでも<!--use--><!--k-2nd-act-noun-->の<!--other-part-->を<!--can-find-->便利さが<!--deaikei-->で'
          '<!--k-obj-act-find--><!--occasion-->の大きな<!--merit-->になります。'],
     'info': {'deny': [], 'only': ['sf_obj'], 'shuffle': [], 'sec_name': 'da_3_1'}}
 # da_3_1/end
@@ -1642,7 +1648,7 @@ da_3_2 = {
         'その<!--mail-->を閲覧して<!--reply-->をすることが<!--s-can-->。'],
     4: [
         '忙しい社会人でも、家族がいて自由になる<!--time-zone-->が少ない<!--sub-married-->でも、<!--deaikei-->なら<!--adult-->を<!--find-u-->ことが<!--s-can-->。',
-        '<!--sl-s-->異性から<!--mail-->が届いた通知,<!--site-->の<!--mail-magazine--><!--sl-s/e-->が<!--smart-phone--><!--address-->に届くようにも<!--s-can-->し、'
+        '<!--sl-s-->異性から<!--mail-->が届いた通知,<!--site-->の<!--mail-magazine--><!--sl-s/e-->が<!--smart-phone--><!--address-->に<!--be-sent-->ようにも<!--s-can-->し、'
         '<!--sl-s--><!--sub-l-partner-->,<!--sub-partner--><!--sl-s/e-->に<!--furin-->が<!--leak-->ないように通知しないように設定することも<!--s-can-->。'],
     5: ['<!--c-並列--><!--communication-->は<!--mail-->でするので、<!--time-zone-->があるときに<!--mail-->送っておけば'
         '<!--other-side-->も都合がいいときに読んで<!--re-mail-->してくれます。',
@@ -1789,7 +1795,7 @@ da_6_1 = {
         '<!--c-順接--><!--at-first-->から<!--look-->ではなく、<!--mail-->の内容など<!--personality-->をメインに惹かれ合っていくことになります。'],
     10: ['そうやって<!--obj-sex-->と<!--intimate-->なってから<!--for-real-->会ってみて、<!--love-->になったり'
          '<!--k-act-noun-->などの<!--adult-->になるので、<!--look--><!--regardless--><!--can-meet-s-->。',
-         '<!--c-順接-->、<!--look-->は<!--regardless--><!--sub-partner-->を<!--make-this-->り<!--adult-->になったりすることが<!--can-u--><!--be-like-this-->。'],
+         '<!--c-順接--><!--look-->は<!--regardless--><!--sub-partner-->を<!--make-this-->り<!--adult-->になったりすることが<!--can-u--><!--be-like-this-->。'],
     11: 'space',
     12: ['<!--nicely--><!--profile-->を吟味して探せば、<!--sub-beauty-->じゃなくても<!--k-obj-status-->で<!--obj-beauty-->の'
          '<!--sl-s--><!--k-act-noun-->,<!--obj-beauty-y--><!--sl-s/e--><!--k-act-->ことが<!--s-can-->。',
@@ -1954,7 +1960,7 @@ da_7_2 = {
 # da_7_2/end
 
 da_8_1 = {
-    0: ['### <!--deaikei-->なら<!--k-sub-is-->誰にも<!--leak-->ず、こっそり<!--k-obj-noun--><!--can-find-d-e-with-->る',
+    0: ['### <!--deaikei-->なら<!--k-sub-is-->誰にも<!--leak-->ず、こっそり<!--k-target-to-find--><!--can-find-d-e-with-->る',
         '### 誰にも<!--leak-->ず<!--k-obj-act-want-->なら<!--deaikei-->一択'],
     1: 'space',
     2: ['<!--there-->を読んでいる<!--sub-reader-->の中にはシャイな<!--sub-reader-->も<!--there-is-s--><!--think-->。',
@@ -1963,7 +1969,7 @@ da_8_1 = {
     3: [
         'シャイな<!--sub-reader-->の<!--case-->、<!--obj-sex-->との出会いを<!--find-->いることを<!--sl-s--><!--acquaintance-->,<!--friend--><!--sl-s/e-->などに<!--leak-->るのが'
         '恥ずかしいと考える<!--may-be-->。',
-        '<!--sl-s--><!--marriage-->,<!--sub-partner--><!--to-find--><!--sl-s/e-->ですらそうな<!--be-like-this-->から、<!--k-act-noun-->などの<!--adult-->を<!--find-->いるのを'
+        '<!--sl-s--><!--marriage-->,<!--sub-partner-->探し<!--sl-s/e-->ですらそうな<!--be-like-this-->から、<!--k-act-noun-->などの<!--adult-->を<!--find-->いるのを'
         '<!--leak-->るのはもっと嫌かもしれません。'],
     4: 'space',
     5: ['<!--c-逆接--><!--deaikei-->で<!--k-find--><!--case-->には<!--like-this2-->心配もいりません。'],
@@ -1996,9 +2002,9 @@ da_9_1 = {
         '<!--trouble-->もなく<!--at-all-->気にすることは<!--is-not-->。'],
     3: ['<!--real-->の社会では<!--at-all--><!--unrelated--><!--target-person-->なので、その失敗も<!--others-->に<!--leak-->てしまうことは'
         '<!--is-not-->。',
-        '<!--c-逆接--><!--deaikei-->で<!--find-d-u--><!--partner-->は<!--usual--><!--at-all-->接点がない<!--others-->なので、'
-        '<!--trouble--><!--is-not-good-->とかいうことは<!--is-not-->。'],
-    4: ['満足いく<!--k-alt-can-do-->まで、いくらでも<!--action-do-->して失敗していい<!--be-like-this-->。',
+        '<!--c-逆接--><!--deaikei-->で<!--find-d-u--><!--other-part-->は<!--usual--><!--at-all-->接点がない<!--others-->なので、'
+        '<!--bad-post-rot-->とかいうことは<!--is-not-->。'],
+    4: ['満足いく<!--k-alt-can-do-->まで、いくらでも<!--action-do-->て失敗していい<!--be-like-this-->。',
         '<!--deaikei-->なら、<!--trouble-->なく<!--k-obj-target-->との<!--find-d-i-->まくれる<!--be-like-this-->。'],
     5: 'space',
     6: ['この点も、<!--real-->の<!--relationship-->の中で<!--find-d-u--><!--occasion-->とは違う、'
@@ -2014,17 +2020,17 @@ da_9_2 = {
         '### <!--relationship-->を気にせず<!--boldly--><!--k-obj-noun-s-alt--><!--can-find-d-e-with-->る'],
     1: 'space',
     2: ['<!--deaikei-->でも百発百中で<!--can-meet-->わけではないので、<!--nicely--><!--date-->に誘えなかったり、'
-        '<!--for-real-->会ったけど相性が合わなくて<!--k-act-i-->ない、あるいは<!--other-side-->の顔が'
-        '<!--not-liking-->くて<!--k-act-i-->なかったという<!--may-be-->。',
+        '<!--for-real-->会ったけど相性が合わなくて<!--k-act-can-i-->ない、あるいは<!--other-side-->の顔が'
+        '<!--not-liking-->くて<!--k-act-i-->なかったということもあります。。',
         '<!--deaikei-->が出会いやすいとは言っても、気が合わないとか<!--not-liking-->いということで<!--nicely2-->いかない'
         '<!--may-be-->。',
         'もし<!--other-side-->に振られたりしても、<!--real-->では<!--at-all-->関係がない<!--target-person-->ですから、'
         '<!--trouble-->もなく<!--at-all-->気にすることは<!--is-not-->。'],
     3: ['<!--real-->の社会では<!--at-all--><!--unrelated--><!--target-person-->なので、その失敗も<!--others-->に<!--leak-->てしまうことは'
         '<!--is-not-->。',
-        '<!--c-逆接--><!--deaikei-->で<!--find-d-u--><!--partner-->は<!--usual--><!--at-all-->接点がない<!--others-->なので、'
-        '<!--trouble--><!--is-not-good-->とかいうことは<!--is-not-->。'],
-    4: ['満足いく<!--k-alt-can-do-->まで、いくらでも<!--action-do-->して失敗していい<!--be-like-this-->。',
+        '<!--c-逆接--><!--deaikei-->で<!--find-d-u--><!--other-part-->は<!--usual--><!--at-all-->接点がない<!--others-->なので、'
+        '<!--bad-post-rot-->とかいうことは<!--is-not-->。'],
+    4: ['<!--k-act-can-->まで、いくらでも<!--action-do-->て失敗していい<!--be-like-this-->。満足できるまでやりましょう。',
         '<!--deaikei-->なら、<!--trouble-->なく<!--k-obj-target-->との<!--find-d-i-->まくれる<!--be-like-this-->。'],
     5: 'space',
     6: ['この点も、<!--real-->の<!--relationship-->の中で<!--find-d-u--><!--occasion-->とは違う、'
@@ -2064,7 +2070,7 @@ da_11_1 = {
         '<!--net-d-->であれば、<!--other-side-->の<!--sl-s--><!--obj-l-partner-->,<!--obj-partner-->,<!--friend-->,<!--acquaintance--><!--sl-s/e-->などに'
         '<!--leak-->ることなく付き合うことが<!--s-can-->。'],
     4: [
-        '<!--deaikei-->は<!--internet-->上での出会いなので、<!--you-->の<!--sl-s--><!--sub-l-partner-->,<!--sub-partner--><!--sl-s/e-->などの<!--partner-->にも、'
+        '<!--deaikei-->は<!--internet-->上での出会いなので、<!--you-->の<!--sl-s--><!--sub-l-partner-->,<!--sub-partner--><!--sl-s/e-->にも、'
         '<!--other-side-->の<!--obj-married-->の<!--sl-s--><!--obj-l-partner-->,家族<!--sl-s/e-->にも、その周りの<!--acquaintance-->などにも'
         '<!--at-all--><!--leak-->ることなく<!--action-->でき、<!--furin-->をして<!--k-2nd-act-noun-->を楽しむことが<!--s-can-->。'],
     5: 'space',
@@ -2193,8 +2199,32 @@ pi_1_1 = {
         '選ぶことが<!--s-can-->。',
         '<!--c-とうぜん--><!--k-act-->だけでなく、<!--link-word-act-->の<!--partner-->や<!--link-word-act-->の<!--partner-->なども'
         '<!--site-->の<!--profile-->を<!--if-use--><!--easily--><!--find-u-->ことが<!--s-can-->'],
-    'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'pi_1_1'}}
+    'info': {'deny': ['site'], 'only': [], 'shuffle': [], 'sec_name': 'pi_1_1'}}
 # pi_1_1/end
+
+pi_1_2 = {
+    0: ['## 本当に<!--k-a-adj--><!--k-act-can-->？',
+        '## 実際、<!--k-a-adj--><!--k-act-can-->のか？',
+        '## <!--k-a-adj--><!--really--><!--k-act-can-->理由'],
+    1: 'space',
+    2: ['%r?<!--k-site-->を<!--use--><!--k-sub-also--><!--k-act-can-->の？',
+        '%r?<!--k-site-->で<!--sl-s--><!--adult-->,<!--k-act-to-find--><!--sl-s/e-->がしやすいのはわかった<!--but-and-c--><!--k-act-can-->の？'],
+    3: ['<!--like-this2--><!--question-->がある<!--sub-reader-->も<!--there-is-s--><!--think-->。',
+        '次は<!--like-this2--><!--question-->が飛び出してくるかもしれませんね。'],
+    4: ['はっきり言って、<!--k-act-sim--><!--best-good--><!--way-->は<!--k-site-->で探すことだと断言<!--s-can-->。',
+        '<!--c-逆接--><!--like-this2-->心配はご無用です！'],
+    5: 'space',
+    6: ['<!--k-site-->では<!--profile-->で<!--other-side-->の<!--data-->がわかります。',
+        '<!--other-side-->の<!--sl-s--><!--job-->,<!--style--><!--sl-s/e-->などの<!--data-->は、<!--k-site-->であれば<!--profile-->を見るだけですぐ分かります。'],
+    7: 'space',
+    8: ['その<!--profile-->を<!--nicely--><!--if-use-->、<!--liking-->の<!--obj-sex--><!--can-meet-with-->ので、'
+        '<!--k-sub-is--><!--k-act-sim-->ことも<!--that-much-->難しいことでは<!--is-not-->。',
+        '<!--c-順接--><!--k-obj-status-->でも<!--link-word-obj-->でも、<!--k-site-->なら<!--liking-->の<!--obj-sex-->を'
+        '選ぶことが<!--s-can-->。',
+        '<!--c-とうぜん--><!--k-act-sim-->だけでなく、<!--link-word-act-->の<!--partner-->や<!--link-word-act-->の<!--partner-->なども'
+        '<!--site-->の<!--profile-->を<!--if-use--><!--easily--><!--find-u-->ことが<!--s-can-->'],
+    'info': {'deny': [], 'only': ['site'], 'shuffle': [], 'sec_name': 'pi_1_2'}}
+# pi_1_2/end
 
 pi_2_1 = {
     0: ['### <!--k-sub-is--><!--adult-->を<!--find-u-->なら<!--deaikei-->が<!--best-->',
@@ -2208,7 +2238,7 @@ pi_2_1 = {
         '<!--seriously--><!--adult-->を<!--find-->いる<!--obj-sex-->が多いです。'],
     5: ['<!--c-とうぜん--><!--adult-->を<!--find-->いる<!--k-obj-noun-s-->も多いです。'],
     6: [
-        '<!--c-順接--><!--deaikei-->では<!--relatively--><!--easily--><!--adult-->の<!--partner-->を<!--find-u-->ことが<!--s-can-->。',
+        '<!--c-順接--><!--deaikei-->では<!--relatively--><!--easily--><!--adult-->の<!--other-part-->を<!--find-u-->ことが<!--s-can-->。',
         '<!--c-順接--><!--adult-->も<!--deaikei-->を<!--if-use--><!--easily-->見つけることが<!--s-can-->。'],
     7: 'space',
     8: ['<!--deaikei-->で<!--adult-->を<!--find-->いる人が多いのは、'
@@ -2240,126 +2270,77 @@ pi_2_1 = {
     18: [
         '<!--like-this2-->感じで<!--adult-->に特化している<!--deaikei-->には、<!--men-and-women-->ともに<!--adult-->を<!--find-->いる人が集まってきます。',
         '<!--c-かいせつ--><!--deaikei-->は<!--adult-->が正式に認められているので、<!--adult-->がしたい人が<!--well-->多いです。'],
-    19: ['そのため、<!--deaikei-->で<!--adult-->がどんどん<!--find-i-->やすくなっていく<!--be-like-this-->。',
-         '<!--c-順接-->、<!--everyone--><!--easily--><!--k-act-to-find-->などの<!--adult-->がしやすい<!--be-like-this-->。'],
+    19: ['<!--c-順接--><!--deaikei-->で<!--adult-->がどんどん<!--find-i-->やすくなっていく<!--be-like-this-->。',
+         '<!--c-順接--><!--everyone--><!--easily--><!--k-act-to-find-->などの<!--adult-->がしやすい<!--be-like-this-->。'],
     20: 'space',
     21: ['<!--c-補足--><!--deaikei-->では公式アプリがありますが、アプリでは<!--control-->上、１８禁の<!--contents-->が利用できない<!--case-->が多いです。',
          'ところで、<!--blog-->で<!--go-introduce-->している<!--deaikei-->にも公式アプリがあります。'],
     22: ['<!--c-逆接--><!--adult-bbs-->の利用などちょっと<!--hな-->機能が制限されています。',
          '<!--c-逆接-->その公式アプリでは<!--k-act-noun-->募集などの<!--hな--><!--purpose-->の出会いは<!--rather--><!--find-i-->にくいかもしれません。'],
     23: ['<!--c-順接--><!--deaikei-->で<!--adult-->を<!--find-u--><!--occasion-->にはアプリから<!--use-u-->のではなく、'
-         'ブラウザを<!--use-->web<!--site-->の方から<!--entry-->するのを<!--my-recommend-s-->。',
+         'ブラウザを<!--use--><!--web-site-->の方から<!--entry-->するのを<!--my-recommend-s-->。',
          '<!--k-obj-target-->を<!--find-i-->たり<!--adult-->がしたい方は、<!--sl-s-->safari,Chrome<!--sl-s/e-->などのブラウザを<!--use-->、'
-         'web<!--site-->の方から<!--entry-->した方がより<!--k-act-can-easy--><!--think-->。'],
-    'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'pi_2_1'}}
+         '<!--web-site-->の方から<!--entry-->した方がより<!--k-act-can-easy--><!--think-->。'],
+    'info': {'deny': ['site'], 'only': [], 'shuffle': [], 'sec_name': 'pi_2_1'}}
 # pi_2_1/end
 
-pa_3_1 = {
-    0: ['### <!--deaikei-->は<!--k-sub-also--><!--hな--><!--k-obj-noun-s-->が<!--find-i-->やすい',
-        '### <!--hな--><!--k-obj-noun-s-->が多い<!--recommended--><!--deaikei-->を<!--use-i-->ましょう'],
+pi_2_2 = {
+    0: ['### <!--k-sub-is--><!--adult-->を<!--find-u-->なら<!--k-site-->が<!--best-->',
+        '### <!--k-obj-noun-->に限らず、<!--k-site-->では<!--k-sub-is--><!--adult-->がしやすい'],
     1: 'space',
-    2: ['<!--k-rnd-do-->のに<!--deaikei-->が<!--best-->なのは、<!--k-obj-noun-l-->と出会いやすいからです。',
-        '<!--deaikei2-->は<!--k-obj-noun-->が<!--many-->いて<!--easily--><!--title-can-meet-->ので、<!--k-obj-act-find-easy-->です。',
-        '<!--deaikei-->が<!--k-easy-->理由の一つに*「<!--deaikei-->では<!--k-obj-noun-l-->と出会いやすい」*ということがあります。'],
-    3: 'space',
-    4: ['はっきり言って、<!--deaikei-->を<!--use-->いる<!--obj-sex-->は多いです。',
-        '上の方でも書きましたが、<!--deaikei-->の<!--b-bbs-->には<!--obj-sex-->の<!--post-->が<!--many-->あります。',
-        '<!--deaikei-->というと、<!--sub-sex-->ばかりが<!--use-->いる<!--impression-->があるかもしれませんが、'
-        '<!--in-real--><!--obj-sex-o-->で出会いを<!--find-->いる人が<!--well--><!--many-->います。'],
-    5: ['<!--obj-partner-->募集中の若い<!--obj-sex-y-->から、<!--companion-->を<!--find--><!--marriage-->中のアラサー<!--obj-sex-o-->、'
-        '<!--hな--><!--partner-->を<!--find-->いる<!--obj-older-->、<!--furin--><!--sex-->の<!--partner-->を<!--find-->いる'
-        'セクシーな<!--k-obj-noun-s-->など<!--various--><!--k-obj-category-->の<!--obj-sex-->が<!--use-->います。',
-        '<!--at-first-l--><!--deaikei-->を<!--use-a-->方は、「こんなに出会いを<!--find-->いる<!--obj-sex-->がいるのか！」と'
-        '驚くかもしれません。'],
-    6: ['<!--profile-->に上げてある<!--photo-->を見ただけでも、<!--h-2-->そうな<!--obj-sex-->も見つかります。'],
+    2: ['<!--k-site-->の一番の特長は、<!--adult-->を<!--find-->いる<!--target-person-->の比率が多いことです。',
+        '<!--k-site-->では、<!--adult-->を<!--find-->いる<!--target-person-->がとっても多いです。'],
+    3: ['これは<!--men-and-women-->どちらにも共通します。',
+        '<!--sub-sex-->は<!--be-natural2-->のこと、<!--obj-sex-o-->でも<!--adult-->を<!--find-->いる<!--target-person-->が<!--many-->います。'],
+    4: ['これはどの<!--area-->でも共通で、<!--link-area-->や<!--link-area-->などの<!--area-->でも、'
+        '<!--seriously--><!--adult-->を<!--find-->いる<!--obj-sex-->が多いです。'],
+    5: ['<!--c-とうぜん--><!--adult-->を<!--find-->いる<!--k-obj-noun-s-->も多いです。'],
+    6: [
+        '<!--c-順接--><!--k-site-->では<!--relatively--><!--easily--><!--adult-->の<!--partner-->を<!--find-u-->ことが<!--s-can-->。',
+        '<!--c-順接--><!--adult-->も<!--k-site-->を<!--if-use--><!--easily-->見つけることが<!--s-can-->。'],
     7: 'space',
-    8: ['<!--c-添加-->その中でも<!--k-obj-noun-->がなぜか<!--well--><!--many-->います。',
-        'その出会いを<!--find-->いる<!--obj-sex-->の中には、<!--unexpectedly--><!--many2--><!--k-obj-noun-->が含まれています。',
-        'その出会いを<!--find-->いる<!--obj-sex-->の中でも、<!--k-obj-noun-->が<!--very-->多いです。'],
-    9: ['<!--profile-->をなんとなく眺めてみてもそうですし、<!--author-->が<!--so-far--><!--deaikei-->で'
-        '<!--can-meet-i-->た<!--k-act-noun-->の中にも<!--k-obj-->が多かったです。',
-        '<!--obj-sex-->の<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->を見てみると、<!--k-obj-noun-->の<!--post-->をよく見かけます。'
-        '<!--deaikei-->では、それだけ<!--many2-->出会いを<!--find-->いる<!--k-obj-noun-s-->がいるということです。'],
-    10: ['<!--site-->に<!--entry-->して意識して<!--b-bbs-->を見てみると一発で<!--understand--><!--think-->。',
-         'これは<!--deaikei-->に<!--entry-->してみると一目瞭然です。'],
-    11: ['<!--sl-s--><!--self-int-->,日記<!--sl-s/e-->を読むと<!--k-obj-noun-->が見つかったりするので、<!--in-real-->もっと多いかもしれません。',
-         '<!--deaikei-->の<!--profile-->には<!--k-obj-category-->を書く欄がありますが、ここに「<!--k-obj-status-->」等を'
-         '書いている<!--obj-sex-->は<!--well-->多いです。<!--profile-->の<!--k-obj-category-->欄にははっきり書いていなくても、'
-         '<!--sl-s--><!--self-int-->,日記,裏<!--profile--><!--sl-s/e-->などで<!--k-obj-status-->だと<!--judge--><!--target-person-->もいます。',
-         '<!--site-->によって<!--k-obj-status-->だとはっきり<!--judge-->ところもあるので、<!--like-this2--><!--site-->では<!--k-obj-noun-->は'
-         '見つけやすい<!--think-->。ない<!--site-->では、<!--self-int-->などを見ると<!--k-obj-noun-->を<!--easily-->見つけられます。'],
-    12: ['個人的な<!--impression-->では、<!--site-1-->や<!--site-2-->に<!--k-obj-noun-->が多い気がします。',
-         '<!--deaikei-->の中でも<!--site-1-->には、<!--profile-->に<!--k-obj-status-->と書いている<!--target-person-->が多いです。'
-         '<!--site-1-->は特に<!--k-alt-easy--><!--think-->。',
-         '中でも、<!--site-1-->には<!--k-obj-noun-->が<!--very-->多いので、<!--k-obj-act-want-->方には断然オススメです。'],
-    13: 'space',
-    14: [
-        '<!--deaikei-->には<!--various--><!--k-obj-category-->の<!--sub-sex-->がいるので、<!--k-obj-noun-->が<!--like-a--><!--sub-sex-->とも'
-        '<!--be-early--><!--can-meet-s-->。',
-        '<!--k-obj-noun-j-->という<!--job-->は、肉体的にも精神的にもストレスが溜まりやすい<!--job-->なのかもしれませんね。'
-        'そのストレスを解消するために、<!--deaikei-->で<!--k-act-noun-->などの<!--adult-->を<!--find2-->、'
-        '<!--sex-->でスッキリしているの<!--think-->。',
-        '<!--k-obj-noun-s-->の中にはなかなか<!--sub-sex--><!--find-d-u-with--><!--chance-->がない<!--target-person-->もいます。'
-        '<!--like-this2--><!--others-->が<!--sex-->の<!--partner-->を<!--find-u-->のに<!--deaikei-->を<!--use-->いるの<!--think-->。'],
-    15: ['<!--deaikei-->を<!--if-use--><!--obj-sex-->でも<!--easily--><!--sex-->の<!--partner-->を見つけられますからね。',
-         '<!--deaikei-->であれば<!--spare-time-->に<!--smart-phone-->で<!--partner-->の募集が<!--s-can-->し、'
-         '<!--you-->の休みと合う都合のいい<!--sub-sex-->を見つけやすいですからね。'],
-    16: ['<!--c-順接-->自然と<!--deaikei-->に出会いたい<!--k-obj-noun-s-->が集まってくるのかもしれませんね。',
-         '<!--c-順接--><!--deaikei-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多い<!--be-like-this-->。'],
+    8: ['<!--k-site-->で<!--adult-->を<!--find-->いる人が多いのは、'
+        '<!--at-first--><!--anonymous--><!--can-find-d-e-->るからです。',
+        '<!--k-site-->では<!--anonymous--><!--can-find-d-e-->るので、<!--adult-->を<!--find-i-->やすいん<!--think2-->ね。'],
+    9: [
+        '<!--one-of-sns-->などの<!--sns-w-->は<!--real-name-->で<!--use-u-->ので、<!--k-obj-noun-->との<!--adult-->を<!--find-u-->のには向きません。',
+        '<!--c-対比--><!--real-name-->で<!--use-u--><!--one-of-sns-->などの<!--sns-w-->では、<!--k-act-noun-->などの<!--adult-->は'
+        '<!--find-i-->にくいです。'],
+    10: ['<!--acquaintance-->に見つかると恥ずかしいですからね。'],
+    11: ['それに対して<!--k-site-->は匿名なので、誰にも<!--leak-->ずに気兼ねすることなく<!--instinct-->のおもむくままに<!--adult-->を'
+         '<!--find-u-->ことが<!--s-can-->。',
+         '<!--k-site-->なら<!--men-or-women--><!--hな--><!--own-->をさらけ出すことが<!--s-can-->。'],
+    12: 'space',
+    13: [
+        '<!--c-並列--><!--k-site-->には<!--sl-s--><!--sub-partner-->募集,<!--marriage--><!--sl-s/e-->などに'
+        '<!--use-u--><!--pure-bbs-->の他に<!--adult-bbs-->があって、この<!--b-bbs-->では<!--adult-->を専門で<!--find-u-->ことが'
+        '<!--s-can-->。',
+        '<!--c-添加2--><!--k-site-->では<!--serious-->と<!--adult-->など<!--purpose-->ごとに<!--b-bbs-->が分けられているので、'
+        '<!--purpose-->に<!--be-fit--><!--partner-->と出会いやすくなっています。'],
+    14: ['<!--c-添加--><!--k-site-->の利用規約上でも<!--adult-->を探すことは<!--at-all-->禁止されていません。',
+         '<!--to-sex-->の<!--find-d-u-->ことも、<!--k-site-->の運営会社が正式に認めているので、何も問題<!--is-not-->。'],
+    15: ['<!--profile-->に<!--hな--><!--words-->を書くことも<!--s-can-->。',
+         '<!--hな--><!--profile-->を書いたりするのも完全に自由です。'],
+    16: [
+        '<!--c-順接--><!--over-18-->で<!--control-->の厳しい<!--sns-w-->などとは違って、オープンに<!--adult-->を<!--find-u-->ことが<!--s-can-->。',
+        '<!--c-順接--><!--adult-->を誰憚ることなく探せます。'],
     17: 'space',
-    18: ['<!--c-かいせつ--><!--deaikei-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多いので、'
-         'その中から<!--k-act-can-i-->そうな<!--hな--><!--obj-sex-->を<!--find--><!--mail-->を送れば、'
-         '<!--k-alt-can-do-->まであと<!--rather-->です。',
-         '<!--c-かいせつ--><!--deaikei-->では<!--k-obj-adj--><!--obj-user-->が多いので、<!--k-alt-do-->には<!--best-->の環境です。',
-         'こんな状況なので、<!--profile--><!--search-->でも<!--k-obj-noun-s-->だけに絞っても<!--many2--><!--obj-sex-->が'
-         'ヒットするので、<!--k-obj-noun--><!--purpose-->で<!--can-meet-s-->。<!--c-添加--><!--deaikei-->を<!--use-->いる'
-         '<!--k-obj-noun-s-->は、全員<!--surely-->出会いを<!--find-->います。'],
-    'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'pa_3_1'}}
-# pa_3_1/end
-
-pa_4_1 = {
-    0: ['### <!--k-obj-noun-s-->は<!--hな--><!--target-person-->が多いから<!--k-sub-also--><!--k-act-can-easy-->',
-        '### <!--hな--><!--obj-sex-->が多い<!--k-obj-noun-s-->は<!--k-act-noun-->に<!--best-->'],
-    1: 'space',
-    2: ['*「<!--k-obj-noun-s-->には<!--hな--><!--obj-sex-->が多い」*という<!--rumor-->がありますが、実はこれは本当です。',
-        'ここだけの話ですが、<!--k-obj-noun-s-->には<!--hな--><!--target-person-->が多いです。',
-        '<!--deaikei-->で出会いを<!--find-->いる<!--k-obj-noun-s-->は、ほぼ<!--full-rate--><!--h-3p-->と考えて間違い無いです。'],
-    3: ['<!--author-->も<!--so-far--><!--deaikei-->で２桁の<!--k-obj-noun-s-->と<!--can-meet-i-->てきましたが、<!--deaikei-->で会った'
-        '<!--k-obj-noun-s-->とは全員<!--sex-->までしています。<!--sex-->打率<!--full-rate-->です。',
-        '<!--author-->の過去の経験上、何人もの<!--k-obj-noun-s-->と<!--deaikei-->で<!--met-->が、<!--k-obj-noun-s-->は'
-        '<!--well-->高い<!--success-rate-->で<!--sex-->できています。',
-        '<!--author-->が<!--so-far--><!--net-d-->で<!--can-meet-i-->た<!--k-obj-noun-s-->とは全員<!--sex-->できていますし、'
-        '<!--k-act-can-i-->た<!--success-rate-->も高いです。'],
-    4: 'space',
-    5: ['一緒に飲みに行くという名目で会った<!--k-obj-noun-s-->も二次会で<!--hotel-->に行って<!--sex-->していますし、'
-        'カフェだけということで会った<!--k-obj-noun-s-->も、その日のうちに宅飲みに持ち込んで<!--me-->の家で<!--sex-->しました。',
-        '<!--mail-->の<!--step-->で<!--sex-->する<!--appoint-->をしていて<!--sex-->した<!--k-obj-noun-s-->も多いですし、'
-        'ちょっと遊ぶ<!--appoint-->で会ったけど<!--result-->は<!--hotel-->に行って<!--sex-->したという<!--case-->も<!--very-->多いです。'],
-    6: ['<!--c-添加2-->その<!--sex-->中も<!--eros-degree-->全開で、興奮する<!--good--><!--sex-->ができました。'],
-    7: ['<!--c-とうぜん--><!--adult--><!--purpose-->で<!--site-->を<!--use-->いるので<!--sex-->できた<!--success-rate-->が高いのは'
-        '自然なことです。<!--c-逆接-->それでも<!--full-rate-->という数字は<!--also--><!--k-obj-noun-s-->の<!--h-2-->さを表している<!--think-->。',
-        '後の方で<!--description-->するように、<!--to-sex-->で<!--find-d-u--><!--occasion-->は<!--hな--><!--obj-sex-->を選んで'
-        '<!--mail-->を送るので、<!--hな--><!--target-person-->が多くなるのは<!--be-natural-->。'
-        '<!--c-逆接-->それにしても<!--k-obj-noun-s-->の<!--h-2-->度の高さは異常です。'],
-    8: ['<!--c-添加2--><!--deaikei-->は匿名なので、<!--use-->いる<!--k-obj-noun-s-->も<!--eros-degree-->を意識して隠す必要はなく、'
-        '<!--ero-n-->全開で出会いを<!--find-->いる<!--case-->も多いです。',
-        '<!--deaikei-->では接点がない<!--sub-sex-->と知り合えるので、<!--others-->を気にすることなく、<!--own-->の<!--eros-degree-->を'
-        '<!--can-send-->ん<!--think2-->ね。'],
-    9: ['<!--c-じっさい--><!--author-->も<!--ero-n-->全開で出会いを<!--find-->いますし。'],
-    10: 'space',
-    11: ['<!--k-act-way-->と<!--recommended--><!--b-bbs-->などでも書いていますが、<!--obj-sex--><!--act-with-d--><!--k-act-->には'
-         '<!--also--><!--hな--><!--obj-sex-->を選んで<!--find-d-u-->のが一番<!--important-->です。',
-         '<!--k-act-find--><!--occasion-->には、<!--profile-->などで<!--hな--><!--target-person-->を<!--find-i-->ます。'],
-    12: ['その点でいうと、<!--k-obj-noun-s-->は<!--hな--><!--obj-sex-->が多いですし、<!--reason-->、'
-         '<!--very--><!--k-act-can-easy-->ということになります。',
-         '<!--very--><!--hな--><!--obj-sex-->が多くて<!--reason-->、<!--k-obj-noun-s-->は<!--k-sub-is--><!--k-act-->には'
-         '<!--best-->なターゲットだ<!--can-say-->。'],
-    13: ['<!--k-obj-act-want--><!--sub-reader-->は、<!--deaikei-->でぜひ<!--k-obj-noun-s-->を狙ってみてください。',
-         '<!--k-obj-noun-->が<!--like-a-->人だけでなく、<!--hな--><!--obj-sex-->を<!--k-sub-want-->は<!--k-obj-noun-s-->を'
-         '特に狙ってみるといい<!--think-->。'],
-    14: ['<!--k-obj-noun-s-->は<!--ero-->で<!--charming-->よ！'],
-    'info': {'deny': ['mh', 'olm', 'bf'], 'only': ['obj'], 'shuffle': [], 'sec_name': 'pa_4_1'}}
-# pa_4_1/end
+    18: [
+        '<!--like-this2-->感じで<!--adult-->に特化している<!--k-site-->には、<!--men-and-women-->ともに<!--adult-->を<!--find-->いる人が集まってきます。',
+        '<!--c-かいせつ--><!--k-site-->は<!--adult-->が正式に認められているので、<!--adult-->がしたい人が<!--well-->多いです。'],
+    19: ['<!--c-順接--><!--k-site-->で<!--adult-->がどんどん<!--find-i-->やすくなっていく<!--be-like-this-->。',
+         '<!--c-順接--><!--everyone--><!--easily--><!--k-act-to-find-->などの<!--adult-->がしやすい<!--be-like-this-->。'],
+    20: 'space',
+    21: ['<!--c-補足--><!--k-site-->では公式アプリがありますが、アプリでは<!--control-->上、１８禁の<!--contents-->が利用できない<!--case-->が多いです。',
+         'ところで、<!--blog-->で<!--go-introduce-->している<!--k-site-->にも公式アプリがあります。'],
+    22: ['<!--c-逆接--><!--adult-bbs-->の利用などちょっと<!--hな-->機能が制限されています。',
+         '<!--c-逆接-->その公式アプリでは<!--k-act-noun-->募集などの<!--hな--><!--purpose-->の出会いは<!--rather--><!--find-i-->にくいかもしれません。'],
+    23: ['<!--c-順接--><!--k-site-->で<!--adult-->を<!--find-u--><!--occasion-->にはアプリから<!--use-u-->のではなく、'
+         'ブラウザを<!--use--><!--web-site-->から<!--entry-->するのを<!--my-recommend-s-->。',
+         '<!--k-obj-target-->を<!--find-i-->たり<!--adult-->がしたい方は、<!--sl-s-->safari,Chrome<!--sl-s/e-->などのブラウザを<!--use-->、'
+         '<!--web-site-->の方から<!--entry-->した方がより<!--k-act-can-easy--><!--think-->。'],
+    'info': {'deny': [], 'only': ['site'], 'shuffle': [], 'sec_name': 'pi_2_2'}}
+# pi_2_2/end
 
 pa_1_1 = {
     0: ['### <!--obj-older-->の<!--k-obj-act-find-easy-->',
@@ -2402,7 +2383,7 @@ pa_1_1 = {
          '<!--obj-older-->だけでなく、<!--deaikei-->には<!--divorce-->の<!--k-obj-noun-s-->も<!--many-->います。'],
     12: [
         '離婚した<!--but-and-c--><!--sl-s-->子供の世話,<!--job--><!--sl-s/e-->などで忙しくて<!--partner-->を見つけることが<!--cant-make-at-all--><!--k-obj-adj--><!--divorce--><!--obj-older-->が、'
-        '<!--for-the-moment--><!--deaikei-->で出会いを<!--find-->いるの<!--think-->。'],
+        '<!--for-the-moment--><!--deaikei-->で出会いを<!--find-->いるの<!--think2-->。'],
     13: [
         '<!--like-this2--><!--divorce-->の<!--k-obj-noun-s-->も<!--easily--><!--sex--><!--can-u-->ので<!--my-recommend-s-->。',
         '<!--divorce-->の<!--k-obj-noun-s-->も<!--obj-older-->と同じように<!--sex-->しやすいので<!--k-act-noun-->に選ぶのはいいかも'
@@ -2428,7 +2409,7 @@ pa_1_2 = {
         '<!--lately-->は<!--obj-older-->ブームです。'],
     3: [
         '<!--deaikei-->であれば、<!--k-sub-also--><!--obj-older-->と<!--can-meet-i-->て<!--sex-->するのも<!--easy-->です。',
-        'その<!--pop-and-famous-n--><!--obj-older-->も、<!--k-sub-also--><!--deaikei-->を<!--if-use--><!--k-obj-act-do-->ことが<!--s-can-->。'],
+        'その人気がある<!--obj-older-->も、<!--k-sub-also--><!--deaikei-->を<!--if-use--><!--k-obj-act-do-->ことが<!--s-can-->。'],
     4: ['<!--blog-->で<!--go-introduce-->している<!--deaikei-->では30代や40代、さらにはその上の<!--age-->まで'
         '色々な<!--age-->の<!--obj-sex-o-->が<!--use-->います。',
         '<!--deaikei-->を<!--use-->いる<!--obj-sex-o-->の<!--age-->は幅広く、１０代（１８歳）から６０代の<!--obj-sex-o-->まで、'
@@ -2460,7 +2441,7 @@ pa_1_2 = {
          '<!--obj-older-->だけでなく、<!--deaikei-->には<!--divorce-->の<!--k-obj-noun-s-->も<!--many-->います。'],
     12: [
         '離婚した<!--but-and-c--><!--sl-s-->子供の世話,<!--job--><!--sl-s/e-->などで忙しくて<!--partner-->を見つけることが<!--cant-make-at-all--><!--k-obj-adj--><!--divorce--><!--obj-older-->が、'
-        '<!--for-the-moment--><!--deaikei-->で出会いを<!--find-->いるの<!--think-->。'],
+        '<!--for-the-moment--><!--deaikei-->で出会いを<!--find-->いるの<!--think2-->。'],
     13: [
         '<!--like-this2--><!--divorce-->の<!--k-obj-noun-s-->も<!--easily--><!--sex--><!--can-u-->ので<!--my-recommend-s-->。',
         '<!--divorce-->の<!--k-obj-noun-s-->も<!--obj-older-->と同じように<!--sex-->しやすいので<!--k-act-noun-->に選ぶのはいいかも'
@@ -2473,8 +2454,66 @@ pa_1_2 = {
          '<!--sl-s--><!--obj-older-->,<!--divorce--><!--obj-sex-o--><!--sl-s/e-->に興味がある方は、'
          '<!--sl-s--><!--obj-older-->,<!--divorce--><!--sl-s/e-->の<!--k-obj-noun-s-->を攻略するのが、'
          '<!--k-act-->早道です。'],
-    'info': {'deny': ['woman', 'mh', 'olm', 'bf', 'obj'], 'only': [], 'shuffle': [], 'sec_name': 'pa_1_2'}}
+    'info': {'deny': ['woman', 'mh', 'olm', 'bf', 'obj', 'site'], 'only': [], 'shuffle': [], 'sec_name': 'pa_1_2'}}
 # pa_1_2/end
+
+pa_1_3 = {
+    0: ['### <!--obj-older-->の<!--k-obj-act-find-easy-->',
+        '### <!--obj-older-->も<!--k-act-noun-->にオススメです'],
+    1: 'space',
+    2: [
+        '<!--obj-older-->と出会いたい<!--sub-reader-->も多い<!--think-->。'
+        '<!--lately-->は<!--obj-older-->ブームで、落ち着いた大人の魅力がある<!--obj-older-->は<!--pop-p-->です。',
+        '<!--lately-->は<!--obj-older-->ブームです。'],
+    3: [
+        '<!--k-site-->であれば、<!--k-sub-also--><!--obj-older-->と<!--can-meet-i-->て<!--sex-->するのも<!--easy-->です。',
+        'その人気がある<!--obj-older-->も、<!--k-sub-also--><!--k-site-->を<!--if-use--><!--k-obj-act-do-->ことが<!--s-can-->。'],
+    4: ['<!--blog-->で<!--go-introduce-->している<!--k-site-->では30代や40代、さらにはその上の<!--age-->まで'
+        '色々な<!--age-->の<!--obj-sex-o-->が<!--use-->います。',
+        '<!--k-site-->を<!--use-->いる<!--obj-sex-o-->の<!--age-->は幅広く、１０代（１８歳）から６０代の<!--obj-sex-o-->まで、'
+        '<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->で目にします。'],
+    5: [
+        '<!--c-添加-->その中には<!--k-obj-noun-s-->も多く、<!--obj-older-->の<!--k-obj-adj--><!--sl-s--><!--profile-->,<!--b-bbs--><!--post--><!--sl-s/e-->も'
+        '<!--well-->多いです。',
+        '<!--there-->を読んでいる<!--sub-reader-->は、<!--k-obj-target-->を<!--find-->いるの<!--think2-->が、'
+        '<!--k-obj-adj--><!--obj-older-->も多いので、<!--obj-older-->が好きだという方は<!--obj-older-->を狙うと、若い<!--k-obj-noun-s-->よりも'
+        '<!--easily--><!--sex-->することが<!--s-can-->。'],
+    6: ['その内容も<!--platonic--><!--love-->を求めるものは少なく、<!--sex-->前提の<!--adult-->を<!--find-->いる'
+        '<!--post-->が多いです。',
+        '<!--obj-older-->は<!--sex-->前提の<!--adult-->を<!--find-->いる<!--target-person-->が多いので、'
+        '<!--very-->出会いやすい<!--think-->。'],
+    7: ['<!--sub-sex-->もですが<!--obj-sex-o-->も生涯現役で、何歳になっても<!--sex-->を楽しみたいという意識があるん<!--think2-->ね。',
+        '<!--obj-older-->は<!--h-2-->なので、<!--very-->満足<!--can-u--><!--think-->よ。'],
+    8: 'space',
+    9: [
+        'その中には<!--obj-l-partner-->と<!--sex-less-->で、何年も<!--sex-->をしていないから恥を忍んで<!--k-site-->に<!--entry-->してみた、'
+        'というような切実な<!--obj-married-->の<!--post-->もあり、<!--like-this2-->健気な<!--obj-married-->の<!--k-obj-noun-s-->は、'
+        '<!--by-all-means--><!--sex-->して助けてあげたくなります。',
+        '出会いを<!--find-->いる<!--obj-older-->の中には<!--sex-less-->でどうしようもなくて、<!--deaikei2-->を<!--use-->いるという'
+        '<!--target-person-->もいます。'],
+    10: [
+        '<!--author-->の経験上、<!--like-this2--><!--sex-less-->の<!--k-obj-adj--><!--obj-married-->は、<!--relatively--><!--find-d-u-->のも<!--easy-short-->で、'
+        '<!--sub-sex-->慣れしていない<!--case-->も多くて清楚な感じだったりするので、<!--good--><!--obj-older-->の<!--k-obj-target-->になってくれます。',
+        '<!--sex-less-->の<!--obj-older-->は特に<!--easily-->会って<!--sex--><!--can-u-->のでオススメです。'],
+    11: ['<!--c-添加2--><!--adult-->を<!--find-->いる<!--divorce-->の<!--obj-older-->も多いです。',
+         '<!--obj-older-->だけでなく、<!--k-site-->には<!--divorce-->の<!--k-obj-noun-s-->も<!--many-->います。'],
+    12: [
+        '離婚した<!--but-and-c--><!--sl-s-->子供の世話,<!--job--><!--sl-s/e-->などで忙しくて<!--partner-->を見つけることが<!--cant-make-at-all--><!--k-obj-adj--><!--divorce--><!--obj-older-->が、'
+        '<!--for-the-moment--><!--k-site-->で出会いを<!--find-->いるの<!--think2-->。'],
+    13: [
+        '<!--like-this2--><!--divorce-->の<!--k-obj-noun-s-->も<!--easily--><!--sex--><!--can-u-->ので<!--my-recommend-s-->。',
+        '<!--divorce-->の<!--k-obj-noun-s-->も<!--obj-older-->と同じように<!--sex-->しやすいので<!--k-act-noun-->に選ぶのはいいかも'
+        'しれませんね。'],
+    14: 'space',
+    15: ['<!--obj-older-->の<!--standard-->は人によって違うので、何歳から<!--obj-older-->かはわかりませんが、<!--k-site-->であれば幅広い<!--age-->の'
+         '<!--k-obj-noun--><!--can-meet-with-->ので、<!--obj-older-->と<!--can-meet-i-->て<!--k-act-want-->という<!--sub-reader-->には'
+         '理想的な環境<!--think2-->。',
+         '<!--c-とうぜん-->若い<!--k-obj-noun-s-->が<!--like-a-->人には興味はないかもしれませんが、なかなか<!--can-find-d-e-->ない方や、'
+         '<!--sl-s--><!--obj-older-->,<!--divorce--><!--obj-sex-o--><!--sl-s/e-->に興味がある方は、'
+         '<!--sl-s--><!--obj-older-->,<!--divorce--><!--sl-s/e-->の<!--k-obj-noun-s-->を攻略するのが、'
+         '<!--k-act-->早道です。'],
+    'info': {'deny': ['woman', 'mh', 'olm', 'bf', 'obj'], 'only': ['site'], 'shuffle': [], 'sec_name': 'pa_1_3'}}
+# pa_1_3/end
 
 pa_2_1 = {
     0: ['## <!--deaikei-->は<!--k-sub-also--><!--k-2nd-act-noun-->したい<!--k-obj-->と出会いやすい',
@@ -2542,7 +2581,7 @@ pa_2_1 = {
          '<!--deaikei-->で会った<!--k-obj-noun-s-->とは全員<!--sex-->までしています。<!--sex-->打率<!--full-rate-->です。',
          '<!--author-->の過去の経験上、何人もの<!--k-obj-noun-s-->と<!--deaikei-->で<!--met-->が、<!--k-obj-noun-s-->は'
          '<!--well-->高い<!--success-rate-->で<!--sex-->できています。'],
-    'info': {'deny': [], 'only': ['sf_obj'], 'shuffle': [], 'sec_name': 'pa_2_1'}}
+    'info': {'deny': ['site'], 'only': ['sf_obj'], 'shuffle': [], 'sec_name': 'pa_2_1'}}
 # pa_2_1/end
 
 pa_2_2 = {
@@ -2611,12 +2650,253 @@ pa_2_2 = {
          '<!--deaikei-->で会った<!--k-obj-noun-s-->とは全員<!--sex-->までしています。<!--sex-->打率<!--full-rate-->です。',
          '<!--author-->の過去の経験上、何人もの<!--k-obj-noun-s-->と<!--deaikei-->で<!--met-->が、<!--k-obj-noun-s-->は'
          '<!--well-->高い<!--success-rate-->で<!--sex-->できています。'],
-    'info': {'deny': ['sf_obj'], 'only': [], 'shuffle': [], 'sec_name': 'pa_2_2'}}
+    'info': {'deny': ['sf_obj', 'site'], 'only': [], 'shuffle': [], 'sec_name': 'pa_2_2'}}
 # pa_2_2/end
+
+pa_2_3 = {
+    0: ['## <!--k-site-->は<!--k-sub-also--><!--k-act-can-d-i-->る<!--k-obj-->と出会いやすい',
+        '## <!--k-sub-also--><!--k-site-->なら<!--k-obj-noun-l-->が<!--many-->見つかります',
+        '## <!--seriously--><!--k-act-want-->なら<!--chance-d-->の多い<!--k-site-->を<!--use-i-->ましょう'],
+    1: 'space',
+    2: ['<!--k-site-->で<!--k-easy-->理由の一つに*「<!--k-site-->では<!--k-obj-noun-->と出会いやすい」*ということがあります。',
+        '<!--k-rnd-do-->のに<!--k-site-->が<!--best-->なのは、<!--k-obj-noun-->と出会いやすいからです。',
+        '<!--deaikei2-->は<!--k-obj-noun-->が<!--many-->いて<!--easily--><!--title-can-meet-->ので、<!--k-alt-easy-->です。'],
+    3: 'space',
+    4: ['<!--k-site-->というと、<!--sub-sex-->ばかりが<!--use-->いる<!--impression-->があるかもしれませんが、<!--in-real--><!--obj-sex-o-->で'
+        '出会いを<!--find-->いる<!--target-person-->が<!--very--><!--many-->います。',
+        'はっきり言って、<!--k-site-->を<!--use-->いる<!--obj-sex-->は多いです。',
+        '上の方でも書きましたが、<!--k-site-->の<!--b-bbs-->には<!--obj-sex-->の<!--post-->が<!--many-->あります。'],
+    5: ['<!--obj-partner-->募集中の若い<!--obj-sex-y-->から、<!--companion-->を<!--find--><!--marriage-->中のアラサー<!--obj-sex-o-->、'
+        '寂しい<!--link-word-obj-->、<!--hな--><!--partner-->を<!--find-->いる<!--obj-older-->、<!--link-word-obj-->、<!--furin--><!--sex-->の'
+        '<!--partner-->を<!--find-->いるセクシーな<!--obj-married-->など<!--various-->タイプの<!--obj-sex-o-->が<!--use-->います。',
+        '<!--at-first-l--><!--k-site-->を<!--use-a-->方は、「こんなに出会いを<!--find-->いる<!--obj-sex-->がいるのか！」と'
+        '驚くかもしれません。'],
+    6: ['<!--profile-->に上げてある<!--photo-->を見ただけでも<!--h-2-->そうな<!--obj-sex-->も見つかります。',
+        ''],
+    7: 'space',
+    8: ['その出会いを<!--find-->いる<!--obj-sex-->の中でも、<!--k-obj-noun-s-->は<!--very-->多いです。',
+        '<!--c-添加-->その中でも<!--k-obj-noun-s-->がなぜか<!--very--><!--many-->います。',
+        'その出会いを<!--find-->いる<!--obj-sex-->の中には、<!--unexpectedly--><!--many2--><!--k-obj-noun-->が含まれています。'],
+    9: [
+        '<!--obj-sex-->の<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->を見てみると、<!--k-obj-noun-->の<!--post-->は<!--very-->多いです。'
+        '<!--k-site-->では、それだけ<!--many2-->出会いを<!--find-->いる<!--k-obj-noun-s-->がいるということです。',
+        '<!--profile-->をなんとなく眺めてみてもそうですし、<!--author-->が<!--so-far--><!--k-site-->で'
+        '<!--can-meet-i-->た<!--k-act-noun-->の中にも<!--k-obj-->が多かったです。'],
+    10: ['これは<!--k-site-->に<!--entry-->してみると一目瞭然です。',
+         '<!--site-->に<!--entry-->して<!--b-bbs-->を見てみると意識しなくても一発で<!--understand--><!--think-->。'],
+    11: ['<!--sl-s-->裏<!--profile-->,<!--self-int-->,日記<!--sl-s/e-->を読むと、さらに<!--k-obj-noun-->が見つかったりするので、'
+         '<!--in-real-->もっと多いかもしれません。',
+         '<!--k-site-->の<!--profile-->には<!--k-obj-category-->を書く欄がありますが、ここに「<!--k-obj-status-->」等を'
+         '書いている<!--obj-sex-->は<!--very-->多いです。<!--profile-->の<!--k-obj-category-->欄にははっきり書いていなくても、'
+         '<!--sl-s-->日記,<!--self-int--><!--sl-s/e-->などで<!--k-obj-status-->だと<!--judge--><!--target-person-->もいます。',
+         '<!--profile-->にはっきりと<!--k-obj-noun-s-->だと書いている<!--obj-sex-->もいますし、<!--sl-s-->日記,<!--profile--><!--sl-s/e-->の'
+         '<!--self-int-->で<!--k-obj-noun-s-->だと<!--judge-->内容を書いている<!--target-person-->もいます。'],
+    12: ['中でも、<!--site-1-->には<!--k-obj-noun-->が<!--very-->多いので、<!--k-obj-act-want-->方には断然オススメです。',
+         '個人的な<!--impression-->では、<!--site-1-->や<!--site-2-->に<!--k-obj-noun-->が多い気がします。',
+         '<!--k-site-->の中でも<!--site-1-->には、<!--profile-->に<!--k-obj-status-->と書いている<!--target-person-->が多いです。'
+         '<!--site-1-->は特に<!--k-obj-act-easy--><!--think-->。'],
+    13: 'space',
+    14: [
+        '<!--k-site-->には<!--various-->タイプの<!--sub-sex-->がいるので、<!--k-obj-noun-->が<!--like-a--><!--sub-sex-->とも<!--be-early--><!--can-meet-s-->。',
+        '<!--k-obj-noun-j-->という<!--job-->は、肉体的にも精神的にもストレスが溜まりやすい<!--job-->なのかもしれませんね。'
+        'そのストレス解消のために、<!--k-site-->で<!--k-act-noun-->などの<!--adult-->を<!--find2-->、<!--sex-->で'
+        'スッキリしているん<!--think-->。',
+        '<!--c-じっさい--><!--k-obj-noun-s-->が<!--find-d-u-->となると、<!--k-site-->くらいしか選択肢がないのかもしれませんね。'],
+    15: 'space',
+    16: ['こんな状況なので、<!--profile--><!--search-->でも<!--k-obj-noun-s-->だけに絞っても<!--many2--><!--obj-sex-->が'
+         'ヒットするので、<!--k-obj-noun--><!--purpose-->で<!--can-meet-s-->。<!--c-添加--><!--k-site-->を<!--use-->いる'
+         '<!--k-obj-noun-s-->は、全員<!--surely-->出会いを<!--find-->います。',
+         '<!--c-かいせつ--><!--k-site-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多いので、その中から<!--k-act-can-i-->そうな'
+         '<!--hな--><!--obj-sex-->を<!--find2--><!--mail-->を送れば、<!--k-alt-can-do-->まであと<!--rather-->です。',
+         '<!--c-かいせつ--><!--k-site-->では<!--k-obj-adj--><!--obj-user-->が多いので、<!--k-alt-do-->には<!--best-->の環境です。'],
+    17: 'space',
+    18: ['<!--k-site-->で出会いを<!--find-->いる<!--k-obj-noun-s-->は、ほぼ<!--full-rate--><!--h-3p-->と考えて間違い無いです。',
+         '*「<!--k-obj-noun-s-->には<!--hな--><!--obj-sex-->が多い」*という<!--rumor-->がありますが、実はこれは本当です。',
+         'ここだけの話ですが、<!--k-obj-noun-s-->には<!--hな--><!--target-person-->が多いです。'],
+    19: ['<!--author-->が<!--so-far--><!--net-d-->で<!--can-meet-i-->た<!--k-obj-noun-s-->とは全員<!--sex-->できていますし、'
+         '<!--k-act-can-i-->た<!--success-rate-->も高いです。',
+         '<!--author-->も<!--so-far--><!--k-site-->で２桁の<!--k-obj-noun-s-->と<!--can-meet-i-->てきましたが、'
+         '<!--k-site-->で会った<!--k-obj-noun-s-->とは全員<!--sex-->までしています。<!--sex-->打率<!--full-rate-->です。',
+         '<!--author-->の過去の経験上、何人もの<!--k-obj-noun-s-->と<!--k-site-->で<!--met-->が、<!--k-obj-noun-s-->は'
+         '<!--well-->高い<!--success-rate-->で<!--sex-->できています。'],
+    'info': {'deny': ['sf_obj'], 'only': ['site'], 'shuffle': [], 'sec_name': 'pa_2_3'}}
+# pa_2_3/end
+
+
+pa_3_1 = {
+    0: ['### <!--deaikei-->は<!--k-sub-also--><!--hな--><!--k-obj-noun-s-->が<!--find-i-->やすい',
+        '### <!--hな--><!--k-obj-noun-s-->が多い<!--recommended--><!--deaikei-->を<!--use-i-->ましょう'],
+    1: 'space',
+    2: ['<!--k-rnd-do-->のに<!--deaikei-->が<!--best-->なのは、<!--k-obj-noun-l-->と出会いやすいからです。',
+        '<!--deaikei2-->は<!--k-obj-noun-->が<!--many-->いて<!--easily--><!--title-can-meet-->ので、<!--k-obj-act-find-easy-->です。',
+        '<!--deaikei-->が<!--k-easy-->理由の一つに*「<!--deaikei-->では<!--k-obj-noun-l-->と出会いやすい」*ということがあります。'],
+    3: 'space',
+    4: ['はっきり言って、<!--deaikei-->を<!--use-->いる<!--obj-sex-->は多いです。',
+        '上の方でも書きましたが、<!--deaikei-->の<!--b-bbs-->には<!--obj-sex-->の<!--post-->が<!--many-->あります。',
+        '<!--deaikei-->というと、<!--sub-sex-->ばかりが<!--use-->いる<!--impression-->があるかもしれませんが、'
+        '<!--in-real--><!--obj-sex-o-->で出会いを<!--find-->いる人が<!--well--><!--many-->います。'],
+    5: ['<!--obj-partner-->募集中の若い<!--obj-sex-y-->から、<!--companion-->を<!--find--><!--marriage-->中のアラサー<!--obj-sex-o-->、'
+        '<!--hな--><!--partner-->を<!--find-->いる<!--obj-older-->、<!--furin--><!--sex-->の<!--partner-->を<!--find-->いる'
+        'セクシーな<!--k-obj-noun-s-->など<!--various--><!--k-obj-category-->の<!--obj-sex-->が<!--use-->います。',
+        '<!--at-first-l--><!--deaikei-->を<!--use-a-->方は、「こんなに出会いを<!--find-->いる<!--obj-sex-->がいるのか！」と'
+        '驚くかもしれません。'],
+    6: ['<!--profile-->に上げてある<!--photo-->を見ただけでも、<!--h-2-->そうな<!--obj-sex-->も見つかります。'],
+    7: 'space',
+    8: ['<!--c-添加-->その中でも<!--k-obj-noun-->がなぜか<!--well--><!--many-->います。',
+        'その出会いを<!--find-->いる<!--obj-sex-->の中には、<!--unexpectedly--><!--many2--><!--k-obj-noun-->が含まれています。',
+        'その出会いを<!--find-->いる<!--obj-sex-->の中でも、<!--k-obj-noun-->が<!--very-->多いです。'],
+    9: ['<!--profile-->をなんとなく眺めてみてもそうですし、<!--author-->が<!--so-far--><!--deaikei-->で'
+        '<!--can-meet-i-->た<!--k-act-noun-->の中にも<!--k-obj-->が多かったです。',
+        '<!--obj-sex-->の<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->を見てみると、<!--k-obj-noun-->の<!--post-->をよく見かけます。'
+        '<!--deaikei-->では、それだけ<!--many2-->出会いを<!--find-->いる<!--k-obj-noun-s-->がいるということです。'],
+    10: ['<!--site-->に<!--entry-->して意識して<!--b-bbs-->を見てみると一発で<!--understand--><!--think-->。',
+         'これは<!--deaikei-->に<!--entry-->してみると一目瞭然です。'],
+    11: ['<!--sl-s--><!--self-int-->,日記<!--sl-s/e-->を読むと<!--k-obj-noun-->が見つかったりするので、<!--in-real-->もっと多いかもしれません。',
+         '<!--deaikei-->の<!--profile-->には<!--k-obj-category-->を書く欄がありますが、ここに「<!--k-obj-status-->」等を'
+         '書いている<!--obj-sex-->は<!--well-->多いです。<!--profile-->の<!--k-obj-category-->欄にははっきり書いていなくても、'
+         '<!--sl-s--><!--self-int-->,日記,裏<!--profile--><!--sl-s/e-->などで<!--k-obj-status-->だと<!--judge--><!--target-person-->もいます。',
+         '<!--site-->によって<!--k-obj-status-->だとはっきり<!--judge-->ところもあるので、<!--like-this2--><!--site-->では<!--k-obj-noun-->は'
+         '見つけやすい<!--think-->。ない<!--site-->では、<!--self-int-->などを見ると<!--k-obj-noun-->を<!--easily-->見つけられます。'],
+    12: ['個人的な<!--impression-->では、<!--site-1-->や<!--site-2-->に<!--k-obj-noun-->が多い気がします。',
+         '<!--deaikei-->の中でも<!--site-1-->には、<!--profile-->に<!--k-obj-status-->と書いている<!--target-person-->が多いです。'
+         '<!--site-1-->は特に<!--k-alt-easy--><!--think-->。',
+         '中でも、<!--site-1-->には<!--k-obj-noun-->が<!--very-->多いので、<!--k-obj-act-want-->方には断然オススメです。'],
+    13: 'space',
+    14: [
+        '<!--deaikei-->には<!--various--><!--k-obj-category-->の<!--sub-sex-->がいるので、<!--k-obj-noun-->が<!--like-a--><!--sub-sex-->とも'
+        '<!--be-early--><!--can-meet-s-->。',
+        '<!--k-obj-noun-j-->という<!--job-->は、肉体的にも精神的にもストレスが溜まりやすい<!--job-->なのかもしれませんね。'
+        'そのストレスを解消するために、<!--deaikei-->で<!--k-act-noun-->などの<!--adult-->を<!--find2-->、'
+        '<!--sex-->でスッキリしているの<!--think2-->。',
+        '<!--k-obj-noun-s-->の中にはなかなか<!--sub-sex--><!--find-d-u-with--><!--chance-->がない<!--target-person-->もいます。'
+        '<!--like-this2--><!--others-->が<!--sex-->の<!--partner-->を<!--find-u-->のに<!--deaikei-->を<!--use-->いるの<!--think2-->。'],
+    15: ['<!--deaikei-->を<!--if-use--><!--obj-sex-->でも<!--easily--><!--sex-->の<!--partner-->を見つけられますからね。',
+         '<!--deaikei-->であれば<!--spare-time-->に<!--smart-phone-->で<!--partner-->の募集が<!--s-can-->し、'
+         '<!--woman-user-->と休みなどが合って都合のいい<!--sub-sex-->を見つけやすいですからね。'],
+    16: ['<!--c-順接-->自然と<!--deaikei-->に出会いたい<!--k-obj-noun-s-->が集まってくるのかもしれませんね。',
+         '<!--c-順接--><!--deaikei-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多い<!--be-like-this-->。'],
+    17: 'space',
+    18: ['<!--c-かいせつ--><!--deaikei-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多いので、'
+         'その中から<!--k-act-can-i-->そうな<!--hな--><!--obj-sex-->を<!--find--><!--mail-->を送れば、'
+         '<!--k-alt-can-do-->まであと<!--rather-->です。',
+         '<!--c-かいせつ--><!--deaikei-->では<!--k-obj-adj--><!--obj-user-->が多いので、<!--k-alt-do-->には<!--best-->の環境です。',
+         'こんな状況なので、<!--profile--><!--search-->でも<!--k-obj-noun-s-->だけに絞っても<!--many2--><!--obj-sex-->が'
+         'ヒットするので、<!--k-obj-noun--><!--purpose-->で<!--can-meet-s-->。<!--c-添加--><!--deaikei-->を<!--use-->いる'
+         '<!--k-obj-noun-s-->は、全員<!--surely-->出会いを<!--find-->います。'],
+    'info': {'deny': ['site'], 'only': [], 'shuffle': [], 'sec_name': 'pa_3_1'}}
+# pa_3_1/end
+
+
+pa_3_2 = {
+    0: ['### <!--k-site-->は<!--k-sub-also--><!--hな--><!--k-obj-noun-s-->が<!--find-i-->やすい',
+        '### <!--hな--><!--k-obj-noun-s-->が多い<!--recommended--><!--k-site-->を<!--use-i-->ましょう'],
+    1: 'space',
+    2: ['<!--k-rnd-do-->のに<!--k-site-->が<!--best-->なのは、<!--k-obj-noun-l-->と出会いやすいからです。',
+        '<!--deaikei2-->は<!--k-obj-noun-->が<!--many-->いて<!--easily--><!--title-can-meet-->ので、<!--k-obj-act-find-easy-->です。',
+        '<!--k-site-->が<!--k-easy-->理由の一つに*「<!--k-site-->では<!--k-obj-noun-l-->と出会いやすい」*ということがあります。'],
+    3: 'space',
+    4: ['はっきり言って、<!--k-site-->を<!--use-->いる<!--obj-sex-->は多いです。',
+        '上の方でも書きましたが、<!--k-site-->の<!--b-bbs-->には<!--obj-sex-->の<!--post-->が<!--many-->あります。',
+        '<!--k-site-->というと、<!--sub-sex-->ばかりが<!--use-->いる<!--impression-->があるかもしれませんが、'
+        '<!--in-real--><!--obj-sex-o-->で出会いを<!--find-->いる人が<!--well--><!--many-->います。'],
+    5: ['<!--obj-partner-->募集中の若い<!--obj-sex-y-->から、<!--companion-->を<!--find--><!--marriage-->中のアラサー<!--obj-sex-o-->、'
+        '<!--hな--><!--partner-->を<!--find-->いる<!--obj-older-->、<!--furin--><!--sex-->の<!--partner-->を<!--find-->いる'
+        'セクシーな<!--k-obj-noun-s-->など<!--various--><!--k-obj-category-->の<!--obj-sex-->が<!--use-->います。',
+        '<!--at-first-l--><!--k-site-->を<!--use-a-->方は、「こんなに出会いを<!--find-->いる<!--obj-sex-->がいるのか！」と'
+        '驚くかもしれません。'],
+    6: ['<!--profile-->に上げてある<!--photo-->を見ただけでも、<!--h-2-->そうな<!--obj-sex-->も見つかります。'],
+    7: 'space',
+    8: ['<!--c-添加-->その中でも<!--k-obj-noun-->がなぜか<!--well--><!--many-->います。',
+        'その出会いを<!--find-->いる<!--obj-sex-->の中には、<!--unexpectedly--><!--many2--><!--k-obj-noun-->が含まれています。',
+        'その出会いを<!--find-->いる<!--obj-sex-->の中でも、<!--k-obj-noun-->が<!--very-->多いです。'],
+    9: ['<!--profile-->をなんとなく眺めてみてもそうですし、<!--author-->が<!--so-far--><!--k-site-->で'
+        '<!--can-meet-i-->た<!--k-act-noun-->の中にも<!--k-obj-->が多かったです。',
+        '<!--obj-sex-->の<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->を見てみると、<!--k-obj-noun-->の<!--post-->をよく見かけます。'
+        '<!--k-site-->では、それだけ<!--many2-->出会いを<!--find-->いる<!--k-obj-noun-s-->がいるということです。'],
+    10: ['<!--site-->に<!--entry-->して意識して<!--b-bbs-->を見てみると一発で<!--understand--><!--think-->。',
+         'これは<!--k-site-->に<!--entry-->してみると一目瞭然です。'],
+    11: ['<!--sl-s--><!--self-int-->,日記<!--sl-s/e-->を読むと<!--k-obj-noun-->が見つかったりするので、<!--in-real-->もっと多いかもしれません。',
+         '<!--k-site-->の<!--profile-->には<!--k-obj-category-->を書く欄がありますが、ここに「<!--k-obj-status-->」等を'
+         '書いている<!--obj-sex-->は<!--well-->多いです。<!--profile-->の<!--k-obj-category-->欄にははっきり書いていなくても、'
+         '<!--sl-s--><!--self-int-->,日記,裏<!--profile--><!--sl-s/e-->などで<!--k-obj-status-->だと<!--judge--><!--target-person-->もいます。',
+         '<!--site-->によって<!--k-obj-status-->だとはっきり<!--judge-->ところもあるので、<!--like-this2--><!--site-->では<!--k-obj-noun-->は'
+         '見つけやすい<!--think-->。ない<!--site-->では、<!--self-int-->などを見ると<!--k-obj-noun-->を<!--easily-->見つけられます。'],
+    12: ['個人的な<!--impression-->では、<!--site-1-->や<!--site-2-->に<!--k-obj-noun-->が多い気がします。',
+         '<!--k-site-->の中でも<!--site-1-->には、<!--profile-->に<!--k-obj-status-->と書いている<!--target-person-->が多いです。'
+         '<!--site-1-->は特に<!--k-alt-easy--><!--think-->。',
+         '中でも、<!--site-1-->には<!--k-obj-noun-->が<!--very-->多いので、<!--k-obj-act-want-->方には断然オススメです。'],
+    13: 'space',
+    14: [
+        '<!--k-site-->には<!--various--><!--k-obj-category-->の<!--sub-sex-->がいるので、<!--k-obj-noun-->が<!--like-a--><!--sub-sex-->とも'
+        '<!--be-early--><!--can-meet-s-->。',
+        '<!--k-obj-noun-j-->という<!--job-->は、肉体的にも精神的にもストレスが溜まりやすい<!--job-->なのかもしれませんね。'
+        'そのストレスを解消するために、<!--k-site-->で<!--k-act-noun-->などの<!--adult-->を<!--find2-->、'
+        '<!--sex-->でスッキリしているの<!--think2-->。',
+        '<!--k-obj-noun-s-->の中にはなかなか<!--sub-sex--><!--find-d-u-with--><!--chance-->がない<!--target-person-->もいます。'
+        '<!--like-this2--><!--others-->が<!--sex-->の<!--partner-->を<!--find-u-->のに<!--k-site-->を<!--use-->いるの<!--think2-->。'],
+    15: ['<!--k-site-->を<!--if-use--><!--obj-sex-->でも<!--easily--><!--sex-->の<!--partner-->を見つけられますからね。',
+         '<!--k-site-->であれば<!--spare-time-->に<!--smart-phone-->で<!--partner-->の募集が<!--s-can-->し、'
+         '<!--woman-user-->に都合のいい<!--sub-sex-->を見つけやすいですからね。'],
+    16: ['<!--c-順接-->自然と<!--k-site-->に出会いたい<!--k-obj-noun-s-->が集まってくるのかもしれませんね。',
+         '<!--c-順接--><!--k-site-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多い<!--be-like-this-->。'],
+    17: 'space',
+    18: ['<!--c-かいせつ--><!--k-site-->には出会いを<!--find-->いる<!--k-obj-noun-s-->が多いので、'
+         'その中から<!--k-act-can-i-->そうな<!--hな--><!--obj-sex-->を<!--find--><!--mail-->を送れば、'
+         '<!--k-alt-can-do-->まであと<!--rather-->です。',
+         '<!--c-かいせつ--><!--k-site-->では<!--k-obj-adj--><!--obj-user-->が多いので、<!--k-alt-do-->には<!--best-->の環境です。',
+         'こんな状況なので、<!--profile--><!--search-->でも<!--k-obj-noun-s-->だけに絞っても<!--many2--><!--obj-sex-->が'
+         'ヒットするので、<!--k-obj-noun--><!--purpose-->で<!--can-meet-s-->。<!--c-添加--><!--k-site-->を<!--use-->いる'
+         '<!--k-obj-noun-s-->は、全員<!--surely-->出会いを<!--find-->います。'],
+    'info': {'deny': [], 'only': ['site'], 'shuffle': [], 'sec_name': 'pa_3_2'}}
+# pa_3_2/end
+
+pa_4_1 = {
+    0: ['### <!--k-obj-noun-s-->は<!--hな--><!--target-person-->が多いから<!--k-sub-also--><!--k-act-can-easy-->',
+        '### <!--hな--><!--obj-sex-->が多い<!--k-obj-noun-s-->は<!--k-act-noun-->に<!--best-->'],
+    1: 'space',
+    2: ['*「<!--k-obj-noun-s-->には<!--hな--><!--obj-sex-->が多い」*という<!--rumor-->がありますが、実はこれは本当です。',
+        'ここだけの話ですが、<!--k-obj-noun-s-->には<!--hな--><!--target-person-->が多いです。',
+        '<!--deaikei-->で出会いを<!--find-->いる<!--k-obj-noun-s-->は、ほぼ<!--full-rate--><!--h-3p-->と考えて間違い無いです。'],
+    3: ['<!--author-->も<!--so-far--><!--deaikei-->で２桁の<!--k-obj-noun-s-->と<!--can-meet-i-->てきましたが、<!--deaikei-->で会った'
+        '<!--k-obj-noun-s-->とは全員<!--sex-->までしています。<!--sex-->打率<!--full-rate-->です。',
+        '<!--author-->の過去の経験上、何人もの<!--k-obj-noun-s-->と<!--deaikei-->で<!--met-->が、<!--k-obj-noun-s-->は'
+        '<!--well-->高い<!--success-rate-->で<!--sex-->できています。',
+        '<!--author-->が<!--so-far--><!--net-d-->で<!--can-meet-i-->た<!--k-obj-noun-s-->とは全員<!--sex-->できていますし、'
+        '<!--k-act-can-i-->た<!--success-rate-->も高いです。'],
+    4: 'space',
+    5: ['一緒に飲みに行くという名目で会った<!--k-obj-noun-s-->も二次会で<!--hotel-->に行って<!--sex-->していますし、'
+        'カフェだけということで会った<!--k-obj-noun-s-->も、その日のうちに宅飲みに持ち込んで<!--me-->の家で<!--sex-->しました。',
+        '<!--mail-->の<!--step-->で<!--sex-->する<!--appoint-->をしていて<!--sex-->した<!--k-obj-noun-s-->も多いですし、'
+        'ちょっと遊ぶ<!--appoint-->で会ったけど<!--result-->は<!--hotel-->に行って<!--sex-->したという<!--case-->も<!--very-->多いです。'],
+    6: ['<!--c-添加2-->その<!--sex-->中も<!--eros-degree-->全開で、興奮する<!--good--><!--sex-->ができました。'],
+    7: ['<!--c-とうぜん--><!--adult--><!--purpose-->で<!--site-->を<!--use-->いるので<!--sex-->できた<!--success-rate-->が高いのは'
+        '自然なことです。<!--c-逆接-->それでも<!--full-rate-->という数字は<!--also--><!--k-obj-noun-s-->の<!--h-2-->さを表している<!--think-->。',
+        '後の方で<!--description-->するように、<!--to-sex-->で<!--find-d-u--><!--occasion-->は<!--hな--><!--obj-sex-->を選んで'
+        '<!--mail-->を送るので、<!--hな--><!--target-person-->が多くなるのは<!--be-natural-->。'
+        '<!--c-逆接-->それにしても<!--k-obj-noun-s-->の<!--h-2-->度の高さは異常です。'],
+    8: ['<!--c-添加2--><!--deaikei-->は匿名なので、<!--use-->いる<!--k-obj-noun-s-->も<!--eros-degree-->を意識して隠す必要はなく、'
+        '<!--ero-n-->全開で出会いを<!--find-->いる<!--case-->も多いです。',
+        '<!--deaikei-->では接点がない<!--sub-sex-->と知り合えるので、<!--others-->を気にすることなく、<!--own-->の<!--eros-degree-->を'
+        '<!--can-send-->ん<!--think2-->ね。'],
+    9: ['<!--c-じっさい--><!--author-->も<!--ero-n-->全開で出会いを<!--find-->いますし。'],
+    10: 'space',
+    11: ['<!--k-act-way-->と<!--recommended--><!--b-bbs-->などでも書いていますが、<!--obj-sex--><!--act-with-d--><!--k-act-->には'
+         '<!--also--><!--hな--><!--obj-sex-->を選んで<!--find-d-u-->のが一番<!--important-->です。',
+         '<!--k-act-find--><!--occasion-->には、<!--profile-->などで<!--hな--><!--target-person-->を<!--find-i-->ます。'],
+    12: ['その点でいうと、<!--k-obj-noun-s-->は<!--hな--><!--obj-sex-->が多いですし、<!--reason-->、'
+         '<!--very--><!--k-act-can-easy-->ということになります。',
+         '<!--very--><!--hな--><!--obj-sex-->が多くて<!--reason-->、<!--k-obj-noun-s-->は<!--k-sub-is--><!--k-act-->には'
+         '<!--best-->なターゲットだ<!--can-say-->。'],
+    13: ['<!--k-obj-act-want--><!--sub-reader-->は、<!--deaikei-->でぜひ<!--k-obj-noun-s-->を狙ってみてください。',
+         '<!--k-obj-noun-->が<!--like-a-->人だけでなく、<!--hな--><!--obj-sex-->を<!--k-sub-want-->は<!--k-obj-noun-s-->を'
+         '特に狙ってみるといい<!--think-->。'],
+    14: ['<!--k-obj-noun-s-->は<!--ero-->で<!--charming-->よ！'],
+    'info': {'deny': ['mh', 'olm', 'bf', 'site'], 'only': ['obj'], 'shuffle': [], 'sec_name': 'pa_4_1'}}
+# pa_4_1/end
 
 use_1_1 = {
     0: ['## <!--deaikei-->で<!--k-alt-find--><!--technique-->',
-        '## <!--hな--><!--k-obj-noun-s-->を<!--find2-->、<!--k-act-noun-->候補を見つけよう！',
+        '## <!--hな--><!--k-target-to-find-->を<!--find2-->、<!--k-act-noun-->候補を見つけよう！',
         '## <!--k-rnd-how-to-->'],
     1: 'space',
     2: ['ここまで、<!--deaikei-->を<!--if-use--><!--everyone--><!--relatively--><!--easily--><!--k-obj-act-can-do-->と'
@@ -2626,7 +2906,7 @@ use_1_1 = {
         'では、続いて<!--k-rnd-how-to-->について<!--in-detail--><!--description-->していきます。'],
     4: 'space',
     5: [
-        '<!--k-obj-noun-->に限定せずに<!--for-the-moment--><!--k-act-want-->という方は、こちらの<!--page-->の<!--k-act-way-all-->を<!--refer-to-->ください。'
+        '<!--k-target-to-find-->に限定せずに<!--for-the-moment--><!--k-act-want-->という方は、こちらの<!--page-->の<!--k-act-way-all-->を<!--refer-to-->ください。'
         '<!--sefre-page-->',
         '<!--k-alt-do--><!--occasion-->でも、基本的な<!--k-act-way-all-->と<!--way-->はほとんど変わりません。'
         '<!--c-順接-->基本的な<!--way-->は下記の<!--page-->の<!--way-->で<!--enough-->。<!--sefre-page-->'],
@@ -2638,8 +2918,8 @@ use_1_1 = {
         '<!--secret-->など特別な部分もあるので、<!--there-->ではその<!--k-obj-target-->特別な部分について'
         '<!--description-->していきます。'],
     8: [
-        '<!--k-alt-do-->には、<!--at-first-->は<!--k-act-noun-->候補の<!--hな--><!--k-obj-noun-s-->を<!--find-u-->ことから<!--be-start-->す。',
-        '具体的に、どのように探せば<!--deaikei-->で<!--hな--><!--k-obj-noun-s-->を<!--can-find-->の<!--think2-->か？',
+        '<!--k-alt-do-->には、<!--at-first-->は<!--k-act-noun-->候補の<!--hな--><!--k-target-to-find-->を<!--find-u-->ことから<!--be-start-->す。',
+        '具体的に、どのように探せば<!--deaikei-->で<!--hな--><!--k-target-to-find-->を<!--can-find-->の<!--think2-->か？',
         '<!--anyways--><!--k-sub-is--><!--hな--><!--k-obj-act-way-->を<!--description-->します。'],
     'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'use_1_1'}}
 # use_1_1/end
@@ -2651,7 +2931,7 @@ use_2_1 = {
     1: ['<!--deaikei-->で<!--net-d-->をする<!--occasion-->、<!--which-site-->を<!--use-u-->かが<!--important-->です。',
         '<!--site-->選びは、<!--k-act-to-find-->に限らず、<!--net-d-->では一番<!--important-point-->です。',
         '<!--net-d-->では、<!--use-u--><!--site-->で全てが決まります。'],
-    2: ['<!--obj-user-->が少ない<!--deaikei-->では<!--k-obj-noun-j-->どころか他の<!--k-obj-category-->の<!--obj-sex-->と'
+    2: ['<!--obj-user-->が少ない<!--deaikei-->では<!--k-target-to-find-->どころか他の<!--k-obj-category-->の<!--obj-sex-->と'
         '<!--find-d-u-->ことすらできませんし、<!--on-earth--><!--can-meet-->仕組みになっている<!--site-->でないと、<!--obj-sex-->と'
         '<!--communication-->することすらできません。',
         '<!--bad-site-->を<!--use-->しまうと、どれだけ<!--fight-for-->も<!--can-find-d-e--><!--is-not-->からね。',
@@ -2680,7 +2960,7 @@ use_2_1 = {
         '<!--author-->が特に自信を持って<!--recommend-n--><!--can-u-->のは、<!--site-1-->と<!--site-2-->ですね。'],
     10: ['この２つの<!--site-->は10年以上運営されている業界で一番<!--pop-and-famous-n-->老舗<!--site-->で、規模が大きく<!--obj-user-->も多いです。',
          'この２つの<!--deaikei-->は<!--deaikei-->の中でもトップクラスで<!--obj-user-->が多く、<!--be-natural2-->それに比例して'
-         '<!--k-obj-noun-s-->も<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->で多く見かけます。',
+         '<!--k-target-to-find-->も<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->で多く見かけます。',
          'この２つの<!--site-->であれば<!--site-user-->が多いので、<!--sub-partner-->募集でも<!--k-obj-act-find-->のにも'
          '間違いは<!--is-not-->。'],
     11: ['<!--site-1-->では<!--japan-->全国どこでも<!--site-user-->が多く、<!--link-area-->や<!--link-area-->などでも'
@@ -2693,26 +2973,26 @@ use_2_1 = {
     14: ['特に<!--deaikei--><!--beginner-->の<!--sub-reader-->は、システム的にも<!--use-i-->やすく慣れていなくても出会いやすいこの２<!--site-->の'
          'どちらかを選ぶのが無難<!--think2-->。',
          '特に<!--wkwk-sn-->は<!--profile-->閲覧が<!--free-->なので、<!--profile--><!--search-->でじっくりと<!--liking-->の'
-         '<!--k-obj-noun-s-->を探せます。',
+         '<!--k-target-to-find-->を探せます。',
          '<!--adult-->もしやすく<!--be-made-so-->、<!--k-act-to-find-->にはもってこいです。'],
     15: ['<!--obj-sex-->からの<!--reply-->率が高いのも魅力です。'],
     16: 'space',
     17: [
-        '<!--k-obj-noun-s-->は<!--deaikei-->では<!--pop-n--><!--k-obj-category-->ですから、ライバルが少ない<!--deaikei-->を選ぶのも<!--k-rnd-do-->'
+        '<!--k-target-to-find-->は<!--deaikei-->では<!--pop-n--><!--k-obj-category-->ですから、ライバルが少ない<!--deaikei-->を選ぶのも<!--k-rnd-do-->'
         '<!--occasion-->の選択とも言えます。',
         '<!--pop-and-famous-n--><!--site-->の他にも、<!--dark-horse--><!--site-->を<!--use-u-->という<!--way-->もあります。穴場<!--site-->は<!--unexpectedly--><!--adult-->が'
         'しやすかったりするので、<!--sl-s--><!--time-zone-->,労力<!--sl-s/e-->的に<!--a-margin-->がある方には<!--by-all-means-->試していただきたいです。'],
-    18: ['<!--author-->の個人的な<!--impression-->では、<!--site-1-->や<!--site-2-->に<!--k-obj-noun-->が多い気がします。',
-         '<!--site-2-->は<!--lately-->急成長している<!--dark-horse--><!--deaikei-->です。'],
+    18: ['<!--author-->の個人的な<!--impression-->では、<!--site-3-->に<!--k-target-to-find-->が多い気がします。',
+         '<!--site-3-->は<!--lately-->急成長している<!--dark-horse--><!--deaikei-->です。'],
     19: [
-        '<!--site-2-->は<!--site-user-->数では<!--sl-s--><!--wkwk-sn-s-->,<!--hm-sn-s--><!--sl-s/e-->には負けますが、<!--men-and-women-->の比率で有利なので、<!--sub-sex-->が<!--obj-sex-o-->に<!--mail-->を送った'
+        '<!--site-3-->は<!--site-user-->数では<!--sl-s--><!--wkwk-sn-s-->,<!--hm-sn-s--><!--sl-s/e-->には負けますが、<!--men-and-women-->の比率で有利なので、<!--sub-sex-->が<!--obj-sex-o-->に<!--mail-->を送った'
         '<!--occasion-->の<!--reply-->率が高いです。',
         '<!--obj-user-->数では<!--sl-s--><!--wkwk-sn-s-->,<!--hm-sn-s--><!--sl-s/e-->などのトップの<!--site-->には敵いませんが、<!--sub-sex-->がまだ少ないので<!--obj-sex-o-->から<!--surely-->'
         '<!--re-mail-->をもらえます。'],
-    20: ['なかなか<!--obj-sex-->から<!--re-mail-->がもらえないという<!--sub-reader-->も<!--site-2-->を試してみるといいかもしれません。'],
+    20: ['なかなか<!--obj-sex-->から<!--re-mail-->がもらえないという<!--sub-reader-->も<!--site-3-->を試してみるといいかもしれません。'],
     21: 'space',
     22: ['<!--c-補足2-->よく言われることですが、<!--deaikei-->で<!--find-d-u--><!--occasion-->には一つの<!--site-->だけを選ぶのではなく、'
-         '同時に<!--some--><!--site-->を<!--use-u-->と<!--k-obj-noun-l--><!--can-meet-with--><!--rate-->が大きく上がります。',
+         '同時に<!--some--><!--site-->を<!--use-u-->と<!--k-target-to-find--><!--can-meet-with--><!--rate-->が大きく上がります。',
          'ここで<!--go-introduce-->した<!--site-->だけでも<!--good-->出会いは<!--s-can-->が、<!--deaikei-->では色々な<!--site-->を'
          '併用することで<!--chance-->が２倍３倍に上がります。'],
     23: ['<!--chance-d-->がそれだけ多くなるわけですから<!--be-natural-->よね。'],
@@ -2733,7 +3013,7 @@ use_2_2 = {
     1: ['<!--deaikei-->で<!--net-d-->をする<!--occasion-->、<!--which-site-->を<!--use-u-->かが<!--important-->です。',
         '<!--site-->選びは、<!--k-act-to-find-->に限らず、<!--net-d-->では一番<!--important-point-->です。',
         '<!--net-d-->では、<!--use-u--><!--site-->で全てが決まります。'],
-    2: ['<!--obj-user-->が少ない<!--deaikei-->では<!--k-obj-noun-j-->どころか他の<!--k-obj-category-->の<!--obj-sex-->と'
+    2: ['<!--obj-user-->が少ない<!--deaikei-->では<!--k-target-to-find-->どころか他の<!--k-obj-category-->の<!--obj-sex-->と'
         '<!--find-d-u-->ことすらできませんし、<!--on-earth--><!--can-meet-->仕組みになっている<!--site-->でないと、<!--obj-sex-->と'
         '<!--communication-->することすらできません。',
         '<!--bad-site-->を<!--use-->しまうと、どれだけ<!--fight-for-->も<!--can-find-d-e--><!--is-not-->からね。',
@@ -2751,8 +3031,8 @@ use_2_2 = {
         '<!--good--><!--site-->は、<!--sub-sex-->も<!--obj-sex-o-->も<!--site-user-->が増えるので、*「<!--good--><!--site-->」イコール'
         '「<!--target-person-->が多い<!--site-->」*ということですよね。'],
     6: [
-        '<!--c-順接-->、<!--k-obj-status-->で<!--obj-beauty-y--><!--obj-sex-y-->と出会いやすくなり、<!--k-act-i-->やすくなる<!--be-like-this-->。',
-        '<!--k-obj-noun-l--><!--can-meet-with--><!--potency-->くなります。'],
+        '<!--c-順接--><!--k-obj-status-->で<!--obj-beauty-y--><!--obj-sex-y-->と出会いやすくなり、<!--k-act-i-->やすくなる<!--be-like-this-->。',
+        '<!--k-target-to-find--><!--can-meet-with--><!--potency-->くなります。'],
     7: 'space',
     8: [
         '<!--blog-->で<!--go-introduce-->している<!--pop-and-famous-n--><!--deaikei-->であればどこでも<!--k-act-noun-->は<!--k-act-v-can-->ますが、',
@@ -2762,7 +3042,7 @@ use_2_2 = {
         '<!--author-->が特に自信がある<!--recommended--><!--deaikei-->は、<!--site-1-->と<!--site-2-->ですね。'],
     10: ['この２つの<!--site-->は10年以上運営されている業界で最も<!--pop-and-famous-n-->老舗<!--site-->で、規模が大きく<!--obj-user-->も多いです。',
          'この２つの<!--deaikei-->は<!--deaikei-->の中でもトップクラスで<!--obj-user-->が多く、<!--be-natural2-->それに比例して'
-         '<!--k-obj-noun-s-->も<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->で多く見かけます。',
+         '<!--k-target-to-find-->も<!--sl-s--><!--b-bbs-->,<!--profile--><!--sl-s/e-->で多く見かけます。',
          'この２つの<!--site-->であれば<!--site-user-->が多いので、<!--sub-partner-->募集でも<!--k-obj-act-find-->のにも'
          '間違いは<!--is-not-->。'],
     11: ['<!--site-1-->では<!--japan-->全国どこでも<!--site-user-->が多く、<!--link-area-->や<!--link-area-->などでも'
@@ -2777,21 +3057,21 @@ use_2_2 = {
     15: ['<!--obj-sex-->からの<!--reply-->率が高いのも魅力です。'],
     16: 'space',
     17: [
-        '<!--k-obj-noun-s-->は<!--deaikei-->では<!--pop-n--><!--k-obj-category-->ですから、ライバルが少ない<!--deaikei-->を選ぶのも<!--k-rnd-do-->'
+        '<!--k-target-to-find-->は<!--deaikei-->では<!--pop-n--><!--k-obj-category-->ですから、ライバルが少ない<!--deaikei-->を選ぶのも<!--k-rnd-do-->'
         '<!--occasion-->の選択とも言えます。',
         '<!--pop-and-famous-n--><!--site-->の他にも、<!--dark-horse--><!--site-->を<!--use-u-->という<!--way-->もあります。穴場<!--site-->は<!--unexpectedly--><!--adult-->が'
         'しやすかったりするので、<!--sl-s--><!--time-zone-->,労力<!--sl-s/e-->的に<!--a-margin-->がある方には<!--by-all-means-->試していただきたいです。'],
-    18: ['<!--author-->の個人的な<!--impression-->では、<!--site-1-->や<!--site-2-->に<!--k-obj-noun-->が多い気がします。',
-         '<!--site-2-->は<!--lately-->急成長している<!--dark-horse--><!--deaikei-->です。'],
+    18: ['<!--author-->の個人的な<!--impression-->では、<!--site-3-->に<!--k-target-to-find-->が多い気がします。',
+         '<!--site-3-->は<!--lately-->急成長している<!--dark-horse--><!--deaikei-->です。'],
     19: [
-        '<!--site-2-->は<!--site-user-->数では<!--sl-s--><!--wkwk-sn-s-->,<!--hm-sn-s--><!--sl-s/e-->には負けますが、<!--sub-sex-->が<!--obj-sex-o-->に<!--mail-->を送った'
+        '<!--site-3-->は<!--site-user-->数では<!--sl-s--><!--wkwk-sn-s-->,<!--hm-sn-s--><!--sl-s/e-->には負けますが、<!--sub-sex-->が<!--obj-sex-o-->に<!--mail-->を送った'
         '<!--occasion-->の<!--reply-->率が高いです。',
         '<!--obj-user-->数では<!--sl-s--><!--wkwk-sn-s-->,<!--hm-sn-s--><!--sl-s/e-->などのトップの<!--site-->には敵いませんが、<!--obj-sex-o-->から<!--surely-->'
         '<!--re-mail-->をもらえます。'],
-    20: ['なかなか<!--obj-sex-->から<!--re-mail-->がもらえないという<!--sub-reader-->も<!--site-2-->を試してみるといいかもしれません。'],
+    20: ['なかなか<!--obj-sex-->から<!--re-mail-->がもらえないという<!--sub-reader-->も<!--site-3-->を試してみるといいかもしれません。'],
     21: 'space',
     22: ['<!--c-補足2-->よく言われることですが、<!--deaikei-->で<!--find-d-u--><!--occasion-->には一つの<!--site-->だけを選ぶのではなく、'
-         '同時に<!--some--><!--site-->を<!--use-u-->と<!--k-obj-noun-l--><!--can-meet-with--><!--rate-->が大きく上がります。',
+         '同時に<!--some--><!--site-->を<!--use-u-->と<!--k-target-to-find--><!--can-meet-with--><!--rate-->が大きく上がります。',
          'ここで<!--go-introduce-->した<!--site-->だけでも<!--good-->出会いは<!--s-can-->が、<!--deaikei-->では色々な<!--site-->を'
          '併用することで<!--chance-->が２倍３倍に上がります。'],
     23: ['<!--chance-d-->がそれだけ多くなるわけですから<!--be-natural-->よね。'],
@@ -2807,7 +3087,7 @@ use_2_2 = {
 
 use_3_1 = {
     0: ['### <!--b-bbs--><!--post-->で<!--k-obj-want-act-->から<!--mail-->をもらう',
-        '### <!--b-bbs-->に<!--post-->して<!--hな--><!--k-obj-noun-s-alt-->を<!--find-u--><!--way-->',
+        '### <!--b-bbs-->に<!--post-->して<!--hな--><!--k-target-to-find-->を<!--find-u--><!--way-->',
         '### <!--b-bbs-->で<!--k-alt-find--><!--way-->'],
     1: ['<!--deaikei-->には<!--b-bbs-->があるので、そこに<!--post-->をしておくと<!--b-bbs-->を見た<!--obj-sex-->から<!--mail-->を'
         'もらうことが<!--s-can-->。',
@@ -2818,7 +3098,7 @@ use_3_1 = {
         '<!--k-act-to-find-->の<!--royal-road-->は<!--profile-->から<!--mail-->で誘う<!--flow-to-->ですが、それと並行して<!--b-bbs-->での募集も'
         'しておきましょう。',
         '<!--b-bbs--><!--post-->よりも<!--profile-->を<!--use--><!--from-me--><!--send-mail-->方が<!--surely--><!--k-act-can-long-->。'
-        '<!--c-逆接--><!--also--><!--rather-->でも<!--chance-d-->を増やすために、<!--b-bbs-->にも<!--just-in-case--><!--k-obj-noun-l-->に向けた<!--k-act-noun-->募集の'
+        '<!--also--><!--rather-->でも<!--chance-d-->を増やすために、<!--b-bbs-->にも<!--just-in-case--><!--k-target-to-find-->に向けた<!--k-act-noun-->募集の'
         '<!--post-->をしておきましょう。'],
     3: ['<!--k-obj-want-act-->など<!--k-obj-category-->などを指定して<!--find-d-u--><!--occasion-->には、<!--b-bbs-->への'
         '<!--post-->も<!--well--><!--effectively-->です。'],
@@ -2835,8 +3115,8 @@ use_3_1 = {
         '出会いを<!--find-->いる理由を書くのも<!--effectively-->です。'],
     7: 'space',
     8: ['<!--k-obj-act-to-find-->が<!--purpose-->ではありますが、<!--b-bbs-->の<!--post-->の本文の内容としては'
-        '「<!--k-act-want-->です」<!--like-->あからさまなものよりも、「<!--k-obj-want-act-->と一緒にいると癒されるので、'
-        '<!--intimate-->なって飲みに行ったり<!--you-must-do-->」<!--like-->ソフトなものの方が<!--obj-sex-->から<!--mail-->がもらえる'
+        '「<!--k-act-want-->です」<!--like-->あからさまなものよりも、「<!--k-obj-->と一緒にいると癒されるので、'
+        '<!--intimate-->なって飲みに行ったりしましょう」<!--like-->ソフトなものの方が、<!--obj-sex-->から<!--mail-->がもらえる'
         '<!--potency-->いです。',
         '一つ注意が必要な<!--be-like-this-->が、いくら<!--k-act-to-find-->をしているからといって、<!--at-first-->の<!--mail-->から<!--eros-degree-->を'
         '押し出しすぎるのもあまりオススメできません。',
@@ -2847,7 +3127,7 @@ use_3_1 = {
          'なかなか<!--is-not-->。',
          '<<!--k-obj-want-act-->に限らず、<!--obj-sex-->は<!--from-me-->は<!--mail-->を送らない<!--case-->が多いので、'
          '<!--sub-sex-->側からの<!--positive-->な<!--approach-n-->が<!--important-->です。',
-         '<!--c-補足--><!--sub-sex-->が<!--b-bbs--><!--post-->だけで<!--can-meet-->ということは、よほど<!--sub-beauty-->だったり'
+         '<!--c-補足--><!--sub-sex-->が<!--b-bbs--><!--post-->だけで<!--can-meet-->というのは、よほど<!--sub-beauty-->だったり'
          '<!--rich-->だったりしない限り難しいです。'],
     11: ['<!--from-me--><!--send-mail-->のと併用して、<!--support-->的に<!--b-bbs-->を活用する<!--way-->がいい<!--think-->。',
          '<!--b-bbs-->に<!--post-->するのと同時に、<!--obj-sex-->の<!--b-bbs-->の<!--post-->も覗いてみて、'
@@ -2870,7 +3150,7 @@ use_4_1 = {
         '<!--profile--><!--search-->などで<!--obj-sex-->を<!--find2--><!--from-me--><!--send-mail--><!--way-->です。',
         '<!--c-順接--><!--b-bbs-->への募集<!--post-->と同時に<!--from-me-->も<!--mail-->を送りましょう。',
         '<!--c-順接--><!--also--><!--k-act-to-find-->の<!--royal-road-->は、<!--profile--><!--search-->で<!--k-act-can-i-->そうな'
-        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->攻めの<!--k-rnd-how-to-->です。'],
+        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->形の、攻めの<!--k-act-way-sim-->です。'],
     4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-obj-want-act-->を選ぶことが<!--s-can-->し、'
         '<!--sl-s--><!--hな--><!--obj-sex-->,<!--kind--><!--obj-sex--><!--sl-s/e-->を選ぶことで<!--success-rate-->が高くなります。',
         'そうすれば、<!--very-->高い<!--success-rate-->で<!--k-can-s-->。'],
@@ -2881,7 +3161,7 @@ use_4_1 = {
         '出会いたい<!--k-obj-category-->の<!--obj-sex-->が見つかります。'],
     6: ['特に<!--sl-s--><!--wkwk-sn-->,<!--hm-sn--><!--sl-s/e-->などの<!--profile-->閲覧で<!--point-->を消費しない<!--deaikei-->では、'
         'この<!--way-->が<!--best-->です。'],
-    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-obj-noun-s-->を探せば、会って<!--k-2nd-act-noun-->するのも'
+    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-target-to-find-->を探せば、会って<!--k-2nd-act-noun-->するのも'
         '<!--easy-->ですし、<!--k-act-can-easy-long-->。'],
     8: 'space',
     9: ['<!--profile--><!--search-->で<!--k-obj-want-act-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
@@ -2935,7 +3215,7 @@ use_4_1 = {
 # use_4_1/end
 
 use_4_2 = {
-    0: ['### <!--profile--><!--search-->で<!--k-obj-noun-->を<!--find2--><!--from-me--><!--send-mail-->',
+    0: ['### <!--profile--><!--search-->で<!--k-target-to-find-->を<!--find2--><!--from-me--><!--send-mail-->',
         '### <!--profile--><!--search-->で<!--hな--><!--k-alt-way-->',
         '### <!--k-alt-do-->には<!--profile--><!--search-->からの<!--mail-->が<!--best-->'],
     1: 'space',
@@ -2948,57 +3228,58 @@ use_4_2 = {
         '<!--profile--><!--search-->などで<!--obj-sex-->を<!--find2--><!--from-me--><!--send-mail--><!--way-->です。',
         '<!--c-順接--><!--b-bbs-->への募集<!--post-->と同時に<!--from-me-->も<!--mail-->を送りましょう。',
         '<!--c-順接--><!--also--><!--k-act-to-find-->の<!--royal-road-->は、<!--profile--><!--search-->で<!--k-act-can-i-->そうな'
-        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->攻めの<!--k-rnd-how-to-->です。'],
-    4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-obj-noun-s-->を選ぶことが<!--s-can-->し、'
+        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->形の、攻めの<!--k-act-way-sim-->です。'],
+    4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-target-to-find-->を選ぶことが<!--s-can-->し、'
         '<!--sl-s--><!--hな--><!--obj-sex-->,<!--kind--><!--obj-sex--><!--sl-s/e-->を選ぶことで<!--success-rate-->が高くなります。',
         'そうすれば、<!--very-->高い<!--success-rate-->で<!--k-can-s-->。'],
     5: [
         '<!--profile--><!--search-->機能を<!--if-use-->、<!--easily--><!--k-obj-status-->をしている<!--obj-sex-->を<!--find-u-->ことが'
         '<!--s-can-->。',
-        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-obj-noun-->でも、<!--you-->が'
+        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-target-to-find-->でも、<!--you-->が'
         '出会いたい<!--k-obj-category-->の<!--obj-sex-->が見つかります。'],
     6: ['<!--blog-->で<!--recommend-n-->している<!--site-->では、<!--woman-o-->はいくらでも<!--mail-->を<!--can-send-->ので、'
-        '<!--liking-->の<!--k-obj-noun-->を<!--easily--><!--can-meet-s-->。',
+        '<!--liking-->の<!--k-target-to-find-->を<!--easily--><!--can-meet-s-->。',
         'ここで<!--publish-e-->いる<!--site-->は、<!--woman-user-->は完全に<!--free-->で<!--site-->を<!--can-use-->ので、'
         '<!--k-obj-target-->でも<!--marriage-->でも<!--boy-friend--><!--to-find-->でも、自由に<!--can-find-d-u-s-->。',
         '<!--blog-->で<!--recommend-n-->している<!--site-->を<!--if-use-->、<!--woman-o-->は<!--mail-->を'
         '何通送っても完全に<!--free-->で<!--k-obj-act-find-->ことが<!--s-can-->。'],
-    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-obj-noun-s-->を探せば、会って<!--k-2nd-act-noun-->するのも'
+    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-target-to-find-->を探せば、会って<!--k-2nd-act-noun-->するのも'
         '<!--easy-->ですし、<!--k-act-can-easy-long-->。',
         ''],
     8: 'space',
-    9: ['<!--profile--><!--search-->で<!--k-obj-noun-s-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
-        '<!--k-obj-noun-s-->に当てはまる項目を選んで、<!--search-->するだけです。',
+    9: [
+        '<!--profile--><!--search-->で<!--k-target-to-find-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
+        '<<!--k-target-to-find-->に当てはまる項目を選んで、<!--search-->するだけです。',
         '具体的な<!--way-->は、<!--site-->の<!--profile--><!--search-->の<!--k-obj-category-->の項目で、'
         '「<!--k-obj-status-->」など該当するものを選んで、<!--search-->するだけです。',
-        '<!--profile--><!--search-->から<!--k-alt-way-->は、<!--profile-->の項目で<!--k-obj-noun-s-->を選択して'
+        '<!--profile--><!--search-->から<!--k-alt-way-->は、<!--profile-->の項目で<!--k-target-to-find-->を選択して'
         '<!--search-->するだけです。'],
     10: ['<!--site-->によっては<!--just-fit-->当てはまるものがないかもしれませんが、その<!--occasion-->は<!--self-int-->などで'
          'フリー<!--words--><!--search-->してみてください。'],
     11: ['<!--c-並列-->住んでいるところが近い方が<!--k-act-connection-->が<!--mail-continue-->ので、「<!--to-sex-->」指定もしておきましょう。',
          '<!--c-添加2--><!--k-obj-category-->に加えて、<!--sl-s-->住んでいる<!--area-->,年齢<!--sl-s/e-->などでも絞り込み<!--search-->をすると、'
-         'より出会いやすい<!--k-obj-noun-s-->を<!--find-u-->ことが<!--s-can-->。'],
+         'より出会いやすい<!--k-target-to-find-->を<!--find-u-->ことが<!--s-can-->。'],
     12: [
         'これで<!--search-->してみて、<!--search-->結果が多すぎる<!--occasion-->には、<!--sl-s-->「年齢」,「未婚/既婚」,「<!--style-->」<!--sl-s/e-->などで'
         'さらに絞り込んで再<!--search-->してみましょう。'],
     13: 'space',
     14: ['それで出てきた結果の中から、<!--you-->の<!--liking-->に合う、それでいて<!--h-2-->そうな<!--obj-sex-->を<!--find-i-->ます。',
          '絞り込み<!--search-->をしてみて出てきた<!--obj-sex-->の中から、<!--you-->の<!--liking-->の<!--obj-sex-->を選びましょう。',
-         'その<!--k-obj-noun-s-->の<!--search-->結果から、気に入った<!--obj-sex-->を選びます。'],
+         'その<!--k-target-to-find-->の<!--search-->結果から、気に入った<!--obj-sex-->を選びます。'],
     15: ['<!--k-sub-is--><!--k-act--><!--occasion-->には<!--obj-sex-->が<!--h-2-->だということは<!--well--><!--important-->で、'
          '<!--hな--><!--obj-sex-->ほど<!--k-act-can-easy-long-->。',
          '<!--hな--><!--obj-sex-->の方が<!--k-act-can-easy-->ので、できるだけ<!--ero-n-->そうな<!--obj-sex-->を<!--find-i-->ます。'],
     16: ['<!--k-obj-status-->で<!--hな--><!--obj-sex-->が見つかったら、<!--boldly--><!--mail-->を送ってみてください。',
-         '<!--liking-->の<!--k-obj-noun-s-->が見つかったら、早速<!--from-me--><!--mail-->を送って<!--approach-e-->みましょう。',
-         '<!--k-act-can-i-->そうな<!--k-obj-noun-s-->が見つかったら、<!--be-early--><!--mail-->を送ります。'],
+         '<!--liking-->の<!--k-target-to-find-->が見つかったら、早速<!--from-me--><!--mail-->を送って<!--approach-e-->みましょう。',
+         '<!--k-act-can-i-->そうな<!--k-target-to-find-->が見つかったら、<!--be-early--><!--mail-->を送ります。'],
     17: ['<!--mail-->の書き方やそのあとの<!--k-act-->までの基本的な<!--flow-to-->は<!--k-act-way-all-->などを<!--refer-to-->みてください。',
          '<!--mail-->を送ってから<!--k-act-->までの<!--flow-to-->については、<!--regular--><!--sub-reader-->でも<!--can-u--><!--k-act-way-all-->の'
          '<!--page-->の方で<!--in-detail--><!--description-->しているので、そちらを<!--refer-to-->みてください。',
          '<!--profile-->を<!--use-a-->具体的な<!--k-act-way-all-->は、<!--k-act-way-all-->の<!--page-->を<!--refer-to-->ください。'],
     18: 'space',
     19: ['<!--k-obj-status-->だけど<!--k-obj-status-->と書かない<!--obj-sex-->も中には存在します。',
-         '<!--k-obj-noun-s-->の中には<!--k-obj-category-->欄に<!--k-obj-status-->だと書かない<!--target-person-->もいます。',
-         '中には、<!--k-obj-status-->だと明かさない<!--k-obj-noun-s-->もいます。'],
+         '<!--k-target-to-find-->の中には<!--k-obj-category-->欄に<!--k-obj-status-->だと書かない<!--target-person-->もいます。',
+         '中には、<!--k-obj-status-->だと明かさない<!--k-target-to-find-->もいます。'],
     20: ['<!--like-this2--><!--target-person-->でも、<!--mail-->の<!--talk-->の中で聞いてみるとちゃんと答えてくれるので、'
          '<!--intimate-->なってから聞いてみましょう。',
          '<!--like-this2--><!--obj-sex-->でも、<!--profile-->の<!--self-int-->に<!--k-obj-status-->だと書いていたりするので、'
@@ -3008,7 +3289,7 @@ use_4_2 = {
 # use_4_2/end
 
 use_4_3 = {
-    0: ['### <!--profile--><!--search-->で<!--k-obj-noun-->を<!--find2--><!--from-me--><!--send-mail-->',
+    0: ['### <!--profile--><!--search-->で<!--k-target-to-find-->を<!--find2--><!--from-me--><!--send-mail-->',
         '### <!--profile--><!--search-->で<!--hな--><!--k-alt-way-->',
         '### <!--k-alt-do-->には<!--profile--><!--search-->からの<!--mail-->が<!--best-->'],
     1: 'space',
@@ -3021,43 +3302,44 @@ use_4_3 = {
         '<!--profile--><!--search-->などで<!--obj-sex-->を<!--find2--><!--from-me--><!--send-mail--><!--way-->です。',
         '<!--c-順接--><!--b-bbs-->への募集<!--post-->と同時に<!--from-me-->も<!--mail-->を送りましょう。',
         '<!--c-順接--><!--also--><!--k-act-to-find-->の<!--royal-road-->は、<!--profile--><!--search-->で<!--k-act-can-i-->そうな'
-        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->攻めの<!--k-obj-act-way-->です。'],
-    4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-obj-noun-s-->を選ぶことが<!--s-can-->し、'
+        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->形の、攻めの<!--k-obj-act-way-->です。'],
+    4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-target-to-find-->を選ぶことが<!--s-can-->し、'
         '<!--sl-s--><!--hな--><!--obj-sex-->,<!--kind--><!--obj-sex--><!--sl-s/e-->を選ぶことで<!--success-rate-->が高くなります。',
         'そうすれば、<!--k-sub-also--><!--very-->高い<!--success-rate-->で<!--k-obj-act-can-do-long-->。'],
     5: [
         '<!--profile--><!--search-->機能を<!--if-use-->、<!--easily--><!--k-obj-status-->をしている<!--obj-sex-->を<!--find-u-->ことが'
         '<!--s-can-->。',
-        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-obj-noun-->でも、<!--you-->が'
+        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-target-to-find-->でも、<!--you-->が'
         '出会いたい<!--k-obj-category-->の<!--obj-sex-->が見つかります。'],
     6: ['特に<!--sl-s--><!--wkwk-sn-->,<!--hm-sn--><!--sl-s/e-->などの<!--profile-->閲覧で<!--point-->を消費しない<!--deaikei-->では、'
         'この<!--way-->が<!--best-->です。'],
-    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-obj-noun-s-->を探せば、会って<!--k-act-can-easy-long-->。'],
+    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-target-to-find-->を探せば、会って<!--k-act-can-easy-long-->。'],
     8: 'space',
-    9: ['<!--profile--><!--search-->で<!--k-obj-noun-s-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
-        '<!--k-obj-noun-s-->に当てはまる項目を選んで、<!--search-->するだけです。',
+    9: [
+        '<!--profile--><!--search-->で<!--k-target-to-find-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
+        '<!--k-target-to-find-->に当てはまる項目を選んで、<!--search-->するだけです。',
         '具体的な<!--way-->は、<!--site-->の<!--profile--><!--search-->の<!--k-obj-category-->の項目で、'
         '「<!--k-obj-status-->」など該当するものを選んで、<!--search-->するだけです。',
-        '<!--profile--><!--search-->から<!--k-alt-way-->は、<!--profile-->の項目で<!--k-obj-noun-s-->を選択して'
+        '<!--profile--><!--search-->から<!--k-alt-way-->は、<!--profile-->の項目で<!--k-target-to-find-->を選択して'
         '<!--search-->するだけです。'],
     10: ['<!--site-->によっては<!--just-fit-->当てはまるものがないかもしれませんが、その<!--occasion-->は<!--self-int-->などで'
          'フリー<!--words--><!--search-->してみてください。'],
     11: ['<!--c-並列-->住んでいるところが近い方が<!--k-act-connection-->が<!--mail-continue-->ので、「<!--to-sex-->」指定もしておきましょう。',
          '<!--c-添加2--><!--k-obj-category-->に加えて、<!--sl-s-->住んでいる<!--area-->,年齢<!--sl-s/e-->などでも絞り込み<!--search-->をすると、'
-         'より出会いやすい<!--k-obj-noun-s-->を<!--find-u-->ことが<!--s-can-->。'],
+         'より出会いやすい<!--k-target-to-find-->を<!--find-u-->ことが<!--s-can-->。'],
     12: [
         'これで<!--search-->してみて、<!--search-->結果が多すぎる<!--occasion-->には、<!--sl-s-->「年齢」,「未婚/既婚」,「<!--style-->」<!--sl-s/e-->などで'
         'さらに絞り込んで再<!--search-->してみましょう。'],
     13: 'space',
     14: ['それで出てきた結果の中から、<!--you-->の<!--liking-->に合う、それでいて<!--h-2-->そうな<!--obj-sex-->を<!--find-i-->ます。',
          '絞り込み<!--search-->をしてみて出てきた<!--obj-sex-->の中から、<!--you-->の<!--liking-->の<!--obj-sex-->を選びましょう。',
-         'その<!--k-obj-noun-s-->の<!--search-->結果から、気に入った<!--obj-sex-->を選びます。'],
+         'その<!--k-target-to-find-->の<!--search-->結果から、気に入った<!--obj-sex-->を選びます。'],
     15: ['<!--k-sub-is--><!--k-act--><!--occasion-->には<!--obj-sex-->が<!--h-2-->だということは<!--well--><!--important-->で、'
          '<!--hな--><!--obj-sex-->ほど<!--k-act-can-easy-long-->。',
          '<!--hな--><!--obj-sex-->の方が<!--k-act-can-easy-->ので、できるだけ<!--ero-n-->そうな<!--obj-sex-->を<!--find-i-->ます。'],
     16: ['<!--k-obj-status-->で<!--hな--><!--obj-sex-->が見つかったら、<!--boldly--><!--mail-->を送ってみてください。',
-         '<!--liking-->の<!--k-obj-noun-s-->が見つかったら、早速<!--from-me--><!--mail-->を送って<!--approach-e-->みましょう。',
-         '<!--k-act-can-i-->そうな<!--k-obj-noun-s-->が見つかったら、<!--be-early--><!--mail-->を送ります。'],
+         '<!--liking-->の<!--k-target-to-find-->が見つかったら、早速<!--from-me--><!--mail-->を送って<!--approach-e-->みましょう。',
+         '<!--k-act-can-i-->そうな<!--k-target-to-find-->が見つかったら、<!--be-early--><!--mail-->を送ります。'],
     17: ['<!--mail-->の書き方やそのあとの<!--k-act-->までの基本的な<!--flow-to-->は<!--k-act-way-all-->などを<!--refer-to-->みてください。',
          '<!--mail-->を送ってから<!--k-act-->までの<!--flow-to-->については、<!--regular--><!--sub-reader-->でも<!--can-u--><!--k-act-way-all-->の'
          '<!--page-->の方で<!--in-detail--><!--description-->しているので、そちらを<!--refer-to-->みてください。',
@@ -3074,8 +3356,8 @@ use_4_3 = {
     21: ['その方が<!--result--><!--be-early--><!--k-act-can-long-->。'],
     22: 'space',
     23: ['<!--k-obj-status-->だけど<!--k-obj-status-->と書かない<!--obj-sex-->も中には存在します。',
-         '<!--k-obj-noun-s-->の中には<!--k-obj-category-->欄に<!--k-obj-status-->だと書かない<!--target-person-->もいます。',
-         '中には、<!--k-obj-status-->だと明かさない<!--k-obj-noun-s-->もいます。'],
+         '<!--k-target-to-find-->の中には<!--k-obj-category-->欄に<!--k-obj-status-->だと書かない<!--target-person-->もいます。',
+         '中には、<!--k-obj-status-->だと明かさない<!--k-target-to-find-->もいます。'],
     24: ['<!--like-this2--><!--target-person-->でも、<!--mail-->の<!--talk-->の中で聞いてみるとちゃんと答えてくれるので、'
          '<!--intimate-->なってから聞いてみましょう。',
          '<!--like-this2--><!--obj-sex-->でも、<!--profile-->の<!--self-int-->に<!--k-obj-status-->だと書いていたりするので、'
@@ -3085,7 +3367,7 @@ use_4_3 = {
 # use_4_3/end
 
 use_4_4 = {
-    0: ['### <!--profile--><!--search-->で<!--k-obj-noun-->を<!--find2--><!--from-me--><!--send-mail-->',
+    0: ['### <!--profile--><!--search-->で<!--k-target-to-find-->を<!--find2--><!--from-me--><!--send-mail-->',
         '### <!--profile--><!--search-->で<!--hな--><!--k-alt-way-->',
         '### <!--k-alt-do-->には<!--profile--><!--search-->からの<!--mail-->が<!--best-->'],
     1: 'space',
@@ -3098,56 +3380,57 @@ use_4_4 = {
         '<!--profile--><!--search-->などで<!--obj-sex-->を<!--find2--><!--from-me--><!--send-mail--><!--way-->です。',
         '<!--c-順接--><!--b-bbs-->への募集<!--post-->と同時に<!--from-me-->も<!--mail-->を送りましょう。',
         '<!--c-順接--><!--also--><!--k-act-to-find-->の<!--royal-road-->は、<!--profile--><!--search-->で<!--k-act-can-i-->そうな'
-        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->攻めの<!--k-rnd-how-to-->です。'],
-    4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-obj-noun-s-->を選ぶことが<!--s-can-->し、'
+        '<!--obj-sex-->を<!--find2--><!--sub-sex-->側から<!--positive-->に<!--approach-->形の、攻めの<!--k-act-way-sim-->です。'],
+    4: ['この<!--way-->であれば、<!--you-->の<!--liking-->の<!--k-target-to-find-->を選ぶことが<!--s-can-->し、'
         '<!--sl-s--><!--hな--><!--obj-sex-->,<!--kind--><!--obj-sex--><!--sl-s/e-->を選ぶことで<!--success-rate-->が高くなります。',
         'そうすれば、<!--very-->高い<!--success-rate-->で<!--k-can-s-->。'],
     5: [
         '<!--profile--><!--search-->機能を<!--if-use-->、<!--easily--><!--k-obj-status-->をしている<!--obj-sex-->を<!--find-u-->ことが'
         '<!--s-can-->。',
-        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-obj-noun-->でも、<!--you-->が'
+        '<!--deaikei-->では<!--profile--><!--search-->で、<!--link-word-obj-->でも<!--k-target-to-find-->でも、<!--you-->が'
         '出会いたい<!--k-obj-category-->の<!--obj-sex-->が見つかります。'],
     6: ['<!--blog-->で<!--recommend-n-->している<!--site-->では、<!--woman-o-->はいくらでも<!--mail-->を<!--can-send-->ので、'
-        '<!--liking-->の<!--k-obj-noun-->を<!--easily--><!--can-meet-s-->。',
+        '<!--liking-->の<!--k-target-to-find-->を<!--easily--><!--can-meet-s-->。',
         'ここで<!--publish-e-->いる<!--site-->は、<!--woman-user-->は完全に<!--free-->で<!--site-->を<!--can-use-->ので、'
         '<!--k-obj-target-->でも<!--marriage-->でも<!--boy-friend--><!--to-find-->でも、自由に<!--can-find-d-u-s-->。',
         '<!--blog-->で<!--recommend-n-->している<!--site-->を<!--if-use-->、<!--woman-o-->は<!--mail-->を'
         '何通送っても完全に<!--free-->で<!--k-obj-act-find-->ことが<!--s-can-->。'],
-    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-obj-noun-s-->を探せば、会って<!--k-act-can-easy-long-->。',
+    7: ['じっくり<!--time-zone-->をかけて<!--k-act-can-easy--><!--k-target-to-find-->を探せば、会って<!--k-act-can-easy-long-->。',
         ''],
     8: 'space',
-    9: ['<!--profile--><!--search-->で<!--k-obj-noun-l-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
-        '<!--k-obj-noun-l-->に当てはまる項目を選んで、<!--search-->するだけです。',
+    9: [
+        '<!--profile--><!--search-->で<!--k-target-to-find-->を<!--find-u-->のは<!--easy-->です。<!--profile-->の<!--style-->などから'
+        '<!--k-target-to-find-->に当てはまる項目を選んで、<!--search-->するだけです。',
         '具体的な<!--way-->は、<!--site-->の<!--profile--><!--search-->の<!--k-obj-category-->の項目で、'
         '「<!--k-obj-status-->」など該当するものを選んで、<!--search-->するだけです。',
-        '<!--profile--><!--search-->から<!--k-alt-way-->は、<!--profile-->の項目で<!--k-obj-noun-l-->を選択して'
+        '<!--profile--><!--search-->から<!--k-alt-way-->は、<!--profile-->の項目で<!--k-target-to-find-->を選択して'
         '<!--search-->するだけです。'],
     10: ['<!--site-->によっては<!--just-fit-->当てはまるものがないかもしれませんが、その<!--occasion-->は<!--self-int-->などで'
          'フリー<!--words--><!--search-->してみてください。'],
     11: ['<!--c-並列-->住んでいるところが近い方が<!--k-act-connection-->が<!--mail-continue-->ので、「<!--to-sex-->」指定もしておきましょう。',
          '<!--c-添加2--><!--k-obj-category-->に加えて、<!--sl-s-->住んでいる<!--area-->,年齢<!--sl-s/e-->などでも絞り込み<!--search-->をすると、'
-         'より出会いやすい<!--k-obj-noun-s-->を<!--find-u-->ことが<!--s-can-->。'],
+         'より出会いやすい<!--k-target-to-find-->を<!--find-u-->ことが<!--s-can-->。'],
     12: [
         'これで<!--search-->してみて、<!--search-->結果が多すぎる<!--occasion-->には、<!--sl-s-->「年齢」,「未婚/既婚」,「<!--style-->」<!--sl-s/e-->などで'
         'さらに絞り込んで再<!--search-->してみましょう。'],
     13: 'space',
     14: ['それで出てきた結果の中から、<!--you-->の<!--liking-->に合う、それでいて<!--h-2-->そうな<!--obj-sex-->を<!--find-i-->ます。',
          '絞り込み<!--search-->をしてみて出てきた<!--obj-sex-->の中から、<!--you-->の<!--liking-->の<!--obj-sex-->を選びましょう。',
-         'その<!--k-obj-noun-s-->の<!--search-->結果から、気に入った<!--obj-sex-->を選びます。'],
+         'その<!--k-target-to-find-->の<!--search-->結果から、気に入った<!--obj-sex-->を選びます。'],
     15: ['<!--k-sub-is--><!--k-act--><!--occasion-->には<!--obj-sex-->が<!--h-2-->だということは<!--well--><!--important-->で、'
          '<!--hな--><!--obj-sex-->ほど<!--k-act-can-easy-long-->。',
          '<!--hな--><!--obj-sex-->の方が<!--k-act-can-easy-->ので、できるだけ<!--ero-n-->そうな<!--obj-sex-->を<!--find-i-->ます。'],
     16: ['<!--k-obj-status-->で<!--hな--><!--obj-sex-->が見つかったら、<!--boldly--><!--mail-->を送ってみてください。',
-         '<!--liking-->の<!--k-obj-noun-s-->が見つかったら、早速<!--from-me--><!--mail-->を送って<!--approach-e-->みましょう。',
-         '<!--k-act-can-i-->そうな<!--k-obj-noun-s-->が見つかったら、<!--be-early--><!--mail-->を送ります。'],
+         '<!--liking-->の<!--k-target-to-find-->が見つかったら、早速<!--from-me--><!--mail-->を送って<!--approach-e-->みましょう。',
+         '<!--k-act-can-i-->そうな<!--k-target-to-find-->が見つかったら、<!--be-early--><!--mail-->を送ります。'],
     17: ['<!--mail-->の書き方やそのあとの<!--k-act-->までの基本的な<!--flow-to-->は<!--k-act-way-all-->などを<!--refer-to-->みてください。',
          '<!--mail-->を送ってから<!--k-act-->までの<!--flow-to-->については、<!--regular--><!--sub-reader-->でも<!--can-u--><!--k-act-way-all-->の'
          '<!--page-->の方で<!--in-detail--><!--description-->しているので、そちらを<!--refer-to-->みてください。',
          '<!--profile-->を<!--use-a-->具体的な<!--k-act-way-all-->は、<!--k-act-way-all-->の<!--page-->を<!--refer-to-->ください。'],
     18: 'space',
     19: ['<!--k-obj-status-->だけど<!--k-obj-status-->と書かない<!--obj-sex-->も中には存在します。',
-         '<!--k-obj-noun-s-->の中には<!--k-obj-category-->欄に<!--k-obj-status-->だと書かない<!--target-person-->もいます。',
-         '中には、<!--k-obj-status-->だと明かさない<!--k-obj-noun-s-->もいます。'],
+         '<!--k-target-to-find-->の中には<!--k-obj-category-->欄に<!--k-obj-status-->だと書かない<!--target-person-->もいます。',
+         '中には、<!--k-obj-status-->だと明かさない<!--k-target-to-find-->もいます。'],
     20: ['<!--like-this2--><!--target-person-->でも、<!--mail-->の<!--talk-->の中で聞いてみるとちゃんと答えてくれるので、'
          '<!--intimate-->なってから聞いてみましょう。',
          '<!--like-this2--><!--obj-sex-->でも、<!--profile-->の<!--self-int-->に<!--k-obj-status-->だと書いていたりするので、'
@@ -3158,14 +3441,14 @@ use_4_4 = {
 
 
 use_5_1 = {
-    0: ['### <!--b-bbs-->に<!--post-->をしている<!--k-obj-noun-s-->に<!--from-me--><!--send-mail--><!--way-->',
+    0: ['### <!--b-bbs-->に<!--post-->をしている<!--k-target-to-find-->に<!--from-me--><!--send-mail--><!--way-->',
         '### '
-        '<!--k-obj-noun-s-->の<!--b-bbs--><!--post-->に<!--sub-sex-->が<!--from-me--><!--mail-->してきっかけ作り',
-        '### <!--k-obj-noun-s-->の<!--post-->に<!--sub-sex-->側から<!--send-mail--><!--way-to-->'],
+        '<!--k-target-to-find-->の<!--b-bbs--><!--post-->に<!--sub-sex-->が<!--from-me--><!--mail-->してきっかけ作り',
+        '### <!--k-target-to-find-->の<!--post-->に<!--sub-sex-->側から<!--send-mail--><!--way-to-->'],
     1: 'space',
-    2: ['<!--b-bbs-->に<!--post-->をしている<!--k-obj-noun-l-->を<!--find2-->、<!--sub-sex-->側から<!--send-mail-->という'
+    2: ['<!--b-bbs-->に<!--post-->をしている<!--k-target-to-find-->を<!--find2-->、<!--sub-sex-->側から<!--send-mail-->という'
         '<!--way-->もあります。',
-        '<!--internet-->で<!--k-act-way-->として、<!--b-bbs-->で<!--k-obj-noun-l-->の<!--post-->を<!--find2-->、'
+        '<!--internet-->で<!--k-act-way-->として、<!--b-bbs-->で<!--k-target-to-find-->の<!--post-->を<!--find2-->、'
         '<!--from-me--><!--positive-->に<!--mail-->を送って<!--approach-->のも<!--you-can-choice-->。'],
     3: ['<!--k-want--><!--occasion-->には、<!--b-bbs-->の<!--obj-sex-->の<!--post-->を見て、<!--profile-->から'
         '<!--k-obj-status-->を<!--find-i-->出して<!--mail-->を送りましょう。',
@@ -3173,7 +3456,7 @@ use_5_1 = {
         '<!--k-act-can--><!--rate-->があります。'],
     4: 'space',
     5: ['<!--use-u--><!--b-bbs-->は、<!--adult-bbs-->よりも<!--pure-bbs-->が<!--my-recommend-s-->。',
-        '<!--k-obj-noun-l-->を<!--find-u--><!--b-bbs-->としては、<!--adult-bbs-->ではなく<!--pure-bbs-->を<!--use-u-->方がベターです。'],
+        '<!--k-target-to-find-->を<!--find-u--><!--b-bbs-->としては、<!--adult-bbs-->ではなく<!--pure-bbs-->を<!--use-u-->方がベターです。'],
     6: [
         '<!--pure-bbs-->の<!--sl-s--><!--marriage-->,<!--be-serious--><!--obj-partner-->募集<!--sl-s/e-->以外のカテゴリーで<!--k-obj-noun-s-->を'
         '<!--find2-->みましょう。',
@@ -3188,20 +3471,20 @@ use_5_1 = {
         '<!--c-補足--><!--deaikei-->では<!--b-bbs-->の<!--obj-sex-->の<!--post-->を閲覧するのに<!--point-->が必要になります。'],
     10: ['<!--b-bbs-->に<!--post-->をして<!--obj-sex-->からの<!--mail-->を待つ<!--way-->か、<!--profile--><!--search-->から'
          '<!--send-mail--><!--way-->の方が、<!--k-act-way-->としては<!--cost-performance--><!--be-better-->。',
-         '<!--c-順接--><!--sub-sex-->が<!--b-bbs-->から<!--k-obj-noun-l-->を狙って<!--positive-->に<!--send-mail--><!--way-->だと、'
+         '<!--c-順接--><!--sub-sex-->が<!--b-bbs-->から<!--k-target-to-find-->を狙って<!--positive-->に<!--send-mail--><!--way-->だと、'
          '<!--many2--><!--point-->が必要になるので、通常はこの<!--way-->はあまり<!--recommend-n-->できません。'],
     'info': {'deny': ['woman'], 'only': [], 'shuffle': [], 'sec_name': 'use_5_1'}}
 # use_5_1/end
 
 use_5_2 = {
-    0: ['### <!--b-bbs-->に<!--post-->をしている<!--k-obj-noun-s-->に<!--from-me--><!--send-mail--><!--way-->',
+    0: ['### <!--b-bbs-->に<!--post-->をしている<!--k-target-to-find-->に<!--from-me--><!--send-mail--><!--way-->',
         '### '
-        '<!--k-obj-noun-s-->の<!--b-bbs--><!--post-->に<!--sub-sex-->が<!--from-me--><!--mail-->してきっかけ作り',
-        '### <!--k-obj-noun-s-->の<!--post-->に<!--sub-sex-->側から<!--send-mail--><!--way-to-->'],
+        '<!--k-target-to-find-->の<!--b-bbs--><!--post-->に<!--sub-sex-->が<!--from-me--><!--mail-->してきっかけ作り',
+        '### <!--k-target-to-find-->の<!--post-->に<!--sub-sex-->側から<!--send-mail--><!--way-to-->'],
     1: 'space',
-    2: ['<!--b-bbs-->に<!--post-->をしている<!--k-obj-noun-s-->を<!--find2-->、<!--sub-sex-->側から<!--send-mail-->という'
+    2: ['<!--b-bbs-->に<!--post-->をしている<!--k-target-to-find-->を<!--find2-->、<!--sub-sex-->側から<!--send-mail-->という'
         '<!--way-->もあります。',
-        '<!--internet-->で<!--k-act-way-->として、<!--b-bbs-->で<!--k-obj-noun-l-->の<!--post-->を<!--find2-->、'
+        '<!--internet-->で<!--k-act-way-->として、<!--b-bbs-->で<!--k-target-to-find-->の<!--post-->を<!--find2-->、'
         '<!--from-me--><!--positive-->に<!--mail-->を送って<!--approach-->のも<!--you-can-choice-->。'],
     3: ['<!--k-want--><!--occasion-->には、<!--b-bbs-->の<!--obj-sex-->の<!--post-->を見て、<!--profile-->から'
         '<!--k-obj-status-->を<!--find-i-->出して<!--mail-->を送りましょう。',
@@ -3209,7 +3492,7 @@ use_5_2 = {
         '<!--k-act-can--><!--rate-->があります。'],
     4: 'space',
     5: ['<!--use-u--><!--b-bbs-->は、<!--adult-bbs-->よりも<!--pure-bbs-->が<!--my-recommend-s-->。',
-        '<!--k-obj-noun-l-->を<!--find-u--><!--b-bbs-->としては、<!--adult-bbs-->ではなく<!--pure-bbs-->を<!--use-u-->方がベターです。'],
+        '<!--k-target-to-find-->を<!--find-u--><!--b-bbs-->としては、<!--adult-bbs-->ではなく<!--pure-bbs-->を<!--use-u-->方がベターです。'],
     6: [
         '<!--pure-bbs-->の<!--sl-s--><!--marriage-->,<!--be-serious--><!--obj-partner-->募集<!--sl-s/e-->以外のカテゴリーで<!--k-obj-noun-l-->を'
         '<!--find2-->みましょう。',
@@ -3218,43 +3501,43 @@ use_5_2 = {
     7: 'space',
     8: ['<!--b-bbs-->に<!--post-->をして<!--obj-sex-->からの<!--mail-->を待つ<!--way-->か、<!--profile--><!--search-->から'
         '<!--send-mail--><!--way-->の方が、<!--k-act-way-->としては効率<!--be-better-->。',
-        '<!--c-順接--><!--sub-sex-->が<!--b-bbs-->から<!--k-obj-noun-l-->を狙って<!--positive-->に<!--send-mail--><!--way-->だと、'
+        '<!--c-順接--><!--sub-sex-->が<!--b-bbs-->から<!--k-target-to-find-->を狙って<!--positive-->に<!--send-mail--><!--way-->だと、'
         '<!--many2--><!--point-->が必要になるので、通常はこの<!--way-->はあまりおすすめできません。'],
     'info': {'deny': ['man'], 'only': [], 'shuffle': [], 'sec_name': 'use_5_2'}}
 # use_5_2/end
 
 use_6_1 = {
-    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-obj-noun-->と<!--intimate-->なれる',
-        '### <!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-sub-also--><!--k-obj-noun-->と<!--be-early--><!--intimate-->なれます',
-        '### <!--k-sub-is--><!--k-obj-noun-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
-        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で高速で<!--k-obj-noun-->と<!--intimate-->なろう'],
+    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-target-to-find-->と<!--intimate-->なれる',
+        '### <!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-sub-also--><!--k-target-to-find-->と<!--be-early--><!--intimate-->なれます',
+        '### <!--k-sub-is--><!--k-target-to-find-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
+        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で<!--be-early--><!--k-target-to-find-->と<!--intimate-->なろう'],
     1: 'space',
     2: ['<!--deaikei-->の中には、<!--site-->内で<!--sl-s-->電話,チャット<!--sl-s/e-->が<!--can-u-->機能を備えたところもあります。',
         '<!--other-side-->と<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->が<!--can-u--><!--deaikei-->もあります。'],
-    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-obj-noun-s-->と<!--intimate-->なるのにチャットや電話を'
+    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-target-to-find-->と<!--intimate-->なるのにチャットや電話を'
         '<!--use-u-->のも<!--you-can-choice-->。',
         '<!--sl-s-->電話,チャット<!--sl-s/e-->が苦にならない<!--sub-reader-->は、<!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-->みるのもオススメです。',
-        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-obj-noun-s-->と'
+        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-target-to-find-->と'
         '親密な<!--relation-->になることも<!--s-can-->。'],
-    4: ['ある程度<!--mail-->で<!--k-obj-noun-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
-        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-obj-noun-->と一気に<!--intimate-->なれます。'],
-    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->が<!--can-u--><!--may-be-->。',
+    4: ['ある程度<!--mail-->で<!--k-target-to-find-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
+        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-target-to-find-->と一気に<!--intimate-->なれます。'],
+    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->ができる<!--may-be-->。',
         '<!--sl-s-->テレフォン<!--sex-->,チャット<!--sex--><!--sl-s/e-->に発展する<!--may-be-->。'],
     6: 'space',
     7: ['<!--c-せつめい--><!--also-->声を聞いて話をすると<!--familiarity-->が湧くものですから。',
-        '人間、<!--other-side-->の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
+        '人間というものは、<!--really-->相手の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
         '声を聞くと<!--other-side-->のことがよく<!--understand-->気がしますし、<!--familiarity-->で直接会ってみたいという気になります。'],
     8: ['それは<!--k-obj-act-to-find-->をするときも<!--effectively-->です。',
         '<!--adult-->で<!--k-act-noun-->を<!--find-->いるときもそれは<!--at-all-->同じです。',
         '<!--deaikei-->の<!--adult-->でもそれは一緒です。'],
-    9: ['声を聞くと<!--other-side-->の<!--k-obj-noun-s-->の人となりもよく分かりますし。',
-        '<!--other-side-->の<!--k-obj-noun-s-->の声がかわいかったりすると、<!--be-early-->会って<!--k-2nd-act-noun-->したくなったりする'
+    9: ['声を聞くと<!--other-side-->の<!--k-target-to-find-->の<!--character-->もよく分かりますし。',
+        '<!--other-side-->の<!--k-target-to-find-->の声がかわいかったりすると、<!--be-early-->会って<!--k-2nd-act-noun-->したくなったりする'
         '<!--think-->。'],
     10: 'space',
     11: ['<!--c-並列-->同じ<!--time-->を共有して一緒に<!--conversation-->をするチャットも、二人の関係を深めるのには<!--well--><!--effectively-->で、'
-         '<!--other-side-->の<!--k-obj-noun-s-->と一気に<!--intimate-->なることが<!--s-can-->。',
+         '<!--other-side-->の<!--k-target-to-find-->と一気に<!--intimate-->なることが<!--s-can-->。',
          '<!--c-並列-->チャットも<!--time-->を隔てた<!--mail-->よりも、<!--in-real-time--><!--communication-->していることで'
-         '<!--other-side-->の<!--k-obj-noun-s-->との<!--sympathy-->が生まれます。',
+         '<!--other-side-->の<!--k-target-to-find-->との<!--sympathy-->が生まれます。',
          '<!--c-並列-->チャットは<!--in-real-time--><!--other-side-->と<!--conversation-->のラリーをするので、<!--mail-->とは違う良さがあります。'],
     12: [
         'タイムリーに<!--sl-s--><!--question-->,<!--response-->,<!--reply--><!--sl-s/e-->が<!--can-u-->ので、<!--each-other-o-->ことをよく知り合うことが<!--s-can-->。',
@@ -3262,7 +3545,7 @@ use_6_1 = {
         'その時の感情で、<!--unexpectedly--><!--hな-->展開になることも少なく<!--is-not-->。'],
     13: [
         '<!--conversation-->の<!--deployment-->で<!--suddenly--><!--real-meet-->ことになって、そのまま<!--k-2nd-act-noun-->することも多いです。',
-        '<!--author-->も<!--k-obj-noun-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
+        '<!--author-->も<!--k-target-to-find-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
         '<!--k-2nd-act-noun-->した時もありました。'],
     14: 'space',
     15: ['<!--c-補足--><!--site-->によっては<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->で<!--point-->を<!--use-i-->ます。',
@@ -3273,44 +3556,44 @@ use_6_1 = {
         '<!--use-i-->すぎないように十分<!--warn-->。',
         '<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->にハマると<!--point-->を<!--use-i-->すぎることもあるので、<!--warn-->。',
         '<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--point-->を<!--use-i-->過ぎて、<!--sl-s--><!--free-point-->,<!--money--><!--sl-s/e-->を<!--waste-->して、'
-        '<!--result-->その<!--k-obj-noun-s-->を<!--k-act-can-i-->ないとなると本末転倒です。<!--warn-->。'],
+        '<!--result-->その<!--k-target-to-find-->を<!--k-act-can-i-->ないとなると本末転倒です。<!--warn-->。'],
     17: [
         '<!--c-とうぜん--><!--sl-s-->電話,チャット<!--sl-s/e-->が<!--not-good-at-adj-->方は、<!--mail-->だけでも十分<!--k-alt-can-do-long-->。'],
     'info': {'deny': ['woman'], 'only': ['sf_obj'], 'shuffle': [], 'sec_name': 'use_6_1'}}
 # use_6_1/end
 
 use_6_2 = {
-    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-obj-noun-->と<!--intimate-->なれる',
-        '### <!--k-sub-also--><!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-obj-noun-->と<!--be-early--><!--intimate-->なれます',
-        '### <!--k-sub-is--><!--k-obj-noun-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
-        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で高速で<!--k-obj-noun-->と<!--intimate-->なろう'],
+    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-target-to-find-->と<!--intimate-->なれる',
+        '### <!--k-sub-also--><!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-target-to-find-->と<!--be-early--><!--intimate-->なれます',
+        '### <!--k-sub-is--><!--k-target-to-find-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
+        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で<!--be-early--><!--k-target-to-find-->と<!--intimate-->なろう'],
     1: 'space',
     2: ['<!--deaikei-->の中には、<!--site-->内で<!--sl-s-->電話,チャット<!--sl-s/e-->が<!--can-u-->機能を備えたところもあります。',
         '<!--other-side-->と<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->が<!--can-u--><!--deaikei-->もあります。'],
-    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-obj-noun-s-->と<!--intimate-->なるのにチャットや電話を'
+    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-target-to-find-->と<!--intimate-->なるのにチャットや電話を'
         '<!--use-u-->のも<!--you-can-choice-->。',
         '<!--sl-s-->電話,チャット<!--sl-s/e-->が苦にならない<!--sub-reader-->は、<!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-->みるのもオススメです。',
-        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-obj-noun-s-->と'
+        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-target-to-find-->と'
         '親密な<!--relation-->になることも<!--s-can-->。'],
-    4: ['ある程度<!--mail-->で<!--k-obj-noun-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
-        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-obj-noun-->と一気に<!--intimate-->なれます。'],
-    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->が<!--can-u--><!--may-be-->。',
+    4: ['ある程度<!--mail-->で<!--k-target-to-find-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
+        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-target-to-find-->と一気に<!--intimate-->なれます。'],
+    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->ができる<!--may-be-->。',
         '<!--sl-s-->テレフォン<!--sex-->,チャット<!--sex--><!--sl-s/e-->に発展する<!--may-be-->。'],
     6: 'space',
     7: ['<!--c-せつめい--><!--also-->声を聞いて話をすると<!--familiarity-->が湧くものですから。',
-        '人間、<!--other-side-->の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
+        '人間というものは、<!--really-->相手の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
         '声を聞くと<!--other-side-->のことがよく<!--understand-->気がしますし、<!--familiarity-->で直接会ってみたいという気になります。'],
     8: ['それは<!--k-obj-act-to-find-->をするときも<!--effectively-->です。',
         '<!--adult-->で<!--k-act-noun-->を<!--find-->いるときもそれは<!--at-all-->同じです。',
         '<!--deaikei-->の<!--adult-->でもそれは一緒です。'],
-    9: ['声を聞くと<!--other-side-->の<!--k-obj-noun-s-->の人となりもよく分かりますし。',
-        '<!--other-side-->の<!--k-obj-noun-s-->の声がかわいかったりすると、<!--be-early-->会って<!--k-2nd-act-noun-->したくなったりする'
+    9: ['声を聞くと<!--other-side-->の<!--k-target-to-find-->の<!--character-->もよく分かりますし。',
+        '<!--other-side-->の<!--k-target-to-find-->の声がかわいかったりすると、<!--be-early-->会って<!--k-2nd-act-noun-->したくなったりする'
         '<!--think-->。'],
     10: 'space',
     11: ['<!--c-並列-->同じ<!--time-->を共有して一緒に<!--conversation-->をするチャットも、二人の関係を深めるのには<!--well--><!--effectively-->で、'
-         '<!--other-side-->の<!--k-obj-noun-s-->と一気に<!--intimate-->なることが<!--s-can-->。',
+         '<!--other-side-->の<!--k-target-to-find-->と一気に<!--intimate-->なることが<!--s-can-->。',
          '<!--c-並列-->チャットも<!--time-->を隔てた<!--mail-->よりも、<!--in-real-time--><!--communication-->していることで'
-         '<!--other-side-->の<!--k-obj-noun-s-->との<!--sympathy-->が生まれます。',
+         '<!--other-side-->の<!--k-target-to-find-->との<!--sympathy-->が生まれます。',
          '<!--c-並列-->チャットは<!--in-real-time--><!--other-side-->と<!--conversation-->のラリーをするので、<!--mail-->とは違う良さがあります。'],
     12: [
         'タイムリーに<!--sl-s--><!--question-->,<!--response-->,<!--reply--><!--sl-s/e-->が<!--can-u-->ので、<!--each-other-o-->ことをよく知り合うことが<!--s-can-->。',
@@ -3318,50 +3601,50 @@ use_6_2 = {
         'その時の感情で、<!--unexpectedly--><!--hな-->展開になることも少なく<!--is-not-->。'],
     13: [
         '<!--conversation-->の<!--deployment-->で<!--suddenly--><!--real-meet-->ことになって、そのまま<!--k-2nd-act-noun-->することも多いです。',
-        '<!--author-->も<!--k-obj-noun-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
+        '<!--author-->も<!--k-target-to-find-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
         '<!--k-2nd-act-noun-->した時もありました。'],
     'info': {'deny': ['man'], 'only': ['sf_obj'], 'shuffle': [], 'sec_name': 'use_6_2'}}
 # use_6_2/end
 
 use_6_3 = {
-    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-obj-noun-->と<!--intimate-->なれる',
-        '### <!--k-sub-also--><!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-obj-noun-->と<!--be-early--><!--intimate-->なれます',
-        '### <!--k-sub-is--><!--k-obj-noun-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
-        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で高速で<!--k-obj-noun-->と<!--intimate-->なろう'],
+    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-target-to-find-->と<!--intimate-->なれる',
+        '### <!--k-sub-also--><!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-target-to-find-->と<!--be-early--><!--intimate-->なれます',
+        '### <!--k-sub-is--><!--k-target-to-find-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
+        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で<!--be-early--><!--k-target-to-find-->と<!--intimate-->なろう'],
     1: 'space',
     2: ['<!--deaikei-->の中には、<!--site-->内で<!--sl-s-->電話,チャット<!--sl-s/e-->が<!--can-u-->機能を備えたところもあります。',
         '<!--other-side-->と<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->が<!--can-u--><!--deaikei-->もあります。'],
-    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-obj-noun-s-->と<!--intimate-->なるのにチャットや電話を'
+    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-target-to-find-->と<!--intimate-->なるのにチャットや電話を'
         '<!--use-u-->のも<!--you-can-choice-->。',
         '<!--sl-s-->電話,チャット<!--sl-s/e-->が苦にならない<!--sub-reader-->は、<!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-->みるのもオススメです。',
-        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-obj-noun-s-->と'
+        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-target-to-find-->と'
         '親密な<!--relation-->になることも<!--s-can-->。'],
-    4: ['ある程度<!--mail-->で<!--k-obj-noun-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
-        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-obj-noun-->と一気に<!--intimate-->なれます。'],
-    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->が<!--can-u--><!--may-be-->。',
+    4: ['ある程度<!--mail-->で<!--k-target-to-find-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
+        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-target-to-find-->と一気に<!--intimate-->なれます。'],
+    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->ができる<!--may-be-->。',
         '<!--sl-s-->テレフォン<!--sex-->,チャット<!--sex--><!--sl-s/e-->に発展する<!--may-be-->。'],
     6: 'space',
     7: ['<!--c-せつめい--><!--also-->声を聞いて話をすると<!--familiarity-->が湧くものですから。',
-        '人間、<!--other-side-->の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
+        '人間というものは、<!--really-->相手の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
         '声を聞くと<!--other-side-->のことがよく<!--understand-->気がしますし、<!--familiarity-->で直接会ってみたいという気になります。'],
     8: ['それは<!--k-obj-act-to-find-->をするときも<!--effectively-->です。',
         '<!--adult-->で<!--k-act-noun-->を<!--find-->いるときもそれは<!--at-all-->同じです。',
         '<!--deaikei-->の<!--adult-->でもそれは一緒です。'],
-    9: ['声を聞くと<!--other-side-->の<!--k-obj-noun-s-->の人となりもよく分かりますし。',
-        '<!--other-side-->の<!--k-obj-noun-s-->の声がかわいかったりすると、<!--be-early-->会って<!--k-act-y-->たくなったりする'
+    9: ['声を聞くと<!--other-side-->の<!--k-target-to-find-->の<!--character-->もよく分かりますし。',
+        '<!--other-side-->の<!--k-target-to-find-->の声がかわいかったりすると、<!--be-early-->会って<!--k-act-y-->たくなったりする'
         '<!--think-->。'],
     10: 'space',
     11: ['<!--c-並列-->同じ<!--time-->を共有して一緒に<!--conversation-->をするチャットも、二人の関係を深めるのには<!--well--><!--effectively-->で、'
-         '<!--other-side-->の<!--k-obj-noun-s-->と一気に<!--intimate-->なることが<!--s-can-->。',
+         '<!--other-side-->の<!--k-target-to-find-->と一気に<!--intimate-->なることが<!--s-can-->。',
          '<!--c-並列-->チャットも<!--time-->を隔てた<!--mail-->よりも、<!--in-real-time--><!--communication-->していることで'
-         '<!--other-side-->の<!--k-obj-noun-s-->との<!--sympathy-->が生まれます。',
+         '<!--other-side-->の<!--k-target-to-find-->との<!--sympathy-->が生まれます。',
          '<!--c-並列-->チャットは<!--in-real-time--><!--other-side-->と<!--conversation-->のラリーをするので、<!--mail-->とは違う良さがあります。'],
     12: [
         'タイムリーに<!--sl-s--><!--question-->,<!--response-->,<!--reply--><!--sl-s/e-->が<!--can-u-->ので、<!--each-other-o-->ことをよく知り合うことが<!--s-can-->。',
         '<!--mail-->では聞けない<!--hな-->ことを聞いたりすることも<!--s-can-->。',
         'その時の感情で、<!--unexpectedly--><!--hな-->展開になることも少なく<!--is-not-->。'],
     13: ['<!--conversation-->の<!--deployment-->で<!--suddenly--><!--real-meet-->ことになって、そのまま<!--k-act-->ことも多いです。',
-         '<!--author-->も<!--k-obj-noun-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
+         '<!--author-->も<!--k-target-to-find-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
          '<!--k-act-y-->た時もありました。'],
     14: 'space',
     15: ['<!--c-補足--><!--site-->によっては<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->で<!--point-->を<!--use-i-->ます。',
@@ -3372,7 +3655,7 @@ use_6_3 = {
         '<!--use-i-->すぎないように十分<!--warn-->。',
         '<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->にハマると<!--point-->を<!--use-i-->すぎることもあるので、<!--warn-->。',
         '<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--point-->を<!--use-i-->過ぎて、<!--sl-s--><!--free-point-->,<!--money--><!--sl-s/e-->を<!--waste-->して、'
-        '<!--result-->その<!--k-obj-noun-s-->を<!--k-act-can-i-->ないとなると本末転倒です。<!--warn-->。'],
+        '<!--result-->その<!--k-target-to-find-->を<!--k-act-can-i-->ないとなると本末転倒です。<!--warn-->。'],
     17: [
         '<!--c-とうぜん--><!--sl-s-->電話,チャット<!--sl-s/e-->が<!--not-good-at-adj-->方は、<!--mail-->だけでも十分<!--k-obj-act-can-do-long-->。',
         ''],
@@ -3380,44 +3663,44 @@ use_6_3 = {
 # use_6_3/end
 
 use_6_4 = {
-    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-obj-noun-->と<!--intimate-->なれる',
-        '### <!--k-sub-also--><!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-obj-noun-->と<!--be-early--><!--intimate-->なれます',
-        '### <!--k-sub-is--><!--k-obj-noun-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
-        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で高速で<!--k-obj-noun-->と<!--intimate-->なろう'],
+    0: ['### <!--site-->内の<!--sl-s-->電話,チャット<!--sl-s/e-->で<!--k-sub-also--><!--k-target-to-find-->と<!--intimate-->なれる',
+        '### <!--k-sub-also--><!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-u-->と<!--k-target-to-find-->と<!--be-early--><!--intimate-->なれます',
+        '### <!--k-sub-is--><!--k-target-to-find-->と<!--be-early--><!--intimate-->なりたいなら<!--sl-s-->電話,チャット<!--sl-s/e-->も活用しよう',
+        '### <!--sl-s-->電話,チャット<!--sl-s/e-->で<!--be-early--><!--k-target-to-find-->と<!--intimate-->なろう'],
     1: 'space',
     2: ['<!--deaikei-->の中には、<!--site-->内で<!--sl-s-->電話,チャット<!--sl-s/e-->が<!--can-u-->機能を備えたところもあります。',
         '<!--other-side-->と<!--sl-s--><!--site-tell-->,チャット<!--sl-s/e-->が<!--can-u--><!--deaikei-->もあります。'],
-    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-obj-noun-s-->と<!--intimate-->なるのにチャットや電話を'
+    3: ['<!--like-this2--><!--site-->では、<!--other-side-->の<!--k-target-to-find-->と<!--intimate-->なるのにチャットや電話を'
         '<!--use-u-->のも<!--you-can-choice-->。',
         '<!--sl-s-->電話,チャット<!--sl-s/e-->が苦にならない<!--sub-reader-->は、<!--sl-s-->電話,チャット<!--sl-s/e-->を<!--use-->みるのもオススメです。',
-        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-obj-noun-s-->と'
+        '<!--site-->内の<!--sl-s-->匿名電話機能,チャット<!--sl-s/e-->を<!--use-->のタイムリーな<!--talk-->で、一気に<!--other-side-->の<!--k-target-to-find-->と'
         '親密な<!--relation-->になることも<!--s-can-->。'],
-    4: ['ある程度<!--mail-->で<!--k-obj-noun-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
-        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-obj-noun-->と一気に<!--intimate-->なれます。'],
-    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->が<!--can-u--><!--may-be-->。',
+    4: ['ある程度<!--mail-->で<!--k-target-to-find-->と<!--intimate-->なったら、<!--sl-s-->電話,チャット<!--sl-s/e-->すると急速に関係が深まります。',
+        '<!--sl-s-->電話,チャット<!--sl-s/e-->なら<!--k-target-to-find-->と一気に<!--intimate-->なれます。'],
+    5: ['チャットで<!--suddenly--><!--hな-->話をしたり、テレフォン<!--sex-->ができる<!--may-be-->。',
         '<!--sl-s-->テレフォン<!--sex-->,チャット<!--sex--><!--sl-s/e-->に発展する<!--may-be-->。'],
     6: 'space',
     7: ['<!--c-せつめい--><!--also-->声を聞いて話をすると<!--familiarity-->が湧くものですから。',
-        '人間、<!--other-side-->の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
+        '人間というものは、<!--really-->相手の声を聞いて話をすると、<!--also-->文字だけよりも<!--familiarity-->が湧くものです。',
         '声を聞くと<!--other-side-->のことがよく<!--understand-->気がしますし、<!--familiarity-->で直接会ってみたいという気になります。'],
     8: ['それは<!--k-obj-act-to-find-->をするときも<!--effectively-->です。',
         '<!--adult-->で<!--k-act-noun-->を<!--find-->いるときもそれは<!--at-all-->同じです。',
         '<!--deaikei-->の<!--adult-->でもそれは一緒です。'],
-    9: ['声を聞くと<!--other-side-->の<!--k-obj-noun-s-->の人となりもよく分かりますし。',
-        '<!--other-side-->の<!--k-obj-noun-s-->の声がかわいかったりすると、<!--be-early-->会って<!--k-act-y-->たくなったりする'
+    9: ['声を聞くと<!--other-side-->の<!--k-target-to-find-->の<!--character-->もよく分かりますし。',
+        '<!--other-side-->の<!--k-target-to-find-->の声がかわいかったりすると、<!--be-early-->会って<!--k-act-y-->たくなったりする'
         '<!--think-->。'],
     10: 'space',
     11: ['<!--c-並列-->同じ<!--time-->を共有して一緒に<!--conversation-->をするチャットも、二人の関係を深めるのには<!--well--><!--effectively-->で、'
-         '<!--other-side-->の<!--k-obj-noun-s-->と一気に<!--intimate-->なることが<!--s-can-->。',
+         '<!--other-side-->の<!--k-target-to-find-->と一気に<!--intimate-->なることが<!--s-can-->。',
          '<!--c-並列-->チャットも<!--time-->を隔てた<!--mail-->よりも、<!--in-real-time--><!--communication-->していることで'
-         '<!--other-side-->の<!--k-obj-noun-s-->との<!--sympathy-->が生まれます。',
+         '<!--other-side-->の<!--k-target-to-find-->との<!--sympathy-->が生まれます。',
          '<!--c-並列-->チャットは<!--in-real-time--><!--other-side-->と<!--conversation-->のラリーをするので、<!--mail-->とは違う良さがあります。'],
     12: [
         'タイムリーに<!--sl-s--><!--question-->,<!--response-->,<!--reply--><!--sl-s/e-->が<!--can-u-->ので、<!--each-other-o-->ことをよく知り合うことが<!--s-can-->。',
         '<!--mail-->では聞けない<!--hな-->ことを聞いたりすることも<!--s-can-->。',
         'その時の感情で、<!--unexpectedly--><!--hな-->展開になることも少なく<!--is-not-->。'],
     13: ['<!--conversation-->の<!--deployment-->で<!--suddenly--><!--real-meet-->ことになって、そのまま<!--k-act-->ことも多いです。',
-         '<!--author-->も<!--k-obj-noun-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
+         '<!--author-->も<!--k-target-to-find-->とチャットでその日のうちに<!--real-meet--><!--appoint-->をして'
          '<!--k-act-y-->た時もありました。'],
     'info': {'deny': ['man', 'sf_obj'], 'only': [], 'shuffle': [], 'sec_name': 'use_6_4'}}
 # use_6_4/end
@@ -3434,7 +3717,7 @@ use_7_1 = {
         '<!--c-並列--><!--deaikei2-->の<!--b-bbs-->などで素人を装ってプロが<!--whore-->の<!--partner-->になる<!--sub-sex-->を探す風俗<!--dealer-->、'
         'いわゆる「援デリ」や「裏デリ」と言われる<!--dealer-->もいます。'],
     3: [
-        '<!--k-obj-noun-->に限らず<!--deaikei-->で<!--adult-->を<!--find-u--><!--occasion-->には<!--like-this2--><!--dealer-->にも<!--warn-->。',
+        '<!--k-target-to-find-->に限らず<!--deaikei-->で<!--adult-->を<!--find-u--><!--occasion-->には<!--like-this2--><!--dealer-->にも<!--warn-->。',
         '<!--like-this2--><!--dealer-->に引っかからないように<!--warn-->。'],
     4: 'space',
     5: ['<!--dealer-->は<!--rather--><!--talk-->すれば<!--dealer-->だと分かりますが、それでも数<!--point-unit-->は<!--point-->をロスしてしまうので、'
@@ -3450,7 +3733,7 @@ use_7_1 = {
         '<!--suddenly--><!--sl-s--><!--address-->,<!--line--><!--sl-s/e-->を教えてくるのも<!--dealer-->臭プンプンです。'],
     9: [
         'ここで<!--privacy-->を教えてしまうと、<!--sl-s--><!--bad-request-->,<!--bad-site-->,<!--adult-site--><!--sl-s/e-->などに誘導する<!--spam-mail-->が'
-        '<!--many2-->送られてくることになります。',
+        '<!--many--><!--be-sent-->ことになります。',
         '万が一<!--address-->を教えたり<!--mail-->を送ったりしてしまうと、その後<!--sl-s--><!--bad-request-->,<!--adult-site--><!--sl-s/e-->の'
         '被害に遭う<!--may-be-->。'],
     10: 'space',
@@ -3464,7 +3747,7 @@ use_7_1 = {
     14: [
         'こういう、いかにも<!--dealer-->っぽい<!--profile-->の<!--obj-sex-o-->には<!--never--><!--mail-->を送らないように<!--you-must-do-->。',
         '<!--dealer-->っぽい<!--k-obj-noun-s-->がいたら、<!--mail-->を送ったりせず、無視<!--you-must-do-->。'],
-    15: ['<!--c-並列--><!--other-side-->から<!--mail-->が送られてくる<!--may-be-->が、舞い上がって<!--re-mail-->を'
+    15: ['<!--c-並列--><!--other-side-->から<!--mail-->が<!--be-sent--><!--may-be-->が、舞い上がって<!--re-mail-->を'
          '送らないようにしてください。',
          '<!--like-this2--><!--target-person-->から<!--mail-->が届いた時にも無視します。'],
     16: ['<!--re-mail-->しても<!--spam-mail-->が届いたりするだけで、<!--k-obj-act-can-not-do-long-->。',
@@ -3481,7 +3764,7 @@ use_7_2 = {
         '<!--site-user-->数が多い<!--deaikei-->には、それを<!--use-->他の<!--unsure--><!--deaikei2-->に誘導しようとする<!--dealer-->がいる'
         '<!--case-->があります。'],
     2: [
-        '<!--k-obj-noun-->に限らず<!--deaikei-->で<!--adult-->を<!--find-u--><!--occasion-->には<!--like-this2--><!--dealer-->にも<!--warn-->。',
+        '<!--k-target-to-find-->に限らず<!--deaikei-->で<!--adult-->を<!--find-u--><!--occasion-->には<!--like-this2--><!--dealer-->にも<!--warn-->。',
         '<!--like-this2--><!--dealer-->に引っかからないように<!--warn-->。'],
     3: 'space',
     4: [
@@ -3492,7 +3775,7 @@ use_7_2 = {
         '<!--suddenly--><!--sl-s--><!--address-->,<!--line--><!--sl-s/e-->を教えてくるのも<!--dealer-->臭プンプンです。'],
     6: [
         'ここで<!--privacy-->を教えてしまうと、<!--sl-s--><!--bad-request-->,<!--bad-site-->,<!--adult-site--><!--sl-s/e-->などに誘導する<!--spam-mail-->が'
-        '<!--many2-->送られてくることになります。',
+        '<!--many--><!--be-sent-->ことになります。',
         '万が一<!--address-->を教えたり<!--mail-->を送ったりしてしまうと、その後<!--sl-s--><!--bad-request-->,<!--adult-site--><!--sl-s/e-->の'
         '被害に遭う<!--may-be-->。'],
     7: 'space',
@@ -3506,7 +3789,7 @@ use_7_2 = {
     11: [
         'こういう、いかにも<!--dealer-->っぽい<!--profile-->の<!--obj-sex-o-->には<!--never--><!--mail-->を送らないように<!--you-must-do-->。',
         '<!--dealer-->っぽい<!--k-obj-noun-s-->がいたら、<!--mail-->を送ったりせず、無視<!--you-must-do-->。'],
-    12: ['<!--c-並列--><!--other-side-->から<!--mail-->が送られてくる<!--may-be-->が、舞い上がって<!--re-mail-->を'
+    12: ['<!--c-並列--><!--other-side-->から<!--mail-->が<!--be-sent--><!--may-be-->が、舞い上がって<!--re-mail-->を'
          '送らないようにしてください。',
          '<!--like-this2--><!--target-person-->から<!--mail-->が届いた時にも無視します。'],
     'info': {'deny': ['man'], 'only': [], 'shuffle': [], 'sec_name': 'use_7_2'}}
@@ -3516,24 +3799,24 @@ tips_1_1 = {
     0: ['## <!--k-alt-find-->ときの<!--secret-->と選び方',
         '## <!--k-alt-do--><!--secret-->',
         '## <!--k-sub-is--><!--nicely--><!--k-obj-act-way-->'],
-    1: ['<!--k-sub-is--><!--deaikei-->で<!--nicely--><!--k-obj-noun-->を<!--find2-->、<!--k-act-->ためには、'
-        'まず<!--site-->で<!--send-mail--><!--k-obj-noun-s-->を選ぶところから<!--warn-->。',
+    1: ['<!--k-sub-is--><!--deaikei-->で<!--nicely--><!--k-target-to-find-->を<!--find2-->、<!--k-act-->ためには、'
+        'まず<!--site-->で<!--send-mail--><!--k-target-to-find-->を選ぶところから<!--warn-->。',
         '<!--net-d-->で<!--k-rnd-do-->ための<!--secret-->をいくつか<!--description-->します。',
-        '<!--deaikei-->で<!--k-obj-noun-->を<!--find2--><!--mail-->した後は<!--regular--><!--k-act-way-all-->と同じです。'
+        '<!--deaikei-->で<!--k-target-to-find-->を<!--find2--><!--mail-->した後は<!--regular--><!--k-act-way-all-->と同じです。'
         'しかし、より<!--cost-performance-->よく<!--k-rnd-do-->ためにはいくつか<!--secret-->があります。'],
     2: 'space',
-    3: ['### <!--k-act-can-easy--><!--hな--><!--k-obj-noun-s-->の<!--profile-->の特徴',
-        '### <!--k-alt-do-->には、<!--hな--><!--k-obj-noun-s-->を探そう',
-        '### <!--hな--><!--k-obj-noun-s-->は<!--k-sub-also--><!--k-act-can-easy-->！'],
+    3: ['### <!--k-act-can-easy--><!--hな--><!--k-target-to-find-->の<!--profile-->の特徴',
+        '### <!--k-alt-do-->には、<!--hな--><!--k-target-to-find-->を探そう',
+        '### <!--hな--><!--k-target-to-find-->は<!--k-sub-also--><!--k-act-can-easy-->！'],
     4: 'space',
     5: ['<!--k-act-want-->なら<!--hな--><!--obj-sex-->を選んで<!--approach-->べきだと書きましたが、'
-        '<!--k-rnd-do--><!--occasion-->には<!--hな--><!--k-obj-noun-s-->を<!--find-u-->必要があります。',
+        '<!--k-rnd-do--><!--occasion-->には<!--hな--><!--k-target-to-find-->を<!--find-u-->必要があります。',
         '<!--k-act-way-all-->の<!--page-->で、<!--k-sub-is--><!--k-act-->のに一番<!--important-->なことは<!--hな--><!--obj-sex-->を選ぶことだと'
         '書きました。'],
-    6: ['<!--deaikei-->には<!--hな--><!--obj-sex-->が多いので、<!--k-obj-noun-s-->を選んで<!--mail-->すれば'
+    6: ['<!--deaikei-->には<!--hな--><!--obj-sex-->が多いので、<!--k-target-to-find-->を選んで<!--mail-->すれば'
         '多分<!--other-side-->は<!--ero--><!--relatively--><!--easily--><!--sex--><!--s-can-->が、'
         '<!--just-in-case--><!--hな--><!--obj-sex-->の特徴について<!--rather--><!--description-->しておきます。',
-        '<!--k-obj-noun-s-->には<!--hな--><!--target-person-->が多いですが、より<!--hな--><!--k-obj-noun-s-->を<!--find-u-->ための'
+        '<!--k-target-to-find-->には<!--hな--><!--target-person-->が多いですが、より<!--hな--><!--k-target-to-find-->を<!--find-u-->ための'
         'ヒントを<!--go-introduce-->します。'],
     7: 'space',
     8: ['<!--hm-sn-->の<!--profile-->の自己評価には<!--sl-s-->「エッチ度」,「M度」<!--sl-s/e-->などがあります。',
@@ -3548,7 +3831,7 @@ tips_1_1 = {
     11: ['<!--c-補足2--><!--author-->の経験上、<!--name-boobs-->が大きい<!--obj-sex-->はなぜか<!--hな-->です。'],
     12: 'space',
     13: [
-        '<!--sl-s--><!--self-int-->,裏<!--profile--><!--sl-s/e-->の中で、<!--sex-->に<!--positive-->そうなことを書いている<!--k-obj-noun-s-->も'
+        '<!--sl-s--><!--self-int-->,裏<!--profile--><!--sl-s/e-->の中で、<!--sex-->に<!--positive-->そうなことを書いている<!--k-target-to-find-->も'
         '<!--k-act-can-easy--><!--think-->。',
         '<!--deaikei-->の<!--self-int-->で<!--hな-->ことを書いている<!--obj-sex-->も<!--h-2-->なので'
         '<!--k-act-can--><!--potency-->いです。'],
@@ -3556,17 +3839,17 @@ tips_1_1 = {
         '<!--k-act-noun-->そのものは<!--find-->いない<!--but-and-c-->「<!--kiss-or-sof-->（ソフトな<!--making-love-->をする<!--sub-sex-->の<!--friend-->）」や'
         '「<!--kiss-or-sof-->（<!--kiss-->までする<!--sub-sex-->の<!--friend-->）」を<!--find-->いる<!--obj-sex-->も結局は<!--h-2-->なので'
         '<!--k-act-can-long-->。',
-        '<!--kiss-->だけとか添い寝だけとか書いている<!--k-obj-noun-s-->も、性格は<!--h-2-->なので<!--sex-->まで<!--s-can-->。'],
+        '<!--kiss-->だけとか添い寝だけとか書いている<!--k-target-to-find-->も、性格は<!--h-2-->なので<!--sex-->まで<!--s-can-->。'],
     15: ['<!--c-対比-->「出会いには興味<!--is-not-->」とか「<!--contact-point-->は教えません」<!--like-->ことを書いている<!--obj-sex-->は'
          '<!--conservative-->くて<!--sex-->しにくいです。',
          '<!--self-int-->だけでなく、<!--sl-s-->日記,伝言板<!--sl-s/e-->などに<!--hな-->日記や文章を書いている<!--target-person-->もいるので、'
          '注意して<!--find2-->みましょう。'],
     16: ['<!--hな--><!--words-->は<!--conversation-->のきっかけにもなるので、<!--nicely--><!--use-i-->ましょう。'],
     17: 'space',
-    18: ['「<!--to-sex-->お断り」と書いている<!--k-obj-noun-s-->については、<!--at-a-glance--><!--sex-->しにくいように見えますが、'
+    18: ['「<!--to-sex-->お断り」と書いている<!--k-target-to-find-->については、<!--at-a-glance--><!--sex-->しにくいように見えますが、'
          '<!--nicely-->やれば<!--sex--><!--s-can-->。',
          '<!--sl-s--><!--profile-->の<!--self-int-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->に「<!--to-sex-->死ね」とか「<!--to-sex-->お断り」'
-         '<!--like-->ことを書いている<!--k-obj-noun-s-->もいますが、実はこういう<!--target-person-->は<!--sex--><!--s-can-->。'],
+         '<!--like-->ことを書いている<!--k-target-to-find-->もいますが、実はこういう<!--target-person-->は<!--sex--><!--s-can-->。'],
     19: ['<!--to-sex-->お断りと書くからには、<!--so-far-->何回か<!--to-sex-->の<!--sub-sex-->にやられてきたということですから、'
          '<!--not-conservative-->いということが言えます。',
          '<!--to-sex-->が嫌いなのは、<!--so-far--><!--to-sex-->の<!--sub-sex-->に引っかかったからです。'],
@@ -3574,7 +3857,7 @@ tips_1_1 = {
          '<!--well--><!--easily--><!--sex--><!--can-u-->と思われます。',
          'それでもまだ出会いを<!--find-->いる<!--be-like-this-->から、<!--nicely-->やれば<!--relatively--><!--easily-->ヤれます。'],
     21: ['<!--c-補足--><!--to-sex-->なのが<!--leak-->るとそれで切られてしまうので、<!--k-act-->には<!--nicely-->やる必要があります。',
-         'その<!--k-obj-noun-s-->に<!--to-sex-->だと<!--leak-->ないように、<!--nicely--><!--intimate-->なりましょう。'],
+         'その<!--k-target-to-find-->に<!--to-sex-->だと<!--leak-->ないように、<!--nicely--><!--intimate-->なりましょう。'],
     22: ['成功すればいい<!--k-obj-target-->になるはずです。'],
     23: 'space',
     24: ['<!--c-補足--><!--h-2-->そうな<!--profile-->の<!--obj-sex-o-->の中には「<!--whore-->」という'
@@ -3588,11 +3871,11 @@ tips_1_1 = {
          '<!--h-2-->そうだから<!--k-act-can-i-->そうだと思うかもしれませんが、<!--whore--><!--purpose-->の<!--obj-sex-o-->は、'
          '<!--money-->がないと絶対<!--sex-->しません。'],
     27: ['<!--c-順接--><!--whore--><!--purpose-->の<!--obj-sex-o-->には引っかからないように<!--warn-->。',
-         '<!--whore--><!--purpose-->の<!--k-obj-noun-s-->は<!--certainly--><!--k-act-can-i-->ないので、'
+         '<!--whore--><!--purpose-->の<!--k-target-to-find-->は<!--certainly--><!--k-act-can-i-->ないので、'
          '<!--mail-->しないように<!--warn-->。'],
     28: [
         '<!--regular--><!--whore--><!--purpose-->の<!--target-person-->ははっきり<!--sl-s-->「割り切って」,「お小遣い」,「<!--whore-->」,「意味ありで」<!--sl-s/e-->などと'
-        '<!--whore--><!--purpose-->だと<!--understand-->キー<!--words-->を書いています。'],
+        '<!--whore--><!--purpose-->だと<!--understand--><!--ug-words-->を書いています。'],
     'info': {'deny': ['woman'], 'only': [], 'shuffle': [], 'sec_name': 'tips_1_1'}}
 # tips_1_1/end
 
@@ -3600,24 +3883,24 @@ tips_1_2 = {
     0: ['## <!--k-alt-find-->ときの<!--secret-->と選び方',
         '## <!--k-alt-do--><!--secret-->',
         '## <!--k-sub-is--><!--nicely--><!--k-obj-act-way-->'],
-    1: ['<!--deaikei-->で<!--nicely--><!--k-obj-noun-->を<!--find2-->、<!--k-act-->ためには、'
-        'まず<!--site-->で<!--send-mail--><!--k-obj-noun-s-->を選ぶところから<!--warn-->。',
+    1: ['<!--deaikei-->で<!--nicely--><!--k-target-to-find-->を<!--find2-->、<!--k-act-->ためには、'
+        'まず<!--site-->で<!--send-mail--><!--k-target-to-find-->を選ぶところから<!--warn-->。',
         '<!--net-d-->で<!--k-rnd-do-->ための<!--secret-->をいくつか<!--description-->します。',
-        '<!--deaikei-->で<!--k-obj-noun-->を<!--find2--><!--mail-->した後は<!--regular--><!--k-act-way-all-->と同じです。'
+        '<!--deaikei-->で<!--k-target-to-find-->を<!--find2--><!--mail-->した後は<!--regular--><!--k-act-way-all-->と同じです。'
         'しかし、より<!--cost-performance-->よく<!--k-rnd-do-->ためにはいくつか<!--secret-->があります。'],
     2: 'space',
-    3: ['### <!--k-sub-also--><!--k-act-can-easy--><!--hな--><!--k-obj-noun-s-->の<!--profile-->の特徴',
-        '### <!--k-alt-do-->には、<!--hな--><!--k-obj-noun-s-->を探そう',
-        '### <!--hな--><!--k-obj-noun-s-->は<!--k-sub-also--><!--k-act-can-easy-->！'],
+    3: ['### <!--k-sub-also--><!--k-act-can-easy--><!--hな--><!--k-target-to-find-->の<!--profile-->の特徴',
+        '### <!--k-alt-do-->には、<!--hな--><!--k-target-to-find-->を探そう',
+        '### <!--hな--><!--k-target-to-find-->は<!--k-sub-also--><!--k-act-can-easy-->！'],
     4: 'space',
     5: ['<!--k-act-want-->なら<!--hな--><!--obj-sex-->を選んで<!--approach-->べきだと書きましたが、'
-        '<!--k-rnd-do--><!--occasion-->には<!--hな--><!--k-obj-noun-s-->を<!--find-u-->必要があります。',
+        '<!--k-rnd-do--><!--occasion-->には<!--hな--><!--k-target-to-find-->を<!--find-u-->必要があります。',
         '<!--k-act-way-all-->の<!--page-->で、<!--k-sub-is--><!--k-act-->のに一番<!--important-->なことは<!--hな--><!--obj-sex-->を選ぶことだと'
         '書きました。'],
-    6: ['<!--k-obj-noun-s-->には<!--hな--><!--obj-sex-->が多いので、<!--k-obj-noun-s-->を選んで<!--mail-->すれば'
+    6: ['<!--k-target-to-find-->には<!--hな--><!--obj-sex-->が多いので、<!--k-target-to-find-->を選んで<!--mail-->すれば'
         '多分<!--other-side-->は<!--ero--><!--relatively--><!--easily--><!--sex--><!--s-can-->が、'
         '<!--just-in-case--><!--hな--><!--obj-sex-->の特徴について<!--rather--><!--description-->しておきます。',
-        '<!--k-obj-noun-s-->には<!--hな--><!--target-person-->が多いですが、より<!--hな--><!--k-obj-noun-s-->を<!--find-u-->ための'
+        '<!--k-target-to-find-->には<!--hな--><!--target-person-->が多いですが、より<!--hな--><!--k-target-to-find-->を<!--find-u-->ための'
         'ヒントを<!--go-introduce-->します。'],
     7: 'space',
     8: ['<!--hm-sn-->の<!--profile-->の自己評価には<!--sl-s-->「エッチ度」,「M度」<!--sl-s/e-->などがあります。',
@@ -3632,7 +3915,7 @@ tips_1_2 = {
     11: ['<!--c-補足2--><!--author-->の経験上、<!--name-boobs-->が大きい<!--obj-sex-->はなぜか<!--hな-->です。'],
     12: 'space',
     13: [
-        '<!--sl-s--><!--self-int-->,裏<!--profile--><!--sl-s/e-->の中で、<!--sex-->に<!--positive-->そうなことを書いている<!--k-obj-noun-s-->も'
+        '<!--sl-s--><!--self-int-->,裏<!--profile--><!--sl-s/e-->の中で、<!--sex-->に<!--positive-->そうなことを書いている<!--k-target-to-find-->も'
         '<!--k-act-can-easy-long-->。',
         '<!--deaikei-->の<!--self-int-->で<!--hな-->ことを書いている<!--obj-sex-->も<!--h-2-->なので'
         '<!--k-act-can--><!--potency-->いです。'],
@@ -3640,17 +3923,17 @@ tips_1_2 = {
         '<!--k-act-noun-->そのものは<!--find-->いない<!--but-and-c-->「<!--kiss-or-sof-->（ソフトな<!--making-love-->をする<!--sub-sex-->の<!--friend-->）」や'
         '「<!--kiss-or-sof-->（<!--kiss-->までする<!--sub-sex-->の<!--friend-->）」を<!--find-->いる<!--obj-sex-->も結局は<!--h-2-->なので'
         '<!--k-act-can-long-->。',
-        '<!--kiss-->だけとか添い寝だけとか書いている<!--k-obj-noun-s-->も、性格は<!--h-2-->なので<!--sex-->まで<!--s-can-->。'],
+        '<!--kiss-->だけとか添い寝だけとか書いている<!--k-target-to-find-->も、性格は<!--h-2-->なので<!--sex-->まで<!--s-can-->。'],
     15: ['<!--c-対比-->「出会いには興味<!--is-not-->」とか「<!--contact-point-->は教えません」<!--like-->ことを書いている<!--obj-sex-->は'
          '<!--conservative-->くて<!--sex-->しにくいです。',
          '<!--self-int-->だけでなく、<!--sl-s-->日記,伝言板<!--sl-s/e-->などに<!--hな-->日記や文章を書いている<!--target-person-->もいるので、'
          '注意して<!--find2-->みましょう。'],
     16: ['<!--hな--><!--words-->は<!--conversation-->のきっかけにもなるので、<!--nicely--><!--use-i-->ましょう。'],
     17: 'space',
-    18: ['「<!--to-sex-->お断り」と書いている<!--k-obj-noun-s-->については、<!--at-a-glance--><!--sex-->しにくいように見えますが、'
+    18: ['「<!--to-sex-->お断り」と書いている<!--k-target-to-find-->については、<!--at-a-glance--><!--sex-->しにくいように見えますが、'
          '<!--nicely-->やれば<!--sex--><!--s-can-->。',
          '<!--sl-s--><!--profile-->の<!--self-int-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->に「<!--to-sex-->死ね」とか「<!--to-sex-->お断り」'
-         '<!--like-->ことを書いている<!--k-obj-noun-s-->もいますが、実はこういう<!--target-person-->は<!--sex--><!--s-can-->。'],
+         '<!--like-->ことを書いている<!--k-target-to-find-->もいますが、実はこういう<!--target-person-->は<!--sex--><!--s-can-->。'],
     19: ['<!--to-sex-->お断りと書くからには、<!--so-far-->何回か<!--to-sex-->の<!--sub-sex-->にやられてきたということですから、'
          '<!--not-conservative-->いということが言えます。',
          '<!--to-sex-->が嫌いなのは、<!--so-far--><!--to-sex-->の<!--sub-sex-->に引っかかったからです。'],
@@ -3658,7 +3941,7 @@ tips_1_2 = {
          '<!--well--><!--easily--><!--sex--><!--can-u-->と思われます。',
          'それでもまだ出会いを<!--find-->いる<!--be-like-this-->から、<!--nicely-->やれば<!--relatively--><!--easily-->ヤれます。'],
     21: ['<!--c-補足--><!--to-sex-->なのが<!--leak-->るとそれで切られてしまうので、<!--k-act-->には<!--nicely-->やる必要があります。',
-         'その<!--k-obj-noun-s-->に<!--to-sex-->だと<!--leak-->ないように、<!--nicely--><!--intimate-->なりましょう。'],
+         'その<!--k-target-to-find-->に<!--to-sex-->だと<!--leak-->ないように、<!--nicely--><!--intimate-->なりましょう。'],
     22: ['成功すればいい<!--k-obj-target-->になるはずです。'],
     'info': {'deny': ['man'], 'only': [], 'shuffle': [], 'sec_name': 'tips_1_2'}}
 # tips_1_2/end
@@ -3721,35 +4004,35 @@ tips_2_2 = {
     0: ['### <!--site-->なら<!--k-target-to-find-->でも<!--girl-friend-->でも<!--easily-->見つかる',
         '### <!--k-sub-also--><!--deaikei-->を<!--if-use--><!--marriage-->も<!--k-target-to-find-->探しも<!--easy-->',
         '### <!--site-->を<!--use--><!--k-target-to-find-->やメル友<!--to-find-->をしよう',
-        '### <!--k-sub-is--><!--sefure-->や<!--k-act-noun-->の<!--partner-->を<!--find-u-->には<!--deaikei-->が<!--best-->'],
+        '### <!--k-sub-is--><!--sefure-->や<!--k-act-noun-->の<!--other-part-->を<!--find-u-->には<!--deaikei-->が<!--best-->'],
     1: 'space',
     2: [
         'ここまで<!--description-->してきたように、<!--deaikei2-->を<!--right-way--><!--way-->で<!--if-use-->、'
-        '<!--easily--><!--k-act-noun-f-->の<!--partner-->を<!--find--><!--k-target-to-find-->にすることが<!--s-can-->。',
+        '<!--easily--><!--k-act-noun-f-->の<!--other-part-->を<!--find--><!--k-target-to-find-->にすることが<!--s-can-->。',
         '<!--there-->を読んでいる方はもう気づいている<!--think-->が、<!--deaikei2-->を<!--if-use-->、<!--k-target-to-find--><!--to-find-->も'
         '<!--k-act-->のも<!--very--><!--easy-->です。',
         '賢明な方はもう分かっている<!--think-->が、<!--site-->を<!--if-use-->、k-target-to-find作りも<!--k-act-noun-f-->も'
         '<!--easily--><!--do-real--><!--s-can-->。'],
     3: [
         '<!--really--><!--deaikei-->を<!--use-->みると、あまりに<!--easily--><!--k-act-noun-f-->の'
-        '<!--partner--><!--can-find-d-e-with-->たり<!--k-target-to-find--><!--can-find-d-u-with-->ことに驚くかもしれません。',
+        '<!--other-part--><!--can-find-d-e-with-->たり<!--k-target-to-find--><!--can-find-d-u-with-->ことに驚くかもしれません。',
         'あまりに<!--easily--><!--can-find-d-u-with-->や<!--k-target-to-find-->が見つかるのに驚いた方も'
         '<!--there-is-s--><!--think-->。',
         'びっくりするくらい<!--easily--><!--can-find-d-e-->たのではない<!--think2-->か。'],
     4: ['<!--site-->というのは<!--like-this2-->所です。', ''],
     5: 'space',
     6: [
-        '<!--c-添加--><!--blog-->で<!--publish-e-->いる<!--site-->であれば、<!--k-obj-noun-l-->や<!--k-act-noun-f-->の'
-        '<!--partner-->だけでなく、<!--link-word-act-->や<!--link-word-act-->の<!--partner-->も<!--easily--><!--find-u-->ことが<!--s-can-->。',
+        '<!--c-添加--><!--blog--><!--publish-e-->いる<!--site-->であれば、<!--k-obj-noun-l-->や<!--k-act-noun-f-->の'
+        '<!--other-part-->だけでなく、<!--link-word-act-->や<!--link-word-act-->の<!--partner-->も<!--easily--><!--find-u-->ことが<!--s-can-->。',
         'もう<!--k-act-noun-f-->をした方は、<!--link-word-act-->や<!--link-word-act-->の<!--partner-->など、次は違う<!--purpose-->の<!--find-d-i-->てみるのも<!--my-recommend-s-->。',
         '<!--k-act-noun-f-->という<!--purpose-->を<!--clear-->した方は、今度は<!--link-word-act-->や<!--link-word-act-->の<!--partner-->を'
         '<!--find--><!--k-a-adj-make-->みるのもいいかもしれません。'],
     7: 'space',
     8: [
         '上で<!--description-->したように、<!--site-->では<!--profile--><!--search-->や<!--b-bbs--><!--search-->で'
-        '<!--partner-->を探します。',
-        '<!--way-->はこれも<!--easy-->で、<!--profile-->や<!--b-bbs-->を<!--search-->して、<!--partner-->を探<!--you-must-do-->。',
-        '<!--k-act-noun-f-->の<!--partner-->を<!--find-u-->時と同じように<!--profile--><!--search-->や'
+        '<!--other-part-->を探します。',
+        '<!--way-->はこれも<!--easy-->で、<!--profile-->や<!--b-bbs-->を<!--search-->して、<!--other-part-->を探<!--you-must-do-->。',
+        '<!--k-act-noun-f-->の<!--other-part-->を<!--find-u-->時と同じように<!--profile--><!--search-->や'
         '<!--b-bbs--><!--search-->を<!--use-->、'
         '<!--link-word-act-->でも<!--link-word-act-->の<!--partner-->でも<!--find-u-->ことが<!--s-can-->。'],
     9: ['<!--c-添加--><!--profile-->や<!--b-bbs-->には、<!--other-side-->の<!--various--><!--data-->が書いてあります。 '
@@ -3782,17 +4065,17 @@ tips_2_2 = {
         '',
         ''],
     15: [
-        '違うのは、<!--profile-->や<!--b-bbs-->の<!--post-->を<!--search--><!--in-this-time--><!--input-->するキー<!--words-->などが違うだけです。',
-        '<!--k-act-noun-->の時と違うのは、<!--search-->で<!--find-u-->ときのキー<!--words-->だけです。',
-        '<!--profile-->や<!--b-bbs-->で<!--find-u-->ときのキー<!--words-->が違うところ以外は同じ<!--way-->です。'],
+        '違うのは、<!--profile-->や<!--b-bbs-->の<!--post-->を<!--search--><!--in-this-time--><!--input-->する<!--search-words-->などが違うだけです。',
+        '<!--k-act-noun-->の時と違うのは、<!--search-->で<!--find-u-->ときの<!--search-words-->だけです。',
+        '<!--profile-->や<!--b-bbs-->で<!--find-u-->ときの<!--search-words-->が違うところ以外は同じ<!--way-->です。'],
     16: 'space',
     17: [
-        '<!--k-act-noun-->の<!--partner-->を見つけたり、<!--k-target-to-find-->を<!--make-this-->りして'
+        '<!--k-act-noun-->の<!--other-part-->を見つけたり、<!--k-target-to-find-->を<!--make-this-->りして'
         '<!--purpose--><!--clear-->できた方は、他の<!--purpose-->の出会いも<!--find-->みるといいかもしれません。',
         '<!--k-act-adj-->ことができた方であれば、他の<!--purpose-->の出会いも<!--easily-->見つかります。'],
     18: [
         '<!--site-->を<!--if-use-->、<!--how--><!--purpose-->の出会いでも<!--k-target-to-find--><!--to-find-->でも<!--easily--><!--clear--><!--s-can-->から。',
-        '<!--blog-->で<!--publish-e-->いる<!--way-->でやれば、<!--how--><!--purpose-->でも<!--surely--><!--k-target-to-find--><!--to-find-->が<!--can-u--><!--think-->。',
+        '<!--blog--><!--publish-e-->いる<!--way-->でやれば、<!--how--><!--purpose-->でも<!--surely--><!--k-target-to-find--><!--to-find-->が<!--can-u--><!--think-->。',
         '<!--really--><!--site-->を試してみて、<!--site-->が<!--can-find-d-e-->てk-target-to-find<!--to-find-->が<!--can-u-->のも分かった<!--think-->。'],
     19: ['いろいろ楽しんでみてください。',
          '<!--k-target-to-find--><!--to-find-->は楽しいので、<!--k-act-y-->ただけで満足せず、<!--various-->出会いをしてみてください。',
@@ -3882,7 +4165,7 @@ tips_4_1 = {
         '<!--other-side-->の気持ちも盛り上がらないのでなかなか<!--real-meet-->ところまで進めなかったりしますし。',
         '<!--on-earth--><!--time-zone-->が違って<!--title-can-meet-->見込みがないとまず<!--mail-->の<!--step-->で<!--intimate-->なれ<!--is-not-->し、'
         '<!--date-->の都合がつかなくて<!--for-real--><!--real-meet-->のも難しくて会えません。'],
-    7: ['<!--c-順接-->、<!--other-side-->の<!--k-obj-noun-s-->を<!--nicely2--><!--k-act-can-i-->ない<!--potency-->いです。'],
+    7: ['<!--c-順接--><!--other-side-->の<!--k-obj-noun-s-->を<!--nicely2--><!--k-act-can-i-->ない<!--potency-->いです。'],
     8: 'space',
     9: ['<!--deaikei-->の<!--profile-->には暇な<!--time-zone-->（自由になる<!--time-zone-->）を書く欄があるので、'
         '具体的にはそこの項目を<!--check-->して、<!--you-->と<!--time-zone-->が合いそうな<!--k-obj-noun-s-->を探<!--you-must-do-->。',
@@ -3917,7 +4200,7 @@ tips_4_2 = {
         '<!--other-side-->の気持ちも盛り上がらないのでなかなか<!--real-meet-->ところまで進めなかったりしますし。',
         '<!--on-earth--><!--time-zone-->が違って<!--title-can-meet-->見込みがないとまず<!--mail-->の<!--step-->で<!--intimate-->なれ<!--is-not-->し、'
         '<!--date-->の都合がつかなくて<!--for-real--><!--real-meet-->のも難しくて会えません。'],
-    7: ['<!--c-順接-->、<!--other-side-->の<!--k-obj-noun-s-->を<!--nicely2--><!--k-act-can-i-->ない<!--potency-->いです。'],
+    7: ['<!--c-順接--><!--other-side-->の<!--k-obj-noun-s-->を<!--nicely2--><!--k-act-can-i-->ない<!--potency-->いです。'],
     8: 'space',
     9: ['<!--deaikei-->の<!--profile-->には暇な<!--time-zone-->（自由になる<!--time-zone-->）を書く欄があるので、'
         '具体的にはそこの項目を<!--check-->して、<!--you-->と<!--time-zone-->が合いそうな<!--k-obj-noun-s-alt-->を探<!--you-must-do-->。',
@@ -4091,7 +4374,7 @@ tips_7_1 = {
         '<!--adult-->に<!--best-->な断れない性格の<!--obj-sex-->を<!--find-u-->には、<!--wkwk-sn-->の<!--sl-s-->日記,伝言板<!--sl-s/e-->に付けられている'
         '<!--sl-s--><!--comment-->,<!--response--><!--sl-s/e-->を<!--check--><!--you-must-do-->。'],
     9: [
-        'その<!--sl-s-->日記,伝言板<!--sl-s/e-->などの受け答えを見て、<!--partner-->の<!--sub-sex-->の意見を受け入れて<!--kind--><!--response-->をしている<!--obj-sex-->は、'
+        'その<!--sl-s-->日記,伝言板<!--sl-s/e-->などの受け答えを見て、<!--other-part-->の<!--sub-sex-->の意見を受け入れて<!--kind--><!--response-->をしている<!--obj-sex-->は、'
         '<!--weak-to-approach-->です。',
         '<!--sl-s-->日記,伝言板<!--sl-s/e-->に<!--sub-sex-->が<!--comment-->をしたりしますが、それに対して<!--kind--><!--response-->をする率が'
         '高い<!--obj-sex-->は、断れない性格だったりします。'],
@@ -4125,12 +4408,14 @@ tips_8_1 = {
     4: 'space',
     5: ['まず、<!--internet-->上にある<!--deaikei-->の中でも<!--free-->で<!--can-use--><!--sl-s--><!--free--><!--deaikei-->,'
         '<!--free--><!--b-bbs--><!--sl-s/e-->といった<!--site-->は<!--privacy-->漏洩の<!--risk-->が高いので<!--use-->はいけません。',
-        '<!--google-->で<!--sl-s-->「<!--deaikei-->」,「<!--k-act-noun--> <!--b-bbs-->」<!--sl-s/e-->などのキー<!--words-->で<!--search-->すると、古臭い作りの<!--s-bbs--><!--site--><!--like-->ものが見つかる<!--may-be-->。'],
+        '<!--google-->で<!--sl-s-->「<!--deaikei-->」,「<!--k-act-noun--> <!--b-bbs-->」<!--sl-s/e-->などの<!--search-words-->で<!--search-->すると、'
+        '古臭い作りの<!--s-bbs--><!--site--><!--like-->ものが見つかる<!--may-be-->。'],
     6: ['<!--like-this2--><!--site-->は<!--can-meet-->ように見せかけて<!--address-->を記入させようとしているだけです。',
         '<!--like-this2-->いかにも<!--unsure--><!--deaikei-->は、<!--address-->などの<!--privacy-->を取得するのが<!--purpose-->の<!--bad-site-->です。'],
-    7: ['もしも、<!--entry-->してしまうと<!--sl-s--><!--many2--><!--spam-mail-->,不要な<!--mail-magazine--><!--sl-s/e-->が届くことになります。',
+    7: [
+        'もしも、<!--entry-->してしまうと<!--sl-s--><!--many2--><!--spam-mail-->,不要な<!--mail-magazine--><!--sl-s/e-->が<!--be-sent-->ことになります。',
         '万が一<!--privacy-->を書いてしまうと、<!--sl-s--><!--bad-request-->,<!--adult-site--><!--sl-s/e-->などの<!--sl-s--><!--spam-mail-->,'
-        '要らない<!--mail-magazine--><!--sl-s/e-->が<!--many-->送られてくるようになります。'],
+        '要らない<!--mail-magazine--><!--sl-s/e-->が<!--many--><!--be-sent-->ようになります。'],
     8: 'space',
     9: ['<!--c-並列--><!--smart-phone-->で<!--can-use--><!--line--><!--s-bbs-->アプリも<!--contact-point-->などの<!--privacy-->を'
         '詐取して、<!--line-->乗っ取りなどを仕掛けるのが<!--purpose-->なので手を出さないように<!--you-must-do-->。',
@@ -4140,7 +4425,7 @@ tips_8_1 = {
     11: ['<!--for-the-moment--><!--blog-->で<!--go-introduce-->している<!--deaikei-->であれば<!--no-plb-->利用<!--s-can-->が、'
          'それ以外の<!--deaikei2-->をご利用の際には、<!--entry-->の前に安全に<!--can-use--><!--site-->か<!--check-->してから<!--privacy-->を'
          '記入するようにしてください。',
-         '<!--internet-->上には嘘の<!--deaikei2-->があるので、<!--sl-s--><!--k-obj-act-to-find-->,<!--sub-partner--><!--to-find--><!--sl-s/e-->をする'
+         '<!--internet-->上には嘘の<!--deaikei2-->があるので、<!--sl-s--><!--k-obj-act-to-find-->,<!--sub-partner-->探し<!--sl-s/e-->をする'
          '<!--occasion-->は、<!--like-this2--><!--sl-s-->偽<!--site-->,<!--bad-site--><!--sl-s/e-->に騙されないように<!--warn-->。'],
     'info': {'deny': [], 'only': [], 'shuffle': [], 'sec_name': 'tips_8_1'}}
 # tips_8_1/end
@@ -4174,10 +4459,10 @@ tips_9_1 = {
         'その後、<!--mail-->を通じた<!--talk-->で<!--intimate-->なって、電話で<!--conversation-->したり、<!--for-real--><!--k-2nd-act-noun-->したりします。',
         '<!--mail-talk-->で<!--intimate-->なったら、<!--address-exchange-->、<!--in-real-o--><!--date-->、と<!--process-->が進んでいきます。'],
     8: ['その<!--at-first-->の<!--step-->の<!--mail-talk-->から、<!--vrt-imp-->は<!--important-point-->です。',
-        'その中の、<!--conversation-->の<!--step-->から<!--vrt-imp-->が<!--partner-->に伝わらないと、<!--nicely--><!--intimate-->なることもできません。',
-        '次の<!--process-->に進めるかどうかは、<!--you-->の<!--vrt-imp-->が<!--partner-->に伝わるかどうかに左右されます。'],
+        'その中の、<!--conversation-->の<!--step-->から<!--vrt-imp-->が<!--other-part-->に伝わらないと、<!--nicely--><!--intimate-->なることもできません。',
+        '次の<!--process-->に進めるかどうかは、<!--you-->の<!--vrt-imp-->が<!--other-part-->に伝わるかどうかに左右されます。'],
     9: [
-        '<!--mail-talk-->の中でも<!--partner-->の<!--vrt-imp-->は<!--mail-->を通じて<!--understand-->ものなので、<!--vrt-imp-->を<!--keep-in-mind--><!--mail-->をしていくことで、<!--conversation-->も<!--nicely-->いき、<!--result--><!--k-act-to-find-->が<!--can-u--><!--be-like-this-->。',
+        '<!--mail-talk-->の中でも<!--other-part-->の<!--vrt-imp-->は<!--mail-->を通じて<!--understand-->ものなので、<!--vrt-imp-->を<!--keep-in-mind--><!--mail-->をしていくことで、<!--conversation-->も<!--nicely-->いき、<!--result--><!--k-act-to-find-->が<!--can-u--><!--be-like-this-->。',
         '<!--mail-->を介した文字の<!--communication-->でも、<!--vrt-imp-->は伝わります。<!--vrt-imp-->を<!--nicely--><!--appeal-->できれば、<!--k-obj-act-to-find-a-->の<!--success-rate-->が大幅に高くなります。',
         '文章の中で<!--vrt-imp-->を出すことで、<!--other-side-->は<!--you-->に好意を持つので、<!--k-obj-act-to-find-a-->の成功に繋がります。'],
     10: ['<!--vrt-imp-->は<!--important-->です。',
@@ -4187,17 +4472,17 @@ tips_9_1 = {
     11: 'space',
     12: [
         'もっと前の<!--step-->、例えば<!--profile-->を各<!--step-->でも<!--vrt-imp-->が<!--profile-->に表れていると、<!--from-me-->の<!--mail-->に対しての<!--re-mail-->率も高くなりますし、<!--case-->によっては<!--k-obj-adj--><!--obj-sex-o-->が<!--from-me--><!--mail-->を送ってくれる<!--may-be-->。',
-        'もしも<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->に<!--vrt-imp-->をしっかり出せていれば、それだけで<!--obj-sex-o-->から<!--mail-->が届く<!--may-be-->。',
+        'もしも<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->に<!--vrt-imp-->をしっかり出せていれば、それだけで<!--obj-sex-o-->から<!--mail-->が<!--be-sent--><!--may-be-->。',
         '<!--sl-s--><!--b-bbs-->に書き込む際,<!--profile-->を作る時<!--sl-s/e-->も<!--vrt-imp-->を出すようにしておくと、もっと<!--k-obj-act-to-find-->が捗ります。',
         ''],
     13: [
-        '<!--k-obj-act-noun-->を募集する際の<!--sl-s--><!--self-int-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->などで、<!--vrt-imp-->が<!--partner-->に伝わるような<!--writing-text-->ようにすると、より<!--cost-performance-->よく<!--can-meet-->ようになります。',
+        '<!--k-obj-act-to-find-a-->を募集する際の<!--sl-s--><!--self-int-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->などで、<!--vrt-imp-->が<!--other-part-->に伝わるような<!--writing-text-->ようにすると、より<!--cost-performance-->よく<!--can-meet-->ようになります。',
         ''],
     14: 'space',
     15: [
         '<!--c-補足--><!--vrt-imp-->が<!--k-alt-do-->のに<!--important-->だとは言っても、<!--self-int-->などで<!--me-->で「俺は<!--vrt-imp-->があります」<!--like-->ことを書いても、誰も信用してくれません。',
         'そうはいっても、<!--self-int-->に<!--me-->は<!--vrt-imp-->があるとそのまま書いても、<!--other-side-->は信用しません。',
-        'その<!--vrt-imp-->の<!--appeal-->が実は難しくて、<!--profile-->の<!--self-int-->で<!--me-->は<!--vrt-imp-->があると文章に書いても、それでは<!--partner-->に伝わりません。'],
+        'その<!--vrt-imp-->の<!--appeal-->が実は難しくて、<!--profile-->の<!--self-int-->で<!--me-->は<!--vrt-imp-->があると文章に書いても、それでは<!--other-part-->に伝わりません。'],
     16: [
         '<!--backwards-->「この人は<!--vrt-imp-->がないんだろうな」と<!--obj-sex-o-->に<!--vrt-imp-->とは<!--anti--><!--impression-->を与えてしまいかねません。',
         '<!--vrt-imp-->があると嘘をついて騙そうとしている、という悪い<!--impression-->を与えてしまうことさえあります。',
@@ -4221,8 +4506,8 @@ tips_9_1 = {
          '<!--lie-->でも<!--at-all--><!--enough-->。',
          ''],
     22: [
-        '<!--mail-talk-->の中で<!--vrt-imp-->を<!--appeal-->して、<!--partner-->は<!--you-->の<!--vrt-imp-->を信用すれば、それで<!--enough-->。',
-        '要は、<!--mail-->に<!--partner-->が<!--vrt-imp-->を感じればいいだけです。',
+        '<!--mail-talk-->の中で<!--vrt-imp-->を<!--appeal-->して、<!--other-part-->は<!--you-->の<!--vrt-imp-->を信用すれば、それで<!--enough-->。',
+        '要は、<!--mail-->に<!--other-part-->が<!--vrt-imp-->を感じればいいだけです。',
         '<!--conversation-->の中で<!--vrt-imp-->を感じられるように<!--act-if-e-->ばそれで<!--k-obj-act-to-find-->は<!--s-can-->。'],
     23: [
         '<!--c-添加--><!--for-real-->会ってからも会っている間だけ<!--other-side-->に<!--vrt-imp-->があると思わせれば、<!--k-act-connection-->には<!--enough-->。',
@@ -4269,10 +4554,10 @@ tips_9_2 = {
         'その後、<!--mail-->を通じた<!--talk-->で<!--intimate-->なって、電話で<!--conversation-->したり、<!--for-real--><!--k-act-noun-->したりします。',
         '<!--mail-talk-->で<!--intimate-->なったら、<!--address-exchange-->、<!--in-real-o--><!--date-->、と<!--process-->が進んでいきます。'],
     8: ['その<!--at-first-->の<!--step-->の<!--mail-talk-->から、<!--vrt-imp-->は<!--important-point-->です。',
-        'その中の、<!--conversation-->の<!--step-->から<!--vrt-imp-->が<!--partner-->に伝わらないと、<!--nicely--><!--intimate-->なることもできません。',
-        '次の<!--process-->に進めるかどうかは、<!--you-->の<!--vrt-imp-->が<!--partner-->に伝わるかどうかに左右されます。'],
+        'その中の、<!--conversation-->の<!--step-->から<!--vrt-imp-->が<!--other-part-->に伝わらないと、<!--nicely--><!--intimate-->なることもできません。',
+        '次の<!--process-->に進めるかどうかは、<!--you-->の<!--vrt-imp-->が<!--other-part-->に伝わるかどうかに左右されます。'],
     9: [
-        '<!--mail-talk-->の中でも<!--partner-->の<!--vrt-imp-->は<!--mail-->を通じて<!--understand-->ものなので、<!--vrt-imp-->を<!--keep-in-mind--><!--mail-->をしていくことで、<!--conversation-->も<!--nicely-->いき、<!--result--><!--k-act-to-find-->が<!--can-u--><!--be-like-this-->。',
+        '<!--mail-talk-->の中でも<!--other-part-->の<!--vrt-imp-->は<!--mail-->を通じて<!--understand-->ものなので、<!--vrt-imp-->を<!--keep-in-mind--><!--mail-->をしていくことで、<!--conversation-->も<!--nicely-->いき、<!--result--><!--k-act-to-find-->が<!--can-u--><!--be-like-this-->。',
         '<!--mail-->を介した文字の<!--communication-->でも、<!--vrt-imp-->は伝わります。<!--vrt-imp-->を<!--nicely--><!--appeal-->できれば、<!--k-obj-act-to-find-a-->の<!--success-rate-->が大幅に高くなります。',
         '文章の中で<!--vrt-imp-->を出すことで、<!--other-side-->は<!--you-->に好意を持つので、<!--k-obj-act-to-find-a-->の成功に繋がります。'],
     10: ['<!--vrt-imp-->は<!--important-->です。',
@@ -4282,17 +4567,17 @@ tips_9_2 = {
     11: 'space',
     12: [
         'もっと前の<!--step-->、例えば<!--profile-->を各<!--step-->でも<!--vrt-imp-->が<!--profile-->に表れていると、<!--from-me-->の<!--mail-->に対しての<!--re-mail-->率も高くなりますし、<!--case-->によっては<!--k-obj-adj--><!--obj-sex-o-->が<!--from-me--><!--mail-->を送ってくれる<!--may-be-->。',
-        'もしも<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->に<!--vrt-imp-->をしっかり出せていれば、それだけで<!--obj-sex-o-->から<!--mail-->が届く<!--may-be-->。',
+        'もしも<!--sl-s--><!--profile-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->に<!--vrt-imp-->をしっかり出せていれば、それだけで<!--obj-sex-o-->から<!--mail-->が<!--be-sent--><!--may-be-->。',
         '<!--sl-s--><!--b-bbs-->に書き込む際,<!--profile-->を作る時<!--sl-s/e-->も<!--vrt-imp-->を出すようにしておくと、もっと<!--k-obj-act-to-find-->が捗ります。',
         ''],
     13: [
-        '<!--k-obj-act-noun-->を募集する際の<!--sl-s--><!--self-int-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->などで、<!--vrt-imp-->が<!--partner-->に伝わるような<!--writing-text-->ようにすると、より<!--cost-performance-->よく<!--can-meet-->ようになります。',
+        '<!--k-obj-act-to-find-a-->を募集する際の<!--sl-s--><!--self-int-->,<!--b-bbs-->の<!--post--><!--sl-s/e-->などで、<!--vrt-imp-->が<!--other-part-->に伝わるような文を書くと、より<!--cost-performance-->よく<!--can-meet-->ようになります。',
         ''],
     14: 'space',
     15: [
         '<!--c-補足--><!--vrt-imp-->が<!--k-alt-do-->のに<!--important-->だとは言っても、<!--self-int-->などで<!--me-->で「俺は<!--vrt-imp-->があります」<!--like-->ことを書いても、誰も信用してくれません。',
         'そうはいっても、<!--self-int-->に<!--me-->は<!--vrt-imp-->があるとそのまま書いても、<!--other-side-->は信用しません。',
-        'その<!--vrt-imp-->の<!--appeal-->が実は難しくて、<!--profile-->の<!--self-int-->で<!--me-->は<!--vrt-imp-->があると文章に書いても、それでは<!--partner-->に伝わりません。'],
+        'その<!--vrt-imp-->の<!--appeal-->が実は難しくて、<!--profile-->の<!--self-int-->で<!--me-->は<!--vrt-imp-->があると文章に書いても、それでは<!--other-part-->に伝わりません。'],
     16: [
         '<!--backwards-->「この人は<!--vrt-imp-->がないんだろうな」と<!--obj-sex-o-->に<!--vrt-imp-->とは<!--anti--><!--impression-->を与えてしまいかねません。',
         '<!--vrt-imp-->があると嘘をついて騙そうとしている、という悪い<!--impression-->を与えてしまうことさえあります。',
@@ -4316,8 +4601,8 @@ tips_9_2 = {
          '<!--lie-->でも<!--at-all--><!--enough-->。',
          ''],
     22: [
-        '<!--mail-talk-->の中で<!--vrt-imp-->を<!--appeal-->して、<!--partner-->は<!--you-->の<!--vrt-imp-->を信用すれば、それで<!--enough-->。',
-        '要は、<!--mail-->に<!--partner-->が<!--vrt-imp-->を感じればいいだけです。',
+        '<!--mail-talk-->の中で<!--vrt-imp-->を<!--appeal-->して、<!--other-part-->は<!--you-->の<!--vrt-imp-->を信用すれば、それで<!--enough-->。',
+        '要は、<!--mail-->に<!--other-part-->が<!--vrt-imp-->を感じればいいだけです。',
         '<!--conversation-->の中で<!--vrt-imp-->を感じられるように<!--act-if-e-->ばそれで<!--k-obj-act-to-find-->は<!--s-can-->。'],
     23: [
         '<!--c-添加--><!--for-real-->会ってからも会っている間だけ<!--other-side-->に<!--vrt-imp-->があると思わせれば、<!--k-act-connection-->には<!--enough-->。',
@@ -4382,8 +4667,8 @@ all_list = [title, des, int_1_1, int_1_2, int_1_3, int_1_4, int_1_5, int_1_6, in
             da_6_1, da_6_2,
             da_7_1, da_7_2, da_8_1, da_9_1, da_9_2, da_10_1, da_11_1, da_11_2, da_12_1, da_12_2,
             tips_8_1,
-            pi_1_1, pi_2_1,
-            pa_1_1, pa_1_2, pa_2_1, pa_2_2, pa_3_1, pa_4_1,
+            pi_1_1, pi_1_2, pi_2_1, pi_2_2,
+            pa_1_1, pa_1_2, pa_1_3, pa_2_1, pa_2_2, pa_2_3, pa_3_1, pa_3_2, pa_4_1,
             use_1_1, use_2_1, use_2_2, use_3_1, use_4_1, use_4_2, use_4_3, use_4_4,
             use_5_1, use_5_2, use_6_1, use_6_2, use_6_3, use_6_4, use_7_1, use_7_2,
             tips_1_1, tips_1_2,
@@ -4398,8 +4683,9 @@ d_advantage = {'da_1': [da_1_1, da_1_2, da_1_3, da_1_4], 'da_2': [da_2_1], 'da_3
                'da_4': [da_4_1], 'da_5': [da_5_1, da_5_2],
                'da_6': [da_6_1, da_6_2], 'da_7': [da_7_1, da_7_2], 'da_8': [da_8_1], 'da_9': [da_9_1, da_9_2],
                'da_10': [da_10_1], 'da_11': [da_11_1, da_11_2], 'da_12': [da_12_1, da_12_2]}
-p_introduction = {'pi_1': [pi_1_1], 'pi_2': [pi_2_1]}
-purpose_advantage = {'pa_1': [pa_1_1, pa_1_2], 'pa_2': [pa_2_1, pa_2_2], 'pa_3': [pa_3_1], 'pa_4': [pa_4_1]}
+p_introduction = {'pi_1': [pi_1_1, pi_1_2], 'pi_2': [pi_2_1, pi_2_2]}
+purpose_advantage = {'pa_1': [pa_1_1, pa_1_2, pa_1_3], 'pa_2': [pa_2_1, pa_2_2, pa_2_3], 'pa_3': [pa_3_1, pa_3_2],
+                     'pa_4': [pa_4_1]}
 tips_bonus = {'tips_1': [tips_1_1, tips_1_2], 'tips_2': [tips_2_1, tips_2_2], 'tips_3': [tips_3_1],
               'tips_4': [tips_4_1, tips_4_2],
               'tips_5': [tips_5_1, tips_5_2], 'tips_6': [tips_6_1], 'tips_7': [tips_7_1], 'tips_8': [tips_8_1],

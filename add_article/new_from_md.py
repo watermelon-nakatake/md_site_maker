@@ -6,13 +6,11 @@ import re
 import os
 import shutil
 import numpy
-
 import markdown
 from PIL import Image
 import time
 import glob
 from email import utils
-
 import make_article_list
 from add_article import amp_file_maker, common_tool
 from upload import file_upload
@@ -846,17 +844,20 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 keyword.remove('')
         else:
             keyword = ''
-        if 'e::' in plain_txt:
-            edit_l = re.findall(r'\ne::(.*?)\n', plain_txt)
-            if edit_l:
-                if 'all' in edit_l:
-                    edit_flag = True
+        if plain_txt.count('<!--ori-->') > 0:
+            edit_flag = True
+        else:
+            if 'e::' in plain_txt:
+                edit_l = re.findall(r'\ne::(.*?)\n', plain_txt)
+                if edit_l:
+                    if 'all' in edit_l:
+                        edit_flag = True
+                    else:
+                        edit_flag = False
                 else:
                     edit_flag = False
             else:
-                edit_flag = False
-        else:
-            edit_flag = True
+                edit_flag = True
         if pd['project_dir'] == 'konkatsu' or pd['project_dir'] == 'online_marriage':
             if 'a::' in plain_txt:
                 ad_flag = int(re.findall(r'a::(\d+?)\n', plain_txt)[0])
