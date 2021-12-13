@@ -37,7 +37,7 @@ html_str_dict = {
     'sex': {'obj_m': 'sex_{}', 'obj_w': 'sex_{}', 'sub_m': 'sex_{}_m', 'sub_w': 'sex_{}_f',
             'act': 'sex_a_{}', 'adj_act': 'sex_a_{}'},
     'shoshin': {'obj_m': '{}_by_beginner_m', 'obj_w': '{}_by_beginner_w', 'sub_m': '{}_by_beginner_s',
-                'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_a'},
+                'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_beginner_sex'},
     'test': {'obj_m': '{}_by_beginner_m', 'obj_w': '{}_by_beginner_w', 'sub_m': '{}_by_beginner_s',
              'sub_w': '{}_by_beginner_s', 'act': '{}_by_beginner_a', 'adj_act': '{}_by_beginner_d'},
     'goodbyedt': {'obj_m': '{}_dt', 'obj_w': '', 'sub_m': '{}_s_dt', 'sub_w': '',
@@ -58,7 +58,7 @@ dir_dict = {'sfd': {'obj_m': 'obj_m', 'obj_w': 'obj_w', 'sub_m': 'sub_m', 'sub_w
             'goodbyedt': {'obj_m': 'object', 'act': 'action'},  # 'sub_m': 'subject',
             'howto': {'obj_m': 'online_love', 'obj_w': 'online_love', 'adj_act': 'site_tec'},
             'htaiken': {'obj_m': 'how_to_sex', 'obj_w': 'how_to_sex'},
-            'shoshin': {'act': 'beginner'},  # 'obj_m': 'object', 'sub_m': 'subject',
+            'shoshin': {'act': 'beginner', 'adj_act': 'means'},  # 'obj_m': 'object', 'sub_m': 'subject',
             'joshideai': {'obj_m': 'make_love', 'adj_act': 'website'},
             'koibito': {'obj_m': 'lover', 'obj_w': 'lover'},
             'konkatsu': {'obj_m': 'partner', 'obj_w': 'partner'},
@@ -201,7 +201,9 @@ def make_new_pages_to_md_from_key_list(project_dir, dir_name, source_mod, main_k
                          'sex': {'a_adj_flag': True, 'act_code': 'sex', 'replace_words': []},
                          'gf': {'a_adj_flag': True, 'act_code': 'gf', 'replace_words': []},
                          'sf': {'a_adj_flag': True, 'act_code': 'sf', 'replace_words': []},
-                         'cov': {'a_adj_flag': True, 'act_code': 'cov', 'replace_words': []}
+                         'cov': {'a_adj_flag': True, 'act_code': 'cov', 'replace_words': []},
+                         'bg': {'a_adj_flag': True, 'act_code': 'bg', 'replace_words': [],
+                                'sub_key': '初心者', 'sub': '出会い系初心者', 's_sex': 'm', 's_ms': 's', 's_adj': '普通の'},
                      },
                      'sub': {
                          'sf': {'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_noun_flag': True, 'a_adj_flag': False,
@@ -576,6 +578,8 @@ def make_md_from_exist_keywords(use_path_list):
         with open(old_md, 'r', encoding='utf-8') as m:
             md_str = m.read()
         keywords = key_dict[md_name]
+        # if 'means/' in md_name and 'index.html' not in md_name:
+        #     keywords.update({'sub_key': '初心者', 'sub': '出会い系初心者', 's_sex': 'm', 's_ms': 's', 's_adj': '普通の'})
         if '<!--ori-->' in md_str:
             print('original sentence in : ' + old_md)
             keywords['ori_flag'] = True
@@ -1191,25 +1195,31 @@ def noun_dict_maker(key_phrase, main_key, subject_sex, no_sub_flag, keywords):
             noun_dict[noun['before']] = [noun['after'], noun['plist']]
         else:
             noun_dict[noun['before']] = [noun['after']]
+    for f_noun in wd.fix_noun_list:
+        if 'plist' in f_noun:
+            use_n = np.random.choice(f_noun['after'], p=f_noun['plist'])
+        else:
+            use_n = random.choice(f_noun['after'])
+        noun_dict[f_noun['before']] = use_n
     if main_key in ['mh', 'olm']:
-        noun_dict['<!--sex-->'] = [['結婚']]
-        noun_dict['<!--to-sex-->'] = [['結婚']]
-        noun_dict['<!--can-sex-->'] = [['結婚できる']]
+        noun_dict['<!--sex-->'] = '結婚'
+        noun_dict['<!--to-sex-->'] = '結婚'
+        noun_dict['<!--can-sex-->'] = '結婚できる'
         noun_dict['<!--h-2-->'] = [['素敵', '魅力的']]
         noun_dict['<!--hな-->'] = [['素敵な', '魅力的な']]
         noun_dict['<!--ero-n-->'] = [['素敵', '魅力的']]
         noun_dict['<!--ero-->'] = [['素敵', '魅力的']]
-        noun_dict['<!--sefure-->'] = [['結婚相手']]
+        noun_dict['<!--sefure-->'] = '結婚相手'
         noun_dict['<!--d-app-->'] = [['婚活サイト', '婚活アプリ', 'マッチングサイト', 'マッチングアプリ']]
         noun_dict['<!--site-->'] = [['婚活サイト', '婚活アプリ', 'マッチングサイト', 'マッチングアプリ']]
         noun_dict['<!--deaikei-->'] = [['婚活サイト', '婚活アプリ', 'マッチングサイト', 'マッチングアプリ']]
         noun_dict['<!--net-d-->'] = [['ネット婚活', 'オンラインの出会い', 'オンライン婚活']]
         noun_dict['<!--kiss-or-sof-->'] = [['彼氏', '恋人']]
-        noun_dict['<!--eros-degree-->'] = [['真剣さ']]
+        noun_dict['<!--eros-degree-->'] = '真剣さ'
         noun_dict['<!--be-adult-->'] = [['真面目な', '真剣な', '本気の']]
         noun_dict['<!--adult-->'] = [['結婚相手探し', '婚活', '真面目な出会い', '真剣な出会い', '本気の出会い']]
-        noun_dict['<!--adult-bbs-->'] = [['婚活掲示板']]
-        noun_dict['<!--kiss-->'] = [['デート']]
+        noun_dict['<!--adult-bbs-->'] = '婚活掲示板'
+        noun_dict['<!--kiss-->'] = 'デート'
     elif main_key in ['bf', 'koi']:
         noun_dict['<!--sex-->'] = [['お付き合い', '交際']]
         noun_dict['<!--to-sex-->'] = [['お付き合い', '交際']]
@@ -1218,16 +1228,16 @@ def noun_dict_maker(key_phrase, main_key, subject_sex, no_sub_flag, keywords):
         noun_dict['<!--hな-->'] = [['素敵な', '魅力的な']]
         noun_dict['<!--ero-n-->'] = [['素敵', '魅力的']]
         noun_dict['<!--ero-->'] = [['素敵', '魅力的']]
-        noun_dict['<!--sefure-->'] = [['彼氏']]
+        noun_dict['<!--sefure-->'] = '彼氏'
         noun_dict['<!--d-app-->'] = [['出会いアプリ', '出会い系アプリ', 'マッチングサイト', 'マッチングアプリ', '恋活アプリ']]
         noun_dict['<!--site-->'] = [['出会いアプリ', '出会い系アプリ', 'マッチングサイト', 'マッチングアプリ', '恋活アプリ']]
         noun_dict['<!--deaikei-->'] = [['出会いアプリ', '出会い系アプリ', 'マッチングサイト', 'マッチングアプリ', '恋活アプリ']]
         noun_dict['<!--kiss-or-sof-->'] = [['彼氏', '恋人']]
-        noun_dict['<!--eros-degree-->'] = [['真剣さ']]
+        noun_dict['<!--eros-degree-->'] = '真剣さ'
         noun_dict['<!--be-adult-->'] = [['真面目な', '真剣な', '本気の']]
         noun_dict['<!--adult-->'] = [['彼氏探し', '恋活', '恋人探し', '真剣な出会い', '本気の出会い', '真面目な出会い']]
         noun_dict['<!--adult-bbs-->'] = [['恋人募集掲示板', '彼氏募集掲示板']]
-        noun_dict['<!--kiss-->'] = [['デート']]
+        noun_dict['<!--kiss-->'] = 'デート'
     elif main_key == 'cov':
         noun_dict['<!--d-app-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
         noun_dict['<!--site-->'] = [['マッチングアプリ', 'マッチングサイト'], [0.8, 0.2]]
@@ -2304,6 +2314,13 @@ def same_line_words_filter(sentence_str):
         random.shuffle(str_list)
         insert_a = 'と'.join(str_list)
         sentence_str = sentence_str.replace(sla_str, insert_a)
+    sln_str_l = re.findall(r'<!--sl-n-->.+?<!--sl-n/e-->', sentence_str)
+    for sln_str in sln_str_l:
+        inner_str = re.sub(r'<!--sl-n-->(.+?)<!--sl-n/e-->', r'\1', sln_str)
+        str_list_n = inner_str.split(',')
+        random.shuffle(str_list_n)
+        insert_n = ''.join(str_list_n)
+        sentence_str = sentence_str.replace(sln_str, insert_n)
     return sentence_str
 
 
@@ -2348,19 +2365,25 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
         sentence_str = link_area_insert(sentence_str, project_dir)
     sentence_str = sentence_str.replace('<!--sefre-page-->', '')
     sentence_str = same_line_words_filter(sentence_str)
+    blank_count = 0
     while '<!--' in sentence_str:
         blank_list = re.findall(r'<!--.+?-->', sentence_str)
         # print(noun_dict)
         # print(sentence_str)
         if blank_list:
             for blank in blank_list:
-                print(blank)
+                if blank_count > 30:
+                    print(blank)
+                # print(blank)
                 if blank in noun_dict:
-                    if len(noun_dict[blank]) <= 1:
-                        sentence_str = sentence_str.replace(blank, random.choice(noun_dict[blank][0]), 1)
+                    if type(noun_dict[blank]) == str:
+                        sentence_str = sentence_str.replace(blank, noun_dict[blank])
                     else:
-                        sentence_str = sentence_str.replace(blank, np.random.choice(noun_dict[blank][0],
-                                                                                    p=noun_dict[blank][1]), 1)
+                        if len(noun_dict[blank]) <= 1:
+                            sentence_str = sentence_str.replace(blank, random.choice(noun_dict[blank][0]), 1)
+                        else:
+                            sentence_str = sentence_str.replace(blank, np.random.choice(noun_dict[blank][0],
+                                                                                        p=noun_dict[blank][1]), 1)
                 if '<!--this-aff-site-->' in sentence_str:
                     for s_name in aff_name_dict:
                         if s_name in sentence_str:
@@ -2369,6 +2392,7 @@ def insert_word_to_sentence(sentence_str, noun_dict, conj_dict, site1, site2, st
                     counter_d[blank] += 1
                 else:
                     counter_d[blank] = 1
+            blank_count += 1
     for bad_w in words_dict.correct_dict:
         if bad_w in sentence_str:
             sentence_str = sentence_str.replace(bad_w, words_dict.correct_dict[bad_w])
@@ -2390,6 +2414,12 @@ def a_adj_filter(sentence_str):
                 split_list.insert(0, adj_str)
             sentence_str = ''.join(split_list)
             # print('k_join : {}'.format(sentence_str))
+    if sentence_str.count('出会') >= 2:
+        if '出会い系サイト初心者' in sentence_str:
+            sentence_str = sentence_str.replace('出会い系サイト初心者', '初心者', 1)
+        else:
+            sentence_str = sentence_str.replace('出会い系初心者', '初心者', 1)
+
     return sentence_str
 
 
@@ -2524,7 +2554,7 @@ def make_md_by_project_and_part(project_dir, part_list, subject_sex, next_id, ex
                      'joshideai': 'sex', 'koibito': 'koi', 'konkatsu': 'mh', 'online_marriage': 'olm',
                      'rei_site': 'gf', 'women': 'bf', 'sfd': 'sf'}  # for multiple
     sub_sex_dict = {'goodbyedt': {'act': ['man'], 'obj_m': ['man']},
-                    'shoshin': {'act': ['man']},
+                    'shoshin': {'act': ['man'], 'adj_act': ['man']},
                     'howto': {'obj_m': ['man'], 'obj_w': ['woman'], 'adj_act': ['man']},
                     'htaiken': {'obj_m': ['man'], 'obj_w': ['woman']},
                     'joshideai': {'obj_m': ['man'], 'adj_act': ['man']},
@@ -2588,8 +2618,8 @@ if __name__ == '__main__':
     # insert_pub_date の書式　'%Y-%m-%dT%H:%M:%S'
     # make_used_id_list_for_key_data('sfd')
 
-    make_md_by_project_and_part('howto', ['adj_act'], 'man', 481, exist_update_flag=False)  # for multiple
-    search_max_id('howto')
+    make_md_by_project_and_part('shoshin', ['adj_act'], 'man', 149, exist_update_flag=False)  # for multiple
+    search_max_id('shoshin')
 
     # todo: 出会い系サイトを他に変更　婚活サイト、SNS、ツイッター
     # todo: 地域の婚活, パパ活、　割り切り, 不倫, 出会う, マッチングアプリで出会う、趣味の出会い

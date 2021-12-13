@@ -811,7 +811,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
     # print(make_article_list.read_pickle_pot('main_data', pd))
     # return
     for md_file_path in md_file_list:
-        print('start : ' + md_file_path)
+        # print('start : ' + md_file_path)
         file_name = md_file_path.replace(pj_path + '/md_files/' + pd['main_dir'], '').replace('.md', '.html')
         # print('file_name : ' + file_name)
         with open(md_file_path, 'r', encoding='utf-8') as f:

@@ -84,6 +84,7 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
             change_list = []
             md_files = glob.glob(md_dir + '/**/**.md', recursive=True)
             md_files = [x for x in md_files if '_copy' not in x and '_test' not in x and '_ud' not in x]
+            print(md_files)
             if md_dir.startswith('reibun/'):
                 md_files.remove('reibun/md_files/pc/majime/m0summer.md')
             for md_path in md_files:
@@ -102,7 +103,7 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
                     counter += 1
             if change_list:
                 # print(md_dir)
-                # print(change_list)
+                print(change_list)
                 upload_list.append(md_dir)
                 up_files.extend([x.replace('.md', '.html').replace('/md_files/', '/html_files/') for x in change_list])
                 if md_dir.startswith('reibun/'):

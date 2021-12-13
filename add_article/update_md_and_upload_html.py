@@ -53,15 +53,19 @@ def change_html_and_upload():
     recent_files = search_edited_md()
     recent_files = [x for x in recent_files if x[1] > last_mod]
     print(recent_files)
-    pj_name = re.sub(r'/md_files/.+$', '', recent_files[0][0])
+    if recent_files:
+        pj_name = re.sub(r'/md_files/.+$', '', recent_files[0][0])
+    else:
+        return
     print(pj_name)
     pk_flag = False
     if pj_name == 'shoshin':
         md_files = [x[0] for x in recent_files if x[1] > last_mod and pj_name + '/md_files/' in x[0]]
         print(md_files)
-        up_files = make_html_for_shoshin.add_new_article(md_files)
+        up_files = make_html_for_shoshin.shoshin_md_to_html(md_files, mod_flag=True)
         for md_path in md_files:
             up_files.extend(insert_image_str_and_resize(md_path))
+        up_files = css_uploader(pj_name, last_mod, up_files)
         if up_files:
             file_upload.shoshin_scp_upload(up_files)
             pk_flag = True
@@ -74,6 +78,7 @@ def change_html_and_upload():
         pd = info_mod.info_dict
         new_from_md.main(0, pd, mod_date_flag=True, last_mod_flag=True, upload_flag=True,
                          first_time_flag=False, fixed_mod_date='')
+        up_files = css_uploader(pj_name, last_mod, up_files)
         if up_files:
             file_upload.scp_upload(up_files, pd)
         pk_flag = True
@@ -82,6 +87,15 @@ def change_html_and_upload():
         print(now)
         with open('pickle_data/add_last_upload.pkl', 'wb') as p:
             pickle.dump(now, p)
+
+
+def css_uploader(pj_name, last_mod, up_files):
+    css_path = pj_name + '/html_files/css/main.css'
+    if css_path not in up_files and os.path.isfile(css_path):
+        css_mod = os.path.getmtime(css_path)
+        if css_mod > last_mod:
+            up_files.append(css_path)
+    return up_files
 
 
 def search_edited_md():
@@ -111,7 +125,10 @@ def insert_image_str_and_resize(md_path):
     up_img = []
     image_files = glob.glob('image_insert/**/**', recursive=True)
     image_files.remove('image_insert/')
-    print(image_files)
+    if image_files:
+        print(image_files)
+    else:
+        print('there is no image')
     if image_files:
         with open('pickle_data/used_img.pkl', 'rb') as n:
             used_img = pickle.load(n)

@@ -84,7 +84,8 @@ def shoshin_scp_upload(up_file_list):
         with scp.SCPClient(ssh.get_transport()) as scpc:
             error_files = []
             for up_file in up_file_list:
-                if up_file in ['.htaccess'] or '/beginner/' in up_file or '/css/' in up_file or '/images/' in up_file:
+                if up_file in ['.htaccess'] or '/beginner/' in up_file or '/css/' in up_file or '/images/' in up_file \
+                        or 'a_sitemap.xml' in up_file or '/means/' in up_file:
                     print('upload: ' + up_file)
                     if '/' in up_file:
                         up_str = up_file.replace(pd['project_dir'] + '/html_files', upload_data['upload_dir'])
@@ -98,8 +99,8 @@ def shoshin_scp_upload(up_file_list):
                         error_files.append(up_file)
             print('Upload finished !')
             return error_files
-            
-            
+
+
 def auto_scp_upload(up_file_list):
     prj_dict = {'howto': howto.main_info.info_dict,
                 'joshideai': joshideai.main_info.info_dict,
@@ -480,7 +481,8 @@ def relational_file_pick_up(target_file):
     with open(target_file, 'r', encoding='utf-8') as f:
         long_str = f.read()
         relational_list = ['reibun/pc/css/base13.css', 'reibun/pc/css/pc13.css', 'reibun/pc/css/phone13.css',
-                           'reibun/p_sitemap.xml', target_file]  # 'reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml',
+                           'reibun/p_sitemap.xml',
+                           target_file]  # 'reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml',
         p_time = 60 * 60 * 24 * 1
         now = time.time()
         img_list = re.findall(r'src="(.+?)"', long_str)

@@ -1,20 +1,25 @@
 import key_data.key_act
 import key_data.key_adj
 
-project_name = 'howto'
+project_name = 'shoshin'
 
 one_act_dict = {
     'sf': {0: {'all_key': 'セフレを作る', 'act': 'セフレを作る', 'act_noun': 'セフレ', 'act_target': 'セフレ',
                'act_connection': ['セフレ関係'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と', 'act_noun_flag': False,
-               '2act_w': '', '2act_noun': '', 'a_ad': 0}}
+               '2act_w': '', '2act_noun': '', 'a_ad': 0}},
+    'sex': {0: {'all_key': 'セックスする', 'act': 'セックスする', 'act_noun': 'セックス相手', 'act_target': 'セックスの相手',
+                'act_connection': ['肉体関係'], 'a_sex': 'a', 'ignore_a': [], 'obj_p': 'と', 'act_noun_flag': False,
+                '2act_w': '', '2act_noun': '', 'a_ad': 0}}
 }
 
 a_adj_data = {'joshideai': {'adj_dict': 'site_name', 'slide_num': 1, 'act_dict': key_data.key_act.act_dict_s},
               'rei_site': {'adj_dict': 'site_name', 'slide_num': 0, 'act_dict': key_data.key_act.act_dict_s},
               'howto': {'adj_dict': 'site_name', 'slide_num': 3, 'act_dict': key_data.key_act.act_dict_s},
               'htaiken': {'adj_dict': 'site_name', 'slide_num': 2, 'act_dict': key_data.key_act.act_dict_s},
+              'shoshin': {'adj_dict': 'multi_adj', 'slide_num': 0, 'act_dict': one_act_dict['sex']},
               'test': {'adj_dict': 'multi_adj', 'slide_num': 0, 'act_dict': one_act_dict['sf']},
               'sfd': {'adj_dict': 'make_sf_and', 'slide_num': 0, 'act_dict': key_data.key_act.act_dict_s}}
+
 adj_dict = {
     'site_name': {
         0: {'a_adj': 'ワクワクメールで', 'site': 'wk'},
