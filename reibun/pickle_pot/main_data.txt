@@ -123,15 +123,16 @@
 
 11: {
 	file_path: caption/fwari.html
-	title: 車内Fとは？F割の意味や相場と車内フェラ割り切り募集掲示板
+	title: 車内F募集とは？車内フェラ割の意味や相場と人気のフェラ掲示板
 	pub_date: 2014-05-18
-	mod_date: 2021-11-26
+	mod_date: 2021-12-15
 	category: caption
-	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトの掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
-	str_len: 12689
+	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる募集方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトのフェラ掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
+	str_len: 13627
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True}
+	edit_flag: True
+	ign_words: ['ワクワクメール']}
 
 12: {
 	file_path: caption/jkandjc.html
@@ -216,10 +217,10 @@
 	file_path: majime/m2topic.html
 	title: 出会い系の会話の話題とハッピーメールやPCMAXで話す内容
 	pub_date: 2017-04-26
-	mod_date: 2021-07-28
+	mod_date: 2021-12-16
 	category: s_mail
 	description: 出会い系でメールがうまく続かない方のためにメールの会話を盛り上げるコツと、最初の会話からの話題の選び方をお教えします。PCMAXやハッピーメール等の出会い系サイトではメッセージ交換がうまくできさえすれば出会えるので、メッセージやラインで何を話すか、どう話すかなど話す内容が非常に重要です。この記事では、うまくメールが続くおすすめの会話の話題をご紹介します。
-	str_len: 7032
+	str_len: 8051
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -237,16 +238,15 @@
 
 21: {
 	file_path: majime/m2lineid.html
-	title: Jメール等の出会い系のライン交換や連絡先交換のメールと聞き方
+	title: Jメール等出会い系のLINE交換や連絡先交換メールと聞き方
 	pub_date: 2014-09-21
-	mod_date: 2021-07-29
+	mod_date: 2021-12-15
 	category: s_mail
-	description: Jメールなどの出会い系でメールしている相手にラインIDやカカオトークIDなどの連絡先を聞く方法を例文と一緒にご紹介します。数パターンのLINEを聞く例文があるので、好きなやり方で連絡先交換をしてみてください。
-	str_len: 5893
+	description: Jメールなどの出会い系でメールしている相手にラインIDやカカオトークIDなどの連絡先交換の聞き方をメッセージの例文と一緒にご紹介します。数パターンのLINE交換のやり方と例文があるので、好きなやり方で連絡先交換をしてみてください。
+	str_len: 5927
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True
-	ign_words: ['line']}
+	edit_flag: True}
 
 22: {
 	file_path: majime/m1netnan-sex.html
@@ -261,15 +261,16 @@
 
 23: {
 	file_path: majime/m2htalk.html
-	title: メールエッチやエロメッセージ募集サイトとエッチなメールの誘い
+	title: メールエッチやエロメール募集サイトとエロメッセージのやり方
 	pub_date: 2014-06-29
-	mod_date: 2021-11-26
+	mod_date: 2021-12-15
 	category: s_mail
-	description: エロトークの相手が見つかるおすすめ出会い系サイトと、出会い系でメッセージのやりとりをしてる相手とエッチな話やメールHをする方法とメールエッチするための会話の流れを例文を使って解説します。出会い系でエッチする相手やメールエッチを楽しむ相手の探し方もお教えします。
-	str_len: 6982
+	description: エロメールの相手が見つかるおすすめ出会い系サイトと、出会い系でメッセージのやりとりをしてる相手とエロメッセージやメールエッチする方法とエロメッセージのやりとりをするための会話の流れを例文を使って解説します。出会い系でエッチする相手やエッチメールを楽しむ相手の探し方もお教えします。
+	str_len: 7182
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True}
+	edit_flag: True
+	ign_words: ['えっち', 'エッチなメール', 'メールえっち']}
 
 24: {
 	file_path: majime/m0aijin.html
@@ -286,7 +287,7 @@
 	file_path: majime/m2_0_1.html
 	title: 出会い系アプリの会話のやりとりやトークのコツと質問メール例文
 	pub_date: 2012-03-01
-	mod_date: 2021-11-26
+	mod_date: 2021-12-15
 	category: s_mail
 	description: 出会い系でメールの会話が長続きする上手なトークややりとりのコツと、メッセージの質問の話題を例文を使って詳しく解説。出会い系暦１５年の管理人がハッピーメールなどの出会い系サイトや出会い系アプリでの女性への話しかけ方やモテる話の進め方と話し方も教えます。
 	str_len: 18046
@@ -433,16 +434,15 @@
 
 38: {
 	file_path: majime/mp_sexfriendprofile.html
-	title: PCMAXのセフレ募集プロフィールとセフレ向きな女性の特徴
+	title: PCMAXのセフレ募集プロフィールとセフレが欲しい女の探し方
 	pub_date: 2017-03-15
-	mod_date: 2021-07-29
+	mod_date: 2021-12-16
 	category: profile
-	description: 出会い系でセフレにしやすい女性の特徴とセフレ候補の探し方、セフレができやすいプロフィールや自己紹介文の書き方を例文を使って詳しく説明します。セフレの作り方のコツやPCMAXでセフレ（セックスフレンド）を作る際のプロフの作り方など役立つ情報もあります。
-	str_len: 10484
+	description: 出会い系でセフレにしやすい女性の特徴とセフレ候補の探し方、セフレができやすいプロフィールや自己紹介文の書き方を例文を使って詳しく説明します。セフレの作り方のコツやPCMAXやハッピーメールでセフレ（セックスフレンド）を作る際のプロフの作り方など役立つ情報もあります。セフレ募集用のプロフィールの書き方も紹介。
+	str_len: 10644
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True
-	ign_words: ['ハッピーメール']}
+	edit_flag: True}
 
 39: {
 	file_path: majime/kakikata_d.html
@@ -468,15 +468,16 @@
 
 41: {
 	file_path: majime/majime.html
-	title: 出会い系の最初の返信(セカンドメール)例文とやりとりのコツ
+	title: 出会い系の２通目の返信(セカンドメール)例文とやりとりのコツ
 	pub_date: 2009-10-01
-	mod_date: 2021-07-28
+	mod_date: 2021-12-15
 	category: majime
 	description: 出会い系で相手からメールが来た時の最初の返信メールであるセカンドメール（２通目のメール）の書き方を例文を使って解説します。ハッピーメールやPCMAXでも使えるセカンドメールや、ラインIDなどの連絡先を聞く流れ、メール自動作成アプリもご紹介。
-	str_len: 6222
+	str_len: 6312
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True}
+	edit_flag: True
+	ign_words: ['ハッピーメール', 'pcmax', '最初のメッセージ']}
 
 42: {
 	file_path: majime/m1goldenweek.html
@@ -559,10 +560,10 @@
 	file_path: majime/m2firstreply.html
 	title: ハッピーメールやJメールの2通目のメールの書き方と定型文返信
 	pub_date: 2017-03-16
-	mod_date: 2021-07-29
+	mod_date: 2021-12-16
 	category: s_mail
 	description: 心理学を利用した、返信がもらえる好印象な2通目のメッセージ（相手への最初の返信）の書き方と例文を紹介します。メールがうまく続かない男性でも女性の心を掴む３つのテクニックを使った返信メールでハッピーメールやJメールなどの出会い系で出会えるように！その他多数メッセージ例文あり。
-	str_len: 5048
+	str_len: 5205
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -723,12 +724,12 @@
 
 64: {
 	file_path: majime/m1sexfriendmail.html
-	title: 出会い系セフレ募集メッセージとハッピーメールのセフレの作り方
+	title: セフレの作り方とハッピーメールの出会い系セフレ募集メッセージ
 	pub_date: 2014-09-06
-	mod_date: 2021-07-28
+	mod_date: 2021-12-16
 	category: f_mail
 	description: セフレが欲しいなら出会い系サイトを使ったセフレ作りがベスト。この記事ではハッピーメールやPCMAXなどの出会い系アプリでのセフレの作り方やセフレ作りの手順、セフレ探しのメッセージの書き方を例文で紹介。セックスやセフレ作りの重要な３つのコツもお教えします。
-	str_len: 12687
+	str_len: 12832
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -746,16 +747,15 @@
 
 66: {
 	file_path: majime/m2_1_1.html
-	title: 一人暮らしか、彼氏いるか聞くLINEやメールと自然な聞き方
+	title: LINEで一人暮らしか聞く方法とメールの彼氏いるかの聞き方
 	pub_date: 2012-02-15
-	mod_date: 2021-07-29
+	mod_date: 2021-12-16
 	category: s_mail
-	description: 出会い系などで異性と仲良くなると、相手に彼氏(彼女)がいるかや一人暮らしか否かを聞きたくなります。この記事では恋人の有無や一人暮らしかどうかをそれとなく確認するLINEやメールの書き方を例文を使ってご紹介します。出会い系だけでなく普通の出会いでも使えるメールテクニックです。
-	str_len: 7163
+	description: 出会い系などで異性と仲良くなると、相手に彼氏(彼女)がいるかや一人暮らしか否かを聞きたくなります。この記事では彼氏いるかや一人暮らしか聞くLINEやメールの書き方を例文を使ってご紹介します。出会い系だけでなく普通の出会いでも使えるメールテクニックです。
+	str_len: 8073
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True
-	ign_words: ['一人暮らしか聞いてくる', '一人暮らしか聞く']}
+	edit_flag: True}
 
 67: {
 	file_path: majime/m0_8.html
@@ -827,12 +827,12 @@
 
 73: {
 	file_path: majime/m0_4.html
-	title: 童貞卒業できる掲示板とPCMAX等出会い系で筆下ろしする方法
+	title: PCMAX等で童貞卒業する方法と早く筆おろしできる童貞掲示板
 	pub_date: 2012-02-15
-	mod_date: 2021-07-28
+	mod_date: 2021-12-15
 	category: post
 	description: 童貞の男性が筆下ろしセックス相手になる女性を探すにはPCMAXやハッピーメールなどの出会い系サイトの童貞卒業掲示板を使うのがベスト。童貞脱出におすすめの出会い掲示板と童貞卒業するための掲示板書き込みの例文を紹介。簡単に掲示板投稿やメールを作成できる無料アプリもあります。出会い系で童貞卒業するコツや彼女を作って童貞卒業するやり方、童貞募集のエッチな女性と童貞卒業する方法もお教えします。
-	str_len: 10850
+	str_len: 10851
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -862,27 +862,29 @@
 
 76: {
 	file_path: majime/m2_4.html
-	title: ややぽっちゃりとは？出会い系でややぽちゃ女性に体重を聞く方法
+	title: ややぽっちゃりとは？出会い系アプリのややぽちゃ女性の体重
 	pub_date: 2012-02-15
-	mod_date: 2021-07-29
+	mod_date: 2021-12-15
 	category: s_mail
-	description: 出会い系で知り合うと相手が見えないので相手の体型(体形)が気になりますよね。この記事では、出会い系サイトで知り合った女性の体型を確認する方法を、写真やプロフィールで確認する方法の他、遠回しに聞くメール例文なども添えて紹介しています。ややぽっちゃりとは何キロくらいなのでしょうか？
-	str_len: 4398
+	description: 出会い系で知り合うと相手が見えないので相手の体型(体形)が気になりますよね。この記事では、出会い系サイトやマッチングアプリで知り合った女性の体型を確認する方法を、写真やプロフィールで確認する方法の他、遠回しに聞くメール例文なども添えて紹介しています。ややぽっちゃりとは何キロくらいなのでしょうか？
+	str_len: 4507
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True}
+	edit_flag: True
+	ign_words: ['マッチングアプリ']}
 
 77: {
 	file_path: majime/m1fixed-phrase.html
-	title: コピペで使えて返信が5倍になる出会い系の文章の定型文と使い方
+	title: 返信が5倍になるPCMAX等出会い系の文章の定型文と使い方
 	pub_date: 2017-05-29
-	mod_date: 2021-07-29
+	mod_date: 2021-12-15
 	category: f_mail
 	description: 出会い系でなかなか出会えないとか、メールのやり取りがうまく続かないという方は、まずは定型文のメールをコピぺしたり真似したりして使ってみることをおすすめします。出会い系サイトで出会うには、定型文の文章を使ったメールが一番楽でしかも確実です。当サイトでは出会い系で出会える定型文を多数ご紹介しています。
-	str_len: 4751
+	str_len: 5315
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True}
+	edit_flag: True
+	ign_words: ['定型分']}
 
 78: {
 	file_path: majime/m0warikiri.html
@@ -1096,12 +1098,12 @@
 
 97: {
 	file_path: majime/m1marriedwoman.html
-	title: PCMAX等出会い系で人妻や主婦をセックスに誘うメール例文
+	title: PCMAX等の出会い系で人妻や主婦をセフレにするメール例文
 	pub_date: 2014-07-09
-	mod_date: 2021-07-29
+	mod_date: 2021-12-16
 	category: f_mail
 	description: 人妻と出会って連絡先を聞けるおすすめサイトや、PCMAXやハッピーメールなどの出会い系サイトで人妻にアプローチしてセックスしたりセフレにしたりするためのメールの書き方を例文を使ってご紹介します。出会い系サイトの出会いでは１通目のファーストメールが重要なので、是非参考にしてください。実際、pcmaxは浮気する人妻とかも多いんですよね。
-	str_len: 6611
+	str_len: 6887
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -1157,7 +1159,7 @@
 	file_path: majime/date.html
 	title: PCMAX等の出会い系でセックスやセフレに誘う例文と誘い方
 	pub_date: 2012-03-01
-	mod_date: 2021-11-26
+	mod_date: 2021-12-15
 	category: majime
 	description: 出会い系サイトで知り合った女の子と仲良くなったらデートに誘いましょう。セックスだけが目的であれば、セックスにうまくさそう方法もあります。この記事ではPCMAXやハッピーメールなどの出会い系で女の子のデートへの誘い方のテクニックと、うまくデートに誘うための例文、それと海や花火大会など夏のデートに誘う例文をご紹介します。
 	str_len: 7404
@@ -1203,37 +1205,37 @@
 	file_path: majime/m2ngword.html
 	title: ハッピーメールやワクワクメール、PCMAXのNGワード
 	pub_date: 2014-12-06
-	mod_date: 2021-07-29
+	mod_date: 2021-12-16
 	category: s_mail
 	description: ハッピーメールやワクワクメール、PCMAXなどの出会い系サイトには、書いてしまうと書き込みが削除されたりアカウント停止になる禁止ワードがあります。この記事ではその禁止ワードや割り切りやパパ活で使えないNGワードについて詳しく説明しています。
-	str_len: 5263
+	str_len: 5803
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 107: {
 	file_path: majime/kakikata_f.html
-	title: 出会い系のファーストメッセージ例文と最初の挨拶メールテンプレ
+	title: 出会い系のファーストメール例文とPCMAXの最初のメッセージ
 	pub_date: 2012-03-01
-	mod_date: 2021-07-28
+	mod_date: 2021-12-16
 	category: majime
-	description: 出会い系サイトで女性から返信をもらえるファーストメール（最初のメール）の書き方と挨拶などファーストメッセージ例文を紹介。コピペして便利に使えるメールテンプレートと自動的にメールを作成する無料アプリもご紹介しています。出会いアプリやサイトではメールがうまく書ければ外見等に自信がなくても出会えるのでチャンスです！
-	str_len: 8751
+	description: 出会い系サイトで女性から返信をもらえるファーストメール（最初のメッセージ）の書き方と挨拶などファーストメッセージ例文を紹介。コピペして便利に使えるメールテンプレートと自動的にメールを作成する無料アプリもご紹介しています。PCMAXなどの出会いアプリやサイトではメールがうまく書ければ外見等に自信がなくても出会えるのでチャンスです！
+	str_len: 8813
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True
-	ign_words: ['掲示板']}
+	edit_flag: True}
 
 108: {
 	file_path: majime/m2sexfriend.html
-	title: セフレを作る流れとJメールのセフレ募集メールと会話のやりとり
+	title: セフレを作る流れとJメールのセフレ募集メールとやり取り
 	pub_date: 2015-08-02
-	mod_date: 2021-05-26
+	mod_date: 2021-12-17
 	category: s_mail
-	description: オンラインの出会いでセフレを作る際はメールでの会話でエッチな話をすると成功率が高くなります。Jメールなどの出会い系サイトで相手をセフレにするための会話を例文で紹介。当サイトでは基本的なセフレの作り方セックスフレンドを作るコツ、セフレ募集用のおすすめ掲示板サイトなども多数ご紹介しています。
-	str_len: 5103
+	description: オンラインの出会いでセフレを作る際はメールでの会話でエッチな話をすると成功率が高くなります。Jメールなどの出会い系サイトで相手をセフレにするための会話のやり取りのやり方を例文で紹介。当サイトでは基本的なセフレの作り方やセックスフレンドを作るコツ、セフレ募集用のおすすめ掲示板サイトなども多数ご紹介しています。
+	str_len: 5305
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 109: {
 	file_path: majime/m0_3.html
@@ -1328,10 +1330,10 @@
 	file_path: qa/q3.html
 	title: ハッピーメール等出会い系のそっけない短文返信は業者やサクラ？
 	pub_date: 2012-03-07
-	mod_date: 2021-07-28
+	mod_date: 2021-12-15
 	category: qa
 	description: ハッピーメールやPCMAX等の出会い系サイトでそっけない短文や一言メッセージを書いたり、異常に返信が早い女性がいますが、サクラや業者でしょうか？短文メールをしてくる理由、一言メールの会話の盛り上げ方等、ハピメなどの出会い系で役立つ情報をお教えします。
-	str_len: 9296
+	str_len: 11510
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1473,13 +1475,14 @@
 	file_path: site/kakaotalksexfriend.html
 	title: カカオトークのセフレ募集方法とカカオでエッチできるエロ掲示板
 	pub_date: 2013-04-18
-	mod_date: 2021-11-26
+	mod_date: 2021-12-15
 	category: site
 	description: ネットやスマホアプリのカカオ掲示板は実はあまり出会えません。そうではなく、出会い系サイトと組み合わせることで抜群に出会えるようになります。この記事では、スマホのカカオ掲示板よりセフレを作りやすい出会い掲示板と、カカオトークを使ってバレずにセフレを作る方法について、その手順とポイントをご紹介します。カカオトークでセックスフレンドを作るには、無料友達募集アプリ等を使っても絶対に出会えないので十分気をつけてください。
-	str_len: 8626
+	str_len: 9046
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True}
+	edit_flag: True
+	ign_words: ['せふれ']}
 
 131: {
 	file_path: site/registration_pcmax_f.html
@@ -1617,7 +1620,7 @@
 	file_path: majime/m4coronavirus_sf.html
 	title: コロナ禍のセフレの作り方と出会い系アプリ以外の安全な出会い方
 	pub_date: 2020-12-28
-	mod_date: 2021-11-26
+	mod_date: 2021-12-15
 	category: how_to
 	description: 新型コロナウイルス感染症の影響で出会い系サイトは以前より出会えるようになっています。特にセフレを作るなら今がチャンスです。コロナ禍での出会い系サイトでセフレを作る方法と、コロナ下で人妻や彼氏持ちの女性をセフレにするためのコツを詳しくご紹介します。コロナ感染を避けつつ出会い系サイトでセフレを作りましょう。アプリ以外の安全な出会い方もご紹介します。
 	str_len: 8524

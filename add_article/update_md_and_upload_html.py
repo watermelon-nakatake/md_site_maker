@@ -1,6 +1,7 @@
 import glob
 import os
 import pickle
+import pprint
 import re
 import time
 import importlib
@@ -30,6 +31,7 @@ def latest_modify_checker():
         page_url = 'https://www.{}/{}'.format(domain_dict[pj_name], url_md)
         # print(page_url)
         gs_list = monitor_all_sites.check_gsc_query_data(page_url)
+        pprint.pprint(gs_list[:20])
         if gs_list:
             set_dict = []
             with open(md_file, 'r', encoding='utf-8') as f:
@@ -42,7 +44,7 @@ def latest_modify_checker():
                 for p_str in str_s:
                     if p_str not in set_dict:
                         set_dict.append(p_str)
-            for word in set_dict:
+            for word in set_dict[:20]:
                 print('{} : {}'.format(word, main_str.count(word)))
             print('\nstr_len : {}'.format(len(main_str.replace('\n', ''))))
 

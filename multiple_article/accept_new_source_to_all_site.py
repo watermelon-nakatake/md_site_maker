@@ -52,5 +52,5 @@ def all_update_and_safety_upload():
 
 
 if __name__ == '__main__':
-    accept_source_for_md_in_all_site_and_upload(['shoshin'], True)
-    # all_update_and_safety_upload()
+    # accept_source_for_md_in_all_site_and_upload(['shoshin'], True)
+    all_update_and_safety_upload()

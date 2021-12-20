@@ -1312,7 +1312,7 @@ def img_str_filter(long_str, file_name, md_str, pd):
     insert_img_l = re.findall(r'<p><img.+?></p>', long_str)
     if insert_img_l:
         for img_str in insert_img_l:
-            print(img_str)
+            # print(img_str)
             img_data_l = re.findall(r'alt="(.*?)" src="(.+?)"', img_str)
             if not img_data_l:
                 img_data_l = re.findall(r'src="(.+?)".*?alt="(.+?)"', img_str)
@@ -1320,7 +1320,7 @@ def img_str_filter(long_str, file_name, md_str, pd):
             if not img_data_l:
                 img_data_l = re.findall(r'src="(.+?)"', img_str)
                 img_data_l = [['', y] for y in img_data_l]
-            print(img_data_l)
+            # print(img_data_l)
             if 'insert_image/' in img_data_l[0][1]:
                 img_url = img_data_l[0][1]
                 new_img_path, add_img = resize_and_rename_image(img_url, file_name, pd)

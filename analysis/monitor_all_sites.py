@@ -181,7 +181,7 @@ def check_gsc_query_data(page_url):
             else:
                 new_row.append(y)
         result.append(new_row)
-    pprint.pprint(result)
+    # pprint.pprint(result)
     return result
 
 

@@ -335,7 +335,7 @@ def check_dir_and_make_dir_and_index_md(dir_name, project_dir):
         with open(md_path, 'r', encoding='utf-8') as f:
             tmp_str = f.read()
             tmp_str = tmp_str.replace('<!--title-->', cat_data[0]).replace('<!--id-num-->', str(cat_data[2]))
-            print(tmp_str)
+            # print(tmp_str)
             with open(md_path, 'w', encoding='utf-8') as g:
                 g.write(tmp_str)
 
@@ -365,7 +365,7 @@ def make_new_pages_to_md_for_mass(pd, site_data, subject_sex, start_id, insert_p
         key_dict = {}
     counter_d = {}
     key_base = {x: site_data[x] for x in site_data if x not in ['title', 'domain', 'dir', 'f_name', 'no_adult_flag']}
-    print(key_base)
+    # print(key_base)
     if insert_pub_date:
         dt1 = datetime.datetime.strptime(insert_pub_date, '%Y-%m-%dT%H:%M:%S')
         start_dt = dt1
@@ -375,7 +375,7 @@ def make_new_pages_to_md_for_mass(pd, site_data, subject_sex, start_id, insert_p
         start_dt = now
     print('dt1 : {}'.format(dt1))
     art_num = random.choice(list(range(40, 100)))
-    print(art_num)
+    # print(art_num)
     key_list = []
     used_key1 = []
     used_key2 = []
@@ -1815,7 +1815,7 @@ def key_phrase_maker(keywords, a_adj_flag, no_obj_flag, no_sub_flag, part_code):
                 k_site = [m_act_adj.replace('で', '')]
             else:
                 k_site = [act_adj.replace('で', '')]
-        print(k_site)
+        # print(k_site)
     else:
         k_site = ['ワクワクメール', 'ワクワク']
     keys = {'k-how-to': [sub + 'が' + m_act_adj + obj + act_with_g + act_way_g,

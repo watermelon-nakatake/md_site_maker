@@ -106,6 +106,9 @@ def joshideai_icon_filter(long_str):
     long_str = long_str.replace('%rw_palm', '%rw_1%')
     long_str = long_str.replace('%rw_!', '%rw_2%')
     if '%r_' in long_str or '%l_' in long_str:
+        print(long_str)
+        print(re.findall('%r_......', long_str))
+        print(re.findall('%l_......', long_str))
         print('There is wrong icon tag !')
         return
     long_str = re.sub(r'%rm_(\d)%([\s\S]+?)\n\n', r'<!--rm_\1-->\n\n\2\n\n<!--e/rm-->\n\n\n', long_str)

@@ -731,7 +731,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list, main_str_limit, today, p
 
 if __name__ == '__main__':
     target_prj = 'reibun'
-    # insert_ignore_key_to_pk_dic(target_prj, 'reibun/md_files/pc/majime/m2htalk.md', ['メールえっち'])
+    insert_ignore_key_to_pk_dic(target_prj, 'reibun/md_files/pc/majime/m2_4.md', ['マッチングアプリ'])
     next_update_target_search(100, 100, 3000, target_prj, False, True, True)
     next_update_target_search(100, 28, 3000, target_prj, False, True, True)
     # make_data_for_graph('reibun', '2020-04-01', '2021-05-04')

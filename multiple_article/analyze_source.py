@@ -82,6 +82,9 @@ def check_noun_list():
             if 'plist' in row:
                 if len(row['plist']) != len(row['after']):
                     print('Be same num in plist !! : {}'.format(row['before']))
+                else:
+                    if not 0.999 < sum(row['plist']) < 1.001:
+                        print('sum is not 1 !! : {}'.format(row['before']))
 
 
 def check_sentence_by_noun_list(s_list, noun_list):
@@ -134,7 +137,7 @@ def pick_up_word_in_source(select_num):
         check_sentence_by_noun_list(s_list, noun_list)
 
     elif select_num == 1:
-        s_list = [x for x in s_list if len(x) > 15]
+        s_list = [x for x in s_list if len(x) > 10]
         pprint.pprint(s_list)
     elif select_num == 2:
         s_str = ''.join(s_list)
@@ -209,5 +212,5 @@ def dict_flat(s_dict):
 
 
 if __name__ == '__main__':
-    pick_up_word_in_source(1)
-    # check_changed_source('<!--like-this2-->')
+    pick_up_word_in_source(0)
+    # check_changed_source('<!--waste-->')
