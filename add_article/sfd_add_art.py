@@ -6,7 +6,7 @@ def translate_md_to_html(md_path, sub_sex):
     with open(md_path, 'r', encoding='utf-8') as m:
         main_str = m.read()
     m_str = main_str
-    print(len(m_str.replace('\n', '').replace('## ', '').replace('### ', '')))
+    print('text len : {}'.format(len(m_str.replace('\n', '').replace('## ', '').replace('### ', ''))))
     m_str = m_str.replace('%arlist%', '\n')
     m_str = re.sub(r'%l_.+?%([\s\S]+?)\n\n', r'\[st-kaiwa1 r]\1[/st-kaiwa1]\n\n', m_str)
     if sub_sex == 'woman':
@@ -40,7 +40,7 @@ def translate_md_to_html(md_path, sub_sex):
 
 def insert_section_tag(long_str):
     h_list = re.findall(r'<h\d>.+?</h\d>', long_str)
-    print(h_list)
+    # print(h_list)
     for i, h in enumerate(h_list):
         if i == 0:
             long_str = long_str.replace(h, '<section>' + h)

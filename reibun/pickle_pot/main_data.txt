@@ -125,27 +125,25 @@
 	file_path: caption/fwari.html
 	title: 車内F募集とは？車内フェラ割の意味や相場と人気のフェラ掲示板
 	pub_date: 2014-05-18
-	mod_date: 2021-12-15
+	mod_date: 2022-01-27
 	category: caption
 	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる募集方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトのフェラ掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
-	str_len: 13627
+	str_len: 13616
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True
-	ign_words: ['ワクワクメール']}
+	edit_flag: True}
 
 12: {
 	file_path: caption/jkandjc.html
 	title: 出会い系でJK?ワクワクメールやPCMAXの高校生の見つけ方
 	pub_date: 2014-10-11
-	mod_date: 2021-07-29
+	mod_date: 2022-01-27
 	category: caption
 	description: 出会い系サイトは18禁ですが、稀に規制を掻い潜ってこっそり利用しているJKやJCもいます。女子高生や女子中学生と出会うのは絶対NGなので、この記事ではトラブルにならないために不正に利用しているJKやJCを見分ける方法をご紹介します。もしもJKやJCを見つけたらメッセージしたりせずに通報してください。
-	str_len: 6676
+	str_len: 6675
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True
-	ign_words: ['ハッピーメール']}
+	edit_flag: True}
 
 13: {
 	file_path: caption/tsutsumotase.html
@@ -263,14 +261,13 @@
 	file_path: majime/m2htalk.html
 	title: メールエッチやエロメール募集サイトとエロメッセージのやり方
 	pub_date: 2014-06-29
-	mod_date: 2021-12-15
+	mod_date: 2022-01-27
 	category: s_mail
 	description: エロメールの相手が見つかるおすすめ出会い系サイトと、出会い系でメッセージのやりとりをしてる相手とエロメッセージやメールエッチする方法とエロメッセージのやりとりをするための会話の流れを例文を使って解説します。出会い系でエッチする相手やエッチメールを楽しむ相手の探し方もお教えします。
-	str_len: 7182
+	str_len: 7174
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True
-	ign_words: ['えっち', 'エッチなメール', 'メールえっち']}
+	edit_flag: True}
 
 24: {
 	file_path: majime/m0aijin.html
@@ -287,10 +284,10 @@
 	file_path: majime/m2_0_1.html
 	title: 出会い系アプリの会話のやりとりやトークのコツと質問メール例文
 	pub_date: 2012-03-01
-	mod_date: 2021-12-15
+	mod_date: 2022-01-27
 	category: s_mail
 	description: 出会い系でメールの会話が長続きする上手なトークややりとりのコツと、メッセージの質問の話題を例文を使って詳しく解説。出会い系暦１５年の管理人がハッピーメールなどの出会い系サイトや出会い系アプリでの女性への話しかけ方やモテる話の進め方と話し方も教えます。
-	str_len: 18046
+	str_len: 18039
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -483,12 +480,13 @@
 	file_path: majime/m1goldenweek.html
 	title: 令和3年ゴールデンウィークおすすめ出会い系掲示板と大型連休とコロナ
 	pub_date: 2017-04-21
-	mod_date: 2021-04-13
+	mod_date: 2022-01-27
 	category: f_mail
 	description: ゴールデンウィークは新しく環境が変わって寂しい男女が出会いを求めるのでとても出会いやすいシーズンです。そんなコロナ下の令和3年のGWにオンラインで出会うための具体的な方法とメールや掲示板の書き込みの書き方を例文を使って詳しく紹介します。
 	str_len: 9160
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 43: {
 	file_path: majime/m2marriedwomenu.html
@@ -957,12 +955,13 @@
 	file_path: majime/m4rookie.html
 	title: 出会いがない社会人や大学生におすすめの恋愛掲示板と恋人の作り方
 	pub_date: 2017-03-03
-	mod_date: 2021-04-05
+	mod_date: 2022-01-27
 	category: how_to
 	description: 出会いがない就職したばかりの新社会人や進学したばかりの大学生や短大生などの学生さんが出会いを探すには出会い系サイトを使ったオンラインの出会いが一番安くて簡単です。ここでは出会い系サイトでの出会いのメリットとや彼氏や彼女の探し方を説明しています。
-	str_len: 8267
+	str_len: 8268
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 85: {
 	file_path: majime/mp_2_1.html
@@ -1159,24 +1158,25 @@
 	file_path: majime/date.html
 	title: PCMAX等の出会い系でセックスやセフレに誘う例文と誘い方
 	pub_date: 2012-03-01
-	mod_date: 2021-12-15
+	mod_date: 2022-01-27
 	category: majime
 	description: 出会い系サイトで知り合った女の子と仲良くなったらデートに誘いましょう。セックスだけが目的であれば、セックスにうまくさそう方法もあります。この記事ではPCMAXやハッピーメールなどの出会い系で女の子のデートへの誘い方のテクニックと、うまくデートに誘うための例文、それと海や花火大会など夏のデートに誘う例文をご紹介します。
-	str_len: 7404
+	str_len: 7397
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 103: {
 	file_path: majime/m1january.html
-	title: クリスマスや年末年始、1月にネトナンで出会う方法と例文
+	title: クリスマスや年末年始、3月にネトナンで出会う方法と例文
 	pub_date: 2017-11-09
-	mod_date: 2021-03-08
+	mod_date: 2022-01-27
 	category: f_mail
-	description: クリスマス前から冬休み、正月休みなどの1月の時期は出会い系サイトで非常に出会いやすいシーズンです。ここでは年末年始や1月、クリスマス前などに出会い系サイトで出会って恋人やセフレを作るためのやり方と、ネトナンで出会うためのメッセージの例文をご紹介します。
-	str_len: 8663
+	description: クリスマス前から冬休み、正月休みなどの3月の時期は出会い系サイトで非常に出会いやすいシーズンです。ここでは年末年始や3月、クリスマス前などに出会い系サイトで出会って恋人やセフレを作るためのやり方と、ネトナンで出会うためのメッセージの例文をご紹介します。
+	str_len: 8662
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 104: {
 	file_path: majime/m4sexfriend-netonan.html
@@ -1475,14 +1475,13 @@
 	file_path: site/kakaotalksexfriend.html
 	title: カカオトークのセフレ募集方法とカカオでエッチできるエロ掲示板
 	pub_date: 2013-04-18
-	mod_date: 2021-12-15
+	mod_date: 2022-01-27
 	category: site
 	description: ネットやスマホアプリのカカオ掲示板は実はあまり出会えません。そうではなく、出会い系サイトと組み合わせることで抜群に出会えるようになります。この記事では、スマホのカカオ掲示板よりセフレを作りやすい出会い掲示板と、カカオトークを使ってバレずにセフレを作る方法について、その手順とポイントをご紹介します。カカオトークでセックスフレンドを作るには、無料友達募集アプリ等を使っても絶対に出会えないので十分気をつけてください。
-	str_len: 9046
+	str_len: 9039
 	layout_flag: True
 	shift_flag: True
-	edit_flag: True
-	ign_words: ['せふれ']}
+	edit_flag: True}
 
 131: {
 	file_path: site/registration_pcmax_f.html
@@ -1620,10 +1619,10 @@
 	file_path: majime/m4coronavirus_sf.html
 	title: コロナ禍のセフレの作り方と出会い系アプリ以外の安全な出会い方
 	pub_date: 2020-12-28
-	mod_date: 2021-12-15
+	mod_date: 2022-01-27
 	category: how_to
 	description: 新型コロナウイルス感染症の影響で出会い系サイトは以前より出会えるようになっています。特にセフレを作るなら今がチャンスです。コロナ禍での出会い系サイトでセフレを作る方法と、コロナ下で人妻や彼氏持ちの女性をセフレにするためのコツを詳しくご紹介します。コロナ感染を避けつつ出会い系サイトでセフレを作りましょう。アプリ以外の安全な出会い方もご紹介します。
-	str_len: 8524
+	str_len: 8517
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1672,6 +1671,42 @@
 	description: 出会い系サイトのハッピーメールを使って童貞男性がセックスして筆下ろしする方法をご紹介します。募集掲示板投稿やメッセージを誰でも簡単に書けるアプリも用意してます。出会い系サイトで出会って童貞卒業するテクニックやコツ、恋人探しをして童貞卒業するやり方、童貞募集のスケべな女の人と出会って童貞を捨てるやり方も伝授します。
 	str_len: 12167
 	layout_flag: True
+	shift_flag: False
+	edit_flag: True}
+
+148: {
+	file_path: majime/m2app_conversation.html
+	title: マッチングアプリで出会えるメールのやりとりと会話の内容とコツ
+	pub_date: 2022-01-18
+	mod_date: 2022-01-27
+	category: s_mail
+	description: マッチングアプリでメールのやり取りが始まってから、実際に会うまでの会話の内容や話題、やり取りを長続きさせるためのコツなどを豊富な例文を使って具体的に詳しくご紹介します。出会い系サイトとマッチングアプリではどちらが出会えるか、どのような違いがあるかについても解説します。
+	str_len: 7265
+	layout_flag: True
+	shift_flag: False
+	edit_flag: True}
+
+149: {
+	file_path: majime/m1app_sexfriendmail.html
+	title: セフレの作り方とセフレが簡単に作れるおすすめマッチングアプリ
+	pub_date: 2022-01-25
+	mod_date: 2022-01-27
+	category: f_mail
+	description: 本当に確実にセフレを作れるマッチングアプリの使い方や、セフレ探しにおすすめな優良マッチングアプリや出会い系サイトの情報をお教えします。出会い系歴20年の管理人が本当に使える情報だけを紹介しています。マッチングアプリで出会えるメールの書き方もあります。
+	str_len: 4524
+	layout_flag: True
+	shift_flag: False
+	edit_flag: True}
+
+150: {
+	file_path: majime/m0marriage_bbs.html
+	title: 結婚相手と出会えるおすすめの婚活掲示板と婚活書き込みのコツ
+	pub_date: 2021-01-27
+	mod_date: 2022-02-01
+	category: post
+	description: 婚活で素敵な結婚相手と出会えるおすすめの婚活掲示板と、婚活掲示板を使って理想の結婚相手に出会える書き込みの書き方を詳しくご紹介します。最近ではネットでの婚活も普通になってきているので、マッチングアプリや出会い系の婚活掲示板を利用した婚活が大人気です。
+	str_len: 5133
+	layout_flag: False
 	shift_flag: False
 	edit_flag: True}
 

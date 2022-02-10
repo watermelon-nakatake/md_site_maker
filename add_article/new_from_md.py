@@ -949,6 +949,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--meta-key-->', ','.join(keyword))
         new_str = new_str.replace('<!--file-path-->', file_name)
         new_str = new_str.replace('<!--category-->', category)
+        if category == 'mail':
+            new_str = new_str.replace('<body class="mail"', '<body class="mail_c"')
         new_str = new_str.replace('<!--category_str-->', '<!--category_{}-->'.format(category))
         new_str = new_str.replace('<!--main-content-->', con_str)
         new_str = new_str.replace('<!--id_num-->', '<!--id_num_{}-->'.format(str(this_id)))

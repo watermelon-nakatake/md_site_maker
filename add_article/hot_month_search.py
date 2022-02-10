@@ -1,5 +1,7 @@
 import glob
 import os
+import re
+
 import file_upload
 import new_from_md
 import htaiken.main_info
@@ -66,7 +68,7 @@ def half_num_filter(half_str):
     return half_str
 
 
-def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
+def rewrite_hot_month(hot_month_str, next_month_str, next_next_str, now_season, next_season, only_season_flag):
     md_list = glob.glob('**/**/md_files/', recursive=True)
     md_list = list(set(md_list))
     md_list = [x for x in md_list if 'mass_production/' not in x]
@@ -91,11 +93,24 @@ def rewrite_hot_month(hot_month_str, next_month_str, next_next_str):
                 with open(md_path, 'r', encoding='utf-8') as f:
                     md_str = f.read()
                 if h_hot in md_str or z_hot in md_str:
-                    md_str = md_str.replace(h_next, h_nn)
-                    md_str = md_str.replace(z_next, h_nn)
-                    md_str = md_str.replace(h_hot, h_next)
-                    md_str = md_str.replace(z_hot, h_next)
-                    md_str = md_str.replace(z_nn, h_nn)
+                    if not only_season_flag:
+                        md_str = md_str.replace(h_next, h_nn)
+                        md_str = md_str.replace(z_next, h_nn)
+                        md_str = md_str.replace(h_hot, h_next)
+                        md_str = md_str.replace(z_hot, h_next)
+                        md_str = md_str.replace(z_nn, h_nn)
+                        target_month = h_next
+                    else:
+                        target_month = h_hot
+                    if now_season and next_season:
+                        hot_h = re.findall(r'## \S*' + target_month + r'\S*\n', md_str)
+                        if hot_h:
+                            hot_p = re.findall(r'(' + hot_h[0] + r'[\S\s]+?)\n##', md_str)
+                            # print(hot_p)
+                            if hot_p:
+                                e_hot_p = hot_p[0].replace(now_season, next_season)
+                                md_str = md_str.replace(hot_p[0], e_hot_p)
+                                # print(e_hot_p)
                     # print(md_str)
                     with open(md_path, 'w', encoding='utf-8') as g:
                         g.write(md_str)
@@ -140,7 +155,7 @@ def make_next_month_str(month_num):
     return '{}月'.format(next_num)
 
 
-def auto_month_update(old_month_str):
+def auto_month_update(old_month_str, now_season, next_season, only_season_flag):
     old_num = int(half_num_filter(old_month_str).replace('月', ''))
     # print(old_num)
     # print(type(old_num))
@@ -148,7 +163,8 @@ def auto_month_update(old_month_str):
     print('next_month_str : {}'.format(next_month_str))
     next_next_str = make_next_month_str(int(next_month_str.replace('月', '')))
     print('next_next_month_str = {}'.format(next_next_str))
-    upload_list, up_files = rewrite_hot_month(old_month_str, next_month_str, next_next_str)
+    upload_list, up_files = rewrite_hot_month(old_month_str, next_month_str, next_next_str, now_season, next_season,
+                                              only_season_flag)
     print('up_files = {}'.format(up_files))
     print('len of up_files : '.format(len(list(set(up_files)))))
     # print(len(up_files))
@@ -163,7 +179,7 @@ def auto_month_update(old_month_str):
 
 
 if __name__ == '__main__':
-    auto_month_update('11月')  # 現在の月を記入 not 新しい月
+    auto_month_update('1月', '年末年始', '冬', only_season_flag=False)  # 現在の月を記入 not 新しい月
     # ul = rewrite_hot_month('９月', '１０月', '１１月')
     # auto_update(ul)
     # hot_month_pick_up('11月')

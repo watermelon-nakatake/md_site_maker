@@ -35,5 +35,5 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
 
 
 if __name__ == '__main__':
-    # make_csv_from_gsc('https://www.sefure-do.com', '2021-01-23', '2021-05-07', 'sd', 'month', ['query', 'page'])
-    make_csv_from_gsc('https://www.demr.jp', '2021-04-01', '2021-10-07', 'test', 'test_date', ['date'])
+    make_csv_from_gsc('https://www.sefure-do.com', '2021-02-06', '2022-02-05', 'sfd', 'month', ['query', 'page'])
+    # make_csv_from_gsc('https://www.demr.jp', '2021-04-01', '2021-10-07', 'test', 'test_date', ['date'])

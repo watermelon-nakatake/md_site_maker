@@ -238,7 +238,7 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
 def read_sd_page(page_url):   # , hot_words
     # スクレイピング対象の URL にリクエストを送り HTML を取得する
     # print(page_url)
-    # print('scrape: ' + page_url)
+    print('scrape: ' + page_url)
     res = requests.get(page_url)
     # レスポンスの HTML から BeautifulSoup オブジェクトを作る
     soup = BeautifulSoup(res.text, 'html.parser')
@@ -250,6 +250,7 @@ def read_sd_page(page_url):   # , hot_words
         tl_flag = False
     main_img = soup.find_all('img', {'class': 'size-large'})
     full_img = soup.find_all('img', {'class': 'size-full'})
+
     # print(main_img)
     if not main_img and not full_img:
         # print('There in no main image!')
@@ -294,9 +295,14 @@ def read_sd_page(page_url):   # , hot_words
         update_flag = True
     else:
         update_flag = False
+    al_img_str = re.findall(r'<div class="entry-content">(.*?) size-large', text)
+    img_pos = main_img_flag
+    if al_img_str:
+        if '</p>' in al_img_str[0]:
+            img_pos = False
     result = {'path': page_url, 'title': title_text, 'title_len': title_len, 'main_img_flag': main_img_flag,
               'k2_flag': k2_flag, 'mt_flag': mt_flag, 'update_flag': update_flag, 'post_id': post_id,
-              'mod_time': str(mod_time)}
+              'mod_time': str(mod_time), 'img_pos': img_pos}
     return result
 
 

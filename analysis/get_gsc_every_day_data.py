@@ -17,4 +17,4 @@ def get_one_day_data_in_period(url, start_period, end_period, dir_path):
 
 
 if __name__ == '__main__':
-    get_one_day_data_in_period('http://www.reibunsite.com', '2020-04-23', '2021-05-25', 'rs_o')
+    get_one_day_data_in_period('https://www.sefure-do.com', '2021-08-09', '2022-02-08', 'sfd')

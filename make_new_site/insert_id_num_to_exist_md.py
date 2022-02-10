@@ -35,5 +35,5 @@ def insert_id_to_imported_md_files(project_dir):
 
 
 if __name__ == '__main__':
-    target_dir = 'koibito'
+    target_dir = 'mailsample'
     insert_id_to_imported_md_files(target_dir)
