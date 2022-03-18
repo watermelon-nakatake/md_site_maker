@@ -235,10 +235,11 @@ def check_list_and_bs(sc_list, pk_dic, limit_d, q_list):
     return pk_dic, target_list
 
 
-def read_sd_page(page_url):   # , hot_words
+def read_sd_page(page_url, log_flag):   # , hot_words
     # スクレイピング対象の URL にリクエストを送り HTML を取得する
     # print(page_url)
-    print('scrape: ' + page_url)
+    if log_flag:
+        print('scrape: ' + page_url)
     res = requests.get(page_url)
     # レスポンスの HTML から BeautifulSoup オブジェクトを作る
     soup = BeautifulSoup(res.text, 'html.parser')

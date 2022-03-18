@@ -1,4 +1,5 @@
 import pandas as pd
+import pathlib
 
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
@@ -17,7 +18,7 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
         'dimensions': d_list,
         'rowLimit': row_limit
     }
-    print(body)
+    # print(body)
     response = webmasters.searchanalytics().query(siteUrl=url, body=body).execute()
     if 'rows' in response:
         df = pd.json_normalize(response['rows'])
@@ -29,11 +30,16 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
         else:
             df.to_csv('gsc_data/{}/{}.csv'.format(dir_path, file_name + end_date), index=False)
             if 'qp_' in file_name:
-                df.to_csv('gsc_data/{}/qp_today.csv'.format(dir_path, file_name + end_date), index=False)
+                df.to_csv('gsc_data/{}/qp_today.csv'.format(dir_path), index=False)
             else:
-                df.to_csv('gsc_data/{}/p_today.csv'.format(dir_path, file_name + end_date), index=False)
+                df.to_csv('gsc_data/{}/p_today.csv'.format(dir_path), index=False)
+    else:
+        print('no data in gsc in {}'.format(start_date))
+        empty_str = 'empty'
+        with open('gsc_data/{}/{}.csv'.format(dir_path, file_name + end_date), 'w', encoding='utf-8') as e:
+            e.write(empty_str)
 
 
 if __name__ == '__main__':
-    make_csv_from_gsc('https://www.sefure-do.com', '2021-02-06', '2022-02-05', 'sfd', 'month', ['query', 'page'])
+    make_csv_from_gsc('https://www.sefure-do.com', '2021-02-06', '2022-02-13', 'all_site_data', 'month', ['query', 'page'])
     # make_csv_from_gsc('https://www.demr.jp', '2021-04-01', '2021-10-07', 'test', 'test_date', ['date'])

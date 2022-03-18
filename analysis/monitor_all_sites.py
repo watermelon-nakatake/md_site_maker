@@ -30,7 +30,7 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
     for target_project in target_project_list:
         # print(target_project)
         pj_dir, domain, main_dir, site_name, pj_domain_main = qcm.project_select(target_project + '/')
-        # print('domain : {}'.format(domain))
+        print('domain : {}'.format(domain))
         end_date = qcm.make_target_data_for_today(today, period, pj_dir, domain)
         if os.path.exists('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv'):
             with open('gsc_data/' + pj_dir + '/p_' + period_name + end_date + '.csv') as f:
