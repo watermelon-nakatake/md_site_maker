@@ -26,7 +26,7 @@ default_img = ''  # images/の続きから
 h_sitemap_path = 'koibito/html_files/sitemap.html'
 domain_str = 'koibitodeau.com'  # www. 以前を含まない
 ignore_files = ['koibito/html_files/google3d7d16f68a5d3b38.html']
-upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
+upload_data = {'host_name': 'brownjaguar94.sakura.ne.jp', 'password_str': 'f.GJizZ86k+J', 'user_name': 'brownjaguar94',
                'upload_dir': 'koibito'}
 sc_url = {'ワクワクメール': 'link/550909', 'PCMAX': 'link/pcmax',
           'ハッピーメール': 'link/happymail', 'Jメール': 'link/mintj'}

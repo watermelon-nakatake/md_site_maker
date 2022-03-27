@@ -22,7 +22,7 @@ default_img = 'common/jd_image.jpeg'
 h_sitemap_path = 'joshideai/html_files/sitemap.html'
 domain_str = 'joshideai.com'
 ignore_files = []
-upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
+upload_data = {'host_name': 'brownjaguar94.sakura.ne.jp', 'password_str': 'f.GJizZ86k+J', 'user_name': 'brownjaguar94',
                'upload_dir': 'deaisite'}
 sc_url = {'ワクワクメール': 'site_page/550909', 'PCMAX': 'site_page/pcmax',
           '口コミランキング': 'site/ranking.html', '口コミ評価ランキング': 'site/ranking.html',

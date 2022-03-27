@@ -30,7 +30,7 @@ default_img = 'common/rs_image.jpeg'
 h_sitemap_path = 'rei_site/html_files/sitemap.html'
 domain_str = 'reibunsite.com'
 ignore_files = ['rei_site/html_files/google3d7d16f68a5d3b38.html', 'rei_site/html_files/y_key_e2722b15d0cec302.html']
-upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
+upload_data = {'host_name': 'brownjaguar94.sakura.ne.jp', 'password_str': 'f.GJizZ86k+J', 'user_name': 'brownjaguar94',
                'upload_dir': 'rs'}
 sc_url = {'ワクワクメール': 'site_data/550909', 'PCMAX': 'site_data/pcmax',
           'ハッピーメール': 'site_data/happymail', 'Jメール': 'site_data/mintj'}

@@ -34,7 +34,7 @@ default_img = 'demr_mgirl_1200x630.jpg'
 h_sitemap_path = 'reibun/html_files/pc/policy/sitemap.html'
 domain_str = 'demr.jp'
 ignore_files = ['reibun/html_files/google3d7d16f68a5d3b38.html', 'reibun/html_files/y_key_e2722b15d0cec302.html']
-upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
+upload_data = {'host_name': 'brownjaguar94.sakura.ne.jp', 'password_str': 'f.GJizZ86k+J', 'user_name': 'brownjaguar94',
                'upload_dir': 'reibun'}
 sc_url = {'ワクワクメール': 'sitepage/wakuwakumail.html', 'PCMAX': 'sitepage/pcmax.html',
           '口コミランキング': 'sitepage/ranking.html', '口コミ評価ランキング': 'sitepage/ranking.html',

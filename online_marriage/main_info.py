@@ -26,7 +26,7 @@ default_img = 'common/olm_img.jpg'
 h_sitemap_path = 'online_marriage/html_files/sitemap.html'
 domain_str = 'lovestrategyguide.com'
 ignore_files = ['online_marriage/html_files/google3d7d16f68a5d3b38.html']
-upload_data = {'host_name': 'blackrhino1.sakura.ne.jp', 'password_str': 'k2u5n47ku6', 'user_name': 'blackrhino1',
+upload_data = {'host_name': 'brownjaguar94.sakura.ne.jp', 'password_str': 'f.GJizZ86k+J', 'user_name': 'brownjaguar94',
                'upload_dir': 'kouryaku'}
 sc_url = {'ワクワクメール': 'link/550909', 'PCMAX': 'link/pcmax',
           'ハッピーメール': 'link/happymail', 'Jメール': 'link/mintj'}

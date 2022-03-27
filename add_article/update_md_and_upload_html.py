@@ -19,7 +19,7 @@ def latest_modify_checker():
                    'goodbyedt': 'goodbyedt.com', 'howto': 'deaihowto.com', 'htaiken': 'deaihtaiken.com',
                    'koibito': 'koibitodeau.com', 'konkatsu': 'netdekonkatsu.com',
                    'online_marriage': 'lovestrategyguide.com', 'shoshin': 'deaishoshinsha.com',
-                   'women': 'deaiwomen.com'}
+                   'women': 'deaiwomen.com', 'mailsample': 'mailsample.jp'}
     rc_list_r = search_edited_md()
     rc_list = [x[0] for x in rc_list_r]
     if rc_list:
@@ -30,15 +30,16 @@ def latest_modify_checker():
         url_md = re.sub(r'^.+?/md_files/(.+)\.md', r'\1.html', md_file)
         page_url = 'https://www.{}/{}'.format(domain_dict[pj_name], url_md)
         # print(page_url)
+        with open(md_file, 'r', encoding='utf-8') as f:
+            md_str = f.read()
+        main_str = re.sub(r'^[\s\S]+k::.*?\n', '', md_str)
+        main_str = re.sub(r'recipe_list = [\s\S]*$', '', main_str)
+        main_str = re.sub(r'<!--.*?-->', '', main_str)
+        print('str_len : {}'.format(len(main_str.replace('\n', ''))))
         gs_list = monitor_all_sites.check_gsc_query_data(page_url)
         pprint.pprint(gs_list[:20])
         if gs_list:
             set_dict = []
-            with open(md_file, 'r', encoding='utf-8') as f:
-                md_str = f.read()
-            main_str = re.sub(r'^[\s\S]+k::.*?\n', '', md_str)
-            main_str = re.sub(r'recipe_list = [\s\S]*$', '', main_str)
-            main_str = re.sub(r'<!--.*?-->', '', main_str)
             for row in gs_list:
                 str_s = row[4].split(' ')
                 for p_str in str_s:
@@ -46,7 +47,6 @@ def latest_modify_checker():
                         set_dict.append(p_str)
             for word in set_dict[:20]:
                 print('{} : {}'.format(word, main_str.count(word)))
-            print('\nstr_len : {}'.format(len(main_str.replace('\n', ''))))
 
 
 def change_html_and_upload():
@@ -105,6 +105,7 @@ def search_edited_md():
     today = now - 60 * 60 * 24
     project_dir = [x for x in make_new_article.dir_dict]
     project_dir.extend(['reibun'])
+    project_dir.extend(['mailsample'])
     project_dir.remove('test')
     project_dir.remove('sfd')
     project_dir.remove('mass')
@@ -117,7 +118,7 @@ def search_edited_md():
         mod_time = os.path.getmtime(file)
         if mod_time > today:
             recent_files.append([file, mod_time])
-            # print('{} : {}'.format(file, mod_time))
+            print('{} : {}'.format(file, mod_time))
     if recent_files:
         recent_files.sort(key=lambda x: x[1], reverse=True)
     return recent_files

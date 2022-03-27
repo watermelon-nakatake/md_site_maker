@@ -19,7 +19,7 @@ def check_all_site_data(limit_d, period, main_str_limit, print_flag, ma_flag, ig
     all_site_c = []
     all_site_p = {}
     target_project_list = ['reibun', 'rei_site', 'joshideai', 'goodbyedt', 'howto', 'htaiken', 'koibito',
-                           'konkatsu', 'online_marriage', 'shoshin', 'women']
+                           'konkatsu', 'online_marriage', 'shoshin', 'women', 'mailsample']
     today = datetime.today()
     if period == 28:
         period_name = 'month'
@@ -158,7 +158,7 @@ def check_gsc_query_data(page_url):
                    'goodbyedt.com': 'goodbyedt', 'deaihowto.com': 'howto', 'deaihtaiken.com': 'htaiken',
                    'koibitodeau.com': 'koibito', 'netdekonkatsu.com': 'konkatsu',
                    'lovestrategyguide.com': 'online_marriage', 'deaishoshinsha.com': 'shoshin',
-                   'deaiwomen.com': 'women'}
+                   'deaiwomen.com': 'women', 'mailsample.jp': 'mailsample'}
     domain_str = re.sub(r'https://www\.(.+?)/.*$', r'\1', page_url)
     pj_dir = domain_list[domain_str]
     # print('pj_name : {}'.format(pj_dir))

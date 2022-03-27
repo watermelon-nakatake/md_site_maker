@@ -40,7 +40,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     now = datetime.datetime.now()
     if first_time_flag:
         last_mod_time = now
-        print(pd)
+        # print(pd)
         if 'mass_flag' in pd:
             pj_path = 'mass_production/' + pd['project_dir']
         else:
@@ -60,8 +60,8 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     else:
         side_bar_dic = make_all_side_bar(pk_dic, pd)
         ad_side_bar_dic = {}
-    print(upload_list)
-    print(title_change_id)
+    # print('upload_list : {}'.format(upload_list))
+    print('title_change_id : {}'.format(title_change_id))
     if pd['project_dir'] == 'shoshin':
         shoshin_finish(pk_dic, upload_list, pd)
     else:
@@ -93,7 +93,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
             upload_list = list(set(upload_list))
             upload_list.sort()
             upload_list = modify_file_check(upload_list, last_mod_time)
-            print(upload_list)
+            print('upload_list : {}'.format(upload_list))
             file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
         if last_mod_flag:
             check_mod_date.make_mod_date_list(pd)
@@ -209,10 +209,10 @@ def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
                         [datetime.datetime.strptime(pk_dic[i]['pub_date'] + ' 00:00:00', '%Y-%m-%d %H:%M:%S'),
                          pk_dic[i]['category'], pk_dic[i]['file_path'], pk_dic[i]['title']])
             up_list.sort(reverse=True)
-            print(up_list)
+            # print(up_list)
             replace_str = ''.join(['<li>{} [{}・<a href="{}">{}</a>]を追加</li>'.format(
                 datetime.date.strftime(x[0], '%Y/%m/%d'), pd['category_data'][x[1]][0], x[2], x[3]) for x in up_list])
-            print(replace_str)
+            # print(replace_str)
         else:
             if pd['project_dir'] != 'konkatsu' and pd['project_dir'] != 'online_marriage':
                 for c_id in title_change_id:
@@ -306,7 +306,7 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
     # category page
     ct_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     for cat in ct_cat:
-        print('cat : '.format(cat))
+        # print('cat : '.format(cat))
         if cat != 'top':
             index_path = '{}/html_files/{}{}/{}'.format(pj_path, pd['main_dir'], cat,
                                                         pd['category_data'][cat][1])
@@ -866,12 +866,22 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 ad_flag = ''
         else:
             ad_flag = ''
-        if 'n::' in plain_txt:
-            this_id = int(re.findall(r'n::(\d+?)\n', plain_txt)[0])
+        id_str = re.findall(r'n::(\d+)', plain_txt)
+        if id_str:
+            check_str = md_file_path.replace(pj_path + '/md_files/', '').replace('.md', '.html')
+            if int(id_str[0]) in pk_dic and check_str not in pk_dic[int(id_str[0])]['file_path']:
+                print('same id num error!!')
+                this_id = len(pk_dic)
+                plain_txt = re.sub(r'n::.*?\n', r'n::' + str(this_id) + r'\n', plain_txt)
+            else:
+                this_id = int(re.findall(r'n::(\d+?)\n', plain_txt)[0])
         else:
             print('no id : ' + md_file_path)
             this_id = len(pk_dic)
-            plain_txt = re.sub(r'(d::.*?\n)', r'\1n::' + str(this_id) + r'\n', plain_txt)
+            if 'n::' in plain_txt:
+                plain_txt = re.sub(r'n::.*?\n', r'n::' + str(this_id) + r'\n', plain_txt)
+            else:
+                plain_txt = re.sub(r'(d::.*?\n)', r'\1n::' + str(this_id) + r'\n', plain_txt)
         title_str = re.findall(r't::(.+?)\n', md_txt)[0]
         plain_txt = re.sub(r'\n# .+?\n', r'\n# ' + title_str + r'\n', plain_txt)
         md_txt = additional_replace_in_md(md_txt, pd)

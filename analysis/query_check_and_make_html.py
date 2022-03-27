@@ -34,7 +34,9 @@ project_info = {
                 'site_name': '出会い系初心者のための攻略法'},
     'women': {'pj_dir': 'women', 'pj_domain': 'https://www.deaiwomen.com', 'main_dir': 'women/html_files/',
               'site_name': '女性のための出会い系教室'},
-    'sfd': {'pj_dir': 'sfd', 'pj_domain': 'https://www.sefure-do.com', 'main_dir': '', 'site_name': 'セフレ道'}}
+    'sfd': {'pj_dir': 'sfd', 'pj_domain': 'https://www.sefure-do.com', 'main_dir': '', 'site_name': 'セフレ道'},
+    'mailsample': {'pj_dir': 'mailsample', 'pj_domain': 'https://www.mailsample.jp', 'main_dir': '',
+                   'site_name': 'マリラブ'}}
 
 
 def make_project_info():
@@ -132,10 +134,11 @@ def make_target_data_for_today(today, period, pj_dir, domain):
 
 
 def project_select(file_path):
+    print(file_path)
     project_str = re.sub(r'^(.+?)/.*$', r'\1', file_path)
     if project_str in project_info:
-        # print('project_str')
-        # print(project_str)
+        print('project_str')
+        print(project_str)
         pj_dir = project_info[project_str]['pj_dir']
         domain = project_info[project_str]['pj_domain']
         main_dir = project_info[project_str]['main_dir']
