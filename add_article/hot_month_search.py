@@ -168,18 +168,18 @@ def auto_month_update(old_month_str, now_season, next_season, only_season_flag):
     print('up_files = {}'.format(up_files))
     print('len of up_files : '.format(len(list(set(up_files)))))
     # print(len(up_files))
-    shoshin_up = [x.replace('/html_files/', '/md_files/').replace('.html', '.md') for x in up_files if 'shoshin/' in x]
-    if shoshin_up:
-        up_files = make_html_for_shoshin.add_new_article(shoshin_up)
-        if up_files:
-            file_upload.shoshin_scp_upload(up_files)
+    # shoshin_up = [x.replace('/html_files/', '/md_files/').replace('.html', '.md') for x in up_files if 'shoshin/' in x]
+    # if shoshin_up:
+    #     up_files = make_html_for_shoshin.add_new_article(shoshin_up)
+    #     if up_files:
+    #         file_upload.shoshin_scp_upload(up_files)
     auto_update(upload_list)
     file_upload.auto_scp_upload(up_files)
     # print(up_files)
 
 
 if __name__ == '__main__':
-    auto_month_update('1月', '年末年始', '冬', only_season_flag=False)  # 現在の月を記入 not 新しい月
+    auto_month_update('3月', '冬', '春', only_season_flag=False)  # 現在の月を記入 not 新しい月
     # ul = rewrite_hot_month('９月', '１０月', '１１月')
     # auto_update(ul)
     # hot_month_pick_up('11月')

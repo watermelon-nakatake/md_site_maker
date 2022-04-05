@@ -2,6 +2,7 @@ import glob
 import pickle
 import os
 # import re
+import pprint
 import shutil
 import importlib
 import preparation
@@ -200,9 +201,27 @@ def change_pickle(p_path):
             pickle.dump(p_dict, g)
 
 
+def change_pickle_by_id(pj_name, rw_dict):
+    with open(pj_name + '/pickle_pot/main_data.pkl', 'rb') as f:
+        p_dict = pickle.load(f)
+        # pprint.pprint(p_dict)
+        # for r_id in rw_dict:
+        #     for row in rw_dict[r_id]:
+        #         p_dict[r_id][row[0]] = row[1]
+        pprint.pprint(p_dict)
+        # with open(pj_name + '/pickle_pot/main_data.pkl', 'wb') as g:
+        #     pickle.dump(p_dict, g)
+
+
 if __name__ == '__main__':
     # read_pickle('sfd/pickle_pot/used_id.pkl')
     # change_pickle('sfd/pickle_pot/used_id.pkl')
+    change_pickle_by_id('mailsample',
+                        {15: [['file_path', 'question/divorced_woman.html'],
+                              ['category', 'question']],
+                         17: [['file_path', 'question/about_online_love.html'],
+                              ['category', 'question']]
+                         })
 
     # make_new_site_dir_and_data(site_data)
-    upload_all_files()
+    # upload_all_files()

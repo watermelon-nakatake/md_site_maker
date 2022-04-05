@@ -23,6 +23,7 @@ import konkatsu.main_info
 
 
 # import rei_site.main_info
+no_up_page = ['mailsample/md_files/index.md']
 
 
 def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_flag, fixed_mod_date):
@@ -52,6 +53,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         mod_list, last_mod_time = pick_up_mod_md_files(pd)
     print('modify list :')
     print(mod_list)
+    mod_list = remove_no_up_page(mod_list)
     upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag,
                                                                 first_time_flag, fixed_mod_date)
     # print(pk_dic)
@@ -98,6 +100,13 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         if last_mod_flag:
             check_mod_date.make_mod_date_list(pd)
             save_last_mod(pd)
+
+
+def remove_no_up_page(mod_list):
+    for nu in no_up_page:
+        if nu in mod_list:
+            mod_list.remove(nu)
+    return mod_list
 
 
 def shoshin_finish(pk_dic, update_list, pd):
@@ -869,6 +878,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         id_str = re.findall(r'n::(\d+)', plain_txt)
         if id_str:
             check_str = md_file_path.replace(pj_path + '/md_files/', '').replace('.md', '.html')
+            if pj_path == 'reibun':
+                check_str = check_str.replace('pc/', '')
             if int(id_str[0]) in pk_dic and check_str not in pk_dic[int(id_str[0])]['file_path']:
                 print('same id num error!!')
                 this_id = len(pk_dic)

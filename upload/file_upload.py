@@ -6,6 +6,7 @@ import re
 import datetime
 
 import howto.main_info
+import mailsample.main_info
 from add_article import amp_file_maker, common_tool
 import random
 import paramiko
@@ -18,6 +19,7 @@ import sfd.main_info
 import shoshin.main_info
 import htaiken.main_info
 import joshideai.main_info
+import mailsample.main_info
 
 
 def scp_upload(up_file_list, pd):
@@ -111,6 +113,7 @@ def auto_scp_upload(up_file_list):
                 'sfd': sfd.main_info.info_dict,
                 'shoshin': shoshin.main_info.info_dict,
                 'htaiken': htaiken.main_info.info_dict,
+                'mailsample': mailsample.main_info.info_dict
                 }
     use_dict = {x: [] for x in prj_dict}
     for pro in use_dict:
@@ -556,7 +559,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['konkatsu/html_files/sitemap.xml']
+    up_files = ['mailsample/html_files/index.html']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)
