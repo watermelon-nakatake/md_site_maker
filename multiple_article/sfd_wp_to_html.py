@@ -1,4 +1,4 @@
-import pprint
+# import pprint
 import re
 import urllib.request
 import os
@@ -145,7 +145,7 @@ def html_to_markdown_filter(main_str, page_url, soup):
         if a_url_l:
             a_url = a_url_l[0]
             if 'sefure-do.com' in a_url:
-                ins_url = re.sub(r'^.+?sefure-do\.com', '', a_url)
+                a_url = re.sub(r'^.+?sefure-do\.com', '', a_url)
             if 'https://' in a_url or 'http://' in a_url:
                 ins_url = a_url
             else:
@@ -219,6 +219,7 @@ def html_to_markdown_filter(main_str, page_url, soup):
             ins_kw = '%l_parm%\n{}\n'.format(kw_text)
         main_str = main_str.replace(kw_str, ins_kw)
     main_str = re.sub(r'<div class="maruck">(.+?)</div>', r'%arlist%\n\1\n', main_str)
+    main_str = re.sub(r'<li .+?>', '<li>', main_str)
     ul_l = re.findall(r'<ul.*?</ul>', main_str)
     if ul_l:
         for ul in ul_l:
@@ -323,8 +324,10 @@ def get_all_url_list(csv_path):
 
 
 def make_all_md_file(all_url_csv, stop_flag, md_remake_flag):
+    no_use_url = ['https://www.sefure-do.com/sitemap/']
     ng_tag = []
     url_list = get_all_url_list(all_url_csv)
+    url_list = [x for x in url_list if x not in no_use_url]
     for page_url in url_list:
         tag_l = read_article_from_sfd_page(page_url, stop_flag, md_remake_flag)
         if tag_l:
@@ -338,8 +341,8 @@ def change_webp_image(img_path):
 
 
 if __name__ == '__main__':
-    make_all_md_file('sfd/all-urls.csv', stop_flag=True, md_remake_flag=False)
-    # change_webp_image('sfd/new_md/images/art_images/woman_in_bed40.jpg')
+    # make_all_md_file('sfd/all-urls.csv', stop_flag=False, md_remake_flag=False)
+    change_webp_image('sfd/new_md/images/art_images/woman_in_bed40.jpg')
     # read_article_from_sfd_page('https://www.sefure-do.com/friend-with-benefits/area-bbs/24-mie/',
     #                            stop_flag=False, md_remake_flag=True)
     # pprint.pprint(get_all_url_list('sfd/all-urls.csv'))
