@@ -1,4 +1,5 @@
 # import pprint
+import glob
 import re
 import urllib.request
 import os
@@ -44,7 +45,7 @@ def read_article_from_sfd_page(page_url, stop_flag, md_remake_flag):
         else:
             des_str = ''
         # print(mod_time)
-        main_txt = soup.find_all('div', {'class': 'mainbox'})[0]
+        main_txt = soup.find_all('div', {'class': 'entry-content'})[0]
         main_str = str(main_txt)
         main_str = re.sub(r'^.*<div class="entry-content">', '', main_str)
         main_str = re.sub(r'<div class="adbox">.*$', '', main_str)
@@ -57,11 +58,11 @@ def read_article_from_sfd_page(page_url, stop_flag, md_remake_flag):
         md_str, tag_l = html_to_markdown_filter(main_str, page_url, soup)
         if tag_l:
             print('error!! there in tag : {}'.format(tag_l))
-            if stop_flag:
-                return
+            # if stop_flag:
+            #     return
         md_head = 't::{}\nd::{}\nn::{}\nm::{}'.format(title_text, des_str, 1, mod_time.replace('+0900', ''))
         md_f = md_head + '\n\n' + md_str
-        # print(md_f)
+        print(md_f)
         md_path = html_path.replace('/wp_html/', '/new_md/').replace('/index.html', '.md')
         with open(md_path, 'w', encoding='utf-8') as m:
             m.write(md_f)
@@ -337,12 +338,28 @@ def make_all_md_file(all_url_csv, stop_flag, md_remake_flag):
 
 def change_webp_image(img_path):
     im = Image.open(img_path)
-    im.save(img_path.replace('.jpeg', '.webp').replace('.jpg', '.webp'), 'webp')
+    width, height = im.size
+    webp_path = img_path.replace('.jpeg', '.webp').replace('.jpg', '.webp').replace('/art_images/', '/webp/')
+    if width != 760:
+        new_height = round(760 * height / width)
+        im_resize = im.resize((760, new_height), Image.LANCZOS)
+        im_resize.save(webp_path, 'webp')
+        im_resize.save(img_path)
+    else:
+        im.save(webp_path, 'webp')
+
+
+def change_webp_by_dir(target_dir):
+    img_list = glob.glob(target_dir + '/**.**', recursive=True)
+    # print(img_list)
+    for im_path in img_list:
+        change_webp_image(im_path)
 
 
 if __name__ == '__main__':
     # make_all_md_file('sfd/all-urls.csv', stop_flag=False, md_remake_flag=False)
-    change_webp_image('sfd/new_md/images/art_images/woman_in_bed40.jpg')
-    # read_article_from_sfd_page('https://www.sefure-do.com/friend-with-benefits/area-bbs/24-mie/',
+    # change_webp_image('sfd/md_files/images/art_images/woman_in_bed40.jpg')
+    change_webp_by_dir('sfd/html_files/images/art_images')
+    # read_article_from_sfd_page('https://www.sefure-do.com/friend-with-benefits/',
     #                            stop_flag=False, md_remake_flag=True)
     # pprint.pprint(get_all_url_list('sfd/all-urls.csv'))

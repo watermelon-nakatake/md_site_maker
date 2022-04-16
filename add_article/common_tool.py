@@ -28,7 +28,8 @@ def index_str(index_list):
                {'h_tag': r'</h4>$', 'li_tag': '</a></li></ol></li></ol></li></ol>'},
                {'h_tag': r'^<h2>', 'li_tag': '<ol><li><a href="#sc¥num¥">'},
                {'h_tag': r'^<h3>', 'li_tag': '<ol><li><ol><li><a href="#sc¥num¥">'},
-               {'h_tag': r'^<h4>', 'li_tag': '<ol><li><ol><li><ol><li><a href="#sc¥num¥">'}]
+               {'h_tag': r'^<h4>', 'li_tag': '<ol><li><ol><li><ol><li><a href="#sc¥num¥">'}
+               ]
     for ex in ex_list:
         work_str = re.sub(ex['h_tag'], ex['li_tag'], work_str)
     i = 1

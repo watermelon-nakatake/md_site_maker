@@ -12,6 +12,7 @@ import time
 import glob
 from email import utils
 import make_article_list
+import sfd.main_info
 from add_article import amp_file_maker, common_tool
 from upload import file_upload
 from analysis import check_mod_date
@@ -21,9 +22,9 @@ from joshideai import main_info
 import rei_site.main_info
 import konkatsu.main_info
 
-
 # import rei_site.main_info
 no_up_page = ['mailsample/md_files/index.md']
+use_webp_list = ['sfd']
 
 
 def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_flag, fixed_mod_date):
@@ -788,6 +789,52 @@ def short_cut_filter(long_str, pd, md_file_path):
     return long_str
 
 
+def make_start_str(md_txt):
+    start_str = re.sub(r'!\[.*?]\(.*?\)', '', md_txt)
+    start_str = re.sub(r'<!--.*?-->', '', start_str)
+    start_str = start_str.replace('\n', '')
+    start_str = start_str[:95] + '...'
+    return start_str
+
+
+def html_path_filter(html_path, this_path):
+    if not html_path.endswith('.html'):
+        if not html_path.endswith('/'):
+            html_path = html_path + '/index.html'
+        else:
+            html_path = html_path + 'index.html'
+    this_dir_str = re.sub(r'^.*/html_files/(.*/)', r'\1', this_path)
+    this_dir_str = re.sub(r'^(.*/).*$', r'\1', this_dir_str)
+    if '/' not in html_path:
+        result = this_dir_str + html_path
+    else:
+        sp_path = this_dir_str.split('/')
+        use_dir = '/'.join(sp_path[:(html_path.count('../') + 1) * -1])
+        result = use_dir + html_path.replace('../', '')
+    return result
+
+
+def card_link_filter(html_str, cl_dic, this_path):
+    base_str = '<div class="cd_link" id="cd-link"><a href="<!--url-->"><span class="cd_inner"><img src="<!--img-->" ' \
+               'alt="<!--title-->" loading="lazy" width="150" height="150"/><span class="cd_r"><span class="cd_title">' \
+               '<!--title--></span><span class="cd_des mob_none"><!--des--></span></span></span></a></div>'
+    if '">card_link</a>' in html_str:
+        html_str = html_str.replace('">card_link</a><br />', '">card_link</a></p><p>')
+        cd_list = re.findall(r'<p><a href="[^"]+?">card_link</a></p>', html_str)
+        for cd_str in cd_list:
+            html_path = re.findall(r'<a href="(.*?)"', cd_str)[0]
+            nml_path = html_path_filter(html_path, this_path)
+            if nml_path in cl_dic:
+                cl_data = cl_dic[nml_path]
+                img_path = ('../' * (this_path.count('/') - 1)) + cl_data['img_path']
+                ins_str = base_str.replace('<!--url-->', html_path).replace('<!--img-->', img_path).replace(
+                    '<!--title-->', cl_data['title'])
+                html_str = html_str.replace(cd_str, ins_str)
+            else:
+                print('error!! : no cl_data => {}'.format(html_path))
+    return html_str
+
+
 def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time_flag, fixed_mod_date):
     upload_list = []
     title_change_id = []
@@ -807,8 +854,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             os.mkdir(pj_path + '/html_files/' + pd['main_dir'] + 'template')
         shutil.copy('template_files/template/main_tmp.html', pj_path + '/html_files/' + pd['main_dir']
                     + 'template/main_tmp.html')
-    with open(pj_path + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') \
-            as t:
+    with open(pj_path + '/html_files/' + pd['main_dir'] + 'template/main_tmp.html', 'r', encoding='utf-8') as t:
         tmp_str = t.read()
     if pd['project_dir'] == 'shoshin':
         with open('shoshin/html_files/template/wp_temp.html', 'r', encoding='utf-8') as st:
@@ -817,6 +863,10 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         pk_dic = make_article_list.read_pickle_pot('main_data', pd)
     else:
         pk_dic = {}
+    if os.path.exists(pj_path + '/pickle_pot/card_data.pkl'):
+        cl_dic = make_article_list.read_pickle_pot('card_data', pd)
+    else:
+        cl_dic = {}
     # print(make_article_list.read_pickle_pot('main_data', pd))
     # return
     for md_file_path in md_file_list:
@@ -935,7 +985,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         md_txt = re.sub(r'%point%\n([\s\S]*?)\n\n', r'<!--point-->\n\n\n\1\n\n<!--e/point-->', md_txt)
         md_txt = re.sub(r'%matome%\n([\s\S]*?)\n\n', r'\n<!--matome-->\n\n\n\1\n\n<!--e/matome-->', md_txt)
         md_txt = re.sub(r'%p%\n([\s\S]*?)\n\n', r'<!--point_i-->\n\n\n\1\n\n<!--e/point_i-->', md_txt)
-        md_txt = icon_filter(md_txt, pd)
+        md_txt = icon_filter(md_txt, pd, md_file_path)
 
         md_txt = md_txt.replace('%sample%', '<!--sample/s-->')
         md_txt = md_txt.replace('%sample/e%', '<!--sample/e-->')
@@ -947,6 +997,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         md_txt = re.sub(r'\n(<!--.+?-->)\n', r'\n\1', md_txt)
         # md_txt = re.sub(r'>[\s]+?<', '><', md_txt)
         md_txt = md_txt.replace('--><!--', '-->\n<!--')
+        md_txt = re.sub(r'(\[card_link]\(\S*?\))\n(\S)', r'\1\n\n\2', md_txt)
         if '\n# ' not in md_txt:
             md_txt = re.sub(r'\n[a-zA-Z]::.*?\n', '\n', md_txt)
             md_txt = re.sub(r't::.*?\n', '\n', md_txt)
@@ -958,6 +1009,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             md_txt = re.sub(r'^[a-zA-Z]::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)
+        start_str = make_start_str(md_txt)
 
         con_str = markdown.markdown(md_txt, extensions=['tables'])
         con_str = con_str.replace('\n', '')
@@ -1036,7 +1088,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = insert_additional_str(new_str, pd)
 
         new_str = logical_box_filter(new_str)
-        new_str, add_list, plain_txt = img_str_filter(new_str, file_name, plain_txt, pd)
+        new_str, add_list, plain_txt, img_size, top_img_path = img_str_filter(new_str, file_name, plain_txt, pd)
         if pd['project_dir'] == 'reibun':
             new_str = img_filter(new_str, pd)
         new_str = re.sub(r'<p>(<img .+?/>)</p>', r'<div class="center">\1</div>', new_str)
@@ -1054,7 +1106,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--e/matome-->', '</div>')
         new_str = new_str.replace('<!--point_i-->', '<div class="in_point"><span>ポイント</span>')
         new_str = new_str.replace('<!--e/point_i-->', '</div>')
-        new_str = new_str.replace('<ol>', '<ol class="arlist">')
+        # new_str = new_str.replace('<ol>', '<ol class="arlist">')
         new_str = new_str.replace('<div class="hidden_show"><ol class="arlist">', '<div class="hidden_show"><ol>')
         new_str = new_str.replace('<br /></p>', '</p>')
         new_str = new_str.replace('。。<br />', '。</p><p>')
@@ -1107,7 +1159,16 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--sample/e-->', '</div>')
         new_str = new_str.replace('../html_files/', '')
         new_str = new_str.replace('../../html_files/pc/', '')
-
+        dir_depth = md_file_path.replace(pd['main_dir'], '').count('/')
+        if dir_depth > 3:
+            dir_list = md_file_path.split('/')
+            over_depth = dir_depth - 2
+            add_str = '../' * over_depth
+            for dir_str in ['css', 'images', 'link', 'url', dir_list[(over_depth + 1) * -1]]:
+                new_str = new_str.replace('"../{}/'.format(dir_str), '"{}{}/'.format(add_str, dir_str))
+            new_str = new_str.replace('"../sitemap.html', '"{}sitemap.html'.format(add_str))
+            new_str = new_str.replace('<a href="../"><div id="site_title">',
+                                      '<a href="{}"><div id="site_title">'.format(add_str))
         if 'i::' in md_txt:
             t_image_l = re.findall(r'i::(.+?)\n', md_txt)
             t_image = t_image_l[0]
@@ -1125,16 +1186,18 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--description-->', description)
         new_str = new_str.replace('.md"', '.html"')
         new_str = new_str.replace('<p>%libut%</p><ul>', '<ul class="libut">')
+        new_str = new_str.replace('</section></p><section>', '</section><section>')
         # ar_str_l = re.findall(r'<article.+?</article>', new_str)
         # if ar_str_l:
         #     ar_str = ar_str_l[0]
         #     ar_str_c = ar_str.replace('<ul>', '<ul class="libut">')
         #     new_str = new_str.replace(ar_str, ar_str_c)
-        new_str = json_img_data_insert(new_str, pd)
+        new_str = json_img_data_insert(new_str, pd, img_size)
         card_br_l = re.findall(r'<span class="ar_dis">.+?</span>', new_str)
         if card_br_l:
             for card_br in card_br_l:
                 new_str = new_str.replace(card_br, card_br.replace('<br />', ''))
+        new_str = card_link_filter(new_str, cl_dic, file_name)
 
         upload_list.extend(add_list)
         upload_list.extend(pick_up_same_name_images(file_name, pd))
@@ -1194,9 +1257,10 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         with open(pj_path + '/html_files/' + pd['main_dir'] + file_name, 'w', encoding='utf-8') as g:
             g.write(new_str)
             upload_list.append(pj_path + '/html_files/' + pd['main_dir'] + file_name)
+        cl_dic[file_name] = {'title': title, 'start_str': start_str, 'img_path': top_img_path}
+        make_article_list.save_data_to_pickle(cl_dic, 'card_data', pd)
 
         add_modify_log(file_name, now.date(), category, title, pub_or_mod, pd)
-        # print(plain_txt)
         with open(md_file_path, 'w', encoding='utf-8') as j:
             j.write(plain_txt)
     return upload_list, pk_dic, title_change_id
@@ -1246,7 +1310,7 @@ def change_category_class(new_str, category, pd):
     return new_str
 
 
-def icon_filter(md_txt, pd):
+def icon_filter(md_txt, pd, md_file_path):
     if pd['project_dir'] == 'reibun':
         md_txt = reibun.main_info.reibun_icon_filter(md_txt)
     elif pd['project_dir'] == 'joshideai':
@@ -1255,6 +1319,8 @@ def icon_filter(md_txt, pd):
         md_txt = rei_site.main_info.rei_site_icon_filter(md_txt)
     elif pd['project_dir'] == 'konkatsu':
         md_txt = konkatsu.main_info.konkatsu_icon_filter(md_txt)
+    elif pd['project_dir'] == 'sfd':
+        md_txt = sfd.main_info.sfd_icon_filter(md_txt, md_file_path)
     else:
         md_txt = reibun.main_info.reibun_icon_filter(md_txt)
     return md_txt
@@ -1263,6 +1329,8 @@ def icon_filter(md_txt, pd):
 def insert_site_banner(md_txt, pd):
     if pd['project_dir'] == 'reibun':
         md_txt = reibun.main_info.reibun_insert_site_banner(md_txt)
+    if pd['project_dir'] == 'sfd':
+        md_txt = sfd.main_info.sfd_insert_site_banner(md_txt)
     elif pd['project_dir'] == 'rei_site':
         md_txt = rei_site.main_info.rei_site_insert_site_banner(md_txt)
     return md_txt
@@ -1285,16 +1353,22 @@ def breadcrumb_maker(directory, file_name, pd):
         return result
 
 
-def json_img_data_insert(long_str, pd):
+def json_img_data_insert(long_str, pd, img_size):
     img_path = pd['eyec_img']['img_path']
     height = pd['eyec_img']['height']
     width = pd['eyec_img']['width']
     if '<div class="alt_img_t">' in long_str:
         img_l = re.findall(r'<div class="alt_img_t"><img src="\.\./images/(.+?)" alt="', long_str)
+        if not img_l:
+            img_l = re.findall(r'<div class="alt_img_t"><img src="\.\./\.\./images/(.+?)" alt="', long_str)
         if img_l:
             img_path = img_l[0]
-            height = '470'
-            width = '760'
+            if img_size:
+                width = str(img_size[0])
+                height = str(img_size[1])
+            else:
+                height = '470'
+                width = '760'
     i_str = long_str.replace('<!--jd-img-path-->', img_path)
     i_str = i_str.replace('"<!--jd-height-->"', height)
     i_str = i_str.replace('"<!--jd-width-->"', width)
@@ -1331,7 +1405,9 @@ def add_modify_log(mod_file_path, now, category, title, pub_or_mod, pd):
 
 
 def img_str_filter(long_str, file_name, md_str, pd):
+    img_size = []
     add_list = []
+    top_img_path = ''
     insert_img_l = re.findall(r'<p><img.+?></p>', long_str)
     if insert_img_l:
         for img_str in insert_img_l:
@@ -1348,17 +1424,48 @@ def img_str_filter(long_str, file_name, md_str, pd):
                 img_url = img_data_l[0][1]
                 new_img_path, add_img = resize_and_rename_image(img_url, file_name, pd)
                 new_img_path = '../' + re.sub(r'^.*/images/', 'images/', new_img_path)
-                new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="760" height="470" /></div>' \
-                    .format(new_img_path, img_data_l[0][0])
+                if pd['project_dir'] in use_webp_list:
+                    width, height = get_image_size(img_url, pd)
+                    new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="{}" height="{}" ' \
+                              'loading="lazy" /></div>'.format(new_img_path, img_data_l[0][0], width, height)
+                    img_size = [width, height]
+                else:
+                    new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="760" height="470" ' \
+                              'loading="lazy" /></div>'.format(new_img_path, img_data_l[0][0])
                 long_str = long_str.replace(img_str, new_str)
                 md_str = md_str.replace(img_url, new_img_path)
                 add_list.extend(add_img)
             else:
                 img_url = img_data_l[0][1]
-                new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="760" height="470" /></div>' \
-                    .format(img_url, img_data_l[0][0])
+                if pd['project_dir'] in use_webp_list:
+                    width, height = get_image_size(img_url, pd)
+                    webp_path = img_url.replace('/art_images/', '/webp/').replace('.jpg', '.webp') \
+                        .replace('.jpeg', '.webp')
+                    # webp_all = webp_path.replace('../images/',
+                    #                              pd['project_dir'] + pd['main_dir'] + '/html_files/images/')
+                    webp_all = re.sub(r'^.*?/images/', pd['project_dir'] + pd['main_dir'] + '/html_files/images/',
+                                      webp_path)
+                    if os.path.exists(webp_all):
+                        img_url = webp_path
+                    new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="{}" height="{}" ' \
+                              'loading="lazy" /></div>'.format(img_url, img_data_l[0][0], width, height)
+                    img_size = [width, height]
+                else:
+                    new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="760" height="470" loading="lazy" />' \
+                              '</div>'.format(img_url, img_data_l[0][0])
                 long_str = long_str.replace(img_str, new_str)
-    return long_str, add_list, md_str
+            if not top_img_path:
+                top_img_path = re.sub(r'^.*/images/', '/images/', img_url)
+                top_img_path = top_img_path.replace('.webp', '-150x150.webp').replace('.jpg', '-150x150.jpg') \
+                    .replace('.jpeg', '-150x150.jpeg')
+    return long_str, add_list, md_str, img_size, top_img_path
+
+
+def get_image_size(image_url, pd):
+    image_url = pd['project_dir'] + '/html_files/' + image_url.replace('../', '')
+    im = Image.open(image_url)
+    width, height = im.size
+    return width, height
 
 
 def resize_and_rename_image(img_path, file_path, pd):
@@ -1373,13 +1480,24 @@ def resize_and_rename_image(img_path, file_path, pd):
             i += 1
             new_name = file_name + '_' + str(i) + '_gr.jpg'
         image_path = re.sub(r'^.*?insert_image/', pd['project_dir'] + '/insert_image/', img_path)
+        webp_path = img_path.replace('.jpeg', '.webp').replace('.jpg', '.webp').replace('/art_images/', '/webp/')
         img = Image.open(image_path)
-        img_gr = img.resize((760, 470))
+        if pd['project_dir'] in use_webp_list:
+            width, height = img.size
+            new_height = round(760 * height / width)
+            img_gr = img.resize((760, new_height))
+            img_gr.save(webp_path, 'webp')
+            add_img.append(webp_path)
+        else:
+            img_gr = img.resize((760, 470))
         img_gr.save(img_dir + '/' + new_name)
         add_img.append(img_dir + '/' + new_name)
         if pd['amp_flag']:
             img_gr.save('{}/html_files/amp/images/{}/'.format(pd['project_dir'], pd['ar_img_dir']) + new_name)
             add_img.append('{}/html_files/amp/images/{}/'.format(pd['project_dir'], pd['ar_img_dir']) + new_name)
+            if pd['project_dir'] in use_webp_list:
+                img_gr.save(webp_path.replace('/pc/', '/amp/'), 'webp')
+                add_img.append(webp_path.replace('/pc/', '/amp/'))
         img_gr.save(img_dir.replace('/html_files/', '/md_files/') + '/' + new_name)
         img.save(pd['project_dir'] + '/image_stock/' + file_name + '_' + str(i) + '.jpg')
         os.remove(image_path)
@@ -1391,10 +1509,12 @@ def resize_and_rename_image(img_path, file_path, pd):
 
 
 def make_thumbnail(file_name, image_path, img_dir, pd):
+    add_img = []
     amp_dir = img_dir.replace('/pc/', '/amp/')
     md_dir = img_dir.replace('/html_files/', '/md_files/')
     im = Image.open(image_path)
     w, h = im.size
+    # 大きいサムネイル作成
     cut_width = (w - h) / 2
     im_crop = im.crop((cut_width, 0, cut_width + h, h))
     im_resize = im_crop.resize((200, 200))
@@ -1402,28 +1522,45 @@ def make_thumbnail(file_name, image_path, img_dir, pd):
     if pd['amp_flag']:
         im_resize.save(amp_dir + '/' + file_name + '_thumb.jpg')
     im_resize.save(md_dir + '/' + file_name + '_thumb.jpg')
-    if h >= w // 1.618:
-        gr_h = w // 1.618
-        h_a = (h - gr_h) // 2
-        im_gr = im.crop((0, h_a, w, gr_h + h_a))
-    else:
-        gr_w = h + 1.618
-        w_a = (w - gr_w) // 2
-        im_gr = im.crop((w_a, 0, gr_w + w_a, h))
-    im_gr_r = im_gr.resize((760, 470))
-    im_gr_r.save(img_dir + '/' + file_name + '_1_gr.jpg')
-    if pd['amp_flag']:
-        im_gr_r.save(amp_dir + '/' + file_name + '_1_gr.jpg')
-    im_gr_r.save(md_dir + '/' + file_name + '_1_gr.jpg')
+    # 小さいサムネイル作成
     im_thumb = im_crop.resize((64, 64))
     im_thumb.save(img_dir + '/' + file_name + '_thumb_s.jpg')
     if pd['amp_flag']:
         im_thumb.save(amp_dir + '/' + file_name + '_thumb_s.jpg')
     im_thumb.save(md_dir + '/' + file_name + '_thumb_s.jpg')
+    # 一番上の画像のトリミング、リサイズ、保存
+    new_img_path = img_dir + '/' + file_name + '_1_gr.jpg'
+    if pd['project_dir'] in use_webp_list:
+        webp_path = new_img_path.replace('.jpeg', '.webp').replace('.jpg', '.webp').replace('/art_images/', '/webp/')
+        new_height = round(760 * h / w)
+        im_rs = im.resize((760, new_height))
+        im_rs.save(new_img_path)
+        im_rs.save(webp_path, 'webp')
+        add_img.append(webp_path)
+        if pd['amp_flag']:
+            im_resize.save(amp_dir.replace('/art_images/', '/webp/') + '/' + file_name + '_thumb.webp')
+            im_thumb.save(amp_dir.replace('/art_images/', '/webp/') + '/' + file_name + '_thumb_s.webp')
+            add_img.extend([amp_dir.replace('/art_images/', '/webp/') + '/' + file_name + '_thumb.webp',
+                            amp_dir.replace('/art_images/', '/webp/') + '/' + file_name + '_thumb_s.webp'])
+    else:
+        if h >= w // 1.618:
+            gr_h = w // 1.618
+            h_a = (h - gr_h) // 2
+            im_gr = im.crop((0, h_a, w, gr_h + h_a))
+        else:
+            gr_w = h + 1.618
+            w_a = (w - gr_w) // 2
+            im_gr = im.crop((w_a, 0, gr_w + w_a, h))
+        im_gr_r = im_gr.resize((760, 470))
+        im_gr_r.save(new_img_path)
+        if pd['amp_flag']:
+            im_gr_r.save(amp_dir + '/' + file_name + '_1_gr.jpg')
+        im_gr_r.save(md_dir + '/' + file_name + '_1_gr.jpg')
+    # 後処理
     im.save(pd['project_dir'] + '/image_stock/' + file_name + '_1.jpg')
     os.remove(image_path)
-    add_img = [img_dir + '/' + file_name + '_thumb.jpg', img_dir + '/' + file_name + '_1_gr.jpg',
-               img_dir + '/' + file_name + '_thumb_s.jpg']
+    add_img.extend([img_dir + '/' + file_name + '_thumb.jpg', img_dir + '/' + file_name + '_1_gr.jpg',
+                    img_dir + '/' + file_name + '_thumb_s.jpg'])
     if pd['amp_flag']:
         add_img.extend([amp_dir + '/' + file_name + '_thumb.jpg', amp_dir + '/' + file_name + '_1_gr.jpg',
                         amp_dir + '/' + file_name + '_thumb_s.jpg'])
@@ -1701,33 +1838,33 @@ def all_html_insert():
 
 # if __name__ == '__main__':
 #     del_main_data('goodbyedt', 359)
-    # insert_ds_link('', '')
+# insert_ds_link('', '')
 
-    # pd_dict = reibun.main_info.info_dict
-    #     main(1, pd_dict)
-    # site_shift_flag ( 0: normal, 1:no jmail )
-    # reibun_upload.files_upload(['reibun/index.html'])
-    # print(make_article_list.read_pickle_pot('modify_log'))
-    # print(make_article_list.read_pickle_pot('main_data', pd_dict))
+# pd_dict = reibun.main_info.info_dict
+#     main(1, pd_dict)
+# site_shift_flag ( 0: normal, 1:no jmail )
+# reibun_upload.files_upload(['reibun/index.html'])
+# print(make_article_list.read_pickle_pot('modify_log'))
+# print(make_article_list.read_pickle_pot('main_data', pd_dict))
 
-    # print(make_article_list.read_pickle_pot('title_log'))
+# print(make_article_list.read_pickle_pot('title_log'))
 
-    # insert_main_length()
-    # import_from_markdown(['md_files/pc/qa/q3_test.md'])
-    # t_l = {0: ['']}
-    # print(make_all_side_bar(t_l))
-    # insert_to_index_page(t_l)
-    # xml_site_map_maker(t_l)
-    # reibun_upload.tab_and_line_feed_remover('reibun/index.html')
-    # print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
-    # print([x for x in test_l if x[1] == test_l[-1][1]])
-    # print(str(datetime.datetime.now())[:-7])
-    # print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
+# insert_main_length()
+# import_from_markdown(['md_files/pc/qa/q3_test.md'])
+# t_l = {0: ['']}
+# print(make_all_side_bar(t_l))
+# insert_to_index_page(t_l)
+# xml_site_map_maker(t_l)
+# reibun_upload.tab_and_line_feed_remover('reibun/index.html')
+# print(markdown.markdown('## h2\n[](あああああ)\n<!--あああああ-->'))
+# print([x for x in test_l if x[1] == test_l[-1][1]])
+# print(str(datetime.datetime.now())[:-7])
+# print(css_optimize('reibun/index.html', 'reibun/pc/css/top1.css'))
 
-    # make_rss([])
-    # reibun_upload.files_upload(['reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml'])
-    # rpd = rei_site.main_info.info_dict
-    # make_html_dir(rpd)
-    # all_html_insert()
-    # first_make_html(rpd)
-    # insert_to_temp(rpd)
+# make_rss([])
+# reibun_upload.files_upload(['reibun/atom.xml', 'reibun/rss10.xml', 'reibun/rss20.xml'])
+# rpd = rei_site.main_info.info_dict
+# make_html_dir(rpd)
+# all_html_insert()
+# first_make_html(rpd)
+# insert_to_temp(rpd)
