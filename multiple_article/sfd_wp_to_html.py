@@ -1,5 +1,6 @@
 # import pprint
 import glob
+import pickle
 import re
 import urllib.request
 import os
@@ -356,10 +357,42 @@ def change_webp_by_dir(target_dir):
         change_webp_image(im_path)
 
 
+def make_sq_webp_img(origin_path, move_dir):
+    im = Image.open(origin_path)
+    width, height = im.size
+    if width == 150 and height == 150:
+        webp_path = move_dir + re.sub(r'^.*/', '', origin_path).replace('.jpeg', '.webp').replace('.jpg', '.webp')
+        im.save(webp_path, 'webp')
+    else:
+        print('error!! : {}'.format(origin_path))
+
+
+def convert_all_sq_image_to_webp(target_dir, project_dir):
+    with open(project_dir + '/pickle_pot/card_data.pkl', 'rb') as p:
+        cl_dic = pickle.load(p)
+    # print(cl_dic)
+    img_list = [re.sub(r'^.*/', '', cl_dic[x]['img_path']) for x in cl_dic if cl_dic[x]['img_path']]
+    img_list = [re.sub(r'-\d*x\d*-150x150\.', r'-150x150.', x).replace('.webp', '.jpg') for x in img_list]
+    # print(len(img_list))
+    # print(img_list)
+    sq_img_list = glob.glob(target_dir + '/**/*-150x150.*', recursive=True)
+    sq_name_list = [re.sub(r'^.*/', '', x) for x in sq_img_list]
+    sq_name_dict = {re.sub(r'^.*/', '', x): x for x in sq_img_list}
+    # print(sq_name_dict)
+    # use_img_list = [x for x in img_list if x in sq_name_list]
+    for img in img_list:
+        make_sq_webp_img(sq_name_dict[img], 'sfd/html_files/images/sq/')
+    # print(no_img_list)
+    # print(len(no_img_list))
+    # print(len(sq_img_list))
+
+
 if __name__ == '__main__':
     # make_all_md_file('sfd/all-urls.csv', stop_flag=False, md_remake_flag=False)
     # change_webp_image('sfd/md_files/images/art_images/woman_in_bed40.jpg')
-    change_webp_by_dir('sfd/html_files/images/art_images')
+    # change_webp_by_dir('sfd/html_files/images/art_images')
+    convert_all_sq_image_to_webp('/Users/tnakatake/会社データ/change_server20220324/wp_down/sefuredo/wp-content/uploads',
+                                 'sfd')
     # read_article_from_sfd_page('https://www.sefure-do.com/friend-with-benefits/',
     #                            stop_flag=False, md_remake_flag=True)
     # pprint.pprint(get_all_url_list('sfd/all-urls.csv'))

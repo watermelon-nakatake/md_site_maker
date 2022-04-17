@@ -793,6 +793,7 @@ def make_start_str(md_txt):
     start_str = re.sub(r'!\[.*?]\(.*?\)', '', md_txt)
     start_str = re.sub(r'<!--.*?-->', '', start_str)
     start_str = start_str.replace('\n', '')
+    start_str = start_str.replace('*', '')
     start_str = start_str[:95] + '...'
     return start_str
 
@@ -815,7 +816,7 @@ def html_path_filter(html_path, this_path):
 
 
 def card_link_filter(html_str, cl_dic, this_path):
-    base_str = '<div class="cd_link" id="cd-link"><a href="<!--url-->"><span class="cd_inner"><img src="<!--img-->" ' \
+    base_str = '<div class="cd_link"><a href="<!--url-->"><span class="cd_inner"><img src="<!--img-->" ' \
                'alt="<!--title-->" loading="lazy" width="150" height="150"/><span class="cd_r"><span class="cd_title">' \
                '<!--title--></span><span class="cd_des mob_none"><!--des--></span></span></span></a></div>'
     if '">card_link</a>' in html_str:
@@ -826,9 +827,10 @@ def card_link_filter(html_str, cl_dic, this_path):
             nml_path = html_path_filter(html_path, this_path)
             if nml_path in cl_dic:
                 cl_data = cl_dic[nml_path]
-                img_path = ('../' * (this_path.count('/') - 1)) + cl_data['img_path']
+                img_path = ('../' * this_path.count('/')) + cl_data['img_path'].replace('.jpg', '.webp').replace(
+                    '.jpeg', '.webp').replace('/art_images/', '/sq/')
                 ins_str = base_str.replace('<!--url-->', html_path).replace('<!--img-->', img_path).replace(
-                    '<!--title-->', cl_data['title'])
+                    '<!--title-->', cl_data['title']).replace('<!--des-->', cl_data['start_str'])
                 html_str = html_str.replace(cd_str, ins_str)
             else:
                 print('error!! : no cl_data => {}'.format(html_path))
@@ -1455,7 +1457,7 @@ def img_str_filter(long_str, file_name, md_str, pd):
                               '</div>'.format(img_url, img_data_l[0][0])
                 long_str = long_str.replace(img_str, new_str)
             if not top_img_path:
-                top_img_path = re.sub(r'^.*/images/', '/images/', img_url)
+                top_img_path = re.sub(r'^.*/images/', 'images/', img_url)
                 top_img_path = top_img_path.replace('.webp', '-150x150.webp').replace('.jpg', '-150x150.jpg') \
                     .replace('.jpeg', '-150x150.jpeg')
     return long_str, add_list, md_str, img_size, top_img_path
