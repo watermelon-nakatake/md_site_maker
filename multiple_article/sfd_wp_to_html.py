@@ -1,6 +1,9 @@
 # import pprint
 import glob
+import pathlib
 import pickle
+import pprint
+import random
 import re
 import urllib.request
 import os
@@ -8,6 +11,7 @@ import csv
 from PIL import Image
 from bs4 import BeautifulSoup
 import requests
+import words_dict
 
 ok_div = ['<div class="maruck">', '<div class="fr2">', '<div class="alt_img_t">', '<div class="icon">',
           '<div class="fl1">', '<div class="lm_b lm_2">', '<div class="rm_b rm_2">']
@@ -16,8 +20,8 @@ ds_list = ['ワクワクメール', 'PCMAX', 'ハッピーメール', 'Jメー�
 
 def read_article_from_sfd_page(page_url, stop_flag, md_remake_flag):
     tag_l = []
-    html_path = re.sub(r'https://www\.sefure-do\.com/(.*)/', r'sfd/wp_html/\1/index.html', page_url)
-    md_path = html_path.replace('/wp_html/', '/new_md/').replace('/index.html', '.md')
+    html_path = re.sub(r'https://www\.sefure-do\.com/(.*)/', r'sfd/del_html/\1/index.html', page_url)
+    md_path = html_path.replace('/del_html/', '/del_md/').replace('/index.html', '.md')
     if not md_remake_flag and os.path.exists(md_path):
         pass
     else:
@@ -64,7 +68,7 @@ def read_article_from_sfd_page(page_url, stop_flag, md_remake_flag):
         md_head = 't::{}\nd::{}\nn::{}\nm::{}'.format(title_text, des_str, 1, mod_time.replace('+0900', ''))
         md_f = md_head + '\n\n' + md_str
         print(md_f)
-        md_path = html_path.replace('/wp_html/', '/new_md/').replace('/index.html', '.md')
+        md_path = html_path.replace('/del_html/', '/del_md/').replace('/index.html', '.md')
         with open(md_path, 'w', encoding='utf-8') as m:
             m.write(md_f)
     return tag_l
@@ -307,7 +311,7 @@ def html_to_markdown_filter(main_str, page_url, soup):
 
 
 def image_download(img_url):
-    save_dir = 'sfd/new_md/'
+    save_dir = 'sfd/del_md/'
     save_path = save_dir + 'images/art_images/' + re.sub(r'^.+/', '', img_url)
     if not os.path.exists(save_path):
         print('download: {}'.format(save_path))
@@ -326,15 +330,38 @@ def get_all_url_list(csv_path):
 
 
 def make_all_md_file(all_url_csv, stop_flag, md_remake_flag):
+    no_display_list = ['https://www.sefure-do.com/friend-with-benefits/boys-love/',
+                       'https://www.sefure-do.com/friend-with-benefits/idol/',
+                       'https://www.sefure-do.com/friend-with-benefits/gal/',
+                       'https://www.sefure-do.com/friend-with-benefits/glamorous-girl/',
+                       'https://www.sefure-do.com/friend-with-benefits/flight-attendant/',
+                       'https://www.sefure-do.com/friend-with-benefits/second-virgin/',
+                       'https://www.sefure-do.com/friend-with-benefits/prostitution/',
+                       'https://www.sefure-do.com/friend-with-benefits/lolita/',
+                       'https://www.sefure-do.com/friend-with-benefits/childcare-worker/',
+                       'https://www.sefure-do.com/friend-with-benefits/sales-lady/',
+                       'https://www.sefure-do.com/friend-with-benefits/area-bbs/11-saitama/',
+                       'https://www.sefure-do.com/friend-with-benefits/taking-children/',
+                       'https://www.sefure-do.com/friend-with-benefits/legal-lolita/',
+                       'https://www.sefure-do.com/friend-with-benefits/plump-and-ugly/',
+                       'https://www.sefure-do.com/friend-with-benefits/erotic/',
+                       'https://www.sefure-do.com/friend-with-benefits/amateur/',
+                       'https://www.sefure-do.com/friend-with-benefits/area-bbs/08-ibaraki/',
+                       'https://www.sefure-do.com/friend-with-benefits/area-bbs/02-aomori/']
     no_use_url = ['https://www.sefure-do.com/sitemap/']
     ng_tag = []
-    url_list = get_all_url_list(all_url_csv)
-    url_list = [x for x in url_list if x not in no_use_url]
+    t_list = get_all_url_list(all_url_csv)
+    a_list = get_all_url_list('sfd/all-urls.csv')
+    url_list = [x for x in t_list if x not in a_list]
+    url_list = [x for x in url_list if x not in no_use_url and '?' not in x and '/top/' not in x]
+    print(url_list)
+    print(len(url_list))
+    # return
     for page_url in url_list:
         tag_l = read_article_from_sfd_page(page_url, stop_flag, md_remake_flag)
         if tag_l:
             ng_tag.extend(tag_l)
-    print(list(set(ng_tag)))
+    # print(list(set(ng_tag)))
 
 
 def change_webp_image(img_path):
@@ -387,12 +414,219 @@ def convert_all_sq_image_to_webp(target_dir, project_dir):
     # print(len(sq_img_list))
 
 
+def all_jpg_to_webp(img_dir):
+    img_files = glob.glob(img_dir + '/**.jpeg')
+    print(img_files)
+    img_num = 1
+    for img_path in img_files:
+        im = Image.open(img_path)
+        width, height = im.size
+        if width == 150 and height == 150:
+            webp_path = img_dir + '/rdm_sq' + str(img_num).zfill(2) + '.webp'
+            im.save(webp_path, 'webp')
+            img_num += 1
+        else:
+            print('error!! : {}'.format(img_path))
+
+
+def insert_pub_date():
+    html_list = glob.glob('sfd/wp_html/**/**.html', recursive=True)
+    for html_path in html_list:
+        if 'sitemap' not in html_path:
+            print(html_path)
+            pub_date = ''
+            html_p = pathlib.Path(html_path)
+            html_p.open()
+            h_str = html_p.read_text()
+            meta_l = re.findall(r'<meta .*?>', h_str)
+            for meta in meta_l:
+                if 'property="article:published_time"' in meta:
+                    pub_date = re.sub(r'^.+content="(.+?)\+\d\d:\d\d".*$', r'\1', meta)
+                    print(pub_date)
+            if pub_date:
+                md_path = html_path.replace('/wp_html/', '/md_files/').replace('/index.html', '.md')
+                m = pathlib.Path(md_path)
+                m.open()
+                md_str = m.read_text()
+                if 'p::' not in md_str:
+                    md_str = re.sub(r'(\nn::\d*?)\n', r'\1\np::' + pub_date + '\n', md_str)
+                    print(md_str)
+                    m.open(mode='w')
+                    m.write_text(md_str)
+
+
+def hide_no_use_page():
+    no_use_list = ['friend-with-benefits/boys-love/',
+                   'friend-with-benefits/idol/',
+                   'friend-with-benefits/gal/',
+                   'friend-with-benefits/glamorous-girl/',
+                   'friend-with-benefits/flight-attendant/',
+                   'friend-with-benefits/second-virgin/',
+                   'friend-with-benefits/prostitution/',
+                   'friend-with-benefits/lolita/',
+                   'friend-with-benefits/childcare-worker/',
+                   'friend-with-benefits/sales-lady/',
+                   'friend-with-benefits/area-bbs/11-saitama/',
+                   'friend-with-benefits/taking-children/',
+                   'friend-with-benefits/legal-lolita/',
+                   'friend-with-benefits/plump-and-ugly/',
+                   'friend-with-benefits/erotic/',
+                   'friend-with-benefits/amateur/',
+                   'friend-with-benefits/area-bbs/08-ibaraki/',
+                   'friend-with-benefits/area-bbs/02-aomori/']
+    no_use_md = [re.sub(r'^.*/(.+)/', r'\1', x) + '.md' for x in no_use_list]
+    print(no_use_md)
+    # return
+    md_list = glob.glob('sfd/md_files/**/**.md', recursive=True)
+    for md_path in md_list:
+        if 'sitemap' not in md_path:
+            # print(md_path)
+            md_p = pathlib.Path(md_path)
+            md_p.open()
+            m_str_p = md_p.read_text()
+            m_str = m_str_p
+            a_str_l = re.findall(r'\[.*?]\(.*?\)', m_str)
+            for a_str in a_str_l:
+                a_url = re.findall(r']\((.*?)\)', a_str)
+                if a_url:
+                    url = a_url[0]
+                    for nu in no_use_md:
+                        if nu in url:
+                            print('no use : {} in {}'.format(nu, md_path))
+                            a_text_l = re.findall(r'\[(.*?)]', a_str)
+                            if a_text_l:
+                                a_text = a_text_l[0]
+                                ins_str = a_text + '<!--dead_link_' + a_str + '-->'
+                                print(ins_str)
+                                m_str = m_str.replace(a_str, ins_str)
+                                # print(m_str)
+                            break
+            if m_str != m_str_p:
+                md_p.open(mode='w')
+                md_p.write_text(m_str)
+
+
+def duplicate_pref_filter():
+    pref_dict = {
+        x: '[{}](area-bbs/{}-{}.md)'.format(words_dict.area_link_list[x]['ari'], str(x).zfill(2),
+                                            words_dict.area_link_list[x]['alpha']) for x in words_dict.area_link_list}
+    pref_list = [x for x in pref_dict]
+    for rem in [2, 8]:
+        pref_list.remove(rem)
+    # print(pref_list)
+    md_list = glob.glob('sfd/md_files/**/**.md', recursive=True)
+    for md_path in md_list:
+        if 'sitemap' not in md_path:
+            md_p = pathlib.Path(md_path)
+            md_p.open()
+            m_str = md_p.read_text()
+            m_str_e = m_str
+            a_str_l = re.findall(r'\[[^]]*?]\([^)]*?\)\S{1,2}\[.*?]\(.*?\)', m_str)
+            for a_str in a_str_l:
+                a_inner_l = re.findall(r'(\[[^]]*?]\([^)]*?\))(\S{1,2})(\[.*?]\(.*?\))', a_str)
+                if a_inner_l[0][0] == a_inner_l[0][2]:
+                    print(md_path)
+                    print(a_inner_l)
+                    if 'area-bbs/' in a_inner_l[0][2]:
+                        ch_id = random.choice(pref_list)
+                        while str(ch_id).zfill(2) in a_inner_l[0][2] or str(ch_id).zfill(2) in md_path:
+                            ch_id = random.choice(pref_list)
+                        ins_str = a_inner_l[0][0] + a_inner_l[0][1] + pref_dict[ch_id]
+                        print(md_path)
+                        print(a_str)
+                        print(ins_str)
+                        print('')
+                        m_str_e = m_str_e.replace(a_str, ins_str)
+                    elif '/url/' in a_inner_l[0][2]:
+                        if 'pcmax' not in a_inner_l[0][0]:
+                            ins_s = '[PCMAX](../url/pcmax)'
+                        else:
+                            ins_s = '[ハッピーメール](../url/happymail)'
+                        ins_str = a_inner_l[0][0] + a_inner_l[0][1] + ins_s
+                        print(ins_str)
+                        print('')
+                        m_str_e = m_str_e.replace(a_str, ins_str)
+            # if m_str_e != m_str:
+            #     md_p.open(mode='w')
+            #     md_p.write_text(m_str_e)
+
+
+def correct_wrong_dead_link_comment():
+    md_list = glob.glob('sfd/md_files/**/**.md', recursive=True)
+    for md_path in md_list:
+        if 'sitemap' not in md_path:
+            md_p = pathlib.Path(md_path)
+            md_p.open()
+            m_str = md_p.read_text()
+            m_str_e = m_str
+            dl_l = re.findall(r'<!--dead_link_.+?<!--dead_link_\[.+?]\(.+?\)-->-->', m_str_e)
+            if dl_l:
+                print(md_path)
+                # print(dl_l)
+                for dl in dl_l:
+                    print(dl)
+                    u_count = dl.count('_')
+                    k_count = dl.count('[')
+                    e_count = dl.count('>')
+                    # print(count)
+                    if u_count == 4 and k_count == 1 and e_count == 2:
+                        ed_str = re.sub(r'^<!--dead_link_.+?(<!--dead_link_\[.+?]\(.+?\)-->)-->$', r'\1', dl)
+                        if '(/' in ed_str:
+                            ed_str = ed_str.replace('(/', '(')
+                        print(ed_str)
+                        m_str_e = m_str_e.replace(dl, ed_str)
+                    else:
+                        print('error!!')
+                print('')
+                # if m_str_e != m_str:
+                #     md_p.open(mode='w')
+                #     md_p.write_text(m_str_e)
+
+
+def correct_wrong_pref_link():
+    pref_dict = {
+        x: '[{}](area-bbs/{}-{}.md)'.format(words_dict.area_link_list[x]['ari'], str(x).zfill(2),
+                                            words_dict.area_link_list[x]['alpha']) for x in words_dict.area_link_list}
+    # pprint.pprint(pref_dict)
+    # wrong_list = [[pref_dict[x].replace('area-bbs/0', 'area-bbs/'), pref_dict[x]] for x in pref_dict if x < 10]
+    # print(wrong_list)
+    wrong_list = [['[北海道](area-bbs/1-hokkaido.md)', '[北海道](area-bbs/01-hokkaido.md)'],
+                  ['[青森県](area-bbs/2-aomori.md)', '青森県<!--dead_link_[青森県](area-bbs/02-aomori.md)-->'],
+                  ['[岩手県](area-bbs/3-iwate.md)', '[岩手県](area-bbs/03-iwate.md)'],
+                  ['[宮城県](area-bbs/4-miyagi.md)', '[宮城県](area-bbs/04-miyagi.md)'],
+                  ['[秋田県](area-bbs/5-akita.md)', '[秋田県](area-bbs/05-akita.md)'],
+                  ['[山形県](area-bbs/6-yamagata.md)', '[山形県](area-bbs/06-yamagata.md)'],
+                  ['[福島県](area-bbs/7-fukushima.md)', '[福島県](area-bbs/07-fukushima.md)'],
+                  ['[茨城県](area-bbs/8-ibaraki.md)', '茨城県<!--dead_link_[茨城県](area-bbs/08-ibaraki.md)-->'],
+                  ['[栃木県](area-bbs/9-tochigi.md)', '[栃木県](area-bbs/09-tochigi.md)']]
+    md_list = glob.glob('sfd/md_files/**/**.md', recursive=True)
+    for md_path in md_list:
+        if 'sitemap' not in md_path:
+            md_p = pathlib.Path(md_path)
+            md_p.open()
+            m_str = md_p.read_text()
+            m_str_e = m_str
+            for wa in wrong_list:
+                if wa[0] in m_str_e:
+                    m_str_e = m_str_e.replace(wa[0], wa[1])
+            if m_str_e != m_str:
+                print(m_str_e)
+                print('\n')
+                # md_p.open(mode='w')
+                # md_p.write_text(m_str_e)
+
+
 if __name__ == '__main__':
-    # make_all_md_file('sfd/all-urls.csv', stop_flag=False, md_remake_flag=False)
+    correct_wrong_pref_link()
+    # hide_no_use_page()
+    # duplicate_pref_filter()
+    # insert_pub_date()
+    # make_all_md_file('sfd/true-all.csv', stop_flag=False, md_remake_flag=False)
     # change_webp_image('sfd/md_files/images/art_images/woman_in_bed40.jpg')
     # change_webp_by_dir('sfd/html_files/images/art_images')
-    convert_all_sq_image_to_webp('/Users/tnakatake/会社データ/change_server20220324/wp_down/sefuredo/wp-content/uploads',
-                                 'sfd')
+    # convert_all_sq_image_to_webp('/Users/tnakatake/会社データ/change_server20220324/wp_down/sefuredo/wp-content/uploads',
+    #                              'sfd')
+    # all_jpg_to_webp('/Users/tnakatake/images/sex/sqr')
     # read_article_from_sfd_page('https://www.sefure-do.com/friend-with-benefits/',
     #                            stop_flag=False, md_remake_flag=True)
     # pprint.pprint(get_all_url_list('sfd/all-urls.csv'))

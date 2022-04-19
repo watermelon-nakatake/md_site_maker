@@ -35,5 +35,7 @@ def main(project_dir):
 
 if __name__ == '__main__':
     main('sfd')
-
+    # with open('sfd/pickle_pot/card_data.pkl', 'rb') as f:
+    #     data = pickle.load(f)
+    # pprint.pprint(data)
 

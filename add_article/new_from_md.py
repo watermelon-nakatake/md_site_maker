@@ -25,6 +25,8 @@ import konkatsu.main_info
 # import rei_site.main_info
 no_up_page = ['mailsample/md_files/index.md']
 use_webp_list = ['sfd']
+random_sq_img = ['rdm_sq01.webp', 'rdm_sq02.webp', 'rdm_sq03.webp', 'rdm_sq04.webp', 'rdm_sq05.webp',
+                 'rdm_sq06.webp', 'rdm_sq07.webp', 'rdm_sq08.webp', 'rdm_sq09.webp', 'rdm_sq10.webp']
 
 
 def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_flag, fixed_mod_date):
@@ -52,8 +54,9 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         # print(mod_list)
     else:
         mod_list, last_mod_time = pick_up_mod_md_files(pd)
-    print('modify list :')
-    print(mod_list)
+    if not first_time_flag:
+        print('modify list :')
+        print(mod_list)
     mod_list = remove_no_up_page(mod_list)
     upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag,
                                                                 first_time_flag, fixed_mod_date)
@@ -64,7 +67,8 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
         side_bar_dic = make_all_side_bar(pk_dic, pd)
         ad_side_bar_dic = {}
     # print('upload_list : {}'.format(upload_list))
-    print('title_change_id : {}'.format(title_change_id))
+    if not first_time_flag:
+        print('title_change_id : {}'.format(title_change_id))
     if pd['project_dir'] == 'shoshin':
         shoshin_finish(pk_dic, upload_list, pd)
     else:
@@ -501,9 +505,13 @@ def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad
         else:
             t_side_bar_dic = side_bar_dic
         if '<!--no_change-->' not in long_str:
+            if '/reibun/' not in html_path and html_path.count('/') > 3:
+                file_depth = html_path.count('/') - 3
+            else:
+                file_depth = 0
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             category = re.findall(r'<!--category_(.+?)-->', long_str)[0]
-            long_str = insert_sidebar_to_str(long_str, t_side_bar_dic, category, insert_cat, pd)
+            long_str = insert_sidebar_to_str(long_str, t_side_bar_dic, category, insert_cat, pd, file_depth)
             long_str = modify_relation_list(long_str, title_change_id, pk_dic)
             with open(html_path, 'w', encoding='utf-8') as g:
                 g.write(long_str)
@@ -511,10 +519,12 @@ def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad
     return change_files
 
 
-def insert_sidebar_to_str(long_str, side_bar_dic, category, insert_cat, pd):
+def insert_sidebar_to_str(long_str, side_bar_dic, category, insert_cat, pd, file_depth):
     if 'pop' in insert_cat:
         if category == 'top':
             pop_str = side_bar_dic['pop'].replace('"../', '"')
+        elif file_depth:
+            pop_str = side_bar_dic['pop'].replace('"../', '"../' + ('../' * file_depth))
         else:
             pop_str = side_bar_dic['pop']
         long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>', '"sbh">人気記事</div><ul>' + pop_str + '</ul></div>',
@@ -522,12 +532,16 @@ def insert_sidebar_to_str(long_str, side_bar_dic, category, insert_cat, pd):
     if 'important' in insert_cat:
         if category == 'top':
             imp_str = side_bar_dic['important'].replace('"../', '"')
+        elif file_depth:
+            imp_str = side_bar_dic['important'].replace('"../', '"../' + ('../' * file_depth))
         else:
             imp_str = side_bar_dic['important']
         long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>', '"sbh">重要記事</div><ul>' + imp_str + '</ul></div>',
                           long_str)
     if category == 'top':
         new_str = side_bar_dic['new'].replace('"../', '"')
+    elif file_depth:
+        new_str = side_bar_dic['new'].replace('"../', '"../' + ('../' * file_depth))
     else:
         new_str = side_bar_dic['new']
     long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
@@ -551,16 +565,36 @@ def insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic):
                 t_side_bar_dic = side_bar_dic
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             category = re.findall(r'<!--category_(.+?)-->', long_str)[0]
-            long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
-                              '"sbh">人気記事</div><ul>' + t_side_bar_dic['pop'] + '</ul></div>', long_str)
-            long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
-                              '"sbh">重要記事</div><ul>' + t_side_bar_dic['important'] + '</ul></div>', long_str)
-            long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
-                              '"sbh">最近の更新記事</div><ul>' + t_side_bar_dic['new'] + '</ul></div>', long_str)
-            if category in pd['category_name']:
-                long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
-                                  '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][0]
-                                  + '</div><ul>' + t_side_bar_dic[category] + '</ul></div>', long_str)
+            if '/reibun/' in r_file and r_file.count('/') <= 3:
+                long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
+                                  '"sbh">人気記事</div><ul>' + t_side_bar_dic['pop'] + '</ul></div>', long_str)
+                long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
+                                  '"sbh">重要記事</div><ul>' + t_side_bar_dic['important'] + '</ul></div>', long_str)
+                long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
+                                  '"sbh">最近の更新記事</div><ul>' + t_side_bar_dic['new'] + '</ul></div>', long_str)
+                if category in pd['category_name']:
+                    long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
+                                      '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][0]
+                                      + '</div><ul>' + t_side_bar_dic[category] + '</ul></div>', long_str)
+            else:
+                plus_str = '../' * (r_file.count('/') - 3)
+                long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
+                                  '"sbh">人気記事</div><ul>' + t_side_bar_dic['pop'].replace('"../',
+                                                                                         '"../' + plus_str) + '</ul></div>',
+                                  long_str)
+                long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
+                                  '"sbh">重要記事</div><ul>' + t_side_bar_dic['important'].replace('"../',
+                                                                                               '"../' + plus_str) + '</ul></div>',
+                                  long_str)
+                long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
+                                  '"sbh">最近の更新記事</div><ul>' + t_side_bar_dic['new'].replace('"../',
+                                                                                            '"../' + plus_str) + '</ul></div>',
+                                  long_str)
+                if category in pd['category_name']:
+                    long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
+                                      '<div class="leftnav"><div class="sbh cat-i">' + pd['category_name'][category][
+                                          0].replace('"../', '"../' + plus_str)
+                                      + '</div><ul>' + t_side_bar_dic[category] + '</ul></div>', long_str)
             with open(r_file, 'w', encoding='utf-8') as g:
                 g.write(long_str)
 
@@ -791,7 +825,7 @@ def short_cut_filter(long_str, pd, md_file_path):
 
 def make_start_str(md_txt):
     start_str = re.sub(r'!\[.*?]\(.*?\)', '', md_txt)
-    start_str = re.sub(r'<!--.*?-->', '', start_str)
+    start_str = re.sub(r'<.*?>', '', start_str)
     start_str = start_str.replace('\n', '')
     start_str = start_str.replace('*', '')
     start_str = start_str[:95] + '...'
@@ -799,6 +833,10 @@ def make_start_str(md_txt):
 
 
 def html_path_filter(html_path, this_path):
+    if 'https://' in html_path or 'http://' in html_path and 'sefure-do.com' in html_path:
+        html_path = re.sub(r'^.*sefure-do\.com', '', html_path)
+        html_path = '../' * this_path.count('/') + html_path
+        html_path = html_path.replace('//', '/')
     if not html_path.endswith('.html'):
         if not html_path.endswith('/'):
             html_path = html_path + '/index.html'
@@ -816,6 +854,8 @@ def html_path_filter(html_path, this_path):
 
 
 def card_link_filter(html_str, cl_dic, this_path):
+    random.shuffle(random_sq_img)
+    rdm_num = 0
     base_str = '<div class="cd_link"><a href="<!--url-->"><span class="cd_inner"><img src="<!--img-->" ' \
                'alt="<!--title-->" loading="lazy" width="150" height="150"/><span class="cd_r"><span class="cd_title">' \
                '<!--title--></span><span class="cd_des mob_none"><!--des--></span></span></span></a></div>'
@@ -827,14 +867,54 @@ def card_link_filter(html_str, cl_dic, this_path):
             nml_path = html_path_filter(html_path, this_path)
             if nml_path in cl_dic:
                 cl_data = cl_dic[nml_path]
-                img_path = ('../' * this_path.count('/')) + cl_data['img_path'].replace('.jpg', '.webp').replace(
-                    '.jpeg', '.webp').replace('/art_images/', '/sq/')
+                if not cl_data['img_path']:
+                    img_path = ('../' * this_path.count('/')) + 'images/sq/' + random_sq_img[rdm_num]
+                    rdm_num += 1
+                    if rdm_num >= len(random_sq_img):
+                        rdm_num = 0
+                else:
+                    img_path = ('../' * this_path.count('/')) + cl_data['img_path'].replace('.jpg', '.webp').replace(
+                        '.jpeg', '.webp').replace('/art_images/', '/sq/').replace('/webp/', '/sq/')
                 ins_str = base_str.replace('<!--url-->', html_path).replace('<!--img-->', img_path).replace(
                     '<!--title-->', cl_data['title']).replace('<!--des-->', cl_data['start_str'])
                 html_str = html_str.replace(cd_str, ins_str)
             else:
                 print('error!! : no cl_data => {}'.format(html_path))
+                print(nml_path)
     return html_str
+
+
+def sfd_relation_list_maker(md_file_path, cl_dic):
+    result_str = ''
+    if not cl_dic:
+        return result_str
+    random.shuffle(random_sq_img)
+    rdm_num = 0
+    base_str = '<li><a href="<!--url-->"><span class="cd_inner"><img src="<!--img-->" ' \
+               'alt="<!--title-->" loading="lazy" width="150" height="150"/><span class="cd_r"><span class="cd_title">' \
+               '<!--title--></span><span class="cd_des mob_none"><!--des--></span></span></span></a></li>'
+    use_list = []
+    this_html_path = re.sub(r'^.*/md_files/', '', md_file_path).replace('.md', '.html')
+    list_len = random.choice([5, 6, 6, 7, 7, 8])
+    cl_list = [x for x in cl_dic]
+    while len(use_list) <= list_len:
+        use_page = random.choice(cl_list)
+        if use_page not in use_list and use_page != this_html_path:
+            use_list.append(use_page)
+            cl_data = cl_dic[use_page]
+            if not cl_data['img_path']:
+                img_path = ('../' * (md_file_path.count('/') - 2)) + 'images/sq/' + random_sq_img[rdm_num]
+                rdm_num += 1
+                if rdm_num >= len(random_sq_img):
+                    rdm_num = 0
+            else:
+                img_path = ('../' * (md_file_path.count('/') - 2)) + cl_data['img_path'].replace('.jpg', '.webp').replace(
+                    '.jpeg', '.webp').replace('/art_images/', '/sq/').replace('/webp/', '/sq/')
+            html_path = ('../' * (md_file_path.count('/') - 2)) + use_page
+            ins_str = base_str.replace('<!--url-->', html_path).replace('<!--img-->', img_path).replace(
+                '<!--title-->', cl_data['title']).replace('<!--des-->', cl_data['start_str'])
+            result_str += ins_str
+    return result_str
 
 
 def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time_flag, fixed_mod_date):
@@ -871,6 +951,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         cl_dic = {}
     # print(make_article_list.read_pickle_pot('main_data', pd))
     # return
+    if 'sfd/md_files/index.md' in md_file_list:
+        md_file_list.remove('sfd/md_files/index.md')
     for md_file_path in md_file_list:
         # print('start : ' + md_file_path)
         file_name = md_file_path.replace(pj_path + '/md_files/' + pd['main_dir'], '').replace('.md', '.html')
@@ -882,11 +964,14 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
         if pd['project_dir'] != 'reibun' and "relation_list = '" in plain_txt:
             re_str = re.findall(r"relation_list = '(.*?)'", plain_txt)[0]
+        elif pd['project_dir'] == 'sfd':
+            re_str = sfd_relation_list_maker(md_file_path, cl_dic)
         else:
             re_str = ''
         # plain_txt = insert_ds_link(plain_txt, pd)
         md_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
         md_txt = re.sub(r'<!--sw.*?-->', '', md_txt)
+        md_txt = re.sub(r'<!--dead_link_.*?-->', '', md_txt)
         # print(md_txt)
         description = re.findall(r'd::(.*?)\n', md_txt)[0]
         if 'p::' in md_txt:
@@ -896,6 +981,9 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                 pub_date = fixed_mod_date
             else:
                 pub_date = ''
+        # if 'm::' in md_txt:
+        #     mod_date = re.findall(r'm::(.*?)\n', md_txt)[0]
+
         if 'l_path = ::' in md_txt:
             keyword_str = re.findall(r'k::(.*?)\n', md_txt)[0]
             if '&' in keyword_str:
@@ -975,6 +1063,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                                 md_txt = md_txt.replace(arlist, ar_re)
             md_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', md_txt)
             md_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-b-->\n\n\n\1\n\n<!--e/arlist_b-->', md_txt)
+            
+        if '%orlist' in md_txt:
+            md_txt = re.sub(r'%orlist%\n([\s\S]*?)\n\n', r'<!--orlist-->\n\n\n\1\n\n<!--e/orlist-->', md_txt)
+            md_txt = re.sub(r'%orlist_b%\n([\s\S]*?)\n\n', r'<!--orlist-b-->\n\n\n\1\n\n<!--e/orlist_b-->', md_txt)
+            
         md_txt = insert_site_banner(md_txt, pd)
         if '%kanren%' in md_txt:
             md_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n',
@@ -991,6 +1084,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
 
         md_txt = md_txt.replace('%sample%', '<!--sample/s-->')
         md_txt = md_txt.replace('%sample/e%', '<!--sample/e-->')
+        md_txt = md_txt.replace('(..)', '(../)')
         md_txt = mail_sample_replace(md_txt)
         md_txt = strong_insert_filter(md_txt)
         # card挿入
@@ -1008,6 +1102,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             md_txt = re.sub(r'e::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'a::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'p::.*?\n', '\n', md_txt)
+            md_txt = re.sub(r'm::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'^[a-zA-Z]::.*?\n', '\n', md_txt)
             md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)
@@ -1098,6 +1193,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--btnli-->', '<div class="btnli">')
         new_str = new_str.replace('<!--e/btnli-->', '</div>')
         new_str = new_str.replace('<!--arlist--><ul>', '<ul class="arlist">')
+        new_str = new_str.replace('<!--orlist--><ol>', '<ol class="or_list">')
         new_str = new_str.replace('</ul><!--e/arlist-->', '</ul>')
 
         new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p>' +
@@ -1203,7 +1299,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
 
         upload_list.extend(add_list)
         upload_list.extend(pick_up_same_name_images(file_name, pd))
-        if md_file_path == pj_path + '/md_files/index.md':
+        if md_file_path == pj_path + '/md_files/index.md' and os.path.exists(pj_path + '/html_files/index.html'):
             with open(pj_path + '/html_files/index.html', 'r', encoding='utf-8') as h:
                 top_long_str = h.read()
                 if pd['project_dir'] == 'reibun':
@@ -1458,6 +1554,7 @@ def img_str_filter(long_str, file_name, md_str, pd):
                 long_str = long_str.replace(img_str, new_str)
             if not top_img_path:
                 top_img_path = re.sub(r'^.*/images/', 'images/', img_url)
+                top_img_path = re.sub(r'-\d+x\d+\.', '.', top_img_path)
                 top_img_path = top_img_path.replace('.webp', '-150x150.webp').replace('.jpg', '-150x150.jpg') \
                     .replace('.jpeg', '-150x150.jpeg')
     return long_str, add_list, md_str, img_size, top_img_path
@@ -1722,6 +1819,7 @@ def count_main_str_length(long_str, file_path):
         per_str = re.findall(r'\D%', main_str)
         if '# ' in main_str or '}(' in main_str or '<' in main_str or '>' in main_str or '](' in main_str:
             print('there is md ! ' + file_path)
+            print(main_str)
         elif per_str:
             print('there is % ! ' + file_path)
             print(per_str)
