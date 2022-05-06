@@ -1,5 +1,6 @@
 import glob
 import os
+import pathlib
 import re
 
 import file_upload
@@ -178,9 +179,29 @@ def auto_month_update(old_month_str, now_season, next_season, only_season_flag):
     # print(up_files)
 
 
+def simple_month_filter(target_dir, replace_list):
+    md_files = glob.glob(target_dir + '/md_files/**/**.md', recursive=True)
+    md_files = [x for x in md_files if '/area-bbs/' not in x]
+    # print(md_files)
+    for md_path in md_files:
+        p = pathlib.Path(md_path)
+        p.open()
+        m_str = p.read_text()
+        e_str = m_str
+        for row in replace_list:
+            if row[0] in e_str:
+                e_str = e_str.replace(row[0], row[1])
+        if m_str != e_str:
+            # print(e_str)
+            # break
+            p.open(mode='w')
+            p.write_text(e_str)
+
+
 if __name__ == '__main__':
-    auto_month_update('3月', '冬', '春', only_season_flag=False)  # 現在の月を記入 not 新しい月
+    # auto_month_update('3月', '冬', '春', only_season_flag=False)  # 現在の月を記入 not 新しい月
     # ul = rewrite_hot_month('９月', '１０月', '１１月')
     # auto_update(ul)
     # hot_month_pick_up('11月')
     # make_num_list()
+    simple_month_filter('sfd', [['4月', '<!--hot-month-->5月<!--e/hot-month-->']])

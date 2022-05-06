@@ -7,7 +7,8 @@
 	description: 当サイト「出会い系メール例文集」の管理人で会える私「ゴーヤン」のプロフィールと出会い系の経歴です。このサイトの記事が信用できるか判断する参考にしてください。
 	str_len: 4742
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 1: {
 	file_path: policy/index.html
@@ -28,9 +29,10 @@
 	mod_date: 2019-09-28
 	category: policy
 	description: 出会い系メール例文集のサイトマップです。
-	str_len: 55
+	str_len: 56
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 3: {
 	file_path: policy/log.html
@@ -62,20 +64,22 @@
 	mod_date: 2021-03-25
 	category: caption
 	description: 出会い系サイトで遭遇する「割り切り（援助交際）」のキーワードなどを利用した見分け方と対策を紹介。割り切りの注意点や募集方法、割り切りをしなくてもセックスできる方法についても解説しています。
-	str_len: 6117
+	str_len: 6118
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 6: {
 	file_path: caption/index.html
 	title: 出会い系の隠語とネトナンの予備知識
 	pub_date: 2012-02-15
 	mod_date: 2019-09-28
-	category: caption
+	category: top
 	description: 出会い系サイトなどネトナンで使われる隠語やスラングの意味と、出会い系サイトを利用する上で知っておくと便利な基礎知識を紹介します。出会い系サイトで素敵な出会いをゲットするために、出会い系の業者やサクラ、割り切りなどについての知識を身につけておきましょう。
-	str_len: 3763
+	str_len: 3764
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 7: {
 	file_path: caption/freesite.html
@@ -86,7 +90,8 @@
 	description: 無料出会い系サイトや無料出会いアプリは出会えるのでしょうか？その仕組みと出会えない理由を詳しく説明しています。また、出会えると定評のある人気出会い系サイトの公式アプリについてもご紹介しています。
 	str_len: 4293
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 8: {
 	file_path: caption/fraud.html
@@ -97,7 +102,8 @@
 	description: 出会えない悪質出会い系サイトや出会えない系さいとを見分ける方法、見分けるための特徴やポイントをご紹介します。ワクワクメールやPCMAX、ハッピーメールなどの大手優良出会い系サイトと出会えない系サイトや悪徳サイトはどこが違うのでしょうか？
 	str_len: 7860
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 9: {
 	file_path: caption/dealerprofile.html
@@ -106,9 +112,10 @@
 	mod_date: 2021-03-25
 	category: caption
 	description: ハッピーメールやワクワクメール等の出会い系サイトを悪用している業者のプロフィールや自己紹介などで見分ける方法をご紹介します。悪質業者のプロフィールの傾向や業者のプロフィールの特徴がわかる記事です。
-	str_len: 3507
+	str_len: 3508
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 10: {
 	file_path: caption/storyofexperience.html
@@ -129,7 +136,7 @@
 	mod_date: 2022-04-02
 	category: caption
 	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる募集方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトのフェラ掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
-	str_len: 14177
+	str_len: 14182
 	layout_flag: True
 	shift_flag: True
 	edit_flag: True}
@@ -153,9 +160,10 @@
 	mod_date: 2021-03-25
 	category: caption
 	description: 出会い系で芸能人がいたら美人局確定？出会い系サイトで遭遇する可能性のある美人局について、その意味・手口・特徴・見破り方・対策を紹介。PCMAXやハッピーメール、ワクワクメール等の出会い系サイトで美人局に遭う可能性や割り切り、サクラと美人局の関係や美人局からの逃げる方法も解説。
-	str_len: 7744
+	str_len: 7745
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 14: {
 	file_path: caption/sakura.html
@@ -166,7 +174,8 @@
 	description: ワクワクメールやハッピーメールにサクラはいるのか？出会い系サイトで遭遇する可能性のあるサクラについて、特徴や見分け方、サクラだった時の対応を紹介します。サクラがいない出会い系サイトもご紹介します。サクラがいないサイトを使えばサクラを心配する必要はありません。
 	str_len: 9243
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 15: {
 	file_path: caption/rapaciousdealer.html
@@ -175,9 +184,10 @@
 	mod_date: 2021-03-25
 	category: caption
 	description: ワクワクメールやハッピーメール、PCMAXなどで遭遇するアドレス収集業者と他サイトへの誘導業者など、出会い系サイトを利用して活動している悪質な業者への対策をお教えします。出会い系サイトで困った時の相談窓口の一覧もご案内しています。
-	str_len: 3725
+	str_len: 3726
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 16: {
 	file_path: majime/m1remarriage.html
@@ -186,9 +196,10 @@
 	mod_date: 2021-03-30
 	category: f_mail
 	description: 出会い系サイトを利用すると早く確実に再婚相手を探すことができます。この記事ではバツイチの男女が出会い系で再婚相手を探す場合のメールや掲示板への書き込みの書き方を例文を使って詳しくご紹介します。婚活におすすめの出会い系サイトもお教えします。
-	str_len: 6878
+	str_len: 6879
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 17: {
 	file_path: majime/kakikata_p.html
@@ -197,9 +208,10 @@
 	mod_date: 2021-03-25
 	category: majime
 	description: ワクワクメールやハッピーメールなどの出会い系サイトやアプリで女性ウケするプロフィールの書き方と、コピペして使える自己紹介文の例文を紹介。出会い系では女性は必ずプロフを見るので、プロフィールが上手に書けていると女の子にモテます。PCMAXの裏プロフィールについても説明してます。
-	str_len: 8400
+	str_len: 8401
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 18: {
 	file_path: majime/m2conversation-technic.html
@@ -208,9 +220,10 @@
 	mod_date: 2020-10-06
 	category: s_mail
 	description: 出会い系サイトでは異性とやり取りするメッセージやLINEでの会話がうまくできさえすれば、モテて出会うことができます。下ネタを話すにも、しかるべきタイミングがあります。この記事では、出会い系アプリで出会うためのネトナン用の会話テクニックを例文付きで詳しくご紹介します。
-	str_len: 8447
+	str_len: 8448
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 19: {
 	file_path: majime/m2topic.html
@@ -233,7 +246,8 @@
 	description: 出会い系や掲示板では巨乳にあいやすいとよく言われます。この記事では、巨乳と出会いやすいおすすめ出会い系サイトや、出会い系で巨乳の女の子と出会ってエッチするための方法、巨乳セフレと出会える掲示板の書き方を例文を使って解説します。出会い系で巨乳女子を探すテクニックもお教えします。
 	str_len: 9284
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 21: {
 	file_path: majime/m2lineid.html
@@ -256,7 +270,8 @@
 	description: ネトナンで女の子とセックスしたいなら、出会える系の出会い系サイトや出会いアプリを使うのがいちばんの近道です。誰でもストナンの何倍も簡単に出会えます。ここではネットナンパで女の子とアポを取ってセックスするためのやり方やメッセージの例文を紹介しています。
 	str_len: 7639
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 23: {
 	file_path: majime/m2htalk.html
@@ -277,9 +292,10 @@
 	mod_date: 2021-04-11
 	category: post
 	description: おすすめの愛人募集掲示板と、既婚男性が出会い系サイトを使って愛人を探すための愛人募集の掲示板例文、パパ活女子を見つけて愛人にする方法などを紹介します。愛人のお手当の相場などについても紹介しています。
-	str_len: 8261
+	str_len: 8327
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 25: {
 	file_path: majime/m2_0_1.html
@@ -302,7 +318,8 @@
 	description: ワクワクメールの伝言板を使って出会うためのメッセージの例文と出会うコツをご紹介します。ワクワクメールの伝言板とは/ワクワクメール伝言板で出会うコツ/ワクワク伝言板で出会うメッセージ例文
 	str_len: 2982
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 27: {
 	file_path: majime/m4manual.html
@@ -313,7 +330,8 @@
 	description: 出会い系サイトを使って出会うための攻略法と、出会い系サイトの無料ポイントや同時登録を有効活用して女の子と出会う方法や無料ポイント稼ぎのやり方、お得な定額制出会い系サイトなどもお教えます。これらの攻略法をうまく使えば、無料で出会いことも可能です。
 	str_len: 8814
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 28: {
 	file_path: majime/m1_8.html
@@ -336,7 +354,8 @@
 	description: 出会い系サイトや婚活サイトで知り合った異性とある程度仲良くなったら、次の段階として敬語をやめてタメ口にしたり、電話で話したり、写メ交換をしたりすることがあります。この記事では敬語のやめ方や電話や写真交換への誘い方をメールの例文を使ってご紹介します。
 	str_len: 6072
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 30: {
 	file_path: majime/m4virgin.html
@@ -345,9 +364,10 @@
 	mod_date: 2021-03-30
 	category: how_to
 	description: 処女とエッチしたいならPCMAXやワクワクメールなどの出会い系サイトの掲示板などで探すのが一番確実です！処女の探し方と処女と出会うコツを教えます。出会い系アプリの募集掲示板やプロフィールでバージンの女の子を探すコツと処女と出会える出会い系サイト、処女と出会ってセックスするまでの手順も掲載。
-	str_len: 9353
+	str_len: 9657
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 31: {
 	file_path: majime/m1_9.html
@@ -356,20 +376,22 @@
 	mod_date: 2021-03-24
 	category: f_mail
 	description: 出会い系で、ぽっちゃり女性と出会いやすいおすすめの掲示板や出会い系サイトと、ぽっちゃり女子と出会えるメールの書き方を豊富な例文を使ってお教えます。ぽっちゃり女子は出会い系では人気がありますが、うまく出会い系サイトの掲示板を利用すれば出会うことができます。
-	str_len: 4780
+	str_len: 4781
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 32: {
 	file_path: majime/index.html
 	title: 必ず会える出会い系サイトと出会えるメールや掲示板の書き方と例文
 	pub_date: 2012-03-01
 	mod_date: 2021-04-11
-	category: majime
+	category: top
 	description: 出会い系サイトで出会うにはメールがうまく書ければそれで必ず出会うことができます。この記事では、出会い系サイトで確実に出会うための攻略法と、必ず出会えるメールや掲示板書き込みの例文をご紹介しています。
 	str_len: 5185
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 33: {
 	file_path: majime/m0bbs.html
@@ -404,7 +426,8 @@
 	description: 出会い系などの出会いで女の子とスムーズに出会うため、好感度をアップさせるメールのやり取りやラインなどのモテるメールの書き方を例文を使って紹介します。会話で安心感を与えたり、自分の優しさをアピールしたり、モテなくはないことをメールでうまく伝えることで好感度は大きく上がります。
 	str_len: 6478
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 36: {
 	file_path: majime/mp_easytocapture.html
@@ -451,7 +474,8 @@
 	description: 出会い系サイトで出会うための方法をその目的や状況別に分けて詳しく紹介しています。また、上手に出会うためのコツもお教えします。出会い系サイトでは出会うための正しい方法を知ってさえいれば、初心者でも簡単に出会えるのでおすすめです。
 	str_len: 4040
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 40: {
 	file_path: majime/mp_enjokousai.html
@@ -460,9 +484,10 @@
 	mod_date: 2021-03-30
 	category: profile
 	description: 素人の女の子が援助交際をしている出会い系サイトのおすすめの掲示板と、ワクワクメールやハッピーメール、PCMAXなどで援交している女の子のプロフィールの見分け方をご紹介します。割り切りなどの援交は違法なことなので絶対にやらないようにしてください。また、出会い系サイトはJK（女子高校生）やJC（女子中学生）などの18歳未満の未成年は一切利用できません。
-	str_len: 6619
+	str_len: 6620
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 41: {
 	file_path: majime/majime.html
@@ -495,9 +520,10 @@
 	mod_date: 2021-03-25
 	category: s_mail
 	description: 人妻や彼氏がいる女性が出会いやすい浮気用の出会い系サイトのおすすめを紹介。また、出会い系サイトで浮気したい人妻を探すためのメールの例文と、人妻や彼氏持ちの独身女性を浮気に誘うメールのやり取りをお教えします。旦那や彼氏への不満などをうまく利用することで、不倫や浮気に誘導できます。
-	str_len: 4564
+	str_len: 4565
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 44: {
 	file_path: majime/m4application.html
@@ -508,7 +534,8 @@
 	description: 女の子と確実に出会って楽しく会話するには出会える出会いアプリを使う必要があります。ここでは、簡単に女の子と出会える出会い系アプリと出会うためのテクニックをご紹介しています。
 	str_len: 2953
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 45: {
 	file_path: majime/m0marriedman.html
@@ -519,7 +546,8 @@
 	description: 既婚者がエッチしたりセフレを作ったりできるおすすめの出会い系サイトと、PCMAXやワクワクメールなどの出会いアプリで出会うための掲示板の書き込みの例文をご紹介。既婚者がお互いの配偶者にバレないようにネットで不倫やダブル不倫をするための出会い方などもご案内しています。
 	str_len: 5630
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 46: {
 	file_path: majime/m4honban.html
@@ -528,9 +556,10 @@
 	mod_date: 2021-03-26
 	category: how_to
 	description: ハッピーメールやワクワクメールなどの出会い系サイトを使うと簡単に風俗じゃない素人の女性と本番（基盤）ありの出会いをすることができます。この記事では、３つある本番ありの出会いのやり方、素人女性と本番ありの出会いをしやすいお勧め出会い系サイトなどを詳しく紹介しています。
-	str_len: 5785
+	str_len: 5786
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 47: {
 	file_path: majime/m1-adult.html
@@ -539,9 +568,10 @@
 	mod_date: 2021-03-25
 	category: f_mail
 	description: 出会い系サイトをうまく使えばエッチな出会いができます。この記事では、エッチできるおすすめ出会い系サイトと、出会い系サイトでのエッチな出会いのやり方と最初のメールの書き方、エッチな女性と出会えるアダルト用のプロフィールの書き方を紹介します。オンラインの出会いでエッチな女性と出会ってセックスするための最初の一歩です。
-	str_len: 4821
+	str_len: 4822
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 48: {
 	file_path: majime/m3_3.html
@@ -552,7 +582,8 @@
 	description: 出会い系で知り合った女の子とデートした後はありがとうのLINEメッセージやお礼メールを出しておきましょう。これが2回目以降のデートに繋がります。彼女を作るためなどの普通の出会いのデートのお礼メール例文と、セフレ探しなどヤリモクの出会いのお礼メール例文をそれぞれ紹介します。
 	str_len: 2785
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 49: {
 	file_path: majime/m2firstreply.html
@@ -575,7 +606,8 @@
 	description: 出会い系サイトや出会いアプリを利用したオンラインの出会いであれば、３０代以上の中年男性でもあまりお金をかけないで婚活や彼女探しをしたり、女の子とセックスしたりできます。セフレを作ることもできます。この記事では中年男性が出会い系で出会うためのメールの例文やおすすめサイトをご紹介しています。
 	str_len: 4122
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 51: {
 	file_path: majime/m0_6.html
@@ -584,9 +616,10 @@
 	mod_date: 2021-03-25
 	category: post
 	description: おすすめのメル友募集用の掲示板とメル友の作り方を詳しく紹介。出会い系サイトや出会いアプリの掲示板でメル友募集や趣味友達募集をする投稿文(書き込み)もあります。純粋なメル友や趣味友達募集もできますし、そこから恋愛やセフレに発展させることも可能です。
-	str_len: 5473
+	str_len: 5474
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 52: {
 	file_path: majime/m4personal-data.html
@@ -595,9 +628,10 @@
 	mod_date: 2021-03-18
 	category: how_to
 	description: 個人情報の心配なく遊べる出会い系サイトとは？出会い系サイトを利用する際の個人情報の安全性と個人情報が安心な出会い系サイトについて説明しています。
-	str_len: 3374
+	str_len: 3375
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 53: {
 	file_path: majime/m0sexfriendmw.html
@@ -608,7 +642,8 @@
 	description: 出会い系サイトの掲示板を利用すれば、他の人に知られることなく人妻や主婦のセフレを作ることができます。この記事では、人妻と出会いやすいおすすめのセフレ募集用掲示板と、出会い系で主婦のセフレを作る方法を具体的にご紹介します。
 	str_len: 5164
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 54: {
 	file_path: majime/m0ym.html
@@ -619,7 +654,8 @@
 	description: ハッピーメールやPCMAXなどの出会い系サイトで、掲示板を使った「待ち作戦」を使えば、お金をほとんど使わずに無料お試しポイントだけで出会うことができます。待ち作戦のやり方と、掲示板の待ち作戦を成功させる５つのポイントをご紹介します。
 	str_len: 6271
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 55: {
 	file_path: majime/m4hitoduma.html
@@ -628,9 +664,10 @@
 	mod_date: 2021-03-25
 	category: how_to
 	description: 人妻が出会いやセックスの相手を探すのに利用する人気出会い系サイトと、出会い系サイトで人妻と出会うための最初のメールや人妻を不倫に誘う会話の流れ、人妻や主婦と出会えるサイトや出会う方法を紹介。人妻や主婦は普通のメールでアプローチして、会話の中でうまく浮気に誘導していきます。PCMAXやハッピーメール、Jメール等で使える人妻攻略法です。
-	str_len: 7710
+	str_len: 7711
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 56: {
 	file_path: majime/m1forties-and-fifties.html
@@ -639,9 +676,10 @@
 	mod_date: 2021-03-25
 	category: f_mail
 	description: 出会い系サイトや出会いアプリを利用すれば４０代の男性でも女の子と出会って恋愛したりセックスしたりセフレを作ったりできます。この記事では40代や50代の男性が出会い系で出会うための例文やテクニックをご紹介します。
-	str_len: 4029
+	str_len: 4030
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 57: {
 	file_path: majime/m3_2.html
@@ -650,9 +688,10 @@
 	mod_date: 2021-03-25
 	category: date
 	description: 出会い系で出会った女の子と最初のデートでエッチする(即ヤリ)するための方法と即エッチ可能なおすすめサイトや出会いアプリも紹介。即ヤリができる「エッチ約束メール」の書き方も例文を使ってお教えします。
-	str_len: 6578
+	str_len: 6579
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 58: {
 	file_path: majime/m2-sympathy.html
@@ -661,9 +700,10 @@
 	mod_date: 2020-10-21
 	category: s_mail
 	description: 出会い系やラインなどで女性と会話する際に大事なのは共感を示すことです。これができればグッと仲良くなれます。この記事では、共感して相手との気持ちの距離を縮める婚活や恋活に役立つテクニックや共感のメール例文をご紹介しています。
-	str_len: 1988
+	str_len: 1990
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 59: {
 	file_path: majime/m2_1_2.html
@@ -674,7 +714,8 @@
 	description: ある程度仲良くなったら相手の女の子の好みのタイプを確認して、デートまで持ち込めるか判断する材料にします。また、仲良くなったらお互い本名で呼び合うともっと仲良くなれます。この記事では、オンラインの出会いで女の子に好きな男性のタイプや本名を聞くメールの書き方を例文を使って解説します。
 	str_len: 4498
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 60: {
 	file_path: majime/m1marriagehunting.html
@@ -683,9 +724,10 @@
 	mod_date: 2021-04-13
 	category: f_mail
 	description: 出会い系で婚活をする場合の結婚相手募集の掲示板書き込みと自分から送るファーストメールの例文を紹介。出会い系サイトを使ったオンラインの出会いで婚活をする場合のやり方やポイント、注意点などもお教えします。
-	str_len: 7486
+	str_len: 7533
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 61: {
 	file_path: majime/mp_sexy-profile.html
@@ -696,7 +738,8 @@
 	description: 出会い系サイトをうまく利用すれば、スケベな女性を探してエッチしたりセフレにしたりできます。この記事ではハッピーメールやPCMAX、ワクワクメールなどの人気出会い系サイトのプロフィールを使ってエロい女性を探して、セフレにしたりヤリモクの大人の出会いをする探す方法をお教えします。ハッピーメールの自己評価のエッチ度やPCMAXの裏プロフィールを有効活用しましょう！
 	str_len: 4542
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 62: {
 	file_path: majime/m1sexfriendbun.html
@@ -707,7 +750,8 @@
 	description: 男性が出会い系サイトでセフレを探す際に使えるメールの例文をご紹介します。出会い系を使ったネトナンで確実にセフレを作るための４つのステップもお教えします。
 	str_len: 6658
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 63: {
 	file_path: majime/m0_10.html
@@ -718,7 +762,8 @@
 	description: 出会い系の掲示板で飲み友達や遊び友達を作る書き込みの書き方を例文を使って解説しています。出会い系サイトを使えば、男友達や女友達、飲み友達を作ることもできます。セックスしたりセフレにしたりすることもできます。
 	str_len: 3170
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 64: {
 	file_path: majime/m1sexfriendmail.html
@@ -739,9 +784,10 @@
 	mod_date: 2020-10-21
 	category: s_mail
 	description: 出会い系でメールのやり取りをしていて、盛り上がる会話の内容がわからない方のために、オンライン恋愛や婚活での話題の選び方や、盛り上がるメッセージの書き方について例文を使ってお教えします。
-	str_len: 3724
+	str_len: 3726
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 66: {
 	file_path: majime/m2_1_1.html
@@ -776,7 +822,8 @@
 	description: 夏は出会い系で出会いやすい季節です。この記事では出会い系サイトで夏出会うための掲示板書き込みやファーストメールの例文、夏の出会いの攻略法をご紹介します。夏に学生など若い女の子と出会う方法についても解説しています。
 	str_len: 6982
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 69: {
 	file_path: majime/m3early.html
@@ -787,7 +834,8 @@
 	description: 出会い系サイトを使って異性と出会うと、相手によってはかなり早く会ってデートしたりできる場合があります。この記事では、出会い系サイトで出会った女の子と早く会う即アポのためのメールの書き方を例文を使ってご紹介します。相手が寂しい時や外出している時などは特に会いやすいのでおすすめです。
 	str_len: 2673
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 70: {
 	file_path: majime/m0sexless.html
@@ -796,9 +844,10 @@
 	mod_date: 2021-03-24
 	category: post
 	description: セックスレスでエッチがしたい人妻さんがエッチの相手を探すのにぴったりの出会い系サイトを紹介します。また、人妻好きな男性向けに、出会い系でセックスレスの人妻と出会って不倫するための掲示板の例文やセックスレスの人妻と出会うコツもご紹介します。
-	str_len: 4444
+	str_len: 4445
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 71: {
 	file_path: majime/m2_9.html
@@ -809,7 +858,8 @@
 	description: 出会い系アプリや出会い系サイトで異性と出会うには、最初の返信メールの書き方が非常に重要です。ここでは、こちらのメールに対して相手の女の子が返信してくれた際にこちらから送る最初の返信メール(セカンドメール)の書き方と、返信メールを送る際のいろいろなポイントを例文などを使って説明します。
 	str_len: 5071
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 72: {
 	file_path: majime/m3first-meeting-sex.html
@@ -854,9 +904,10 @@
 	mod_date: 2021-03-25
 	category: f_mail
 	description: 出会い系初心者の出会い系攻略法とおすすめの優良出会い系サイト、出会えるメールの書き方と例文を紹介。全くの初心者でも出会える出会い系サイトと正しい出会い系攻略法を実行すれば必ず出会うことができます。例文はコピペして使えるので簡単です。
-	str_len: 9236
+	str_len: 9237
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 76: {
 	file_path: majime/m2_4.html
@@ -868,8 +919,7 @@
 	str_len: 4643
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True
-	ign_words: ['マッチングアプリ']}
+	edit_flag: True}
 
 77: {
 	file_path: majime/m1fixed-phrase.html
@@ -881,8 +931,7 @@
 	str_len: 5315
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True
-	ign_words: ['定型分']}
+	edit_flag: True}
 
 78: {
 	file_path: majime/m0warikiri.html
@@ -903,9 +952,10 @@
 	mod_date: 2021-03-25
 	category: post
 	description: 出会い系で熟女や専業主婦と出会ってセックスする方法と出会うために、おすすめの熟女募集掲示板とメールや主婦募集書き込みを紹介。出会い系サイトを利用するとエッチな熟女や専業主婦、パート主婦と出会いやすくて、セフレにしたりエッチしたりできます。
-	str_len: 8425
+	str_len: 8426
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 80: {
 	file_path: majime/m1_1.html
@@ -916,7 +966,8 @@
 	description: ガラケーを使っていても、出会い系サイトを使えば恋人を作ったりセフレを作ったりセックスの相手を探したりできます。この記事ではガラケーでも出会えるおすすめの出会い系サイトと、ガラケーを使ったオンラインの出会いで女性と出会う方法をご紹介します。女の子から返事がもらえるファーストメールの書き方を例文を使って教えます。
 	str_len: 7862
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 81: {
 	file_path: majime/m4netnan-technique.html
@@ -925,9 +976,10 @@
 	mod_date: 2021-03-18
 	category: how_to
 	description: ネトナンならルックスに自信がなくても出会えます。ネトナンできるアプリとネトナンでエッチする方法を紹介。ネトナンでは安全に出会える出会い系サイトやアプリで、正しいやり方でやれば外見やスペックは無関係です。コピペで使える例文も多数掲載。
-	str_len: 5660
+	str_len: 5661
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 82: {
 	file_path: majime/m0virgin.html
@@ -938,7 +990,8 @@
 	description: 処女と出会ってエッチできるおすすめの掲示板と、ワクワクメールやJメールなどの出会い系サイトで処女と出会うための掲示板書き込みの書き方と投稿文の例文をご紹介します。成人男性が所女と出会ってエッチするには出会い系サイトの掲示板を使うのがベストです。
 	str_len: 4059
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 83: {
 	file_path: majime/m0_12.html
@@ -947,9 +1000,10 @@
 	mod_date: 2020-11-27
 	category: post
 	description: 出会い系サイトで女の子を食事やカラオケに誘って即会いするための方法と掲示板例文をご紹介します。Jメールやハッピーメールなどの出会い系掲示板を使って正しいやり方でメールのやり取りをすればば、すぐに会って遊んだりセックスしたり出来ます。
-	str_len: 4370
+	str_len: 4372
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 84: {
 	file_path: majime/m4rookie.html
@@ -972,7 +1026,8 @@
 	description: PCMAXやハッピーメールなどの出会い系サイトに登録したら、まずはプロフィールを充実させましょう。ノリの良い短文の自己紹介もいいですが、丁寧で落ち着いた長文の自己PRも好印象です。ここでは長文の自己PRと短文の簡単な自由コメントの書き方とその例文を紹介します。
 	str_len: 4232
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 86: {
 	file_path: majime/t0_01bbs.html
@@ -983,7 +1038,8 @@
 	description: 出会い系サイトを利用して実際に出会えている当サイトの読者の方からのメールや掲示板書き込みの投稿をご紹介します。20代女性や30代女性をターゲットにした掲示板書き込み例文
 	str_len: 2102
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 87: {
 	file_path: majime/m1deaiapplication.html
@@ -992,9 +1048,10 @@
 	mod_date: 2021-03-25
 	category: f_mail
 	description: 出会い系アプリで出会えるメッセージにはコツがあります。この記事では確実に出会える出会い系アプリや出会い系サイト、会えるメッセージの書き方と出会い系で出会う流れを紹介。他にも、出会うためのコピペしてそのまま使えるファーストメールの例文もご紹介します。
-	str_len: 5787
+	str_len: 5788
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 88: {
 	file_path: majime/m2adult-relations.html
@@ -1003,9 +1060,10 @@
 	mod_date: 2021-03-29
 	category: s_mail
 	description: 出会い系サイトで大人の関係になるには、実際に会う前の段階でエッチな話をするなどのコツがあります。この記事では、出会い系で大人の関係になって女の子とセックスするための方法と、大人の出会いのための会話のやり取りを例文を使ってご紹介します。
-	str_len: 5846
+	str_len: 5847
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 89: {
 	file_path: majime/m1_6.html
@@ -1016,7 +1074,8 @@
 	description: 出会い系サイトをうまく利用すれば、オタクの男性でも簡単に出会うことができますし、オタク女子を彼女にするのも簡単です。この記事では、オタクにおすすめの出会い系サイトと、オタクが彼女を作る方法、オタク女子を彼女にする方法などを詳しくご紹介します。
 	str_len: 6060
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 90: {
 	file_path: majime/mp_bad-personality.html
@@ -1027,7 +1086,8 @@
 	description: 出会い系サイトを利用していると、稀に性格が悪い女性やそれ以前のレベルのやばい女性に遭遇することがあります。ここでは、出会い系で性格が悪い女性ややばい女性と性格のいい女性をプロフィールの情報から見分ける方法をご紹介します。
 	str_len: 5822
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 91: {
 	file_path: majime/m0papakatsu_no_sex.html
@@ -1038,7 +1098,8 @@
 	description: エッチなしでおこづかいやプレゼントをくれるパパを探している女性のために、Hなしのパパ活のやり方と探し方を紹介。年上男性と出会いやすい人気の出会い系サイトの掲示板にこちらの例文を書き込みすれば、簡単にセックスなしのパパが見つかります。
 	str_len: 6484
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 92: {
 	file_path: majime/mail-applicaton.html
@@ -1049,7 +1110,8 @@
 	description: 出会い系サイトで出会えるメールの文章を簡単に作成できるアプリをご紹介します。当サイト特製のメール自動作成アプリケーションです。スマホでもPCでも使えます。
 	str_len: 5230
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 93: {
 	file_path: majime/m2papakatsu.html
@@ -1058,9 +1120,10 @@
 	mod_date: 2020-08-04
 	category: s_mail
 	description: 女子がでネットでパパ活をするときに上手に、そして安全にパパを探す方法と、出会い系サイトや掲示板などでのメッセージの書き方について例文を挙げて説明しています。男性がパパ活している女性と出会う方法についても少し説明しています。
-	str_len: 4563
+	str_len: 4598
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 94: {
 	file_path: majime/mp_profile.html
@@ -1071,7 +1134,8 @@
 	description: オンラインの出会いで出会うには、プロフィールや掲示板に書き込む自己紹介をうまく書く必要があります。この記事では、出会い系サイトで出会えるプロフィールの書き方や書く内容と自由コメント（自己紹介）の例文をお教えします。
 	str_len: 2959
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 95: {
 	file_path: majime/mp_self-introduction.html
@@ -1080,9 +1144,10 @@
 	mod_date: 2020-10-28
 	category: profile
 	description: 出会い系で出会うにはプロフィールの自己紹介文が重要。女子にモテるプロフィールの自己紹介文の書き方とモテるメールの文章の例文を掲載。女性ウケのいいプロフィールの作り方や、ファーストメールに添える自己PRやについても伝授。出会い系でモテるためコメントはしっかり書きましょう。
-	str_len: 4456
+	str_len: 4458
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 96: {
 	file_path: majime/m0happymail.html
@@ -1093,7 +1158,8 @@
 	description: 出会い系サイトのハッピーメールの大人の掲示板やピュア掲示板で出会うための書き込みとプロフィールの自己紹介文の書き方を例文をたくさん使って紹介。ハピメでセフレを作るやり方や、ハッピーメールの掲示板で出会う方法の手順や攻略法も詳しく解説します。これを知っていればハッピーメールで出会えます。
 	str_len: 8289
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 97: {
 	file_path: majime/m1marriedwoman.html
@@ -1128,7 +1194,8 @@
 	description: 彼女が欲しい男性は出会い系サイトなどでオンライン恋愛や婚活をするのが一番確実で、しかも早く出会えます。ここでは出会い系サイトを使った彼女の探し方と彼女募集のメールの書き方、彼女探し用のロマンティックなメールの例文などをご紹介しています。無料で彼女を作る方法も詳しく解説してます。
 	str_len: 13193
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 100: {
 	file_path: majime/m4yarimokuw.html
@@ -1140,8 +1207,7 @@
 	str_len: 5866
 	layout_flag: True
 	shift_flag: False
-	edit_flag: True
-	ign_words: ['やりもく', 'やりもくさいと']}
+	edit_flag: True}
 
 101: {
 	file_path: majime/m4yarimoku.html
@@ -1150,9 +1216,10 @@
 	mod_date: 2021-03-25
 	category: how_to
 	description: 女子がヤリモク（H目的）の男に引っかからないために、ヤリ目男性の特徴とそういう男性がいないアプリを紹介。ヤリモク男子はプロフィールやメールの内容で判断できるので、彼氏探しや婚活中の方はそういう人とメールしないようにしましょう。この記事は女性用の記事です。
-	str_len: 6803
+	str_len: 6804
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 102: {
 	file_path: majime/date.html
@@ -1187,7 +1254,8 @@
 	description: セフレを作るにはネットナンパを利用するのが一番で、しかもスマホアプリの規定上出会いアプリではなく出会い系サイトを使わなくてはセフレは作ることができません。ここでは、ネトナンでセフレを作るための具体的なやり方や手順、ネットのライン掲示板、セフレ作りにオススメの出会い系サイトなどをご紹介しています。
 	str_len: 10468
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 105: {
 	file_path: majime/m4enderiuraderi.html
@@ -1244,9 +1312,10 @@
 	mod_date: 2021-03-26
 	category: post
 	description: 出会い系サイトを使うと誰でも恋人を作れます。彼氏・彼女や結婚相手が見つかる人気出会い系掲示板と、恋愛のための掲示板投稿の例文と恋人の作り方を紹介。ネットで恋人募集をするときの注意点やポイントなども詳しく解説しています。
-	str_len: 9618
+	str_len: 9619
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 110: {
 	file_path: majime/m1sexfriendpurpose.html
@@ -1257,7 +1326,8 @@
 	description: 出会い系サイトでセフレを探しているときに、割り切り目的の女性や微妙な女性からメールが来た場合の対応について、ワクワクメールやハッピーメールのマナー返信などを利用した方法をご紹介します。出会い系サイトでセフレを作ったり、会って初対面で即エッチするのに役立つメール例文もお教えします。上手なセフレ作りや即エッチのための具体的な手順についても解説しています。
 	str_len: 6785
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 111: {
 	file_path: majime/m1papakatsu.html
@@ -1266,9 +1336,10 @@
 	mod_date: 2021-03-25
 	category: f_mail
 	description: パパ活中の女の子とエッチするための、おすすめ掲示板や出会い系サイト、セックスする方法などを教えます。また、パパ活がしたい女子のために、安全なパパ活の始め方やメッセージの書き方もお教えします。掲示板でパパ活女子を探す方法や、お小遣いの相場、中年男性が若い女の子とうまく出会うためのメールテクニックなども紹介。コピペして使えます。
-	str_len: 7456
+	str_len: 7457
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 112: {
 	file_path: qa/q8.html
@@ -1291,18 +1362,20 @@
 	description: 出会い系サイトで掲示板に書き込みをして女性を募集する場合、書き込むタイミングによって女性からメールがもらえるかどうかが違ってきます。この記事では、どのような曜日、時間帯に書き込みをするのが一番出会えるかについて説明します。
 	str_len: 3378
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 114: {
 	file_path: qa/index.html
 	title: 出会い系Ｑ＆Ａ-出会い系サイトと出会いの疑問にお答えします
 	pub_date: 2012-02-15
 	mod_date: 2020-10-07
-	category: qa
+	category: top
 	description: 出会い系のテクニックや疑問に関する質問に対してQ&A形式で説明しています。アドレス交換や写メ交換のタイミング、写メの撮り方や出会い系サイト初心者からの質問などにお答えしています。
-	str_len: 1367
+	str_len: 1368
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 115: {
 	file_path: qa/q5.html
@@ -1311,9 +1384,10 @@
 	mod_date: 2020-10-07
 	category: qa
 	description: ハッピーメールなどの出会い系サイトで女の子と出会いたい場合、あまり焦ったりガツガツしていると出会えなくなります。逆に余裕を見せる事で女の子は安心します。読者からのしつもんにお答えします。
-	str_len: 1828
+	str_len: 1829
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 116: {
 	file_path: qa/q2.html
@@ -1322,9 +1396,10 @@
 	mod_date: 2020-10-08
 	category: qa
 	description: 出会い系では仲良くなってくると写メ交換をしますがそこで切られる事も珍しくありません。そこで、出会うための奇跡の写メを撮るウラ技をいくつか紹介します。写メール交換/写メ撮影法/写メの撮り方/デートプラン/出会い系の選び方/サクラ･美人局対策
-	str_len: 2769
+	str_len: 2770
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 117: {
 	file_path: qa/q3.html
@@ -1347,7 +1422,8 @@
 	description: 出会い系サイトで知り合った相手とサイト内でメッセージのやり取りをした後、LINEや直アドなどの連絡先交換をして直接やり取りします。また、仲良くなったら写メ交換などもして、お互いを知り合います。相手から嫌われないで直アド交換等するタイミングをお教えします。
 	str_len: 1629
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 119: {
 	file_path: qa/q6.html
@@ -1358,7 +1434,8 @@
 	description: 出会い系サイトで掲示板に書き込みをしていると、最初はメールがもらえたのにそのうちこなくなる場合があります。なぜメールが来なくなったかという理由と、そういう場合の対策を紹介します。
 	str_len: 3824
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 120: {
 	file_path: qa/q7.html
@@ -1369,7 +1446,8 @@
 	description: 出会い系サイトでなかなか出会えない方から、「出会い系サイトは本当に出会えるのか」という質問が来ました。出会い系サイトは、出会えるサイトを利用して、正しいやり方で出会いを探せば、誰でも比較的簡単に出会うことができます。この記事では出会い系サイトで出会えない理由とその対策についてお話しします。
 	str_len: 3370
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 121: {
 	file_path: site/tel.html
@@ -1378,9 +1456,10 @@
 	mod_date: 2021-03-18
 	category: site
 	description: ハッピーメールなどの出会い系サイトで登録時に必要となる電話番号確認の手続きの安全性とやり方について解説しています。当サイトでご紹介している大手の出会い系サイトに関しては、個人情報漏洩などの心配は一切不要です。お得に出会い系サイトを利用する方法もお教えします。
-	str_len: 3220
+	str_len: 3221
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 122: {
 	file_path: site/index.html
@@ -1400,9 +1479,10 @@
 	mod_date: 2020-10-11
 	category: site
 	description: 出会い系サイトで遊ぶ息抜きには、エッチな女の子とライブチャットができるジュエルライブがおすすめです。女の子とエッチな会話を楽しみたい時はちょっと試してみてください。
-	str_len: 719
+	str_len: 721
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 124: {
 	file_path: site/news_pcmax.html
@@ -1413,7 +1493,8 @@
 	description: 出会い系サイトPCMAXの最新情報です。サイトから送信されるニュースメールを最速で転載しておしらせします。お得なキャンペーンや便利な機能をチェックしてください。
 	str_len: 595
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 125: {
 	file_path: site/registration_pcmax.html
@@ -1424,7 +1505,8 @@
 	description: 男性の出会い系サイトPCMAXへの登録方法を画像付きで詳しくご紹介しています。スマホからとPCやタブレットからの登録方法を分けて図解で説明しています。
 	str_len: 2104
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 126: {
 	file_path: site/point.html
@@ -1447,7 +1529,8 @@
 	description: mixiを利用して彼女やセフレを作る方法をご紹介。Mixiでセフレを作る手順やミクシィでセフレ募集するポイント、mixiでアドレス交換する方法、ミクシィで出会う場合の注意点などをお教えします。
 	str_len: 7259
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 128: {
 	file_path: site/wakuwakutel.html
@@ -1458,7 +1541,8 @@
 	description: 出会いやすいことで定評のある出会い系サイトのワクワクメールに登録する際に、電話番号認証があります。この電話番号認証の安全性やワクワクメールの退会の仕方についてご紹介します。当サイト限定の無料お試しポイント増量キャンペーンもあります。
 	str_len: 3554
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 129: {
 	file_path: site/wakuwakumailadult.html
@@ -1469,7 +1553,8 @@
 	description: ワクワクメールで大人の交際をする方法を具体的に説明しています。当サイトからワクワクメールに登録すると特別に通常より50ポイント多く無料お試しポイントがもらえます！ワクワクメールでセフレを作る方法や処女の彼女を探す方法、ワクワクメールの裏技などの攻略法もあります。
 	str_len: 18961
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 130: {
 	file_path: site/kakaotalksexfriend.html
@@ -1492,7 +1577,8 @@
 	description: 女性の出会い系サイトPCMAXへの女性の登録方法を画像付きで詳しくご紹介しています。スマホからとPCやタブレットからの登録方法を分けて図解で説明しています。
 	str_len: 2358
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 132: {
 	file_path: site/nenrei.html
@@ -1503,7 +1589,8 @@
 	description: 平成21年2月から出会い系登録の際に年齢確認が必要になりました。ワクワクメールやハッピーメールなどの出会い系サイトの年齢確認についての情報と、年齢確認で送信する画像の処理方法についてお教えします。ガラケー向けの写真撮影用フレームも配布しています。
 	str_len: 2890
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 133: {
 	file_path: site/pcmaxsexfriendlong.html
@@ -1514,7 +1601,8 @@
 	description: 大手の老舗出会い系サイトのPCMAXはエッチな出会いでも真面目な出会いでも出会いやすい人気出会い系サイトです。PCMAXでのセックスフレンドの作り方や彼女やメル友の探し方を紹介。PCMAXの裏プロフィールや新人検索機能を使ってセックスフレンドを作る方法をお教えします。
 	str_len: 11305
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 134: {
 	file_path: site/194964_s.html
@@ -1523,9 +1611,10 @@
 	mod_date: 2021-03-25
 	category: site
 	description: 出会い系サイトのイククルを使ったセフレの作り方をご紹介します。掲示板からセフレ（セックスフレンド）を作る方法や伝言板を使って彼女を作る方法、掲示板からの出会い攻略法などもご紹介しています。
-	str_len: 10413
+	str_len: 10424
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 135: {
 	file_path: site/news_mintj.html
@@ -1536,7 +1625,8 @@
 	description: 出会い系サイト ミントC!Jメールの最新情報です。サイトから送信されるニュースメールを最速で転載しておしらせします。お得なキャンペーンや便利な機能をチェックしてください。
 	str_len: 446
 	layout_flag: False
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 136: {
 	file_path: site/yyc_c.html
@@ -1547,7 +1637,8 @@
 	description: 出会い系サイトのYYCを使ってセフレはできるのでしょうか？この記事では、出会い系サイトでメル友や彼女を作る方法とセフレを作る方法などの攻略法をご紹介します。ワイワイシーのポイントを節約して出会う方法や効率よく出会うための日記攻略法、ボトルメール攻略法などもご紹介しています。
 	str_len: 11386
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 137: {
 	file_path: site/happymailpoint.html
@@ -1558,7 +1649,8 @@
 	description: 人気出会い系サイトハッピーメールにこのページから登録すると、特別にお試しポイントが少し多め（500円相当）にプレゼントされます。出会えることで有名なハッピーメールに登録するなら、このページからお得に登録してより有利に出会いましょう！再登録についても解説しています。
 	str_len: 4617
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 138: {
 	file_path: site/happymail_a.html
@@ -1569,7 +1661,8 @@
 	description: ハッピーメールなどの出会い系サイトを使うと女性と大人の交際をすることができます。この記事では大人の交際や大人の関係の言葉の意味や、出会い系サイトのハッピーメールで大人の交際でエッチする方法、ハピメでのセフレの作り方を紹介します。そのほかにも、ハピメで普通の出会いをする方法やエッチな女の子の探し方、ハピメの登録方法などについても詳しく説明しています。
 	str_len: 14147
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 139: {
 	file_path: site/jmail.html
@@ -1578,20 +1671,22 @@
 	mod_date: 2021-04-11
 	category: site
 	description: 出会える出会い系サイトを利用すれば、誰でもセフレを作ってエッチをすることができます。この記事では出会い系サイトのミントC!Jメールで早く出会うための攻略法やセフレの作り方、大人な出会いのやり方を詳しくご紹介します！この攻略法をマスターすれば、誰でも好きなだけ出会えます。
-	str_len: 8153
+	str_len: 8741
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 140: {
 	file_path: majime/m1fifties.html
 	title: 50代の中年向け出会い系サイトとエッチな出会いやセフレの探し方
-	pub_date: 
+	pub_date: 2021-03-26
 	mod_date: 2021-03-26
 	category: f_mail
 	description: 出会い系サイトや出会いアプリを利用すれば、５０代の男性でも女の子と出会って恋愛したりセックスしたりできます。この記事では40代や50代の男性が出会い系で出会うための例文や中年男性がセフレや彼女を作るテクニックをご紹介します。
-	str_len: 6379
+	str_len: 6380
 	layout_flag: True
-	shift_flag: True}
+	shift_flag: True
+	edit_flag: True}
 
 141: {
 	file_path: majime/m2bad_mail.html
@@ -1600,9 +1695,10 @@
 	mod_date: 2020-08-28
 	category: s_mail
 	description: メールのやり取りや会話の中で言ってはいけない禁句と、返信がこなくなるダメなメールについて説明します。ダメなメールは例も用意しています。出会い系で素敵な出会いをするためにもメールする時には十分気を付けましょう。
-	str_len: 5163
+	str_len: 5164
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 142: {
 	file_path: majime/m4coronavirus_gf.html
@@ -1613,7 +1709,8 @@
 	description: 新型コロナウイルス感染症の影響で出会い系サイトでの恋愛や婚活がどのように変化したのか？コロナ禍での出会い系サイトの攻略法と、コロナ以前よりも出会えるようになった出会い系サイトについて詳しくご紹介します。コロナ感染を避けながら出会い系サイトで彼女や結婚相手を探すための注意点もご紹介します。
 	str_len: 6601
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 143: {
 	file_path: majime/m4coronavirus_sf.html
@@ -1636,7 +1733,8 @@
 	description: 新型コロナの影響で安全にセフレを作れるオンラインの出会いが男性女性問わず人気になっています。この記事では、出会い系サイトやマッチングアプリを利用して、安全にセフレを作るための方法と、オンラインで出会えるおすすめの出会い系サイトやマッチングアプリを詳しく紹介しています。
 	str_len: 5181
 	layout_flag: True
-	shift_flag: False}
+	shift_flag: False
+	edit_flag: True}
 
 145: {
 	file_path: qa/q9.html

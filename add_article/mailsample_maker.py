@@ -1,11 +1,16 @@
+import os
+
 import new_from_md
 import mailsample.main_info
 import update_md_and_upload_html
 
 if __name__ == '__main__':
-    update_md_and_upload_html.latest_modify_checker()
+    os.chdir('../')
+    update_md_and_upload_html.latest_modify_checker(print_flag=True)
     new_from_md.main(1, mailsample.main_info.info_dict, mod_date_flag=True, last_mod_flag=True,
                      upload_flag=True, first_time_flag=False, fixed_mod_date=False)
+    # new_from_md.main(1, mailsample.main_info.info_dict, mod_date_flag=False, last_mod_flag=True,
+    #                  upload_flag=True, first_time_flag=True, fixed_mod_date=False)
     """
     新規markdownファイルやファイル更新でサイト全体とアップデートしてアップロード
     :param site_shift: サイトの表示に関するフラグ

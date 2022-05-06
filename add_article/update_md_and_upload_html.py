@@ -14,13 +14,13 @@ import file_upload
 import new_from_md
 
 
-def latest_modify_checker():
+def latest_modify_checker(print_flag):
     domain_dict = {'reibun': 'demr.jp', 'rei_site': 'reibunsite.com', 'joshideai': 'joshideai.com',
                    'goodbyedt': 'goodbyedt.com', 'howto': 'deaihowto.com', 'htaiken': 'deaihtaiken.com',
                    'koibito': 'koibitodeau.com', 'konkatsu': 'netdekonkatsu.com',
                    'online_marriage': 'lovestrategyguide.com', 'shoshin': 'deaishoshinsha.com',
-                   'women': 'deaiwomen.com', 'mailsample': 'mailsample.jp'}
-    rc_list_r = search_edited_md()
+                   'women': 'deaiwomen.com', 'mailsample': 'mailsample.jp', 'sfd': 'sefure-do.com'}
+    rc_list_r = search_edited_md(print_flag)
     rc_list = [x[0] for x in rc_list_r]
     if rc_list:
         md_file = rc_list[0]
@@ -52,7 +52,7 @@ def latest_modify_checker():
 def change_html_and_upload():
     with open('pickle_data/add_last_upload.pkl', 'rb') as n:
         last_mod = pickle.load(n)
-    recent_files = search_edited_md()
+    recent_files = search_edited_md(print_flag=True)
     recent_files = [x for x in recent_files if x[1] > last_mod]
     print(recent_files)
     if recent_files:
@@ -100,14 +100,14 @@ def css_uploader(pj_name, last_mod, up_files):
     return up_files
 
 
-def search_edited_md():
+def search_edited_md(print_flag):
     now = time.time()
     today = now - 60 * 60 * 24
     project_dir = [x for x in make_new_article.dir_dict]
     project_dir.extend(['reibun'])
     project_dir.extend(['mailsample'])
     project_dir.remove('test')
-    project_dir.remove('sfd')
+    # project_dir.remove('sfd')
     project_dir.remove('mass')
     all_md = []
     recent_files = []
@@ -118,7 +118,8 @@ def search_edited_md():
         mod_time = os.path.getmtime(file)
         if mod_time > today:
             recent_files.append([file, mod_time])
-            print('{} : {}'.format(file, mod_time))
+            if print_flag:
+                print('{} : {}'.format(file, mod_time))
     if recent_files:
         recent_files.sort(key=lambda x: x[1], reverse=True)
     return recent_files

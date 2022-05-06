@@ -46,13 +46,17 @@ def a_tag_filter(main_str):
 
 def g_tag_insert(content_str):
     insert_str = ''
-    g_tag_list = ['waku-otherb', 'mintj-otherb', 'happy-otherb', 'max1-otherb', 'merupa-otherb', 'iku-otherb']
+    g_tag_list = ['waku-otherb', 'mintj-otherb', 'happy-otherb', 'max1-otherb', 'merupa-otherb', 'iku-otherb',
+                  'waku-atxil', 'mintj-atxil', 'happy-atxil', 'max1-atxil', 'merupa-atxil', 'iku-atxil', 'rank-atxil']
     for i in range(len(g_tag_list)):
         if g_tag_list[i] in content_str:
             event_label = g_tag_list[i].replace('-', '-amp')
             insert_str += ',"trackAncorClicks' + str(i + 1) + '":{"on":"click","selector":".' + g_tag_list[i] \
                           + '","request":"event","vars":{"eventCategory":"access","eventAction":"click","eventLabel":"' \
                           + event_label + '"}}'
+    insert_str += ',"trackAncorClicksR' + \
+                  '":{"on":"click","selector":".rank_top_il","request":"event","vars":{"eventCategory":"access",' \
+                  '"eventAction":"click","eventLabel":"amp_rank-topil"}}'
     return insert_str
 
 
@@ -163,6 +167,8 @@ def amp_maker(pc_path_list, pd):
                 content = amp_image_filter(content, pd)
                 content = re.sub(r'<a href="\.\./ds/(.+?)" class="(.+?)" onclick="gtag\(.+?}\);" rel="nofollow">',
                                  r'<a href="../ds/\1" class="\2" rel="sponsored">', content)
+                content = re.sub(r'<a href="\.\./sitepage/(.+?)" class="(.+?)" onclick="gtag\(.+?}\);">',
+                                 r'<a href="../ds/\1" class="\2">', content)
                 pub_date = re.findall(r'itemprop="datePublished" datetime="(.*?)">', str_x)[0]
                 mod_date = re.findall(r'itemprop="dateModified" datetime="(.*?)">', str_x)[0]
                 description = re.findall(r'<meta name="description" content="(.*?)">', str_x)[0]
@@ -197,8 +203,8 @@ def amp_maker(pc_path_list, pd):
                     amp_data = amp_data.replace('<!--other-a-->', match_str_list[0])
                 gtag_i = g_tag_insert(content)
                 if gtag_i:
-                    amp_data = amp_data.replace('{"trackPageview": {"on": "visible","request": "pageview"}}}',
-                                                '{"trackPageview": {"on": "visible","request": "pageview"}' +
+                    amp_data = amp_data.replace('{"trackPageview":{"on":"visible","request":"pageview"}}}',
+                                                '{"trackPageview":{"on":"visible","request":"pageview"}' +
                                                 gtag_i + '}}')
                 if pc_path == 'reibun/html_files/index.html':
                     amp_data = amp_data.replace('"pc/', '"')
@@ -262,7 +268,9 @@ def amp_image_filter(long_str, pd):
                     img_str_r = img_str_r.replace('>', ' height="{}">'.format(str(h)))
             if 'layout=' not in img_str:
                 img_str_r = img_str_r.replace('>', ' layout="responsive">')
-                img_str_r = img_str_r.replace('  ', ' ')
+            if 'loading="lazy"' in img_str:
+                img_str_r = img_str_r.replace('loading="lazy"', '')
+            img_str_r = img_str_r.replace('  ', ' ')
             long_str = long_str.replace(img_str, img_str_r)
     return long_str
 

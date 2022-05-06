@@ -25,8 +25,10 @@ import konkatsu.main_info
 # import rei_site.main_info
 no_up_page = ['mailsample/md_files/index.md']
 use_webp_list = ['sfd']
+tag_use_list = ['sfd', 'reibun']
 random_sq_img = ['rdm_sq01.webp', 'rdm_sq02.webp', 'rdm_sq03.webp', 'rdm_sq04.webp', 'rdm_sq05.webp',
                  'rdm_sq06.webp', 'rdm_sq07.webp', 'rdm_sq08.webp', 'rdm_sq09.webp', 'rdm_sq10.webp']
+reibun_site_page_flag = False  # reibunのsitepageへのリンクをアフィ直リンクに変更するか、Trueなら/ds/に置換
 
 
 def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_flag, fixed_mod_date):
@@ -44,20 +46,16 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     now = datetime.datetime.now()
     if first_time_flag:
         last_mod_time = now
-        # print(pd)
         if 'mass_flag' in pd:
             pj_path = 'mass_production/' + pd['project_dir']
         else:
             pj_path = pd['project_dir']
         mod_list = [x for x in glob.glob(pj_path + '/md_files/**/**.md', recursive=True) if
-                    '_copy' not in x and '_test' not in x and '_ud' not in x]
-        # print(mod_list)
+                    '_copy' not in x and '_test' not in x and '_ud' not in x and x not in no_up_page]
     else:
         mod_list, last_mod_time = pick_up_mod_md_files(pd)
     if not first_time_flag:
-        print('modify list :')
-        print(mod_list)
-    mod_list = remove_no_up_page(mod_list)
+        print('modify list : {}'.format(mod_list))
     upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag,
                                                                 first_time_flag, fixed_mod_date)
     # print(pk_dic)
@@ -66,29 +64,30 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     else:
         side_bar_dic = make_all_side_bar(pk_dic, pd)
         ad_side_bar_dic = {}
-    # print('upload_list : {}'.format(upload_list))
     if not first_time_flag:
         print('title_change_id : {}'.format(title_change_id))
     if pd['project_dir'] == 'shoshin':
         shoshin_finish(pk_dic, upload_list, pd)
     else:
         if title_change_id:
+            print('title_change_id : {}'.format(title_change_id))
             print('change other page')
-            change_files = insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad_side_bar_dic)
+            change_files = insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad_side_bar_dic,
+                                                          first_time_flag)
             if pd['project_dir'] == 'reibun':
                 reibun_index_insert(pk_dic, title_change_id, pd)
             else:
                 insert_to_index_page(pk_dic, title_change_id, pd)
             insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag)
+            upload_list.extend(change_files)
         else:
             print('change only one page')
             change_files = [x for x in upload_list if '.html' in x]
-        insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic)
+            insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic)
         if pd['project_dir'] == 'reibun':
             change_files = reibun_qa_check(pk_dic, change_files, title_change_id)
         xml_site_map_maker(pk_dic, pd)
         # make_rss(new_file_data)
-        upload_list.extend(change_files)
         if pd['amp_flag']:
             change_files = list(set(change_files))
             amp_upload = amp_file_maker.amp_maker([x for x in change_files if '/amp/' not in x], pd)
@@ -100,18 +99,14 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
             upload_list = list(set(upload_list))
             upload_list.sort()
             upload_list = modify_file_check(upload_list, last_mod_time)
+            if os.path.exists('{}/html_files/index.html'.format(pd['project_dir'])):
+                upload_list.append('{}/html_files/index.html'.format(pd['project_dir']))
             print('upload_list : {}'.format(upload_list))
             file_upload.scp_upload([x for x in upload_list if '_copy' not in x and '_test' not in x], pd)
         if last_mod_flag:
             check_mod_date.make_mod_date_list(pd)
             save_last_mod(pd)
-
-
-def remove_no_up_page(mod_list):
-    for nu in no_up_page:
-        if nu in mod_list:
-            mod_list.remove(nu)
-    return mod_list
+    return upload_list
 
 
 def shoshin_finish(pk_dic, update_list, pd):
@@ -145,12 +140,11 @@ def pick_up_mod_md_files(pd):
     now = time.time()
     if os.path.exists(pd['project_dir'] + '/pickle_pot/last_md_mod.pkl'):
         last_md_mod = make_article_list.read_pickle_pot('last_md_mod', pd)
-        print(last_md_mod)
+        print('last_mod_md_path : {}'.format(last_md_mod))
     else:
         last_md_mod = now
     all_md_files = [x for x in glob.glob(pd['project_dir'] + '/md_files/**/**.md', recursive=True) if
-                    '_copy' not in x and
-                    '_test' not in x and '_ud' not in x]
+                    '_copy' not in x and '_test' not in x and '_ud' not in x and x not in no_up_page]
     result = [y for y in all_md_files if os.path.getmtime(y) > last_md_mod]
     # for p in all_md_files:
     #     print('{} : {}'.format(p, os.path.getmtime(p)))
@@ -223,6 +217,8 @@ def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
                         [datetime.datetime.strptime(pk_dic[i]['pub_date'] + ' 00:00:00', '%Y-%m-%d %H:%M:%S'),
                          pk_dic[i]['category'], pk_dic[i]['file_path'], pk_dic[i]['title']])
             up_list.sort(reverse=True)
+            if pd['project_dir'] in ['sfd']:
+                up_list = up_list[:25]
             # print(up_list)
             replace_str = ''.join(['<li>{} [{}・<a href="{}">{}</a>]を追加</li>'.format(
                 datetime.date.strftime(x[0], '%Y/%m/%d'), pd['category_data'][x[1]][0], x[2], x[3]) for x in up_list])
@@ -282,6 +278,100 @@ def insert_to_amp_top(replace_str, pd):
             g.write(long_str)
 
 
+def aff_site_link_counter(a_list, aff_dir):
+    counter = {}
+    for a_str in a_list:
+        if ('/' + aff_dir + '/' in a_str or '/sitepage/' in a_str) and 'gtag' not in a_str:
+            if '/sitepage/' in a_str:
+                aff_dir = 'sitepage'
+            count_str = re.sub(r'^.*/' + aff_dir + r'/(.*?)".+$', r'\1', a_str)
+            count_str = count_str.replace('/', '')
+            if count_str not in counter:
+                counter[count_str] = 1
+            else:
+                counter[count_str] = counter[count_str] + 1
+    return counter
+
+
+def insert_gtag_to_a_tag(long_str, pd):
+    name_dic = {'550909': 'waku', 'pcmax': 'max', 'mintj': 'mintj', 'happymail': 'happy'}
+    sitepage_dic = {'wakuwakumail': 'waku', 'pcmax': 'max', 'mintj': 'mintj', 'jmail': 'mintj', 'happymail': 'happy',
+                    'ranking': 'rank'}
+    a_list = re.findall(r'<a .*?>.*?</a>', long_str)
+    # a_list = list(set(a_list))
+    aff_dir = pd['aff_dir']['dir']
+    if pd['project_dir'] == 'reibun':
+        aff_dir = 'ds'
+    counter = aff_site_link_counter(a_list, aff_dir)
+    id_counter = {x: 1 for x in counter}
+    for a_str in a_list:
+        if '/{}/'.format(aff_dir) in a_str and 'gtag(' not in a_str:
+            a_sp = re.findall(r'<a.+?href="(.*?)".*?>(.*?)</a>', a_str)
+            if a_sp and '<img ' not in a_sp[0][1]:
+                name = 'aff'
+                id_num = 0
+                for x in name_dic:
+                    if x in a_sp[0][0]:
+                        name = name_dic[x]
+                        if counter[x] > 1:
+                            id_num = id_counter[x]
+                            id_counter[x] = id_counter[x] + 1
+                        break
+                if id_num:
+                    id_str = ' id="{}-text-{}"'.format(name, str(id_num))
+                else:
+                    id_str = ''
+                i1 = '<a href="{}" target="_blank" rel="nofollow" class="{}-text"{} onclick="gtag'.format(a_sp[0][0],
+                                                                                                          name, id_str)
+                i2 = "('event','click',{'event_category':'access','event_label':'"
+                i3 = "-artext'})"
+                a_text = a_sp[0][1]
+                ins_str = i1 + i2 + name + i3 + ';">' + a_text + '(R18)</a>'
+                long_str = long_str.replace(a_str, ins_str, 1)
+                # print('{}\n=>\n{}'.format(a_str, ins_str))
+        elif pd['project_dir'] == 'reibun' and '/sitepage/' in a_str and 'gtag' not in a_str:
+            if not reibun_site_page_flag or '/ranking.' in a_str:
+                a_front = re.sub(r'(<a .+?>).*$', r'\1', a_str)
+                for s_name in sitepage_dic:
+                    if '/sitepage/' + s_name in a_front:
+                        if 'class="' not in a_front:
+                            c_str = ' class="{}-atxil"'.format(sitepage_dic[s_name])
+                        else:
+                            c_str_l = re.findall(r'class="(.+?)"', a_front)
+                            if c_str_l:
+                                c_str = ' class="{}-atxil {}"'.format(sitepage_dic[s_name], c_str_l[0])
+                            else:
+                                c_str = ' class="{}-atxil"'.format(sitepage_dic[s_name])
+                        tag_str = ' onclick="gtag' + "('event','click',{'event_category':'access','event_label':'" \
+                                  + sitepage_dic[s_name] + "-txil'}" + ');"'
+                        ins_a = a_front.replace('>', c_str + tag_str + '>')
+                        ins_a = ins_a.replace('  ', ' ')
+                        long_str = long_str.replace(a_front, ins_a, 1)
+            else:
+                a_sp = re.findall(r'<a.+?href="(.*?)".*?>(.*?)</a>', a_str)
+                if a_sp and '<img ' not in a_sp[0][1]:
+                    name = 'aff'
+                    use_a = a_sp[0][0]
+                    for x in sitepage_dic:
+                        if x in a_sp[0][0]:
+                            name = name_dic[x]
+                            if x != 'ranking':
+                                use_a = use_a.replace('/sitepage/', '/ds/')
+                            if x == 'wakuwakumail':
+                                use_a = use_a.replace('/wakuwakumail', '/550909')
+                            elif x == 'jmail':
+                                use_a = use_a.replace('/jmail', '/mintj')
+                            break
+                    i1 = '<a href="{}" target="_blank" rel="nofollow" class="{}-text" onclick="gtag'.format(use_a, name)
+                    i2 = "('event','click',{'event_category':'access','event_label':'"
+                    i3 = "-artext'})"
+                    a_text = a_sp[0][1]
+                    ins_str = i1 + i2 + name + i3 + ';">' + a_text + '(R18)</a>'
+                    long_str = long_str.replace(a_str, ins_str, 1)
+                    # print('{}\n=>\n{}'.format(a_str, ins_str))
+    return long_str
+
+
 def insert_to_index_page(pk_dic, title_change_id, pd):
     if 'mass_flag' in pd:
         pj_path = 'mass_production/' + pd['project_dir']
@@ -298,8 +388,12 @@ def insert_to_index_page(pk_dic, title_change_id, pd):
     for category in h_dec:
         h_dec[category].sort(key=lambda x: x[0])
     # html site map
-    h_str = '<ul class="arlist" id="sitemap"><li><a href="{}">トップページ</a></li>'.format('../' * pd['main_dir']
-                                                                                      .count('/'))
+    sm_depth = pd['h_sitemap_path'].count('/') - 2
+    if sm_depth == 0:
+        sm_path = 'index.html'
+    else:
+        sm_path = '../' * sm_depth
+    h_str = '<ul class="arlist" id="sitemap"><li><a href="{}">トップページ</a></li>'.format(sm_path)
     for category in h_dec:
         h_str += '<li><a href="{}">{}</a><ul>'.format(pk_dic[pd['category_data'][category][2]]['file_path'],
                                                       pk_dic[pd['category_data'][category][2]]['title'])
@@ -340,7 +434,8 @@ def reibun_index_insert(pk_dic, title_change_id, pd):
     category_list = ['ap_mail', 'profile', 'post', 'f_mail', 's_mail', 'date', 'how_to', 'site', 'caption', 'qa',
                      'policy', 'majime']
     for id_num in pk_dic:
-        h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
+        if pk_dic[id_num]['category'] != 'top':
+            h_dec[pk_dic[id_num]['category']].append([pk_dic[id_num]['file_path'], pk_dic[id_num]['title']])
     for category in h_dec:
         h_dec[category].sort(key=lambda x: x[0])
     # html site map
@@ -472,16 +567,19 @@ def cat_index_str_maker(cat_dic, directory):
     return cat_str
 
 
-def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad_side_bar_dic):
+def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad_side_bar_dic, first_time_flag):
     change_files = []
-    # print(pk_dic)
+    # title_change_path = [pk_dic[x] for x in title_change_id]
     insert_cat = list(set([pk_dic[x]['category'] for x in title_change_id]))
     if pd['side_bar_list']['important'] or pd['side_bar_list']['pop']:
         for sb_cat in pd['side_bar_list']:
-            for change_id in title_change_id:
-                if change_id in pd['side_bar_list'][sb_cat]:
-                    insert_cat.append(sb_cat)
-                    break
+            if title_change_id:
+                for change_id in title_change_id:
+                    if change_id in pd['side_bar_list'][sb_cat]:
+                        insert_cat.append(sb_cat)
+                        break
+            elif first_time_flag:
+                insert_cat.append(sb_cat)
     else:
         if not pd['side_bar_list']['important']:
             insert_cat.append('important')
@@ -505,7 +603,7 @@ def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad
         else:
             t_side_bar_dic = side_bar_dic
         if '<!--no_change-->' not in long_str:
-            if '/reibun/' not in html_path and html_path.count('/') > 3:
+            if 'reibun/' not in html_path:
                 file_depth = html_path.count('/') - 3
             else:
                 file_depth = 0
@@ -521,26 +619,26 @@ def insert_sidebar_to_existing_art(side_bar_dic, title_change_id, pk_dic, pd, ad
 
 def insert_sidebar_to_str(long_str, side_bar_dic, category, insert_cat, pd, file_depth):
     if 'pop' in insert_cat:
-        if category == 'top':
+        if file_depth < 0:
             pop_str = side_bar_dic['pop'].replace('"../', '"')
-        elif file_depth:
+        elif file_depth > 0:
             pop_str = side_bar_dic['pop'].replace('"../', '"../' + ('../' * file_depth))
         else:
             pop_str = side_bar_dic['pop']
         long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>', '"sbh">人気記事</div><ul>' + pop_str + '</ul></div>',
                           long_str)
     if 'important' in insert_cat:
-        if category == 'top':
+        if file_depth < 0:
             imp_str = side_bar_dic['important'].replace('"../', '"')
-        elif file_depth:
+        elif file_depth > 0:
             imp_str = side_bar_dic['important'].replace('"../', '"../' + ('../' * file_depth))
         else:
             imp_str = side_bar_dic['important']
         long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>', '"sbh">重要記事</div><ul>' + imp_str + '</ul></div>',
                           long_str)
-    if category == 'top':
+    if file_depth < 0:
         new_str = side_bar_dic['new'].replace('"../', '"')
-    elif file_depth:
+    elif file_depth > 0:
         new_str = side_bar_dic['new'].replace('"../', '"../' + ('../' * file_depth))
     else:
         new_str = side_bar_dic['new']
@@ -565,7 +663,7 @@ def insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic):
                 t_side_bar_dic = side_bar_dic
             long_str = file_upload.tab_and_line_feed_remove_from_str(long_str)
             category = re.findall(r'<!--category_(.+?)-->', long_str)[0]
-            if '/reibun/' in r_file and r_file.count('/') <= 3:
+            if ('reibun/' in r_file and r_file.count('/') == 4) or 'reibun/' not in r_file and r_file.count('/') == 3:
                 long_str = re.sub(r'"sbh">人気記事</div><ul>.+?</ul></div>',
                                   '"sbh">人気記事</div><ul>' + t_side_bar_dic['pop'] + '</ul></div>', long_str)
                 long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
@@ -584,7 +682,8 @@ def insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic):
                                   long_str)
                 long_str = re.sub(r'"sbh">重要記事</div><ul>.+?</ul></div>',
                                   '"sbh">重要記事</div><ul>' + t_side_bar_dic['important'].replace('"../',
-                                                                                               '"../' + plus_str) + '</ul></div>',
+                                                                                               '"../' + plus_str)
+                                  + '</ul></div>',
                                   long_str)
                 long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
                                   '"sbh">最近の更新記事</div><ul>' + t_side_bar_dic['new'].replace('"../',
@@ -879,8 +978,7 @@ def card_link_filter(html_str, cl_dic, this_path):
                     '<!--title-->', cl_data['title']).replace('<!--des-->', cl_data['start_str'])
                 html_str = html_str.replace(cd_str, ins_str)
             else:
-                print('error!! : no cl_data => {}'.format(html_path))
-                print(nml_path)
+                print('error!! : no cl_data => {} {}'.format(html_path, nml_path))
     return html_str
 
 
@@ -908,7 +1006,8 @@ def sfd_relation_list_maker(md_file_path, cl_dic):
                 if rdm_num >= len(random_sq_img):
                     rdm_num = 0
             else:
-                img_path = ('../' * (md_file_path.count('/') - 2)) + cl_data['img_path'].replace('.jpg', '.webp').replace(
+                img_path = ('../' * (md_file_path.count('/') - 2)) + cl_data['img_path'].replace('.jpg',
+                                                                                                 '.webp').replace(
                     '.jpeg', '.webp').replace('/art_images/', '/sq/').replace('/webp/', '/sq/')
             html_path = ('../' * (md_file_path.count('/') - 2)) + use_page
             ins_str = base_str.replace('<!--url-->', html_path).replace('<!--img-->', img_path).replace(
@@ -962,6 +1061,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         if '%kanren%' in plain_txt:
             plain_txt = relational_article.collect_md_relation_title_in_str(plain_txt, pk_dic, md_file_path)
         plain_txt = short_cut_filter(plain_txt, pd, md_file_path)
+        if not plain_txt.endswith('\n\n\n'):
+            plain_txt = plain_txt + '\n\n'
         if pd['project_dir'] != 'reibun' and "relation_list = '" in plain_txt:
             re_str = re.findall(r"relation_list = '(.*?)'", plain_txt)[0]
         elif pd['project_dir'] == 'sfd':
@@ -1063,11 +1164,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                                 md_txt = md_txt.replace(arlist, ar_re)
             md_txt = re.sub(r'%arlist%\n([\s\S]*?)\n\n', r'<!--arlist-->\n\n\n\1\n\n<!--e/arlist-->', md_txt)
             md_txt = re.sub(r'%arlist_b%\n([\s\S]*?)\n\n', r'<!--arlist-b-->\n\n\n\1\n\n<!--e/arlist_b-->', md_txt)
-            
+
         if '%orlist' in md_txt:
             md_txt = re.sub(r'%orlist%\n([\s\S]*?)\n\n', r'<!--orlist-->\n\n\n\1\n\n<!--e/orlist-->', md_txt)
             md_txt = re.sub(r'%orlist_b%\n([\s\S]*?)\n\n', r'<!--orlist-b-->\n\n\n\1\n\n<!--e/orlist_b-->', md_txt)
-            
+
         md_txt = insert_site_banner(md_txt, pd)
         if '%kanren%' in md_txt:
             md_txt = re.sub(r'%kanren%\n([\s\S]*?)\n\n',
@@ -1084,6 +1185,9 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
 
         md_txt = md_txt.replace('%sample%', '<!--sample/s-->')
         md_txt = md_txt.replace('%sample/e%', '<!--sample/e-->')
+        md_txt = md_txt.replace('<!--hot-month-->', '')
+        md_txt = md_txt.replace('<!--e/hot-month-->', '')
+
         md_txt = md_txt.replace('(..)', '(../)')
         md_txt = mail_sample_replace(md_txt)
         md_txt = strong_insert_filter(md_txt)
@@ -1107,7 +1211,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             md_txt = re.sub(r'^\n*', '', md_txt)
         # print(md_txt)
         start_str = make_start_str(md_txt)
-
         con_str = markdown.markdown(md_txt, extensions=['tables'])
         con_str = con_str.replace('\n', '')
         con_str = re.sub(r'^([\s\S]*)</h1>', '', con_str)
@@ -1189,6 +1292,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         if pd['project_dir'] == 'reibun':
             new_str = img_filter(new_str, pd)
         new_str = re.sub(r'<p>(<img .+?/>)</p>', r'<div class="center">\1</div>', new_str)
+        new_str = a8_banner_filter(new_str)
 
         new_str = new_str.replace('<!--btnli-->', '<div class="btnli">')
         new_str = new_str.replace('<!--e/btnli-->', '</div>')
@@ -1232,6 +1336,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = re.sub(r'(件名: .+?)<br />', r'<span class="m_title">\1</span>', new_str)
         new_str = new_str.replace('<table>', '<table class="tb_n">')
         new_str = new_str.replace('<td align="center">', '<td class="al_c">')
+        new_str = new_str.replace('<th align="center">', '<th class="al_c">')
 
         new_str = re.sub(r'<!--lm_(\d)-->',
                          r'<div class="fl1"><div class="icon"><div class="lm_b lm_\1"></div></div>', new_str)
@@ -1257,6 +1362,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--sample/e-->', '</div>')
         new_str = new_str.replace('../html_files/', '')
         new_str = new_str.replace('../../html_files/pc/', '')
+        if pd['project_dir'] in tag_use_list:
+            new_str = insert_gtag_to_a_tag(new_str, pd)
         dir_depth = md_file_path.replace(pd['main_dir'], '').count('/')
         if dir_depth > 3:
             dir_list = md_file_path.split('/')
@@ -1295,7 +1402,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         if card_br_l:
             for card_br in card_br_l:
                 new_str = new_str.replace(card_br, card_br.replace('<br />', ''))
-        new_str = card_link_filter(new_str, cl_dic, file_name)
+        if pd['project_dir'] in ['sfd']:
+            new_str = h_tag_filter(new_str)
 
         upload_list.extend(add_list)
         upload_list.extend(pick_up_same_name_images(file_name, pd))
@@ -1312,6 +1420,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
                                       '</section></article>')
         str_len = count_main_str_length(new_str, file_name)
         layout_flag = check_page_layout(new_str)
+        new_str = card_link_filter(new_str, cl_dic, file_name)
         # print(new_str)
         if mod_flag:
             if os.path.exists(pj_path + '/html_files/' + pd['main_dir'] + file_name) and not first_time_flag:
@@ -1333,6 +1442,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         else:
             pub_or_mod = 'mod'
             new_mod_date = pk_dic[this_id]['mod_date']
+        if not pub_date:
+            pub_date = pk_dic[this_id]['mod_date']
         if 'T' in pub_date:
             pub_date = pub_date.replace('T', ' ')
         if type(str_len) == int:
@@ -1362,6 +1473,29 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         with open(md_file_path, 'w', encoding='utf-8') as j:
             j.write(plain_txt)
     return upload_list, pk_dic, title_change_id
+
+
+def a8_banner_filter(html_str):
+    a_str_l = re.findall(r'<p><a href="https://px\.a8\.net.+?><img .+?></a><img .+?></p>', html_str)
+    a_str_l = list(set(a_str_l))
+    for a_str in a_str_l:
+        html_str = html_str.replace(a_str,
+                                    '<div class="center">{}</div>'.format(a_str.replace('<p>', '').replace('</p>', '')))
+    return html_str
+
+
+def h_tag_filter(long_str):
+    h_list = re.findall(r'<h\d.+?</h\d>', long_str)
+    for h_str in h_list:
+        if '<span id=' in h_str:
+            if '<p>' in h_str:
+                print('error!! h in p')
+            ins_str = re.sub(r'<h([234])(.*?)><span( id=".*?")>(.*?)</span></h\d>', r'<h\1\3\2>\4</h\1>', h_str)
+            # print(ins_str)
+            if ins_str != h_str:
+                long_str = long_str.replace(h_str, ins_str)
+    # print(long_str)
+    return long_str
 
 
 def insert_ds_link(md_str, pd):
@@ -1711,18 +1845,16 @@ def strong_insert_filter(long_str):
 
 
 def add_pickle_dec(pk_dic, new_data, pd, new_data_id):
-    path_list = [pk_dic[x]['file_path'] for x in pk_dic]
+    path_dict = {pk_dic[x]['file_path']: x for x in pk_dic}
     if new_data_id or new_data_id == 0:
         pk_dic[new_data_id] = new_data
     else:
-        if new_data['file_path'] not in path_list:
-            pk_dic[len(pk_dic)] = new_data
+        if new_data['file_path'] not in path_dict:
+            id_list = [x for x in pk_dic]
+            pk_dic[max(id_list) + 1] = new_data
         else:
-            for i in range(len(path_list)):
-                if path_list[i] == new_data['file_path']:
-                    pk_dic[i] = new_data
+            pk_dic[path_dict[new_data['file_path']]] = new_data
     make_article_list.save_data_to_pickle(pk_dic, 'main_data', pd)
-    # print(pk_dic)
     make_article_list.save_text_file(pk_dic, pd)
     return pk_dic
 
@@ -1822,7 +1954,7 @@ def count_main_str_length(long_str, file_path):
             print(main_str)
         elif per_str:
             print('there is % ! ' + file_path)
-            print(per_str)
+            print('this str : {}'.format(per_str))
         return str_len
     else:
         return 'no article !'
@@ -1844,7 +1976,7 @@ def insert_main_length(pd):
                     print('md : ' + pk_dic[i]['file_path'])
                 else:
                     print('error : ' + pk_dic[i]['file_path'])
-                    print(str_len)
+                    print('str_len'.format(str_len))
                 flag = check_page_layout(long_str)
                 if flag != pk_dic[i]['layout_flag']:
                     print('flag_change : ' + file_path)

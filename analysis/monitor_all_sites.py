@@ -158,7 +158,7 @@ def check_gsc_query_data(page_url):
                    'goodbyedt.com': 'goodbyedt', 'deaihowto.com': 'howto', 'deaihtaiken.com': 'htaiken',
                    'koibitodeau.com': 'koibito', 'netdekonkatsu.com': 'konkatsu',
                    'lovestrategyguide.com': 'online_marriage', 'deaishoshinsha.com': 'shoshin',
-                   'deaiwomen.com': 'women', 'mailsample.jp': 'mailsample'}
+                   'deaiwomen.com': 'women', 'mailsample.jp': 'mailsample', 'sefure-do.com': 'sfd'}
     domain_str = re.sub(r'https://www\.(.+?)/.*$', r'\1', page_url)
     pj_dir = domain_list[domain_str]
     # print('pj_name : {}'.format(pj_dir))

@@ -63,20 +63,21 @@ def reibun_additional_replace_in_md(md_str):
 def reibun_insert_site_banner(long_str):
     b_dict = {'hm': '<a href="../ds/happymail/" target="_blank" rel="nofollow" class="happy-otherb"'
                     ' onclick="gtag(' + "'event', 'click', {'event_category': 'access','event_label': 'happy-otherb'}" +
-                    ');"><img src="../images/hm234x60_1214.gif" width="234" height="60" alt="ハッピーメール"></a>',
+                    ');"><img src="../images/hm234x60_1214.gif" width="234" height="60" alt="ハッピーメール" loading="lazy"></a>',
               'mt': '<a href="../ds/mintj/" target="_blank" class="mintj-otherb" onclick="gtag' +
                     "('event', 'click', {'event_category': 'access','event_label': 'mintj-otherb'})" +
-                    ';"><img width="234" height="60" alt="Jメール" src="../images/mt234x60blue.gif"></a>',
+                    ';"><img　src="../images/mt234x60blue.gif" width="234" height="60" alt="Jメール" loading="lazy"></a>',
               'hm2': '<a href="../ds/happymail2/" target="_blank" rel="nofollow" '
                      'class="happy2-otherb" onclick="gtag(' +
                      "'event', 'click', {'event_category': 'access','event_label': 'happy2-otherb'})" +
-                     ';"><img src="../images/happymail50p200x150.gif" width="200" height="150" alt="ハッピーメール"></a>',
+                     ';"><img src="../images/happymail50p200x150.gif" width="200" height="150" alt="ハッピーメール"'
+                     ' loading="lazy"></a>',
               'max': '<a href="../ds/pcmax" target="_blank" rel="nofollow" class="max1-otherb" onclick="gtag' +
                      "('event', 'click', {'event_category': 'access','event_label': 'max1-otherb'})" +
-                     ';"><img width="240" height="90" src="../images/pm240x90_02.gif" alt="PCMAX"></a>',
+                     ';"><img width="240" height="90" src="../images/pm240x90_02.gif" alt="PCMAX" loading="lazy"></a>',
               'wk': '<a href="../ds/550909" target="_blank" rel="nofollow" class="waku-otherb"' +
                     ' onclick="gtag' + "('event', 'click', {'event_category': 'access','event_label': 'waku-otherb'})"
-                    + ';"><img width="236" height="80" src="../images/wk236-80_2.png" alt="ワクワクメール"></a>'
+                    + ';"><img width="236" height="80" src="../images/wk236-80_2.png" alt="ワクワクメール" loading="lazy"></a>'
               }
     for site_code in b_dict:
         long_str = long_str.replace('%bn_' + site_code + '%', '<div class="center">' + b_dict[site_code] + '</div>')
@@ -163,14 +164,18 @@ def reibun_insert_additional_str(new_str):
     new_str = new_str.replace('</section><section><div class="kanren">',
                               '</section><div class="only_mob teisite"><div class="sbh">出会系口コミランキング</div>'
                               '<ul class="slu"><li><a href="../sitepage/wakuwakumail.html"><div class="sli">'
-                              '<span class="sl_num">1</span><img src="../images/common/wkwk_sq.gif" '
-                              'alt="ワクワクメール"><div class="slr"><span class="slsn">ワクワクメール</span>'
-                              '<span class="slsd">利用者が多くコスパ抜群</span></div></div></a></li><li><a href="../sitepage/happymail.html"><div class="sli">'
+                              '<span class="sl_num">1</span><img src="../images/common/wkwk_sq_60.gif" '
+                              'alt="ワクワクメール" width="60" height="60" loading="lazy">'
+                              '<div class="slr"><span class="slsn">ワクワクメール</span>'
+                              '<span class="slsd">利用者が多くコスパ抜群</span></div></div></a></li><li>'
+                              '<a href="../sitepage/happymail.html"><div class="sli">'
                               '<span class="sl_num">2</span><img src="../images/common/hm_sq.png" '
-                              'alt="ハッピーメール"><div class="slr"><span class="slsn">ハッピーメール</span>'
+                              'alt="ハッピーメール" width="60" height="60" loading="lazy">'
+                              '<div class="slr"><span class="slsn">ハッピーメール</span>'
                               '<span class="slsd">真面目な出会いに強い</span></div></div></a></li><li>'
                               '<a href="../sitepage/pcmax.html"><div class="sli"><span class="sl_num">3</span>'
-                              '<img src="../images/common/max_sq.gif" alt="PCMAX"><div class="slr">'
+                              '<img src="../images/common/max_sq_60.gif" alt="PCMAX" width="60" height="60" loading="lazy">'
+                              '<div class="slr">'
                               '<span class="slsn">PCMAX</span><span class="slsd">初心者でも使いやすい</span></div>'
                               '</div></a></li></ul>'
                               '<div class="center"><a href="../sitepage/ranking.html">口コミ評価ランキング</a>'

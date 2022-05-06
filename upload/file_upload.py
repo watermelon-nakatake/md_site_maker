@@ -44,6 +44,11 @@ def scp_upload(up_file_list, pd):
                     print(o)
                 for e in stderr:
                     print(e)
+        if pd['project_dir'] == 'sfd':
+            local_dir = 'up_html'
+
+        else:
+            local_dir = 'html_files'
         # ファイルをアップロード
         with scp.SCPClient(ssh.get_transport(), socket_timeout=600) as scpc:
             error_files = []
@@ -51,7 +56,7 @@ def scp_upload(up_file_list, pd):
                 if 'mass_flag' in pd:
                     print('upload: ' + up_file)
                     if '/' in up_file:
-                        up_str = up_file.replace('mass_production/' + pd['project_dir'] + '/html_files',
+                        up_str = up_file.replace('mass_production/' + pd['project_dir'] + '/' + local_dir,
                                                  upload_data['upload_dir'])
                         up_dir = re.findall(r'^(.+)/', up_str)[0]
                     else:
@@ -59,7 +64,7 @@ def scp_upload(up_file_list, pd):
                 else:
                     print('upload: ' + up_file)
                     if '/' in up_file:
-                        up_str = up_file.replace(pd['project_dir'] + '/html_files', upload_data['upload_dir'])
+                        up_str = up_file.replace(pd['project_dir'] + '/' + local_dir, upload_data['upload_dir'])
                         up_dir = re.findall(r'^(.+)/', up_str)[0]
                     else:
                         up_dir = ''
@@ -539,6 +544,8 @@ def all_amp_file_upload(pd):
 # todo: ABテストのscript作成
 
 if __name__ == '__main__':
+    os.chdir('../')
+    print(os.getcwd())
     # target = ['reibun/pc/caption/fwari.html']
     # files_upload(target)
 
@@ -559,8 +566,10 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['mailsample/html_files/index.html']
+    up_files = ['sfd/up_html/css/main.css']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)
-    # scp_upload(up_files, konkatsu.main_info.info_dict)
+
+    # scp_upload(['reibun/html_files/pc/images/common/site_name_250.png',
+    #             'reibun/html_files/pc/images/common/site_name_250.png'], reibun.main_info.info_dict)
