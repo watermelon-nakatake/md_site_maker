@@ -566,7 +566,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['sfd/up_html/css/main.css']
+    up_files = ['mailsample/html_files/google3d7d16f68a5d3b38.html']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)

@@ -24,7 +24,7 @@ import konkatsu.main_info
 
 # import rei_site.main_info
 no_up_page = ['mailsample/md_files/index.md']
-use_webp_list = ['sfd']
+use_webp_list = ['sfd', 'reibun']
 tag_use_list = ['sfd', 'reibun']
 random_sq_img = ['rdm_sq01.webp', 'rdm_sq02.webp', 'rdm_sq03.webp', 'rdm_sq04.webp', 'rdm_sq05.webp',
                  'rdm_sq06.webp', 'rdm_sq07.webp', 'rdm_sq08.webp', 'rdm_sq09.webp', 'rdm_sq10.webp']
@@ -278,13 +278,23 @@ def insert_to_amp_top(replace_str, pd):
             g.write(long_str)
 
 
+def reibun_sitepage_filter(long_str):
+    sn_dict = {'wakuwakumail': '550909', 'pcmax': 'pcmax', 'mintj': 'mintj', 'jmail': 'mintj',
+               'happymail': 'happymail', '194964': '194964', 'loveseach': 'loves', 'yyc': 'yyc'}
+    for x in sn_dict:
+        long_str = long_str.replace('/sitepage/' + x + '.html', '/ds/' + sn_dict[x])
+    return long_str
+
+
 def aff_site_link_counter(a_list, aff_dir):
     counter = {}
     for a_str in a_list:
         if ('/' + aff_dir + '/' in a_str or '/sitepage/' in a_str) and 'gtag' not in a_str:
             if '/sitepage/' in a_str:
-                aff_dir = 'sitepage'
-            count_str = re.sub(r'^.*/' + aff_dir + r'/(.*?)".+$', r'\1', a_str)
+                rem_dir = 'sitepage'
+            else:
+                rem_dir = aff_dir
+            count_str = re.sub(r'^.*/' + rem_dir + r'/(.*?)".+$', r'\1', a_str)
             count_str = count_str.replace('/', '')
             if count_str not in counter:
                 counter[count_str] = 1
@@ -297,6 +307,8 @@ def insert_gtag_to_a_tag(long_str, pd):
     name_dic = {'550909': 'waku', 'pcmax': 'max', 'mintj': 'mintj', 'happymail': 'happy'}
     sitepage_dic = {'wakuwakumail': 'waku', 'pcmax': 'max', 'mintj': 'mintj', 'jmail': 'mintj', 'happymail': 'happy',
                     'ranking': 'rank'}
+    if not reibun_site_page_flag:
+        long_str = reibun_sitepage_filter(long_str)
     a_list = re.findall(r'<a .*?>.*?</a>', long_str)
     # a_list = list(set(a_list))
     aff_dir = pd['aff_dir']['dir']
@@ -321,16 +333,22 @@ def insert_gtag_to_a_tag(long_str, pd):
                     id_str = ' id="{}-text-{}"'.format(name, str(id_num))
                 else:
                     id_str = ''
-                i1 = '<a href="{}" target="_blank" rel="nofollow" class="{}-text"{} onclick="gtag'.format(a_sp[0][0],
-                                                                                                          name, id_str)
-                i2 = "('event','click',{'event_category':'access','event_label':'"
-                i3 = "-artext'})"
+                if pd['project_dir'] in tag_use_list:
+                    tag_str = ' onclick="gtag' + "('event','click',{'event_category':'access','event_label':'" \
+                              + name + "-txil'}" + ');"'
+                else:
+                    tag_str = ''
+                i1 = '<a href="{}" target="_blank" rel="sponsored" class="{}-text"{}{}'.format(a_sp[0][0], name, id_str,
+                                                                                              tag_str)
                 a_text = a_sp[0][1]
-                ins_str = i1 + i2 + name + i3 + ';">' + a_text + '(R18)</a>'
+                if '18' in a_text:
+                    ins_str = i1 + '>' + a_text + '</a>'
+                else:
+                    ins_str = i1 + '>' + a_text + '(R18)</a>'
                 long_str = long_str.replace(a_str, ins_str, 1)
                 # print('{}\n=>\n{}'.format(a_str, ins_str))
         elif pd['project_dir'] == 'reibun' and '/sitepage/' in a_str and 'gtag' not in a_str:
-            if not reibun_site_page_flag or '/ranking.' in a_str:
+            if reibun_site_page_flag and '/ranking.' not in a_str:
                 a_front = re.sub(r'(<a .+?>).*$', r'\1', a_str)
                 for s_name in sitepage_dic:
                     if '/sitepage/' + s_name in a_front:
@@ -342,8 +360,11 @@ def insert_gtag_to_a_tag(long_str, pd):
                                 c_str = ' class="{}-atxil {}"'.format(sitepage_dic[s_name], c_str_l[0])
                             else:
                                 c_str = ' class="{}-atxil"'.format(sitepage_dic[s_name])
-                        tag_str = ' onclick="gtag' + "('event','click',{'event_category':'access','event_label':'" \
-                                  + sitepage_dic[s_name] + "-txil'}" + ');"'
+                        if pd['project_dir'] in tag_use_list:
+                            tag_str = ' onclick="gtag' + "('event','click',{'event_category':'access','event_label':'" \
+                                      + sitepage_dic[s_name] + "-txil'}" + ');"'
+                        else:
+                            tag_str = ''
                         ins_a = a_front.replace('>', c_str + tag_str + '>')
                         ins_a = ins_a.replace('  ', ' ')
                         long_str = long_str.replace(a_front, ins_a, 1)
@@ -354,19 +375,16 @@ def insert_gtag_to_a_tag(long_str, pd):
                     use_a = a_sp[0][0]
                     for x in sitepage_dic:
                         if x in a_sp[0][0]:
-                            name = name_dic[x]
-                            if x != 'ranking':
-                                use_a = use_a.replace('/sitepage/', '/ds/')
-                            if x == 'wakuwakumail':
-                                use_a = use_a.replace('/wakuwakumail', '/550909')
-                            elif x == 'jmail':
-                                use_a = use_a.replace('/jmail', '/mintj')
+                            name = sitepage_dic[x]
                             break
-                    i1 = '<a href="{}" target="_blank" rel="nofollow" class="{}-text" onclick="gtag'.format(use_a, name)
-                    i2 = "('event','click',{'event_category':'access','event_label':'"
-                    i3 = "-artext'})"
+                    if pd['project_dir'] in tag_use_list:
+                        tag_str = ' onclick="gtag' + "('event','click',{'event_category':'access','event_label':'" \
+                                  + name + "-artext'}" + ');"'
+                    else:
+                        tag_str = ''
+                    i1 = '<a href="{}" class="{}-text"{}'.format(use_a, name, tag_str)
                     a_text = a_sp[0][1]
-                    ins_str = i1 + i2 + name + i3 + ';">' + a_text + '(R18)</a>'
+                    ins_str = i1 + '>' + a_text + '</a>'
                     long_str = long_str.replace(a_str, ins_str, 1)
                     # print('{}\n=>\n{}'.format(a_str, ins_str))
     return long_str
@@ -1053,7 +1071,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
     if 'sfd/md_files/index.md' in md_file_list:
         md_file_list.remove('sfd/md_files/index.md')
     for md_file_path in md_file_list:
-        # print('start : ' + md_file_path)
+        print('start : ' + md_file_path)
         file_name = md_file_path.replace(pj_path + '/md_files/' + pd['main_dir'], '').replace('.md', '.html')
         # print('file_name : ' + file_name)
         with open(md_file_path, 'r', encoding='utf-8') as f:
@@ -1214,6 +1232,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         con_str = markdown.markdown(md_txt, extensions=['tables'])
         con_str = con_str.replace('\n', '')
         con_str = re.sub(r'^([\s\S]*)</h1>', '', con_str)
+        con_str = insert_gtag_to_a_tag(con_str, pd)
+
         # print(con_str)
         directory, category = directory_and_category_select(file_name, pd)
         title = re.sub(r'%(.+?)%', r'【\1】', title_str)
@@ -1362,8 +1382,6 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--sample/e-->', '</div>')
         new_str = new_str.replace('../html_files/', '')
         new_str = new_str.replace('../../html_files/pc/', '')
-        if pd['project_dir'] in tag_use_list:
-            new_str = insert_gtag_to_a_tag(new_str, pd)
         dir_depth = md_file_path.replace(pd['main_dir'], '').count('/')
         if dir_depth > 3:
             dir_list = md_file_path.split('/')
@@ -1532,7 +1550,10 @@ def img_filter(new_str, pd):
 
 def insert_additional_str(new_str, pd):
     if pd['project_dir'] == 'reibun':
-        new_str = reibun.main_info.reibun_insert_additional_str(new_str)
+        if reibun_site_page_flag:
+            new_str = reibun.main_info.reibun_insert_additional_str(new_str)
+        else:
+            new_str = reibun.main_info.reibun_insert_additional_str_another(new_str)
     return new_str
 
 
@@ -1669,13 +1690,13 @@ def img_str_filter(long_str, file_name, md_str, pd):
                 add_list.extend(add_img)
             else:
                 img_url = img_data_l[0][1]
-                if pd['project_dir'] in use_webp_list:
-                    width, height = get_image_size(img_url, pd)
+                width, height = get_image_size(img_url, pd)
+                if pd['project_dir'] in use_webp_list and ('.jpg' in img_url or '.jpeg' in img_url):
                     webp_path = img_url.replace('/art_images/', '/webp/').replace('.jpg', '.webp') \
                         .replace('.jpeg', '.webp')
                     # webp_all = webp_path.replace('../images/',
                     #                              pd['project_dir'] + pd['main_dir'] + '/html_files/images/')
-                    webp_all = re.sub(r'^.*?/images/', pd['project_dir'] + pd['main_dir'] + '/html_files/images/',
+                    webp_all = re.sub(r'^.*?/images/', pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images/',
                                       webp_path)
                     if os.path.exists(webp_all):
                         img_url = webp_path
@@ -1683,8 +1704,8 @@ def img_str_filter(long_str, file_name, md_str, pd):
                               'loading="lazy" /></div>'.format(img_url, img_data_l[0][0], width, height)
                     img_size = [width, height]
                 else:
-                    new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="760" height="470" loading="lazy" />' \
-                              '</div>'.format(img_url, img_data_l[0][0])
+                    new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="{}" height="{}" loading="lazy" />' \
+                              '</div>'.format(img_url, img_data_l[0][0], width, height)
                 long_str = long_str.replace(img_str, new_str)
             if not top_img_path:
                 top_img_path = re.sub(r'^.*/images/', 'images/', img_url)
@@ -1695,7 +1716,14 @@ def img_str_filter(long_str, file_name, md_str, pd):
 
 
 def get_image_size(image_url, pd):
-    image_url = pd['project_dir'] + '/html_files/' + image_url.replace('../', '')
+    if pd['project_dir'] == 'reibun':
+        main_dir = 'pc/'
+    else:
+        main_dir = ''
+    if '/html_files/' not in image_url:
+        image_url = pd['project_dir'] + '/html_files/' + main_dir + image_url.replace('../', '')
+    else:
+        image_url = re.sub(r'^.*/html_files/', pd['project_dir'] + '/html_files/', image_url)
     im = Image.open(image_url)
     width, height = im.size
     return width, height

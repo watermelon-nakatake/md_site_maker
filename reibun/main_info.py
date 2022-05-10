@@ -29,7 +29,7 @@ add_files = ['reibun/html_files/index.html', 'reibun/html_files/amp/index.html',
 
 main_dir = 'pc/'
 article_image_dir = 'art_images'
-amp_flag = True
+amp_flag = False
 default_img = 'demr_mgirl_1200x630.jpg'
 h_sitemap_path = 'reibun/html_files/pc/policy/sitemap.html'
 domain_str = 'demr.jp'
@@ -180,6 +180,58 @@ def reibun_insert_additional_str(new_str):
                               '</div></a></li></ul>'
                               '<div class="center"><a href="../sitepage/ranking.html">口コミ評価ランキング</a>'
                               '</div></div><section><div class="kanren">')
+    new_str = new_str.replace('<!--arlist_b--><ul>', '<ul class="arlist" id="deaikei">')
+    new_str = new_str.replace('</ul><!--e/arlist_b-->', '</ul>')
+    return new_str
+
+
+def reibun_insert_additional_str_another(new_str):
+    tag_flag = True
+    tag_str = '</section><div class="only_mob teisite"><div class="sbh">出会系口コミランキング</div><ul class="slu"><li>' \
+              '<a href="../ds/550909" target="_blank" rel="sponsored" class="ar_waku_link"' + ' onclick="gtag('\
+              + "'event','click',{'event_category':'access','event_label':'ar-waku-link'});" + '"><div class="sli">' \
+              '<span class="sl_num">1</span><img src="../images/common/wkwk_sq_60.gif" ' \
+              'alt="ワクワクメール" width="60" height="60" loading="lazy">' \
+              '<div class="slr"><span class="slsn">ワクワクメール</span>' \
+              '<span class="slsd">利用者が多くコスパ抜群</span></div></div></a></li><li>' \
+              '<a href="../ds/happymail" target="_blank" rel="sponsored" class="ar_happy_link"' + ' onclick="gtag('\
+              + "'event','click',{'event_category':'access','event_label':'ar-happy-link'});" + '"><div class="sli">' \
+              '<span class="sl_num">2</span><img src="../images/common/hm_sq.png" ' \
+              'alt="ハッピーメール" width="60" height="60" loading="lazy">' \
+              '<div class="slr"><span class="slsn">ハッピーメール</span>' \
+              '<span class="slsd">真面目な出会いに強い</span></div></div></a></li><li>' \
+              '<a href="../ds/pcmax" target="_blank" rel="sponsored" class="ar_max_link"' + ' onclick="gtag('\
+              + "'event','click',{'event_category':'access','event_label':'ar-max-link'});"\
+              + '"><div class="sli"><span class="sl_num">3</span>' \
+              '<img src="../images/common/max_sq_60.gif" alt="PCMAX" width="60" height="60" loading="lazy">' \
+              '<div class="slr">' \
+              '<span class="slsn">PCMAX</span><span class="slsd">初心者でも使いやすい</span></div>' \
+              '</div></a></li></ul>' \
+              '<div class="center"><a href="../sitepage/ranking.html" class="ar_rank_link">口コミ評価ランキング</a>' \
+              '</div></div><section><div class="kanren">'
+    no_tag = '</section><div class="only_mob teisite"><div class="sbh">出会系口コミランキング</div>' \
+             '<ul class="slu"><li><a href="../ds/550909" target="_blank" rel="sponsored" class="ar_waku_link"><div class="sli">' \
+             '<span class="sl_num">1</span><img src="../images/common/wkwk_sq_60.gif" ' \
+             'alt="ワクワクメール" width="60" height="60" loading="lazy">' \
+             '<div class="slr"><span class="slsn">ワクワクメール</span>' \
+             '<span class="slsd">利用者が多くコスパ抜群</span></div></div></a></li><li>' \
+             '<a href="../ds/happymail" target="_blank" rel="sponsored" class="ar_happy_link"><div class="sli">' \
+             '<span class="sl_num">2</span><img src="../images/common/hm_sq.png" ' \
+             'alt="ハッピーメール" width="60" height="60" loading="lazy">' \
+             '<div class="slr"><span class="slsn">ハッピーメール</span>' \
+             '<span class="slsd">真面目な出会いに強い</span></div></div></a></li><li>' \
+             '<a href="../ds/pcmax" target="_blank" rel="sponsored" class="ar_max_link"><div class="sli"><span class="sl_num">3</span>' \
+             '<img src="../images/common/max_sq_60.gif" alt="PCMAX" width="60" height="60" loading="lazy">' \
+             '<div class="slr">' \
+             '<span class="slsn">PCMAX</span><span class="slsd">初心者でも使いやすい</span></div>' \
+             '</div></a></li></ul>' \
+             '<div class="center"><a href="../sitepage/ranking.html" class="ar_rank_link">口コミ評価ランキング</a>' \
+             '</div></div><section><div class="kanren">'
+    if tag_flag:
+        use_str = tag_str
+    else:
+        use_str = no_tag
+    new_str = new_str.replace('</section><section><div class="kanren">', use_str)
     new_str = new_str.replace('<!--arlist_b--><ul>', '<ul class="arlist" id="deaikei">')
     new_str = new_str.replace('</ul><!--e/arlist_b-->', '</ul>')
     return new_str
