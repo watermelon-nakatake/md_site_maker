@@ -1,3 +1,5 @@
+import pprint
+
 import pandas as pd
 import pathlib
 
@@ -18,7 +20,8 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
         'dimensions': d_list,
         'rowLimit': row_limit
     }
-    # print(body)
+    print(body)
+    print(url)
     response = webmasters.searchanalytics().query(siteUrl=url, body=body).execute()
     if 'rows' in response:
         df = pd.json_normalize(response['rows'])
@@ -38,6 +41,28 @@ def make_csv_from_gsc(url, start_date, end_date, dir_path, file_name, d_list):
         empty_str = 'empty'
         with open('gsc_data/{}/{}.csv'.format(dir_path, file_name + end_date), 'w', encoding='utf-8') as e:
             e.write(empty_str)
+
+
+def make_list_from_gsc(site_url, start_date, end_date, dimension_list, row_limit):
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(KEY_FILE_LOCATION, SCOPES)
+    webmasters = build('webmasters', 'v3', credentials=credentials)
+    body = {
+        'startDate': start_date,
+        'endDate': end_date,
+        'dimensions': dimension_list,
+        'rowLimit': row_limit
+    }
+    response = webmasters.searchanalytics().query(siteUrl=site_url, body=body).execute()
+    df = pd.json_normalize(response['rows'])
+    for i, d in enumerate(dimension_list):
+        df[d] = df['keys'].apply(lambda x: x[i])
+    df.drop(columns='keys', inplace=True)
+    l_2d = df.values.tolist()
+    df_index = df.columns
+    df_index = [x for x in df_index]
+    # print(df_index)
+    # pprint.pprint(l_2d, width=150)
+    return l_2d, df_index
 
 
 if __name__ == '__main__':

@@ -26,6 +26,8 @@ import konkatsu.main_info
 no_up_page = ['mailsample/md_files/index.md']
 use_webp_list = ['sfd', 'reibun']
 tag_use_list = ['sfd', 'reibun']
+up_log_update_list = ['reibun']
+add_meta_list = ['reibun']
 random_sq_img = ['rdm_sq01.webp', 'rdm_sq02.webp', 'rdm_sq03.webp', 'rdm_sq04.webp', 'rdm_sq05.webp',
                  'rdm_sq06.webp', 'rdm_sq07.webp', 'rdm_sq08.webp', 'rdm_sq09.webp', 'rdm_sq10.webp']
 reibun_site_page_flag = False  # reibunのsitepageへのリンクをアフィ直リンクに変更するか、Trueなら/ds/に置換
@@ -54,7 +56,8 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
                     '_copy' not in x and '_test' not in x and '_ud' not in x and x not in no_up_page]
     else:
         mod_list, last_mod_time = pick_up_mod_md_files(pd)
-    if not first_time_flag:
+    # mod_list = ['reibun/md_files/pc/caption/fwari.md']
+    if not first_time_flag and mod_list:
         print('modify list : {}'.format(mod_list))
     upload_list, pk_dic, title_change_id = import_from_markdown(mod_list, site_shift, now, pd, mod_date_flag,
                                                                 first_time_flag, fixed_mod_date)
@@ -64,7 +67,7 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
     else:
         side_bar_dic = make_all_side_bar(pk_dic, pd)
         ad_side_bar_dic = {}
-    if not first_time_flag:
+    if not first_time_flag and title_change_id:
         print('title_change_id : {}'.format(title_change_id))
     if pd['project_dir'] == 'shoshin':
         shoshin_finish(pk_dic, upload_list, pd)
@@ -78,12 +81,12 @@ def main(site_shift, pd, mod_date_flag, last_mod_flag, upload_flag, first_time_f
                 reibun_index_insert(pk_dic, title_change_id, pd)
             else:
                 insert_to_index_page(pk_dic, title_change_id, pd)
-            insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag)
             upload_list.extend(change_files)
         else:
-            print('change only one page')
+            print('change only edited page')
             change_files = [x for x in upload_list if '.html' in x]
             insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic)
+        insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag)
         if pd['project_dir'] == 'reibun':
             change_files = reibun_qa_check(pk_dic, change_files, title_change_id)
         xml_site_map_maker(pk_dic, pd)
@@ -140,7 +143,7 @@ def pick_up_mod_md_files(pd):
     now = time.time()
     if os.path.exists(pd['project_dir'] + '/pickle_pot/last_md_mod.pkl'):
         last_md_mod = make_article_list.read_pickle_pot('last_md_mod', pd)
-        print('last_mod_md_path : {}'.format(last_md_mod))
+        # print('last_mod_time : {}'.format(last_md_mod))
     else:
         last_md_mod = now
     all_md_files = [x for x in glob.glob(pd['project_dir'] + '/md_files/**/**.md', recursive=True) if
@@ -194,6 +197,9 @@ def update_filter(up_str):
 def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
     today = datetime.date.today()
     today_str = str(today).replace('-', '/').replace('/0', '/')
+    update_log_flag = 'pub_date'
+    if pd['project_dir'] in up_log_update_list:
+        update_log_flag = 'mod_date'
     if 'mass_flag' in pd:
         pj_path = 'mass_production/' + pd['project_dir']
     else:
@@ -203,26 +209,27 @@ def insert_to_top_page(title_change_id, pk_dic, pd, first_time_flag):
         # 更新記事一覧
         up_str = re.findall(r'<ul class="updli">(.*?)</ul>', long_str)[0]
         add_str = ''
-        if first_time_flag:
+        if first_time_flag or pd['project_dir'] in up_log_update_list:
             up_list = []
             for i in pk_dic:
                 if ((pd['project_dir'] == 'konkatsu' or pd['project_dir'] == 'online_marriage') and pk_dic[i][
                     'ad_flag'] == 3) or pk_dic[i]['category'] == 'top':
                     continue
-                if ':' in pk_dic[i]['pub_date']:
-                    up_list.append([datetime.datetime.strptime(pk_dic[i]['pub_date'], '%Y-%m-%d %H:%M:%S'),
+                if ':' in pk_dic[i][update_log_flag]:
+                    up_list.append([datetime.datetime.strptime(pk_dic[i][update_log_flag], '%Y-%m-%d %H:%M:%S'),
                                     pk_dic[i]['category'], pk_dic[i]['file_path'], pk_dic[i]['title']])
                 else:
                     up_list.append(
-                        [datetime.datetime.strptime(pk_dic[i]['pub_date'] + ' 00:00:00', '%Y-%m-%d %H:%M:%S'),
+                        [datetime.datetime.strptime(pk_dic[i][update_log_flag] + ' 00:00:00', '%Y-%m-%d %H:%M:%S'),
                          pk_dic[i]['category'], pk_dic[i]['file_path'], pk_dic[i]['title']])
             up_list.sort(reverse=True)
-            if pd['project_dir'] in ['sfd']:
-                up_list = up_list[:25]
+            up_list = up_list[:30]
             # print(up_list)
             replace_str = ''.join(['<li>{} [{}・<a href="{}">{}</a>]を追加</li>'.format(
                 datetime.date.strftime(x[0], '%Y/%m/%d'), pd['category_data'][x[1]][0], x[2], x[3]) for x in up_list])
             # print(replace_str)
+            if pd['project_dir'] == 'reibun':
+                replace_str = replace_str.replace('href="', 'href="pc/')
         else:
             if pd['project_dir'] != 'konkatsu' and pd['project_dir'] != 'online_marriage':
                 for c_id in title_change_id:
@@ -339,7 +346,7 @@ def insert_gtag_to_a_tag(long_str, pd):
                 else:
                     tag_str = ''
                 i1 = '<a href="{}" target="_blank" rel="sponsored" class="{}-text"{}{}'.format(a_sp[0][0], name, id_str,
-                                                                                              tag_str)
+                                                                                               tag_str)
                 a_text = a_sp[0][1]
                 if '18' in a_text:
                     ins_str = i1 + '>' + a_text + '</a>'
@@ -705,7 +712,8 @@ def insert_sidebar_to_modify_page(side_bar_dic, mod_list, pd, ad_side_bar_dic):
                                   long_str)
                 long_str = re.sub(r'"sbh">最近の更新記事</div><ul>.+?</ul></div>',
                                   '"sbh">最近の更新記事</div><ul>' + t_side_bar_dic['new'].replace('"../',
-                                                                                            '"../' + plus_str) + '</ul></div>',
+                                                                                            '"../' + plus_str)
+                                  + '</ul></div>',
                                   long_str)
                 if category in pd['category_name']:
                     long_str = re.sub(r'<div class="leftnav"><div class="sbh cat-i">.*?</div><ul>.*?</ul></div>',
@@ -867,7 +875,7 @@ def make_rss(new_file_data, pd):
 
 
 def insert_tag_to_upper_anchor(long_str):
-    top_str_l = re.findall(r'</h1>.+?<div id="mokujio"', long_str)
+    top_str_l = re.findall(r'</h1>.+?<nav id="mokuji"', long_str)
     if '<a href="#sc' in top_str_l[0]:
         a_str_l = re.findall(r'<a href="#.+?</a>', top_str_l[0])
         for a_str in a_str_l:
@@ -1000,6 +1008,36 @@ def card_link_filter(html_str, cl_dic, this_path):
     return html_str
 
 
+def make_meta_thumbnail_str(long_str, pd):
+    up_files = []
+    a_img_l = re.findall(r'<div class="alt_img_t">.+?</div>', long_str)
+    if a_img_l:
+        img_path = re.sub(r'^.*src="(.*?)".*$', r'\1', a_img_l[0])
+        thumb_path = img_path.replace('.webp', '_thumb.webp').replace('.jpg', '_thumb.jpg')
+        if pd['project_dir'] == 'reibun':
+            ab_img_path = pd['project_dir'] + '/html_files/pc' + re.sub(r'^.*/images/', r'/images/', img_path)
+            ab_thumb_path = pd['project_dir'] + '/html_files/pc' + re.sub(r'^.*/images/', r'/images/', thumb_path)
+        else:
+            ab_thumb_path = pd['project_dir'] + '/html_files' + re.sub(r'^.*/images/', r'/images/', thumb_path)
+            ab_img_path = pd['project_dir'] + '/html_files' + re.sub(r'^.*/images/', r'/images/', img_path)
+        if not os.path.exists(ab_thumb_path):
+            print(ab_img_path)
+            im = Image.open(ab_img_path)
+            w, h = im.size
+            cut_width = (w - h) / 2
+            im_crop = im.crop((cut_width, 0, cut_width + h, h))
+            im_resize = im_crop.resize((200, 200))
+            im_resize.save(ab_thumb_path)
+            up_files.append(ab_thumb_path)
+        thumb_url = 'https://www.' + pd['domain_str'] + '/' + pd['main_dir'] + re.sub(r'^.*/images/', r'images/',
+                                                                                      thumb_path)
+        meta_str = '<meta name="thumbnail" content="{}" />'.format(thumb_url)
+        result = meta_str
+    else:
+        result = ''
+    return result, up_files
+
+
 def sfd_relation_list_maker(md_file_path, cl_dic):
     result_str = ''
     if not cl_dic:
@@ -1032,6 +1070,29 @@ def sfd_relation_list_maker(md_file_path, cl_dic):
                 '<!--title-->', cl_data['title']).replace('<!--des-->', cl_data['start_str'])
             result_str += ins_str
     return result_str
+
+
+def faq_snippet_filter(long_str):
+    faq_l = re.findall(r'%faq%[\s\S]+?%e/faq%', long_str)
+    inner_str = ''
+    if faq_l:
+        f_str = faq_l[0]
+        f_title = re.findall(r'## (.*?)\n', f_str)[0]
+        sp_l = ['%q%' + x for x in f_str.replace('%e/faq%', '').split('%q%')[1:]]
+        if sp_l:
+            for sp in sp_l:
+                q_str = re.findall(r'%q%(.+?)\n', sp)[0]
+                a_str = re.findall(r'%a%([\s\S]*)$', sp.strip())[0]
+                a_str = a_str.replace('\n\n', '</p><p>').replace('\n', '<br>')
+                inner = '<section class="faq" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">' \
+                        '<h3 itemprop="name">{}</h3><div class="answer" itemscope itemprop="acceptedAnswer"' \
+                        ' itemtype="https://schema.org/Answer"><div class="ans_inner" itemprop="text"><p>{}</p>' \
+                        '</div></div></section>'.format(q_str, a_str)
+                inner_str += inner
+        i_str = '<section itemscope itemtype="https://schema.org/FAQPage"><h2 class="faq_title">{}</h2>{}</section>'.format(
+            f_title, inner_str)
+        long_str = long_str.replace(f_str, i_str)
+    return long_str
 
 
 def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time_flag, fixed_mod_date):
@@ -1091,6 +1152,8 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         md_txt = re.sub(r'recipe_list = {[\s\S]+$', '', plain_txt)
         md_txt = re.sub(r'<!--sw.*?-->', '', md_txt)
         md_txt = re.sub(r'<!--dead_link_.*?-->', '', md_txt)
+        md_txt = faq_snippet_filter(md_txt)
+
         # print(md_txt)
         description = re.findall(r'd::(.*?)\n', md_txt)[0]
         if 'p::' in md_txt:
@@ -1254,7 +1317,7 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             else:
                 new_str = new_str.replace('<!--ad-flag-->', '')
         new_str = common_tool.index_maker(new_str)
-        new_str = common_tool.section_insert(new_str)
+        new_str = common_tool.section_insert(new_str, pd, file_name)
         if '"mokuji"' in new_str:
             new_str = insert_markdown_anchor(new_str)
             new_str = insert_tag_to_upper_anchor(new_str)
@@ -1313,6 +1376,11 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
             new_str = img_filter(new_str, pd)
         new_str = re.sub(r'<p>(<img .+?/>)</p>', r'<div class="center">\1</div>', new_str)
         new_str = a8_banner_filter(new_str)
+        if pd['project_dir'] in add_meta_list:
+            meta_str, add_img_files = make_meta_thumbnail_str(new_str, pd)
+            new_str = new_str.replace('<!--add-meta-->', meta_str)
+            if add_img_files:
+                upload_list.extend(add_img_files)
 
         new_str = new_str.replace('<!--btnli-->', '<div class="btnli">')
         new_str = new_str.replace('<!--e/btnli-->', '</div>')
@@ -1320,10 +1388,10 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('<!--orlist--><ol>', '<ol class="or_list">')
         new_str = new_str.replace('</ul><!--e/arlist-->', '</ul>')
 
-        new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph"><p>この記事のポイント</p>' +
+        new_str = new_str.replace('<!--point-->', '<div id="kijip"><div class="kijoph">この記事のポイント' +
                                   '</div>')
         new_str = new_str.replace('<!--e/point-->', '</div>')
-        new_str = new_str.replace('<!--matome-->', '<div id="kijim"><div class="kijoph"><p>この記事のまとめ</p>' +
+        new_str = new_str.replace('<!--matome-->', '<div id="kijim"><div class="kijoph">この記事のまとめ' +
                                   '</div>')
         new_str = new_str.replace('<!--e/matome-->', '</div>')
         new_str = new_str.replace('<!--point_i-->', '<div class="in_point"><span>ポイント</span>')
@@ -1410,6 +1478,10 @@ def import_from_markdown(md_file_list, site_shift, now, pd, mod_flag, first_time
         new_str = new_str.replace('.md"', '.html"')
         new_str = new_str.replace('<p>%libut%</p><ul>', '<ul class="libut">')
         new_str = new_str.replace('</section></p><section>', '</section><section>')
+        new_str = new_str.replace('<!--end/howto--></section></section></section></section><section',
+                                  '</section></section><section')
+        new_str = new_str.replace('<!--end/howto--></section></section></section></section><div',
+                                  '</section></section><div')
         # ar_str_l = re.findall(r'<article.+?</article>', new_str)
         # if ar_str_l:
         #     ar_str = ar_str_l[0]
@@ -1673,12 +1745,12 @@ def img_str_filter(long_str, file_name, md_str, pd):
                 img_data_l = re.findall(r'src="(.+?)"', img_str)
                 img_data_l = [['', y] for y in img_data_l]
             # print(img_data_l)
+            img_url = img_data_l[0][1]
             if 'insert_image/' in img_data_l[0][1]:
-                img_url = img_data_l[0][1]
                 new_img_path, add_img = resize_and_rename_image(img_url, file_name, pd)
                 new_img_path = '../' + re.sub(r'^.*/images/', 'images/', new_img_path)
                 if pd['project_dir'] in use_webp_list:
-                    width, height = get_image_size(img_url, pd)
+                    width, height = get_image_size(new_img_path, pd)
                     new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="{}" height="{}" ' \
                               'loading="lazy" /></div>'.format(new_img_path, img_data_l[0][0], width, height)
                     img_size = [width, height]
@@ -1689,16 +1761,21 @@ def img_str_filter(long_str, file_name, md_str, pd):
                 md_str = md_str.replace(img_url, new_img_path)
                 add_list.extend(add_img)
             else:
-                img_url = img_data_l[0][1]
                 width, height = get_image_size(img_url, pd)
                 if pd['project_dir'] in use_webp_list and ('.jpg' in img_url or '.jpeg' in img_url):
                     webp_path = img_url.replace('/art_images/', '/webp/').replace('.jpg', '.webp') \
                         .replace('.jpeg', '.webp')
-                    # webp_all = webp_path.replace('../images/',
-                    #                              pd['project_dir'] + pd['main_dir'] + '/html_files/images/')
                     webp_all = re.sub(r'^.*?/images/', pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images/',
                                       webp_path)
                     if os.path.exists(webp_all):
+                        img_url = webp_path
+                    else:
+                        ab_img_path = re.sub(r'^.*?/images/',
+                                             pd['project_dir'] + '/html_files/' + pd['main_dir'] + 'images/',
+                                             img_url)
+                        img = Image.open(ab_img_path)
+                        img.save(webp_all, 'webp')
+                        add_list.append(webp_all)
                         img_url = webp_path
                     new_str = '<div class="alt_img_t"><img src="{}" alt="{}" width="{}" height="{}" ' \
                               'loading="lazy" /></div>'.format(img_url, img_data_l[0][0], width, height)
@@ -1740,9 +1817,10 @@ def resize_and_rename_image(img_path, file_path, pd):
         while new_name in current_images:
             i += 1
             new_name = file_name + '_' + str(i) + '_gr.jpg'
-        image_path = re.sub(r'^.*?insert_image/', pd['project_dir'] + '/insert_image/', img_path)
-        webp_path = img_path.replace('.jpeg', '.webp').replace('.jpg', '.webp').replace('/art_images/', '/webp/')
-        img = Image.open(image_path)
+        ab_img_path = re.sub(r'^.*?insert_image/', pd['project_dir'] + '/insert_image/', img_path)
+        webp_path = img_dir.replace('/art_images/', '/webp/') + '/' + new_name.replace('.jpeg', '.webp').replace('.jpg',
+                                                                                                                 '.webp')
+        img = Image.open(ab_img_path)
         if pd['project_dir'] in use_webp_list:
             width, height = img.size
             new_height = round(760 * height / width)
@@ -1761,7 +1839,7 @@ def resize_and_rename_image(img_path, file_path, pd):
                 add_img.append(webp_path.replace('/pc/', '/amp/'))
         img_gr.save(img_dir.replace('/html_files/', '/md_files/') + '/' + new_name)
         img.save(pd['project_dir'] + '/image_stock/' + file_name + '_' + str(i) + '.jpg')
-        os.remove(image_path)
+        os.remove(ab_img_path)
     else:
         # print(img_path)
         add_img = make_thumbnail(file_name, pd['project_dir'] + '/' + img_path.replace('../', ''), img_dir, pd)

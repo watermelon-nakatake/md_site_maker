@@ -286,6 +286,7 @@ def tab_and_line_feed_remove_from_str(long_str):
     result = result.replace('"width="', '" width="')
     result = result.replace('"media="', '" media="')
     result = result.replace('"src', '" src')
+    result = result.replace('"title="', '" title="')
     result = result.replace('"itemscope=', '" itemscope=')
     result = result.replace('"itemprop=', '" itemprop=')
     result = result.replace('imgitemprop=', 'img itemprop=')
@@ -566,7 +567,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['mailsample/html_files/google3d7d16f68a5d3b38.html']
+    up_files = ['reibun/html_files/pc/sitepage/194964.html']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)

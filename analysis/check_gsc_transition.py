@@ -157,6 +157,8 @@ def make_site_sum(d_list):
 
 
 if __name__ == '__main__':
+    os.chdir('../')
+    print(os.getcwd())
     # make_transition_data('https://www.sefure-do.com/friend-with-benefits/jc/')
     # search_irregular_imp_data('sfd', '2021-08-09', '2022-02-08')
     # make_transition_dict('reibun', '2021-02-09', 'today')

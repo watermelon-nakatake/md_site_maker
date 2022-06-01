@@ -17,18 +17,12 @@ def index_str(index_list):
     work_str = ''.join(work_list)
     ex_list = [{'h_tag': '</h2><h2>', 'li_tag': '</a></li><li><a href="#sc¥num¥">'},
                {'h_tag': '</h3><h3>', 'li_tag': '</a></li><li><a href="#sc¥num¥">'},
-               {'h_tag': '</h4><h4>', 'li_tag': '</a></li><li><a href="#sc¥num¥">'},
                {'h_tag': '</h2><h3>', 'li_tag': '</a><ol><li><a href="#sc¥num¥">'},
                {'h_tag': '</h3><h2>', 'li_tag': '</a></li></ol></li><li><a href="#sc¥num¥">'},
-               {'h_tag': '</h3><h4>', 'li_tag': '</a><ol><li><a href="#sc¥num¥">'},
-               {'h_tag': '</h4><h3>', 'li_tag': '</a></li></ol></li><li><a href="#sc¥num¥">'},
-               {'h_tag': '</h4><h2>', 'li_tag': '</a></li></ol></li></ol></li><li><a href="#sc¥num¥">'},
                {'h_tag': r'</h2>$', 'li_tag': '</a></li></ol>'},
                {'h_tag': r'</h3>$', 'li_tag': '</a></li></ol></li></ol>'},
-               {'h_tag': r'</h4>$', 'li_tag': '</a></li></ol></li></ol></li></ol>'},
                {'h_tag': r'^<h2>', 'li_tag': '<ol><li><a href="#sc¥num¥">'},
                {'h_tag': r'^<h3>', 'li_tag': '<ol><li><ol><li><a href="#sc¥num¥">'},
-               {'h_tag': r'^<h4>', 'li_tag': '<ol><li><ol><li><ol><li><a href="#sc¥num¥">'}
                ]
     for ex in ex_list:
         work_str = re.sub(ex['h_tag'], ex['li_tag'], work_str)
@@ -36,14 +30,16 @@ def index_str(index_list):
     while '¥num¥' in work_str:
         work_str = work_str.replace('¥num¥', str(i), 1)
         i += 1
-    work_str = '<div id="mokujio"><nav id="mokuji"><div class="moh">目次 <span class="small">' \
+    work_str = '<nav id="mokuji"><div class="moh">目次 <span class="small">' \
                '[<label for="label1">開く/閉じる</label>]</span></div><input type="checkbox" id="label1"/>' \
-               '<div class="hidden_show">' + work_str + '</div></nav></div>'
+               '<div class="hidden_show">' + work_str + '</div></nav>'
+    work_str = work_str.replace('<div class="hidden_show"><ol>', '<ol  class="hidden_show">')\
+        .replace('</ol></div>', '</ol>')
     return work_str
 
 
 def anchor_insert(str_a):
-    str_w = re.sub(r'(<h[234]>)(.*?)(</h[234]>)', r'\1<span id="sc¥num_i¥">\2</span>\3', str_a)
+    str_w = re.sub(r'(<h[23])(.*?)(</h[23]>)', r'\1 id="sc¥num_i¥"\2\3', str_a)
     if '関連記事' in str_w:
         str_w = str_w.replace('<h2><span id="sc¥num_i¥">関連記事</span></h2>', '<h2>関連記事</h2>')
     i = 1
@@ -54,41 +50,61 @@ def anchor_insert(str_a):
 
 
 def make_list(input_file):
-    matched_list = re.findall(r'<h[234]>.*?</h[234]>', input_file)
+    matched_list = re.findall(r'<h[23].*?</h[23]>', input_file)
     if '<h2>関連記事</h2>' in matched_list:
         matched_list.remove('<h2>関連記事</h2>')
     result = []
     for x in matched_list:
         x = re.sub(r'[0-9]\.\s', '', x)
+        x = re.sub(r'(h[23]) .*?>', r'\1>', x)
         result.append(x)
     return result
 
 
-def section_insert(long_str):
-    h_tag_outer = re.findall(r'<h[2|3]>.*?</h[2|3]>', long_str)
+def section_insert(long_str, pd, file_name):
+    h_tag_outer = re.findall(r'<h[23] .*?</h[23]>', long_str)
     if h_tag_outer:
         h_tag_outer.reverse()
         insert_list = []
         for i in range(len(h_tag_outer) - 1):
-            if '<h2>' in h_tag_outer[i]:
-                if '<h2>' in h_tag_outer[i + 1]:
-                    insert_list.append('</section><section>' + h_tag_outer[i])
-                elif '<h3>' in h_tag_outer[i + 1]:
-                    insert_list.append('</section></section><section>' + h_tag_outer[i])
-            elif '<h3>' in h_tag_outer[i]:
-                if '<h2>' in h_tag_outer[i + 1]:
-                    insert_list.append('<section>' + h_tag_outer[i])
-                elif '<h3>' in h_tag_outer[i + 1]:
-                    insert_list.append('</section><section>' + h_tag_outer[i])
+            if 'class="faq_title"' in h_tag_outer[i] or 'itemprop="' in h_tag_outer[i]:
+                insert_list.append(h_tag_outer[i])
+            else:
+                if 'itemprop="' in h_tag_outer[i + 1]:
+                    if '<h2 ' in h_tag_outer[i]:
+                        insert_list.append('<section>' + h_tag_outer[i])
+                else:
+                    if '<h2 ' in h_tag_outer[i]:
+                        if '<h2 ' in h_tag_outer[i + 1]:
+                            insert_list.append('</section><section>' + h_tag_outer[i])
+                        elif '<h3 ' in h_tag_outer[i + 1]:
+                            insert_list.append('</section></section><section>' + h_tag_outer[i])
+                    elif '<h3 ' in h_tag_outer[i]:
+                        if '<h2 ' in h_tag_outer[i + 1]:
+                            insert_list.append('<section>' + h_tag_outer[i])
+                        elif '<h3 ' in h_tag_outer[i + 1]:
+                            insert_list.append('</section><section>' + h_tag_outer[i])
         insert_list.append('<section>' + h_tag_outer[-1])
         insert_list.reverse()
         h_tag_outer.reverse()
         for j in range(len(h_tag_outer)):
             long_str = long_str.replace(h_tag_outer[j], insert_list[j])
-        if '<h2>' in h_tag_outer[-1]:
+        if '<h2 ' in h_tag_outer[-1]:
             long_str = long_str.replace('<!--last-section-->', '</section>')
-        elif '<h3>' in h_tag_outer[-1]:
+        elif '<h3 ' in h_tag_outer[-1]:
             long_str = long_str.replace('<!--last-section-->', '</section></section>')
+        if 'itemtype="https://schema.org/FAQPage"' in long_str:
+            long_str = long_str.replace('<section itemscope itemtype="https://schema.org/FAQPage">',
+                                        '</section><section itemscope itemtype="https://schema.org/FAQPage">')
+        if 'itemtype="https://schema.org/HowTo"' in long_str:
+            url_str = 'https://www.' + pd['domain_str'] + '/' + pd['main_dir'] + file_name
+            long_str = long_str.replace('https://howto_url', url_str)
+            long_str = re.sub(r'#howtonum"/><h3 id="sc(\d+)" itemprop="name">', r'#sc\1"/><h3 id="sc\1" itemprop="name">',
+                              long_str)
+            long_str = long_str.replace('</p><section itemscope itemtype="https://schema.org/HowTo">',
+                                        '</p></section><section itemscope itemtype="https://schema.org/HowTo">')
+            long_str = long_str.replace('</div><section itemscope itemtype="https://schema.org/HowTo">',
+                                        '</div></section><section itemscope itemtype="https://schema.org/HowTo">')
     return long_str
 
 

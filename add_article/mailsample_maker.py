@@ -6,7 +6,8 @@ import update_md_and_upload_html
 
 if __name__ == '__main__':
     os.chdir('../')
-    update_md_and_upload_html.latest_modify_checker(print_flag=True)
+    update_md_and_upload_html.latest_modify_checker(print_flag=False)
+    print('')
     new_from_md.main(1, mailsample.main_info.info_dict, mod_date_flag=True, last_mod_flag=True,
                      upload_flag=True, first_time_flag=False, fixed_mod_date=False)
     # new_from_md.main(1, mailsample.main_info.info_dict, mod_date_flag=False, last_mod_flag=True,

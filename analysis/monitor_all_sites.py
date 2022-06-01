@@ -191,6 +191,8 @@ def check_gsc_query_data(page_url):
 # todo: そのページのクエリのデータを表示
 
 if __name__ == '__main__':
+    os.chdir('../')
+    print('pwd : {}'.format(os.getcwd()))
     main()
     # make_domain_list()
     # check_all_site_data(100, 28, 3000, False, True, False, 1)

@@ -37,7 +37,8 @@ def latest_modify_checker(print_flag):
         main_str = re.sub(r'<!--.*?-->', '', main_str)
         print('str_len : {}'.format(len(main_str.replace('\n', ''))))
         gs_list = monitor_all_sites.check_gsc_query_data(page_url)
-        pprint.pprint(gs_list[:20])
+        if gs_list:
+            pprint.pprint(gs_list[:20])
         if gs_list:
             set_dict = []
             for row in gs_list:

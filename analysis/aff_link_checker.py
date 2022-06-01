@@ -1,5 +1,8 @@
+import os
+# import pprint
 import re
 import csv
+import google_analytics_access
 
 
 def check_aff_link_str(long_str, pj_name):
@@ -53,5 +56,63 @@ def check_aff_for_gsc_data(pj_name, limit_num):
             count_i += 1
 
 
+def mint_checker(pj_name):
+    checked_url = []
+    gsc_data_path = 'gsc_data/{}/p_today.csv'.format(pj_name)
+    with open(gsc_data_path, 'r', encoding='utf-8') as p:
+        reader_p = csv.reader(p)
+        p_list = [x for x in reader_p]
+    # print(p_list)
+    counter = 0
+    for page in p_list[1:101]:
+        if 'https:' in page[4]:
+            html_path = page[4]
+            if html_path.endswith('/'):
+                html_path = html_path + 'index.html'
+            elif '.html' not in html_path:
+                html_path = html_path + '/index.html'
+            md_path = pj_name + '/md_files/' + re.sub(r'^https://.+?/', '', html_path).replace('.html', '.md')
+            if os.path.exists(md_path):
+                with open(md_path, 'r', encoding='utf-8') as f:
+                    md_str = f.read()
+                    if '/mintj.' in md_str:
+                        print('{} : {}'.format(md_path, page[0]))
+                        counter += 1
+                    else:
+                        checked_url.append(md_path)
+    return checked_url
+
+
+def ga_order_mint_checker(pj_name, start_date, limit):
+    checked_url = mint_checker(pj_name)
+    ga_data = google_analytics_access.get_ga_data(start_date, limit)
+    pc_dict = {}
+    rename_data = [[x[0].replace('/amp/', '/pc/'), x[2]] for x in ga_data]
+    for row in rename_data:
+        if row[0] not in pc_dict:
+            pc_dict[row[0]] = int(row[1])
+        else:
+            pc_dict[row[0]] = pc_dict[row[0]] + int(row[1])
+    pc_list = [[x.replace('.html', '.md').replace('/pc/', pj_name + '/md_files/pc/'), pc_dict[x]] for x in pc_dict]
+    pc_list = [x for x in pc_list if x[0] not in checked_url]
+    pc_list.sort(key=lambda x: x[1], reverse=True)
+    for md in pc_list:
+        md_path = md[0]
+        if md_path not in ['/app/', '/', 'reibun/md_files/pc/']:
+            if md_path.endswith('/'):
+                md_path = md_path + 'index.md'
+            elif '.md' not in md_path:
+                md_path = md_path + '/index.md'
+            if os.path.exists(md_path):
+                with open(md_path, 'r', encoding='utf-8') as f:
+                    md_str = f.read()
+                    if '/mintj.' in md_str:
+                        print('{} : {}'.format(md_path, md[1]))
+    # pprint.pprint(pc_list)
+
+
 if __name__ == '__main__':
-    check_aff_for_gsc_data('reibun', 1)
+    print(os.getcwd())
+    # check_aff_for_gsc_data('reibun', 1)
+    # mint_checker('reibun')
+    ga_order_mint_checker('reibun', start_date='2022-04-01', limit='200')
