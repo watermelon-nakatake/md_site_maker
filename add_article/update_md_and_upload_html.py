@@ -13,6 +13,7 @@ import make_html_for_shoshin
 import file_upload
 import new_from_md
 
+replace_words = {'pcmax': 'PCMAX'}
 
 def latest_modify_checker(print_flag):
     domain_dict = {'reibun': 'demr.jp', 'rei_site': 'reibunsite.com', 'joshideai': 'joshideai.com',
@@ -47,7 +48,11 @@ def latest_modify_checker(print_flag):
                     if p_str not in set_dict:
                         set_dict.append(p_str)
             for word in set_dict[:20]:
-                print('{} : {}'.format(word, main_str.count(word)))
+                if word in replace_words:
+                    word_r = replace_words[word]
+                else:
+                    word_r = word
+                print('{} : {}'.format(word_r, main_str.count(word_r)))
 
 
 def change_html_and_upload():

@@ -47,12 +47,12 @@
 
 4: {
 	file_path: caption/meaningofwarikiri.html
-	title: ハッピーメール等出会い系割り切りとは？割り切り募集方法と意味
+	title: ハッピーメール等にある割り切りとは？割り切り意味とやり方
 	pub_date: 2016-09-14
-	mod_date: 2022-05-12
+	mod_date: 2022-06-02
 	category: caption
 	description: ハッピーメールなどの出会い系で見かける「割り切り」という言葉の意味と割り切りの相場や流れ、割り切りの募集方法と、逆に割り切りせずに素人女性と無料で出会ってセックスする方法などもお教えします。また、意味あり、お礼あり、サポ等の割切り＝援助交際を意味する隠語の他、割り募集の多いサイト紹介しているので割り切りを見分けるのに役立つと思います。割り切りとはなんでしょうか？
-	str_len: 7075
+	str_len: 7241
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -95,12 +95,12 @@
 
 8: {
 	file_path: caption/fraud.html
-	title: 悪質出会い系や出会えない系の特徴とワクワクメール等優良サイトの違い
+	title: 出会えない系の特徴とワクワクメール等の優良出会い系サイト
 	pub_date: 2013-11-11
-	mod_date: 2021-04-05
+	mod_date: 2022-06-09
 	category: caption
 	description: 出会えない悪質出会い系サイトや出会えない系さいとを見分ける方法、見分けるための特徴やポイントをご紹介します。ワクワクメールやPCMAX、ハッピーメールなどの大手優良出会い系サイトと出会えない系サイトや悪徳サイトはどこが違うのでしょうか？
-	str_len: 7885
+	str_len: 7950
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -419,12 +419,12 @@
 
 35: {
 	file_path: majime/m2_2_1.html
-	title: 効果的に男の好感度を上げるモテるラインや恋愛メールのテクニック
+	title: 好感度を上げるモテるラインやモテメールや恋愛のテクニック
 	pub_date: 2012-02-15
-	mod_date: 2021-04-06
+	mod_date: 2022-06-09
 	category: s_mail
 	description: 出会い系などの出会いで女の子とスムーズに出会うため、好感度をアップさせるメールのやり取りやラインなどのモテるメールの書き方を例文を使って紹介します。会話で安心感を与えたり、自分の優しさをアピールしたり、モテなくはないことをメールでうまく伝えることで好感度は大きく上がります。
-	str_len: 6468
+	str_len: 6741
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -455,12 +455,12 @@
 
 38: {
 	file_path: majime/mp_sexfriendprofile.html
-	title: PCMAXのセフレ募集プロフィールとセフレが欲しい女の探し方
+	title: PCMAXのセフレ募集プロフィールとセフレ向きな人の探し方
 	pub_date: 2017-03-15
-	mod_date: 2022-05-11
+	mod_date: 2022-06-09
 	category: profile
 	description: 出会い系でセフレにしやすい女性の特徴とセフレ候補の探し方、セフレができやすいプロフィールや自己紹介文の書き方を例文を使って詳しく説明します。セフレの作り方のコツやPCMAXやハッピーメールでセフレ（セックスフレンド）を作る際のプロフの作り方など役立つ情報もあります。セフレ募集用のプロフィールの書き方も紹介。
-	str_len: 10628
+	str_len: 10637
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -493,10 +493,10 @@
 	file_path: majime/majime.html
 	title: 出会い系サイトの返信メール(セカンドメール)のコツと例文
 	pub_date: 2009-10-01
-	mod_date: 2022-06-01
+	mod_date: 2022-06-09
 	category: majime
 	description: 出会い系で相手からメールが来た時の最初の返信メールであるセカンドメール（２通目のメール）の書き方を例文を使って解説します。ハッピーメールやPCMAXでも使えるセカンドメールや、ラインIDなどの連絡先を聞く流れ、メール自動作成アプリもご紹介。
-	str_len: 7029
+	str_len: 7063
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -539,24 +539,24 @@
 
 45: {
 	file_path: majime/m0marriedman.html
-	title: 既婚者がHできるおすすめ出会い系とPCMAXのダブル不倫攻略法
+	title: 既婚者がPCMAXでセフレ探しする方法と不倫できる出会い系
 	pub_date: 2014-09-26
-	mod_date: 2021-04-11
+	mod_date: 2022-06-02
 	category: post
 	description: 既婚者がエッチしたりセフレを作ったりできるおすすめの出会い系サイトと、PCMAXやワクワクメールなどの出会いアプリで出会うための掲示板の書き込みの例文をご紹介。既婚者がお互いの配偶者にバレないようにネットで不倫やダブル不倫をするための出会い方などもご案内しています。
-	str_len: 5650
+	str_len: 6451
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 46: {
 	file_path: majime/m4honban.html
-	title: ハッピーメール等の出会い系で非風俗の素人と本番ありで出会う方法
+	title: ハッピーメール等の出会い系で非風俗の素人女性と本番する方法
 	pub_date: 2017-03-15
-	mod_date: 2022-05-12
+	mod_date: 2022-06-02
 	category: how_to
 	description: ハッピーメールやワクワクメールなどの出会い系サイトを使うと簡単に風俗じゃない素人の女性と本番（基盤）ありの出会いをすることができます。この記事では、３つある本番ありの出会いのやり方、素人女性と本番ありの出会いをしやすいお勧め出会い系サイトなどを詳しく紹介しています。
-	str_len: 5806
+	str_len: 7014
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -575,12 +575,12 @@
 
 48: {
 	file_path: majime/m3_3.html
-	title: デート後のお礼メールやラインの書き方とありがとうの言葉と例文
+	title: デート後のお礼メールの書き方と婚活や出会い系のお礼例文
 	pub_date: 2012-02-15
-	mod_date: 2021-04-10
+	mod_date: 2022-06-10
 	category: date
 	description: 出会い系で知り合った女の子とデートした後はありがとうのLINEメッセージやお礼メールを出しておきましょう。これが2回目以降のデートに繋がります。彼女を作るためなどの普通の出会いのデートのお礼メール例文と、セフレ探しなどヤリモクの出会いのお礼メール例文をそれぞれ紹介します。
-	str_len: 2785
+	str_len: 3907
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -623,12 +623,12 @@
 
 52: {
 	file_path: majime/m4personal-data.html
-	title: 個人情報が安全な出会い系サイト一覧
+	title: ハッピーメールやPCMAX他個人情報が安全な出会い系サイト
 	pub_date: 2017-07-23
-	mod_date: 2021-03-18
+	mod_date: 2022-06-02
 	category: how_to
 	description: 個人情報の心配なく遊べる出会い系サイトとは？出会い系サイトを利用する際の個人情報の安全性と個人情報が安心な出会い系サイトについて説明しています。
-	str_len: 3400
+	str_len: 4480
 	layout_flag: False
 	shift_flag: False
 	edit_flag: True}
@@ -887,12 +887,12 @@
 
 74: {
 	file_path: majime/kakikata_t.html
-	title: PCMAX等の出会い系掲示板投稿の書き方例文とテンプレアプリ
+	title: 出会い系掲示板の書き方例文とPCMAXの投稿テンプレと例文
 	pub_date: 2012-03-01
-	mod_date: 2021-07-29
+	mod_date: 2022-06-09
 	category: majime
 	description: 出会い系サイトで出会える掲示板の書き込みの書き方と出会うコツを紹介。多数の例文（テンプレ）の他、掲示板投稿文やメールの文面、プロフィールを自動作成するアプリも利用できます。恋人募集や婚活、セフレ募集などシチュエーションごとの書き込みも掲載。
-	str_len: 8754
+	str_len: 9178
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1273,22 +1273,22 @@
 	file_path: majime/m2ngword.html
 	title: ハッピーメールやワクワクメール、PCMAXのNGワード
 	pub_date: 2014-12-06
-	mod_date: 2022-05-11
+	mod_date: 2022-06-09
 	category: s_mail
 	description: ハッピーメールやワクワクメール、PCMAXなどの出会い系サイトには、書いてしまうと書き込みが削除されたりアカウント停止になる禁止ワードがあります。この記事ではその禁止ワードや割り切りやパパ活で使えないNGワードについて詳しく説明しています。
-	str_len: 5813
+	str_len: 5936
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 107: {
 	file_path: majime/kakikata_f.html
-	title: 出会い系のファーストメール例文とPCMAXの最初のメッセージ
+	title: PCMAXの最初のメッセージの書き方とファーストメール例文
 	pub_date: 2012-03-01
-	mod_date: 2021-12-16
+	mod_date: 2022-06-09
 	category: majime
 	description: 出会い系サイトで女性から返信をもらえるファーストメール（最初のメッセージ）の書き方と挨拶などファーストメッセージ例文を紹介。コピペして便利に使えるメールテンプレートと自動的にメールを作成する無料アプリもご紹介しています。PCMAXなどの出会いアプリやサイトではメールがうまく書ければ外見等に自信がなくても出会えるのでチャンスです！
-	str_len: 8774
+	str_len: 8787
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1343,12 +1343,12 @@
 
 112: {
 	file_path: qa/q8.html
-	title: 出会い系でプロフィールの顔写真なしや自己PRなしの人の攻略法
+	title: 出会い系プロフィールの顔写真なしや自己PRなしの人の攻略法
 	pub_date: 2013-12-29
-	mod_date: 2022-05-11
+	mod_date: 2022-06-02
 	category: qa
 	description: ハッピーメールやJメールなどの出会い系サイトでプロフィールの自己PRなしや顔写真なしなどの情報が少ない女性やそっけない返信の相手へのアプローチ方法をお教えします。情報が少ない相手へのファーストメールの書き方ややりとりの仕方を詳しくお教えします。
-	str_len: 4476
+	str_len: 4549
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1403,12 +1403,12 @@
 
 117: {
 	file_path: qa/q3.html
-	title: ハッピーメール等出会い系のそっけない短文返信は業者やサクラ？
+	title: ハッピーメール等の出会い系の短文メール返信は業者やサクラ？
 	pub_date: 2012-03-07
-	mod_date: 2021-12-15
+	mod_date: 2022-06-09
 	category: qa
 	description: ハッピーメールやPCMAX等の出会い系サイトでそっけない短文や一言メッセージを書いたり、異常に返信が早い女性がいますが、サクラや業者でしょうか？短文メールをしてくる理由、一言メールの会話の盛り上げ方等、ハピメなどの出会い系で役立つ情報をお教えします。
-	str_len: 11525
+	str_len: 11522
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1546,12 +1546,12 @@
 
 129: {
 	file_path: site/wakuwakumailadult.html
-	title: ワクワクメールで大人の交際やセフレを作る攻略法とポイントの裏技
+	title: ワクワクメールで大人の交際やセフレ探しの攻略法と会える裏技
 	pub_date: 2013-10-16
-	mod_date: 2021-04-13
+	mod_date: 2022-06-02
 	category: site
 	description: ワクワクメールで大人の交際をする方法を具体的に説明しています。当サイトからワクワクメールに登録すると特別に通常より50ポイント多く無料お試しポイントがもらえます！ワクワクメールでセフレを作る方法や処女の彼女を探す方法、ワクワクメールの裏技などの攻略法もあります。
-	str_len: 18966
+	str_len: 19066
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1642,38 +1642,38 @@
 
 137: {
 	file_path: site/happymailpoint.html
-	title: ハッピーメール無料ポイント増量プレゼントキャンペーンと再登録
+	title: ハッピーメール無料ポイント増量キャンペーンと再登録の手順
 	pub_date: 2013-01-02
-	mod_date: 2021-04-11
+	mod_date: 2022-06-02
 	category: site
 	description: 人気出会い系サイトハッピーメールにこのページから登録すると、特別にお試しポイントが少し多め（500円相当）にプレゼントされます。出会えることで有名なハッピーメールに登録するなら、このページからお得に登録してより有利に出会いましょう！再登録についても解説しています。
-	str_len: 4622
+	str_len: 5099
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 138: {
 	file_path: site/happymail_a.html
-	title: ハッピーメールの大人の交際のやり方と大人の関係でエッチする方法
+	title: ハッピーメールの大人の交際のやり方と大人の出会いでエッチ
 	pub_date: 2013-07-23
-	mod_date: 2021-04-11
+	mod_date: 2022-06-09
 	category: site
 	description: ハッピーメールなどの出会い系サイトを使うと女性と大人の交際をすることができます。この記事では大人の交際や大人の関係の言葉の意味や、出会い系サイトのハッピーメールで大人の交際でエッチする方法、ハピメでのセフレの作り方を紹介します。そのほかにも、ハピメで普通の出会いをする方法やエッチな女の子の探し方、ハピメの登録方法などについても詳しく説明しています。
-	str_len: 14033
+	str_len: 14029
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 139: {
 	file_path: site/jmail.html
-	title: ミントC!Jメールで大人なセフレを作って誰でもエッチできる攻略法
+	title: セフレ探しの方法とミントC!Jメールのアダルト掲示板攻略法
 	pub_date: 2013-01-23
-	mod_date: 2021-04-11
+	mod_date: 2022-06-02
 	category: site
 	description: 出会える出会い系サイトを利用すれば、誰でもセフレを作ってエッチをすることができます。この記事では出会い系サイトのミントC!Jメールで早く出会うための攻略法やセフレの作り方、大人な出会いのやり方を詳しくご紹介します！この攻略法をマスターすれば、誰でも好きなだけ出会えます。
-	str_len: 8766
+	str_len: 9235
 	layout_flag: True
-	shift_flag: True
+	shift_flag: False
 	edit_flag: True}
 
 140: {
@@ -1738,12 +1738,12 @@
 
 145: {
 	file_path: qa/q9.html
-	title: ハッピーメールやPCMAXで長文メールするのはサクラや業者？
+	title: ハッピーメールやPCMAXの長文メールはサクラや業者か？
 	pub_date: 2021-05-28
-	mod_date: 2022-05-18
+	mod_date: 2022-06-09
 	category: qa
 	description: ハッピーメールやPCMAX等の出会い系サイトで一通目にやたらと長い長文メールを送ってくる女の人がいますが、サクラや悪質業者ですか？出会い系で女性が長文メールをしてくる理由やサクラや業者の情報等、ハピメなどの出会い系サイトで役立つ情報をお教えします。
-	str_len: 4455
+	str_len: 4452
 	layout_flag: True
 	shift_flag: False
 	edit_flag: False}
