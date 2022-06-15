@@ -54,9 +54,9 @@ let viewObj = {
         document.getElementById(selectID + 'Label').textContent = labelDict[preCode];
         document.getElementById(selectID + 'Outer').style.display = 'block'
     },
-    makeInputForm: function (mailText) {
-        if (mailText.indexOf('((') !== -1) {
-            let matchList = mailText.match(/\(\(.*?\)\)/g);
+    makeInputForm: function () {
+        if (modelObj.mailStr.indexOf('((') !== -1) {
+            let matchList = modelObj.mailStr.match(/\(\(.*?\)\)/g);
             console.log(matchList);
             for (let i = 0; i < inputFormLength; i++) {
                 if (i < matchList.length) {
