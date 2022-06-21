@@ -11,7 +11,8 @@ const sampleDict = {
     '13': 'はじめまして。こんにちは。ありがとうございます。13'
 };　/*自動生成*/
 const maxSelectLength = 5;  /*自動生成*/
-const inputFormLength = 5;  /*自動生成*/
+const inputFormLength = 5;
+const profileFormLength = 7;
 const optionDict = {
     '00': '普通のプロフィール', '01': '婚活用プロフィール', '02': '恋活用プロフィール', '03': 'メル友プロフ',
     '10': '普通のメール', '11': '婚活用メール', '12': '恋活用メール', '13': 'メル友メール',
@@ -20,22 +21,31 @@ const optionDict = {
 const labelDict = {'0': 'プロフィールの目的', '1': 'メールの目的', '00': 'どんな感じで？'};
 const mailInputDict = {'001': ['趣味']};
 const mailSelectDict = {'001': ['映画', '料理', 'スポーツ', '読書']};
-const profileDataIndex = {'name': '名前', 'age': '年齢', 'area': '住所', 'hobby': '趣味', 'sex': '性別'};　/*profの対照用*/
-const testProfData = {'name': 'ごろう', 'age': '33才', 'hobby': 'ゲーム', 'sex': '男'};  /*テスト用の仮データ*/
-const profileList = ['名前', '年齢', '住所', '性別'] 　/*profデータに入れるべき項目のリスト 自動生成*/
+// const profileDataIndex = {'name': '名前', 'age': '年齢', 'area': '住所', 'hobby': '趣味', 'sex': '性別'};　/*profの対照用*/
+const testProfData = {'名前': 'ごろう', '年齢': '33才', '趣味': 'ゲーム', '性別': '男'};  /*テスト用の仮データ*/
+const profileList = ['名前', '年齢', '住所', '性別']; 　/*profデータに入れるべき項目のリスト 自動生成*/
+const cnfList = ['saveMail', 'lineSpacing', 'saveName'];
 
 let viewObj = {
     initialView: function () {
-        for (let i = 1; i < modelObj.inputData.length; i++) {
-            this.makeOptionStr(modelObj.inputData.slice(i))
+        let inputData = modelObj.inputData;
+        for (let i = 1; i < inputData.length; i++) {
+            console.log(inputData.slice(0, i));
+            this.makeSelectStr(inputData.slice(0, i))
         }
-        if (modelObj.inputData in sampleDict) {
-            this.mailSampleDisplay(modelObj.inputData)
+        if (inputData in sampleDict) {
+            console.log('print ' + sampleDict[inputData]);
+            this.mailTextDisplay(inputData)
         }
+        this.selectFill();
+        this.makeProfileForm();
+        this.makeConfigForm()
     },
-    makeOptionStr: function (preCode) {
+
+    makeSelectStr: function (preCode) {
         const selectID = 'sO' + String(preCode.length)
         console.log('selectID : ' + selectID);
+        console.log(typeof preCode);
         let optStr = '<option value="s" selected hidden>選択してください</option>';
         for (let orderNum = 0; orderNum < maxSelectLength; orderNum += 1) {
             if (preCode + orderNum in optionDict) {
@@ -46,158 +56,277 @@ let viewObj = {
         // console.log(optStr)
         document.getElementById(selectID).innerHTML = optStr;
         document.getElementById(selectID + 'Label').textContent = labelDict[preCode];
-        document.getElementById(selectID + 'Outer').style.display = 'block'
+        document.getElementById(selectID + 'Outer').style.display = 'block';
     },
-    makeInputForm: function () {
-        console.log(modelObj.mailStr);
-        if (modelObj.mailStr.indexOf('((') !== -1) {
-            let matchList = modelObj.mailStr.match(/\(\(.*?\)\)/g);
-            console.log(matchList);
-            for (let i = 0; i < inputFormLength; i++) {
-                if (i < matchList.length) {
-                    document.getElementById('ip' + String(i) + 'Label').textContent
-                        = matchList[i].replace('((', '').replace('))', '');
-                    document.getElementById('ip' + String(i) + 'Outer').style.display = 'block'
-                } else {
-                    document.getElementById('ip' + String(i) + 'Outer').style.display = 'none'
-                }
-            }
-        } else {
-            for (let i = 0; i < inputFormLength; i++) {
+
+    selectFill: function () {
+        let inputData = modelObj.inputData;
+        for (let i = 0;i < inputData.length;i++){
+            document.getElementById('sO' + String(i)).options[Number(inputData[i]) + 1].selected = true
+        }
+    },
+
+    makeInputForm: function (blankList) {
+        for (let i = 0; i < inputFormLength; i++) {
+            if (i < blankList.length) {
+                document.getElementById('ip' + String(i) + 'Label').textContent
+                    = blankList[i].replace('((', '').replace('))', '');
+                document.getElementById('ip' + String(i) + 'Outer').style.display = 'block'
+            } else {
                 document.getElementById('ip' + String(i) + 'Outer').style.display = 'none'
             }
         }
     },
-    mailSampleDisplay: function () {
+
+    delInputValue: function () {
+        for (let i = 0; i < inputFormLength; i++) {
+            document.getElementById('ip' + String(i)).value = ''
+        }
+    },
+
+    makeProfileForm: function () {
+        for (let i = 0; i < profileFormLength; i++) {
+            if (i < profileList.length) {
+                document.getElementById('pr' + String(i) + 'Label').textContent = profileList[i];
+                document.getElementById('pr' + String(i) + 'Outer').style.display = 'block'
+                if (profileList[i] in modelObj.profData) {
+                    document.getElementById('pr' + String(i)).value = modelObj.profData[profileList[i]];
+                }
+            } else {
+                document.getElementById('pr' + String(i) + 'Outer').style.display = 'none'
+            }
+        }
+    },
+
+    makeConfigForm: function () {
+        for (let i = 0; i < cnfList.length; i++) {
+            document.getElementById(cnfList[i]).checked = modelObj.configData[cnfList[i]]
+        }
+
+    },
+
+    mailTextDisplay: function () {
+        console.log('mail display');
         let dspStr = modelObj.mailStr;
-        if (dspStr.indexOf('((') !== -1){
+        if (dspStr.indexOf('((') !== -1) {
             dspStr = dspStr.split('((').join('(')
             dspStr = dspStr.split('))').join(')')
         }
         document.getElementById('mailText').textContent = dspStr
     },
 
-    inputDisplay: function (beforeW, afterW) {
-        modelObj.replaceWord(beforeW, afterW);
-        document.getElementById('mailText').textContent = modelObj.mailStr
+    delMailText: function () {
+        document.getElementById('mailText').textContent = '例文'
+    },
+
+    changeTab: function (clicked) {
+        for (let i = 1; i < 4; i++) {
+            let cID = 'tab' + String(i)
+            if (clicked === cID) {
+                if (!(document.getElementById(cID).classList.contains('active'))) {
+                    document.getElementById(cID).classList.add('active')
+                }
+                document.getElementById(cID + 'c').style.display = 'block'
+            } else {
+                document.getElementById(cID).classList.remove('active')
+                document.getElementById(cID + 'c').style.display = 'none'
+            }
+        }
     }
-};
+}
 
 let controllerObj = {
-    currentID : '',
-    currentValue : '',
-    currentLabel : '',
+    currentID: '',
+    currentValue: '',
+    currentLabel: '',
+    currentPrfID: '',
+    currentPrfValue: '',
+    currentPrfLabel: '',
+    currentCnfID: '',
+    currentCnfValue: true,
+
     changeSelect: function (selectID) {
         this.currentID = selectID;
         this.currentValue = document.getElementById(selectID).value;
-        console.log('changeOption => preCode : ' + this.currentValue);
-        modelObj.changeSelect()
+        console.log('changeSelect => preCode : ' + this.currentValue);
+        modelObj.changeSelect(this.currentValue)
     },
+
     changeInput: function (inputID) {
-        console.log('start changeInputOption');
+        console.log('start changeInput');
+        console.log(inputID);
         this.currentID = inputID;
         this.currentValue = document.getElementById(inputID).value;
         this.currentLabel = document.getElementById(inputID + 'Label').textContent;
+        console.log(this.currentValue);
         modelObj.changeInput()
+    },
+
+    changeProfile: function (inputID) {
+        console.log('start changeProfile');
+        console.log(inputID);
+        this.currentPrfID = inputID;
+        this.currentPrfValue = document.getElementById(inputID).value;
+        this.currentPrfLabel = document.getElementById(inputID + 'Label').textContent;
+        console.log(this.currentPrfValue);
+        modelObj.changeProfile()
+    },
+
+    changeConfig: function (inputID) {
+        console.log('start changeConfig');
+        this.currentCnfID = inputID;
+        this.currentCnfValue = document.getElementById(inputID).checked;
+        modelObj.changeConfig()
     }
 }
 
 let modelObj = {
     inputData: '',
     profData: {},
-    optionData: {},
-    mailStr: '',
+    configData: {'saveMail': false, 'lineSpacing': false, 'saveName': false},
+    currentInputDict: {},
+    insertList: [],
+    baseStr: '例文',
+    mailStr: '例文',
+
     displayMailStr: function () {
-        this.mailStr = sampleDict[viewObj.inputData];
-        this.insertProfileData();
-        viewObj.makeInputForm();
-        viewObj.mailSampleDisplay()
+        const blankList = this.insertBlank();
+        viewObj.makeInputForm(blankList);
+        viewObj.mailTextDisplay()
     },
-    
-    changeSelect: function () {
-        let preCode = controllerObj.currentValue;
-        console.log(preCode);
-        viewObj.inputData = preCode;
+
+    changeSelect: function (preCode) {
+        this.inputData = preCode;
+        this.rewriteInputData();
+        this.currentInputDict = {};
+        this.insertList = []
+        viewObj.delInputValue();
         if (preCode in sampleDict) {
+            this.baseStr = sampleDict[preCode];
             this.mailStr = sampleDict[preCode];
-            this.insertProfileData();
-
+            this.displayMailStr()
         } else {
-            viewObj.makeOptionStr(preCode);
-            this.mailStr = '例文本文';
+            viewObj.makeSelectStr(preCode);
+            this.baseStr = '例文';
+            this.mailStr = '例文';
+            viewObj.delMailText()
         }
-        viewObj.makeInputForm();
-        viewObj.mailSampleDisplay()
     },
 
-    changeInput: function (){
-        let inputLabel = controllerObj.currentLabel
-        if (inputLabel in profileList) {
-            viewObj.profData[inputLabel] = this.inputData
+    changeInput: function () {
+        let inputLabel = controllerObj.currentLabel;
+        if (profileList.indexOf(inputLabel) !== -1) {
+            this.profData[inputLabel] = controllerObj.currentValue;
+            this.rewriteProfData();
+            viewObj.makeProfileForm()
         }
-        viewObj.inputDisplay(inputLabel, this.inputData);
-        console.log(viewObj.profData)
-        this.replaceWord()
+        this.currentInputDict[inputLabel] = controllerObj.currentValue;
+        console.log(this.profData);
+        this.displayMailStr()
     },
-    insertProfileData: function () {
-        for (let key in profileDataIndex) {
-            if (this.mailStr.indexOf('((' + profileDataIndex[key] + '))') !== -1 && key in testProfData) {
-                this.mailStr = this.mailStr.replace('((' + profileDataIndex[key] + '))', testProfData[key])
+
+    changeProfile: function () {
+        let inputLabel = controllerObj.currentPrfLabel;
+        this.profData[inputLabel] = controllerObj.currentPrfValue;
+        if (this.baseStr !== '例文' && this.insertList.indexOf(inputLabel) !== -1) {
+            this.currentInputDict[inputLabel] = controllerObj.currentPrfValue;
+            this.displayMailStr()
+        }
+        this.rewriteProfData();
+        console.log(this.profData);
+    },
+
+    changeConfig: function () {
+        let inputLabel = cnfDict[controllerObj.currentCnfID]
+        this.configData[inputLabel] = controllerObj.currentCnfValue === true;
+        if (this.baseStr !== '例文') {
+            this.displayMailStr()
+        }
+        this.rewriteConfigData();
+        console.log(this.configData);
+    },
+
+    insertBlank: function () {
+        let matchList = this.baseStr.match(/\(\(.*?\)\)/g);
+        this.insertList = matchList;
+        let blankList = [];
+        if (matchList !== null) {
+            let newStr = this.baseStr;
+            for (let i = 0; i < matchList.length; i++) {
+                let cLabel = matchList[i].replace('((', '').replace('))',
+                    '');
+                if (profileList.indexOf(cLabel) !== -1 && cLabel in this.profData) {
+                    newStr = newStr.replace(matchList[i], '<<' + this.profData[cLabel] + '>>')
+                } else {
+                    if (cLabel in this.currentInputDict) {
+                        newStr = newStr.replace(matchList[i], '<<' + this.currentInputDict[cLabel] + '>>')
+                    }
+                    if (blankList.indexOf(cLabel) === -1) {
+                        blankList.push(cLabel);
+                        console.log(blankList)
+                    }
+                }
             }
+            modelObj.mailStr = newStr
         }
+        return blankList
     },
-    checkBlank: function () {
 
-    },
     initializeSession: function () {
-        let inputData = JSON.parse(localStorage.getItem("inputData"));
-        if (inputData !== null) {
-            viewObj.inputData = inputData
-        } else {
-            viewObj.inputData = '0'
-        }
-        console.log(viewObj.inputData);
         let profData = JSON.parse(localStorage.getItem("profData"));
+        console.log(profData);
         if (profData !== null) {
-            viewObj.profData = profData
+            this.profData = profData
         } else {
-            viewObj.profData = {}
+            this.profData = {}
         }
-        console.log(viewObj.profData);
-        let optionData = JSON.parse(localStorage.getItem("optionData"));
-        if (optionData !== null) {
-            viewObj.optionData = optionData
+        // this.profData = testProfData;  /*テスト*/
+        console.log(this.profData);
+        let confData = JSON.parse(localStorage.getItem("configData"));
+        if (confData !== null) {
+            this.configData = confData
         } else {
-            viewObj.optionData = {}
+            this.configData = {'saveMail': false, 'lineSpacing': false, 'saveName': false}
         }
-        console.log(viewObj.optionData);
+        console.log(this.configData);
+        let inputData = JSON.parse(localStorage.getItem("inputData"));
+        console.log(inputData);
+        if (inputData !== null && inputData in sampleDict && this.configData['saveMail'] === true) {
+            console.log(inputData);
+            this.inputData = inputData;
+            this.baseStr = sampleDict[inputData];
+            this.mailStr = sampleDict[inputData];
+            let blankList = this.insertBlank();
+            viewObj.makeInputForm(blankList)
+        } else {
+            this.inputData = '0';
+            console.log(this.inputData);
+        }
+        viewObj.initialView()
+
     },
 
     removeLocalStorage: function () {
-        const lsDataList = ['inputData', 'profData', 'optionData'];
+        const lsDataList = ['inputData', 'profData', 'configData'];
         for (let i = 0; i < lsDataList.length; i++) {
             localStorage.removeItem(lsDataList[i])
         }
     },
-    replaceWord: function (beforeW, afterW){
-        let sStr = this.mailStr.split('((' + beforeW + '))');
-        this.mailStr = sStr.join(afterW)
-    },
 
     rewriteInputData: function () {
-        localStorage.setItem("inputData", JSON.stringify(viewObj.inputData))
+        localStorage.setItem("inputData", JSON.stringify(this.inputData))
     },
 
     rewriteProfData: function () {
-        localStorage.setItem("profData", JSON.stringify(viewObj.profData))
+        localStorage.setItem("profData", JSON.stringify(this.profData))
     },
 
-    rewriteOptionData: function () {
-        localStorage.setItem("optionData", JSON.stringify(viewObj.optionData))
+    rewriteConfigData: function () {
+        localStorage.setItem("configData", JSON.stringify(this.configData))
     }
 }
+
 
 // viewObj.makeOptionStr('sO1', '00');
 // modelObj.removeLocalStorage();
 modelObj.initializeSession();
-viewObj.initialView()
