@@ -133,22 +133,22 @@
 	file_path: caption/fwari.html
 	title: 車内F割とは？車内フェラ割の意味や相場とフェラ募集掲示板
 	pub_date: 2014-05-18
-	mod_date: 2022-05-27
+	mod_date: 2022-06-24
 	category: caption
 	description: 車内Fや口割の意味と相場、簡単なやり方と、車内フェラ割りや車内割り切りがしやすいおすすめ出会い系やアプリを紹介。お金を使わずに誰でも出会い系サイトで女の子とセックスできる募集方法も紹介しています。車内えふや車内Fとは何かの説明や、ワクワクメールやハッピーメールなどの出会い系サイトのフェラ掲示板で女の子と出会えるメールが簡単に書けるアプリもあります。
-	str_len: 15133
+	str_len: 15139
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
 
 12: {
 	file_path: caption/jkandjc.html
-	title: 出会い系でJK?ワクワクメールやPCMAXの高校生の見つけ方
+	title: 出会い系のJK？ワクワクメールやPCMAXの高校生の探し方
 	pub_date: 2014-10-11
-	mod_date: 2022-05-11
+	mod_date: 2022-06-26
 	category: caption
 	description: 出会い系サイトは18禁ですが、稀に規制を掻い潜ってこっそり利用しているJKやJCもいます。女子高生や女子中学生と出会うのは絶対NGなので、この記事ではトラブルにならないために不正に利用しているJKやJCを見分ける方法をご紹介します。もしもJKやJCを見つけたらメッセージしたりせずに通報してください。
-	str_len: 7273
+	str_len: 7336
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -277,10 +277,10 @@
 	file_path: majime/m2htalk.html
 	title: メールエッチのやり方とエロメールやラインHできる出会い系
 	pub_date: 2014-06-29
-	mod_date: 2022-05-27
+	mod_date: 2022-06-22
 	category: s_mail
-	description: エロメールの相手が簡単に見つかるおすすめ出会い系サイトやマッチングアプリと、メッセージのやりとりをしてる相手とエロメッセージやメールエッチする方法を例文を使って解説します。出会い系でエッチメールやラインエッチを楽しむ相手の探すやり方も詳しくお教えします。
-	str_len: 11056
+	description: エロメールやラインセックスの相手が簡単に見つかるおすすめ出会い系サイトやマッチングアプリと、メッセージの相手とエロメッセージやメールエッチする方法を例文を使って解説します。出会い系でエッチメールやラインエッチ、エロ話を楽しむ相手の探すやり方も詳しくお教えします。
+	str_len: 12105
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -301,10 +301,10 @@
 	file_path: majime/m2_0_1.html
 	title: 出会い系のメールのやり取りのコツと会話が長続きする質問例文
 	pub_date: 2012-03-01
-	mod_date: 2022-06-01
+	mod_date: 2022-06-24
 	category: s_mail
 	description: 出会い系でメールの会話が長続きする上手なトークややりとりのコツと、メッセージの質問の話題を例文を使って詳しく解説。出会い系暦１５年の管理人がハッピーメールなどの出会い系サイトや出会い系アプリでの女性への話しかけ方やモテる話の進め方と話し方も教えます。
-	str_len: 17993
+	str_len: 17971
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -659,12 +659,12 @@
 
 55: {
 	file_path: majime/m4hitoduma.html
-	title: 人妻と出会える人気出会い系サイトとJメール等の人妻攻略メール
+	title: 人妻と会える人気出会い系サイトとJメール等の人妻攻略メール
 	pub_date: 2018-08-22
-	mod_date: 2022-05-12
+	mod_date: 2022-06-26
 	category: how_to
 	description: 人妻が出会いやセックスの相手を探すのに利用する人気出会い系サイトと、出会い系サイトで人妻と出会うための最初のメールや人妻を不倫に誘う会話の流れ、人妻や主婦と出会えるサイトや出会う方法を紹介。人妻や主婦は普通のメールでアプローチして、会話の中でうまく浮気に誘導していきます。PCMAXやハッピーメール、Jメール等で使える人妻攻略法です。
-	str_len: 7963
+	str_len: 7962
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -961,10 +961,10 @@
 	file_path: majime/m1_1.html
 	title: ガラケー対応で出会える出会い系サイトとガラケーで出会う方法
 	pub_date: 2012-02-15
-	mod_date: 2022-05-27
+	mod_date: 2022-06-24
 	category: f_mail
 	description: ガラケーを使っていても、出会い系サイトを使えば恋人を作ったりセフレを作ったりセックスの相手を探したりできます。この記事ではガラケーでも出会えるおすすめの出会い系サイトと、ガラケーを使ったオンラインの出会いで女性と出会う方法をご紹介します。女の子から返事がもらえるファーストメールの書き方を例文を使って教えます。
-	str_len: 9093
+	str_len: 9892
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}

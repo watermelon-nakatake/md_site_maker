@@ -567,7 +567,7 @@ if __name__ == '__main__':
     # insert_index_list('reibun/pc/majime/mail-applicaton.html')
     # total_update()
 
-    up_files = ['reibun/html_files/pc/sitepage/194964.html']
+    up_files = ['reibun/html_files/pc/sitepage/ranking.html']
     auto_scp_upload(up_files)
 
     # ftp_upload(up_files)

@@ -1,40 +1,38 @@
 'use strict'
 
-const sampleDict = {
-    '00': 'はじめまして。こんにちは。ありがとうございます。((１))３((年齢))え((る))あ((お))い((かか))00',
-    '01': 'はじめまして。こんにちは。ありがとうございます。((も))01',
-    '02': 'はじめまして。こんにちは。ありがとうございます。自分は((名前))です。住んでいるのは((住所))です。02',
-    '03': 'はじめまして。こんにちは。ありがとうございます。03',
-    '10': 'はじめまして。こんにちは。ありがとうございます。10',
-    '11': 'はじめまして。こんにちは。ありがとうございます。11',
-    '12': 'はじめまして。こんにちは。ありがとうございます。12',
-    '13': 'はじめまして。こんにちは。ありがとうございます。13'
-};　/*自動生成*/
-const maxSelectLength = 5;  /*自動生成*/
+// const sampleDict = {
+//     '00': 'はじめまして。こんにちは。ありがとうございます。((１))３((年齢))え((る))あ((お))い((かか))00',
+//     '01': 'はじめまして。こんにちは。ありがとうございます。((も))01',
+//     '02': 'はじめまして。こんにちは。ありがとうございます。自分は((名前))です。住んでいるのは((住所))です。02',
+//     '03': 'はじめまして。こんにちは。ありがとうございます。03',
+//     '10': 'はじめまして。こんにちは。ありがとうございます。10',
+//     '11': 'はじめまして。こんにちは。ありがとうございます。11',
+//     '12': 'はじめまして。こんにちは。ありがとうございます。12',
+//     '13': 'はじめまして。こんにちは。ありがとうございます。13'
+// };　/*自動生成*/
+// const maxSelectLength = 5;  /*自動生成*/
+// const optionDict = {
+//     '00': '普通のプロフィール', '01': '婚活用プロフィール', '02': '恋活用プロフィール', '03': 'メル友プロフ',
+//     '10': '普通のメール', '11': '婚活用メール', '12': '恋活用メール', '13': 'メル友メール',
+//     '000': '真面目な感じ', '001': 'フランクな感じ', '002': 'シンプルな感じ', '003': '誠実な感じ'
+// }  /*自動生成*/
+// const labelDict = {'0': 'プロフィールの目的', '1': 'メールの目的', '00': 'どんな感じで？'};
+
 const inputFormLength = 5;
 const profileFormLength = 7;
-const optionDict = {
-    '00': '普通のプロフィール', '01': '婚活用プロフィール', '02': '恋活用プロフィール', '03': 'メル友プロフ',
-    '10': '普通のメール', '11': '婚活用メール', '12': '恋活用メール', '13': 'メル友メール',
-    '000': '真面目な感じ', '001': 'フランクな感じ', '002': 'シンプルな感じ', '003': '誠実な感じ'
-}  /*自動生成*/
-const labelDict = {'0': 'プロフィールの目的', '1': 'メールの目的', '00': 'どんな感じで？'};
-const mailInputDict = {'001': ['趣味']};
-const mailSelectDict = {'001': ['映画', '料理', 'スポーツ', '読書']};
+
 // const profileDataIndex = {'name': '名前', 'age': '年齢', 'area': '住所', 'hobby': '趣味', 'sex': '性別'};　/*profの対照用*/
 const testProfData = {'名前': 'ごろう', '年齢': '33才', '趣味': 'ゲーム', '性別': '男'};  /*テスト用の仮データ*/
-const profileList = ['名前', '年齢', '住所', '性別']; 　/*profデータに入れるべき項目のリスト 自動生成*/
+const profileList = ['名前', '年齢', '住所', '性別', '自分']; 　/*profデータに入れるべき項目のリスト*/
 const cnfList = ['saveMail', 'lineSpacing', 'saveName'];
 
 let viewObj = {
     initialView: function () {
         let inputData = modelObj.inputData;
         for (let i = 1; i < inputData.length; i++) {
-            console.log(inputData.slice(0, i));
             this.makeSelectStr(inputData.slice(0, i))
         }
         if (inputData in sampleDict) {
-            console.log('print ' + sampleDict[inputData]);
             this.mailTextDisplay(inputData)
         }
         this.selectFill();
@@ -45,7 +43,6 @@ let viewObj = {
     makeSelectStr: function (preCode) {
         const selectID = 'sO' + String(preCode.length)
         console.log('selectID : ' + selectID);
-        console.log(typeof preCode);
         let optStr = '<option value="s" selected hidden>選択してください</option>';
         for (let orderNum = 0; orderNum < maxSelectLength; orderNum += 1) {
             if (preCode + orderNum in optionDict) {
@@ -61,7 +58,7 @@ let viewObj = {
 
     selectFill: function () {
         let inputData = modelObj.inputData;
-        for (let i = 0;i < inputData.length;i++){
+        for (let i = 0; i < inputData.length; i++) {
             document.getElementById('sO' + String(i)).options[Number(inputData[i]) + 1].selected = true
         }
     },
@@ -108,11 +105,36 @@ let viewObj = {
     mailTextDisplay: function () {
         console.log('mail display');
         let dspStr = modelObj.mailStr;
+        console.log(dspStr);
+        if (dspStr.indexOf('(comment)') !== -1) {
+            let spList = dspStr.split('(comment)');
+            dspStr = spList[0];
+            let commentStr = spList[1];
+            commentStr = commentStr.split('$$$').join('</p><p>');
+            commentStr = commentStr.split('$$').join('<br>')
+            document.getElementById('commentText').innerHTML = commentStr
+        }
         if (dspStr.indexOf('((') !== -1) {
             dspStr = dspStr.split('((').join('(')
             dspStr = dspStr.split('))').join(')')
         }
-        document.getElementById('mailText').textContent = dspStr
+        if (modelObj.configData['lineSpacing']) {
+            dspStr = dspStr.split('$$$').join('</p><p>');
+            dspStr = dspStr.split('$$').join('<br>')
+        } else {
+            dspStr = dspStr.split('$$$').join('<br>');
+            dspStr = dspStr.split('$$').join('')
+        }
+        this.insertCopyText(dspStr);
+        dspStr = '<p>' + dspStr + '</p>'
+        console.log(dspStr);
+        document.getElementById('mailText').innerHTML = dspStr
+    },
+
+    insertCopyText: function (dspStr){
+        dspStr = dspStr.split('</p><p>').join('\n\n');
+        dspStr = dspStr.split('<br>').join('\n');
+        document.getElementById('mailDisplay').value = dspStr
     },
 
     delMailText: function () {
@@ -177,6 +199,11 @@ let controllerObj = {
         this.currentCnfID = inputID;
         this.currentCnfValue = document.getElementById(inputID).checked;
         modelObj.changeConfig()
+    },
+
+    copyButton: function (clickID) {
+        console.log("push copy");
+        modelObj.copyText(clickID)
     }
 }
 
@@ -193,6 +220,13 @@ let modelObj = {
         const blankList = this.insertBlank();
         viewObj.makeInputForm(blankList);
         viewObj.mailTextDisplay()
+    },
+
+    copyText: function (targetID) {
+        let copyTarget = document.getElementById(targetID);
+        copyTarget.select();
+        document.execCommand("Copy");
+        alert("コピーできました")
     },
 
     changeSelect: function (preCode) {
@@ -237,7 +271,7 @@ let modelObj = {
     },
 
     changeConfig: function () {
-        let inputLabel = cnfDict[controllerObj.currentCnfID]
+        let inputLabel = controllerObj.currentCnfID
         this.configData[inputLabel] = controllerObj.currentCnfValue === true;
         if (this.baseStr !== '例文') {
             this.displayMailStr()
@@ -290,9 +324,7 @@ let modelObj = {
         }
         console.log(this.configData);
         let inputData = JSON.parse(localStorage.getItem("inputData"));
-        console.log(inputData);
         if (inputData !== null && inputData in sampleDict && this.configData['saveMail'] === true) {
-            console.log(inputData);
             this.inputData = inputData;
             this.baseStr = sampleDict[inputData];
             this.mailStr = sampleDict[inputData];
