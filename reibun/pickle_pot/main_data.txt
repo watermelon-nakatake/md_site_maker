@@ -251,12 +251,12 @@
 
 21: {
 	file_path: majime/m2lineid.html
-	title: Jメール等出会い系のLINE交換や連絡先交換メールと聞き方
+	title: 出会い系のLINE交換の聞き方とJメールの連絡先交換方法
 	pub_date: 2014-09-21
-	mod_date: 2022-05-18
+	mod_date: 2022-07-03
 	category: s_mail
 	description: Jメールなどの出会い系でメールしている相手にラインIDやカカオトークIDなどの連絡先交換の聞き方をメッセージの例文と一緒にご紹介します。数パターンのLINE交換のやり方と例文があるので、好きなやり方で連絡先交換をしてみてください。
-	str_len: 6424
+	str_len: 10456
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -277,10 +277,10 @@
 	file_path: majime/m2htalk.html
 	title: メールエッチのやり方とエロメールやラインHできる出会い系
 	pub_date: 2014-06-29
-	mod_date: 2022-06-22
+	mod_date: 2022-07-27
 	category: s_mail
 	description: エロメールやラインセックスの相手が簡単に見つかるおすすめ出会い系サイトやマッチングアプリと、メッセージの相手とエロメッセージやメールエッチする方法を例文を使って解説します。出会い系でエッチメールやラインエッチ、エロ話を楽しむ相手の探すやり方も詳しくお教えします。
-	str_len: 12105
+	str_len: 12377
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -335,12 +335,12 @@
 
 28: {
 	file_path: majime/m1_8.html
-	title: ワクワクメールやJメール等出会い系で出会って童貞卒業する方法
+	title: ワクワクメールやJメール等出会い系で会って童貞卒業する方法
 	pub_date: 2012-02-15
-	mod_date: 2022-05-11
+	mod_date: 2022-07-25
 	category: f_mail
 	description: 童貞卒業するならJメールやワクワクメール等の出会い系サイトが一番。出会い系で童貞卒業するやり方と出会うためのメールの書き方を例文をたくさん使って紹介。出会い系が童貞卒業に最適な理由と、童貞を捨てる相手の探し方や裏ワザまで詳しくお教えします。例文はコピペして簡単に使えます。
-	str_len: 13720
+	str_len: 13740
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -371,12 +371,12 @@
 
 31: {
 	file_path: majime/m1_9.html
-	title: ぽちゃ女性のセフレ募集の方法とおすすめのぽっちゃり掲示板
+	title: ぽちゃ女性のセフレ募集のやり方とおすすめぽっちゃり掲示板
 	pub_date: 2012-02-15
-	mod_date: 2021-03-24
+	mod_date: 2022-07-03
 	category: f_mail
 	description: 出会い系で、ぽっちゃり女性と出会いやすいおすすめの掲示板や出会い系サイトと、ぽっちゃり女子と出会えるメールの書き方を豊富な例文を使ってお教えます。ぽっちゃり女子は出会い系では人気がありますが、うまく出会い系サイトの掲示板を利用すれば出会うことができます。
-	str_len: 4791
+	str_len: 4836
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -407,12 +407,12 @@
 
 34: {
 	file_path: majime/m0sexfriend.html
-	title: おすすめセフレ募集掲示板と募集方法、安全確実なセフレの作り方
+	title: おすすめセフレ募集掲示板と出会い系の安全なセフレの作り方
 	pub_date: 2013-12-05
-	mod_date: 2022-05-12
+	mod_date: 2022-07-25
 	category: post
 	description: 正しいやり方を知っていれば誰でもセフレを作れます。この記事ではおすすめのセフレと出会える掲示板とセフレの作り方、セフレができるメールの書き方を紹介。この通り実行すれば、どんな男性でも安全で確実にセフレを作れます。セックスフレンド作りにかかる費用や落としやすい女性の探し方、出会い系の会話のコツやコピペで使える各種メッセージの例文、セフレ募集掲示板が出会えない理由などもご紹介しています。
-	str_len: 25948
+	str_len: 25946
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -683,12 +683,12 @@
 
 57: {
 	file_path: majime/m3_2.html
-	title: 即ヤリにおすすめの出会い系アプリと出会って即エッチできる裏技
+	title: おすすめの即ヤリ出会い系アプリと出会って即エッチできる裏技
 	pub_date: 2012-02-15
-	mod_date: 2022-05-12
+	mod_date: 2022-07-03
 	category: date
 	description: 出会い系で出会った女の子と最初のデートでエッチする(即ヤリ)するための方法と即エッチ可能なおすすめサイトや出会いアプリも紹介。即ヤリができる「エッチ約束メール」の書き方も例文を使ってお教えします。
-	str_len: 6594
+	str_len: 6592
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -731,12 +731,12 @@
 
 61: {
 	file_path: majime/mp_sexy-profile.html
-	title: PCMAXやハッピーメールのエッチ度自己評価でスケベな女性を探す
+	title: PCMAXやハッピーメールのエッチ度等でエロい女性を探す
 	pub_date: 2018-08-25
-	mod_date: 2021-04-02
+	mod_date: 2022-07-25
 	category: profile
-	description: 出会い系サイトをうまく利用すれば、スケベな女性を探してエッチしたりセフレにしたりできます。この記事ではハッピーメールやPCMAX、ワクワクメールなどの人気出会い系サイトのプロフィールを使ってエロい女性を探して、セフレにしたりヤリモクの大人の出会いをする探す方法をお教えします。ハッピーメールの自己評価のエッチ度やPCMAXの裏プロフィールを有効活用しましょう！
-	str_len: 4552
+	description: 出会い系サイトをうまく利用すれば、スケベな女性を探してエッチしたりセフレにしたりできます。この記事ではハッピーメールやPCMAX、ワクワクメールなどの人気出会い系サイトのプロフィールのエッチ度などの情報を使ってエロい女性を探して、セフレにしたりヤリモクの大人の出会いをする探す方法をお教えします。ハッピーメールの自己評価のエッチ度やPCMAXの裏プロフィールを有効活用しましょう！
+	str_len: 4590
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -875,12 +875,12 @@
 
 73: {
 	file_path: majime/m0_4.html
-	title: PCMAX等で童貞卒業する方法と早く筆おろしできる童貞掲示板
+	title: 童貞卒業の方法とPCMAXの安全に筆おろしできる童貞掲示板
 	pub_date: 2012-02-15
-	mod_date: 2022-05-11
+	mod_date: 2022-07-03
 	category: post
 	description: 童貞の男性が筆下ろしセックス相手になる女性を探すにはPCMAXやハッピーメールなどの出会い系サイトの童貞卒業掲示板を使うのがベスト。童貞脱出におすすめの出会い掲示板と童貞卒業するための掲示板書き込みの例文を紹介。簡単に掲示板投稿やメールを作成できる無料アプリもあります。出会い系で童貞卒業するコツや彼女を作って童貞卒業するやり方、童貞募集のエッチな女性と童貞卒業する方法もお教えします。
-	str_len: 10765
+	str_len: 10763
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -913,10 +913,10 @@
 	file_path: majime/m2_4.html
 	title: ややぽっちゃりとは？出会い系のややぽちゃ女性の体重確認方法
 	pub_date: 2012-02-15
-	mod_date: 2022-05-19
+	mod_date: 2022-07-27
 	category: s_mail
 	description: 出会い系で知り合うと相手が見えないので相手の体型(体形)が気になりますよね。この記事では、出会い系サイトやマッチングアプリで知り合った女性の体型を確認する方法を、写真やプロフィールで確認する方法の他、遠回しに聞くメール例文なども添えて紹介しています。ややぽっちゃりとは何キロくらいなのでしょうか？
-	str_len: 4654
+	str_len: 6165
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1165,7 +1165,7 @@
 	file_path: majime/m1marriedwoman.html
 	title: PCMAX等の出会い系で人妻や主婦をセフレにするメール例文
 	pub_date: 2014-07-09
-	mod_date: 2022-05-11
+	mod_date: 2022-07-27
 	category: f_mail
 	description: 人妻と出会って連絡先を聞けるおすすめサイトや、PCMAXやハッピーメールなどの出会い系サイトで人妻にアプローチしてセックスしたりセフレにしたりするためのメールの書き方を例文を使ってご紹介します。出会い系サイトの出会いでは１通目のファーストメールが重要なので、是非参考にしてください。実際、pcmaxは浮気する人妻とかも多いんですよね。
 	str_len: 6896
@@ -1223,12 +1223,12 @@
 
 102: {
 	file_path: majime/date.html
-	title: PCMAX等の出会い系でセックスやセフレに誘う例文と誘い方
+	title: PCMAX等出会い系のセックスやセフレへの誘い方とメール例
 	pub_date: 2012-03-01
-	mod_date: 2022-05-11
+	mod_date: 2022-07-25
 	category: majime
 	description: 出会い系サイトで知り合った女の子と仲良くなったらデートに誘いましょう。セックスだけが目的であれば、セックスにうまくさそう方法もあります。この記事ではPCMAXやハッピーメールなどの出会い系で女の子のデートへの誘い方のテクニックと、うまくデートに誘うための例文、それと海や花火大会など夏のデートに誘う例文をご紹介します。
-	str_len: 7374
+	str_len: 7405
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1261,10 +1261,10 @@
 	file_path: majime/m4enderiuraderi.html
 	title: ハッピーメールやPCMAXでの援デリ業者や裏デリの見分け方
 	pub_date: 2017-03-13
-	mod_date: 2021-06-11
+	mod_date: 2022-07-03
 	category: how_to
 	description: 出会い系サイトの掲示板などで援デリや裏デリの業者が書き込みをしていることがあります。この記事では、援デリ、裏デリの言葉の意味と、援デリが違法か合法かの解説、援デリと裏デリの違い、ハッピーメールやPCMAXなどの出会い系掲示板で援デリや裏デリを見分ける方法などをお教えします。
-	str_len: 3614
+	str_len: 3692
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}
@@ -1740,10 +1740,10 @@
 	file_path: qa/q9.html
 	title: ハッピーメールやPCMAXの長文メールはサクラや業者か？
 	pub_date: 2021-05-28
-	mod_date: 2022-06-09
+	mod_date: 2022-07-06
 	category: qa
 	description: ハッピーメールやPCMAX等の出会い系サイトで一通目にやたらと長い長文メールを送ってくる女の人がいますが、サクラや悪質業者ですか？出会い系で女性が長文メールをしてくる理由やサクラや業者の情報等、ハピメなどの出会い系サイトで役立つ情報をお教えします。
-	str_len: 4452
+	str_len: 7073
 	layout_flag: True
 	shift_flag: False
 	edit_flag: False}
@@ -1762,12 +1762,12 @@
 
 147: {
 	file_path: majime/m0_dt_hm.html
-	title: ハッピーメールの童貞卒業のやり方と筆おろし募集のおすすめ掲示板
+	title: ハッピーメールの童貞卒業のやり方と人気の筆おろし募集掲示板
 	pub_date: 2021-05-15
-	mod_date: 2021-06-11
+	mod_date: 2022-07-03
 	category: post
 	description: 出会い系サイトのハッピーメールを使って童貞男性がセックスして筆下ろしする方法をご紹介します。募集掲示板投稿やメッセージを誰でも簡単に書けるアプリも用意してます。出会い系サイトで出会って童貞卒業するテクニックやコツ、恋人探しをして童貞卒業するやり方、童貞募集のスケべな女の人と出会って童貞を捨てるやり方も伝授します。
-	str_len: 12177
+	str_len: 12174
 	layout_flag: True
 	shift_flag: False
 	edit_flag: True}

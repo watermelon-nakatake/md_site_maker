@@ -23,8 +23,8 @@ const profileFormLength = 7;
 
 // const profileDataIndex = {'name': '名前', 'age': '年齢', 'area': '住所', 'hobby': '趣味', 'sex': '性別'};　/*profの対照用*/
 const testProfData = {'名前': 'ごろう', '年齢': '33才', '趣味': 'ゲーム', '性別': '男'};  /*テスト用の仮データ*/
-const profileList = ['名前', '年齢', '住所', '性別', '自分']; 　/*profデータに入れるべき項目のリスト*/
-const cnfList = ['saveMail', 'lineSpacing', 'saveName'];
+const profileListBase = ['名前', '年齢', '住所', '性別', '自分']; 　/*profデータに入れるべき項目のリスト*/
+const cnfList = ['saveMail', 'lineSpacing', 'saveName', 'accessWay'];
 
 let viewObj = {
     initialView: function () {
@@ -41,11 +41,12 @@ let viewObj = {
     },
 
     makeSelectStr: function (preCode) {
+        // selectを変更した際に次以降のselectボックスを消す
         const selectID = 'sO' + String(preCode.length)
         console.log('selectID : ' + selectID);
         let optStr = '<option value="s" selected hidden>選択してください</option>';
         for (let orderNum = 0; orderNum < maxSelectLength; orderNum += 1) {
-            if (preCode + orderNum in optionDict) {
+            if (preCode + String(orderNum) in optionDict) {
                 optStr += '<option value="' + preCode + String(orderNum) + '">' + optionDict[preCode + String(orderNum)]
                     + "</option>\n"
             }
@@ -66,9 +67,13 @@ let viewObj = {
     makeInputForm: function (blankList) {
         for (let i = 0; i < inputFormLength; i++) {
             if (i < blankList.length) {
+                let blankName = blankList[i].replace('((', '').replace('))', '');
                 document.getElementById('ip' + String(i) + 'Label').textContent
-                    = blankList[i].replace('((', '').replace('))', '');
+                    = blankName;
                 document.getElementById('ip' + String(i) + 'Outer').style.display = 'block'
+                if (blankName === '相手の名前' && modelObj.configData['saveName'] && modelObj.partnerName !== '') {
+                    document.getElementById('ip' + String(i)).value = modelObj.partnerName
+                }
             } else {
                 document.getElementById('ip' + String(i) + 'Outer').style.display = 'none'
             }
@@ -83,11 +88,11 @@ let viewObj = {
 
     makeProfileForm: function () {
         for (let i = 0; i < profileFormLength; i++) {
-            if (i < profileList.length) {
-                document.getElementById('pr' + String(i) + 'Label').textContent = profileList[i];
+            if (i < modelObj.profileList.length) {
+                document.getElementById('pr' + String(i) + 'Label').textContent = modelObj.profileList[i];
                 document.getElementById('pr' + String(i) + 'Outer').style.display = 'block'
-                if (profileList[i] in modelObj.profData) {
-                    document.getElementById('pr' + String(i)).value = modelObj.profData[profileList[i]];
+                if (modelObj.profileList[i] in modelObj.profData) {
+                    document.getElementById('pr' + String(i)).value = modelObj.profData[modelObj.profileList[i]];
                 }
             } else {
                 document.getElementById('pr' + String(i) + 'Outer').style.display = 'none'
@@ -126,14 +131,21 @@ let viewObj = {
             dspStr = dspStr.split('$$').join('')
         }
         this.insertCopyText(dspStr);
+
+        if (dspStr.indexOf('<<') !== -1) {
+            dspStr = dspStr.split('<<').join('<span class="replaced">')
+            dspStr = dspStr.split('>>').join('</span>')
+        }
         dspStr = '<p>' + dspStr + '</p>'
         console.log(dspStr);
         document.getElementById('mailText').innerHTML = dspStr
     },
 
-    insertCopyText: function (dspStr){
+    insertCopyText: function (dspStr) {
         dspStr = dspStr.split('</p><p>').join('\n\n');
         dspStr = dspStr.split('<br>').join('\n');
+        dspStr = dspStr.split('<<').join('');
+        dspStr = dspStr.split('>>').join('');
         document.getElementById('mailDisplay').value = dspStr
     },
 
@@ -210,9 +222,11 @@ let controllerObj = {
 let modelObj = {
     inputData: '',
     profData: {},
-    configData: {'saveMail': false, 'lineSpacing': false, 'saveName': false},
+    configData: {'saveMail': false, 'lineSpacing': false, 'saveName': false, 'accessWay': false},
     currentInputDict: {},
     insertList: [],
+    profileList: [],
+    partnerName: '',
     baseStr: '例文',
     mailStr: '例文',
 
@@ -249,10 +263,14 @@ let modelObj = {
 
     changeInput: function () {
         let inputLabel = controllerObj.currentLabel;
-        if (profileList.indexOf(inputLabel) !== -1) {
+        if (this.profileList.indexOf(inputLabel) !== -1) {
             this.profData[inputLabel] = controllerObj.currentValue;
             this.rewriteProfData();
             viewObj.makeProfileForm()
+        } else if (inputLabel === '相手の名前' && this.configData['saveName'] === true) {
+            this.partnerName = controllerObj.currentValue;
+            this.rewritePartnerName();
+            console.log(this.partnerName);
         }
         this.currentInputDict[inputLabel] = controllerObj.currentValue;
         console.log(this.profData);
@@ -271,8 +289,11 @@ let modelObj = {
     },
 
     changeConfig: function () {
-        let inputLabel = controllerObj.currentCnfID
-        this.configData[inputLabel] = controllerObj.currentCnfValue === true;
+        let inputLabel = controllerObj.currentCnfID;
+        this.configData[inputLabel] = controllerObj.currentCnfValue;
+        if (inputLabel === 'saveName' && controllerObj.currentCnfValue === false){
+            this.partnerName = ''
+        }
         if (this.baseStr !== '例文') {
             this.displayMailStr()
         }
@@ -282,6 +303,7 @@ let modelObj = {
 
     insertBlank: function () {
         let matchList = this.baseStr.match(/\(\(.*?\)\)/g);
+        console.log(matchList)
         this.insertList = matchList;
         let blankList = [];
         if (matchList !== null) {
@@ -289,8 +311,20 @@ let modelObj = {
             for (let i = 0; i < matchList.length; i++) {
                 let cLabel = matchList[i].replace('((', '').replace('))',
                     '');
-                if (profileList.indexOf(cLabel) !== -1 && cLabel in this.profData) {
+                if (this.profileList.indexOf(cLabel) !== -1 && cLabel in this.profData) {
                     newStr = newStr.replace(matchList[i], '<<' + this.profData[cLabel] + '>>')
+                } else if (cLabel === '相手の名前' && this.configData['saveName'] === true && this.partnerName !== '') {
+                    newStr = newStr.replace('((相手の名前))', '<<' + this.partnerName + '>>');
+                    if (blankList.indexOf('相手の名前') === -1) {
+                        blankList.push('相手の名前')
+                    }
+                    console.log(this.partnerName)
+                } else if (cLabel === 'メール') {
+                    if (this.configData['accessWay']) {
+                        newStr = newStr.replace('((メール))', '<<いいね>>')
+                    } else {
+                        newStr = newStr.replace('((メール))', '<<メール>>')
+                    }
                 } else {
                     if (cLabel in this.currentInputDict) {
                         newStr = newStr.replace(matchList[i], '<<' + this.currentInputDict[cLabel] + '>>')
@@ -320,9 +354,24 @@ let modelObj = {
         if (confData !== null) {
             this.configData = confData
         } else {
-            this.configData = {'saveMail': false, 'lineSpacing': false, 'saveName': false}
+            this.configData = {'saveMail': false, 'lineSpacing': false, 'saveName': false, 'accessWay': false}
         }
         console.log(this.configData);
+        let prfList = JSON.parse(localStorage.getItem("profileList"));
+        if (prfList !== null) {
+            this.profileList = confData
+        } else {
+            this.profileList = profileListBase
+        }
+        console.log(this.profileList);
+        let partnerN = localStorage.getItem("partnerName");
+        if (partnerN !== null) {
+            this.partnerName = partnerN
+        } else {
+            this.partnerName = ''
+        }
+        console.log(this.configData);
+        console.log(this.partnerName)
         let inputData = JSON.parse(localStorage.getItem("inputData"));
         if (inputData !== null && inputData in sampleDict && this.configData['saveMail'] === true) {
             this.inputData = inputData;
@@ -335,7 +384,6 @@ let modelObj = {
             console.log(this.inputData);
         }
         viewObj.initialView()
-
     },
 
     removeLocalStorage: function () {
@@ -355,6 +403,10 @@ let modelObj = {
 
     rewriteConfigData: function () {
         localStorage.setItem("configData", JSON.stringify(this.configData))
+    },
+
+    rewritePartnerName: function () {
+        localStorage.setItem("partnerName", this.partnerName)
     }
 }
 
